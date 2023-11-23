@@ -1,0 +1,276 @@
+# Variable 'artifactName' was defined in the Variables tab - This is from my fix branch
+# Agent Queue 'Azure Pipelines' was used with unrecognized Agent Specification, vmImage property must be specified to determine image - https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
+variables:
+  - name: 'BuildParameters.configuration'
+    value: release
+  - name: 'isMain'
+    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  - name: 'intentSolutionPath'
+    value: 'intent'
+  - group: 'Intent Architect Credentials'
+pr:
+  branches:
+    include:
+      - releases/*
+trigger:
+  tags:
+    include:
+      - 'release-*'
+  branches:
+    include:
+      - releases/*
+
+pool:
+  name: Azure Pipelines
+stages:
+  - stage: build
+    jobs:
+      - job: Job_1
+        displayName: Build_PD_Shesha_API
+        pool:
+          name: Azure Pipelines
+          vmImage: windows-latest
+        steps:
+          - checkout: self
+          - task: PowerShell@2
+            displayName: 'install intent cli'
+            inputs:
+              targetType: 'inline'
+              pwsh: true
+              script: dotnet tool install Intent.SoftwareFactory.CLI --global --prerelease
+
+          - task: PowerShell@2
+            displayName: 'run intent cli'
+            env:
+              INTENT_USER: $(intent-architect-user)
+              INTENT_PASS: $(intent-architect-password)
+              INTENT_SOLUTION_PATH: $(intentSolutionPath)
+            inputs:
+              targetType: 'inline'
+              pwsh: true
+              script: |
+                if (($Env:INTENT_USER -Eq $null) -or ($Env:INTENT_USER -Like "`$(*")) {
+                  Write-Host "##vso[task.logissue type=warning;]Intent Architect Credentials not configured, see https://github.com/IntentArchitect/Intent.Modules.NET/blob/development/Modules/Intent.Modules.ContinuousIntegration.AzurePipelines/README.md#configuring-intent-architect-credentials for more information."
+                  Return
+                }
+
+                intent-cli ensure-no-outstanding-changes "$Env:INTENT_USER" "$Env:INTENT_PASS" "$Env:INTENT_SOLUTION_PATH"
+          - task: PowerShell@2
+            
+            displayName: Check if Pull Request
+            inputs:
+              targetType: 'inline'
+              script: |
+                $targetBranch = ""
+                if ("$(Build.SourceBranch)" -like "*/pull/*")
+                {
+                    $targetBranch = "$(System.PullRequest.TargetBranch)"
+                    write-host "This is a Pull Request and the target branch is: $targetBranch"
+                    write-host "##vso[task.setvariable variable=prTargetBranch]$targetBranch"
+                }
+                write-host "This is not a Pull Request and the target branch is set to empty string"
+                write-host "##vso[task.setvariable variable=prTargetBranch]''"
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+          - task: PowerShell@2
+            displayName: Check to establish if this pipeline was triggered from a tag
+            inputs:
+              filePath: 'ReleaseFlow.ps1'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              arguments: '-PipeBuildNumber "$(Build.BuildNumber)" -PipeSourceBranch "$(Build.SourceBranch)" -PipeSourceVersion "$(Build.SourceVersion)" -PipeTargetBranch "$(prTargetBranch)" -PipeBuildId "$(Build.BuildId)"'
+          - task: PowerShell@2
+            displayName: Output to console the current branch and version
+            inputs:
+              targetType: 'inline'
+              script: |
+                write-host "The current branch is: $(currentBranch)"
+                write-host "The current version is: $(versionNo)"
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+          - task: PowerShell@2
+            displayName: Create a txt file to carry the original branch name to the release pipeline
+            inputs:
+              targetType: 'inline'
+              script: |
+                $variable = '$(currentBranch)'
+                $variable | Out-File $(Build.ArtifactStagingDirectory)\branchName.txt
+                Get-Content $(Build.ArtifactStagingDirectory)\branchName.txt
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: api-info-1'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'api-info-1'
+          - task: UseDotNet@2
+            displayName: Use .NET Core sdk 7.x
+            retryCountOnTaskFailure: 3
+            inputs:
+              version: 7.x
+          - task: Assembly-Info-NetCore@3
+            displayName: 'Set Assembly Manifest Data'
+            inputs:
+              InsertAttributes: true
+              VersionNumber: '$(versionNo)'
+              FileVersionNumber: '$(versionNo)'
+              InformationalVersion: '$(versionNo)'
+              PackageVersion: '$(versionNo)'
+            # condition: ne(variables['currentBranch'], 'refs/heads/main')
+          # - task: DotNetCoreCLI@2
+          #   displayName: dotnet Restore
+          #   inputs:
+          #     command: 'restore'
+          #     projects: backend/**/*.csproj
+          #     feedsToUse: 'select'
+          #     vstsFeed: '44b4667a-8963-403d-9962-bde66225adbd'
+          - task: DotNetCoreCLI@2
+            displayName: dotnet Restore
+            inputs:
+              command: 'restore'
+              projects: backend/**/*.sln
+              feedsToUse: 'config'
+              nugetConfigPath: 'backend/.nuget/NuGet.Config'
+          - task: DotNetCoreCLI@2
+            displayName: dotnet build
+            inputs:
+              projects: backend/**/*.sln
+              arguments: --configuration $(BuildParameters.configuration)
+          - task: DotNetCoreCLI@2
+            displayName: dotnet publish
+            inputs:
+              command: publish
+              publishWebProjects: false
+              projects: backend/**/*.sln
+              arguments: --configuration $(BuildParameters.configuration) --output $(build.artifactstagingdirectory) --no-build
+              zipAfterPublish: false
+              modifyOutputPath: false
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: shesha-api'
+            inputs:
+              ArtifactName: shesha-api
+          - task: DotNetCoreCLI@2
+            displayName: dotnet pack
+            inputs:
+              command: 'pack'
+              packagesToPack: 'backend/src/**/*.csproj'
+              configuration: '$(BuildParameters.configuration)'
+              nobuild: true
+              includesymbols: true
+              includesource: true
+              versioningScheme: 'byEnvVar'
+              versionEnvVar: 'versionNo'
+          - task: NuGetCommand@2
+            displayName: dotnet push if main
+            inputs:
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+              nuGetFeedType: 'internal'
+              publishVstsFeed: '89b3d60a-0f8d-4f9c-9231-d8ec31f33661'
+              publishPackageMetadata: false
+              allowPackageConflicts: true
+            condition: eq(variables['currentBranch'], 'refs/heads/main')
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: Nuget packs'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'nuget-packs'
+      - job: Job_2
+        displayName: Build_Shesha_AdminPortal_And_Modules
+        pool:
+          vmImage: windows-latest
+        steps:
+          - task: PowerShell@2
+            displayName: Check if Pull Request
+            inputs:
+              targetType: 'inline'
+              script: |
+                $targetBranch = ""
+                if ("$(Build.SourceBranch)" -like "*/pull/*")
+                {
+                    $targetBranch = "$(System.PullRequest.TargetBranch)"
+                    write-host "This is a Pull Request and the target branch is: $targetBranch"
+                    write-host "##vso[task.setvariable variable=prTargetBranch]$targetBranch"
+                }
+                write-host "This is not a Pull Request and the target branch is set to empty string"
+                write-host "##vso[task.setvariable variable=prTargetBranch]''"
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+          - task: PowerShell@2
+            displayName: Check to establish if this pipeline was triggered from a tag
+            inputs:
+              filePath: 'ReleaseFlow.ps1'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              arguments: '-PipeBuildNumber "$(Build.BuildNumber)" -PipeSourceBranch "$(Build.SourceBranch)" -PipeSourceVersion "$(Build.SourceVersion)" -PipeTargetBranch "$(prTargetBranch)" -PipeBuildId "$(Build.BuildId)"'
+          - task: NodeTool@0
+            displayName: 'Use Node 18.15.0'
+            retryCountOnTaskFailure: 3
+            inputs:
+              versionSpec: 18.15.0
+          - task: Npm@1
+            displayName: 'Npm Update Version'
+            inputs:
+              command: custom
+              workingDir: adminportal
+              verbose: false
+              customCommand: 'version $(versionNo) --allow-same-version'
+          - task: npmAuthenticate@0
+            inputs:
+              workingFile: 'adminportal/.npmrc'
+          - task: PowerShell@2
+            displayName: Version Module and NPM Install, Build and Publish
+            inputs:
+              targetType: 'inline'
+              script: |
+                $PSVersionTable
+
+                write-host "The current branch is: $(currentBranch)"
+                write-host "The current version is: $(versionNo)"
+
+                # get the list of directories under packages
+                $directories = Get-ChildItem -Path ./packages -Directory
+
+                # iterate over each directory
+                foreach ($directory in $directories) {
+                    Write-Host "Start of Module Processing: $($directory.Name)"
+
+                    Set-Location -Path $directory.FullName
+
+                    Write-Host "Set Module Version"       
+                    # npm version $(versionNo) --allow-same-version --no-git-tag-version
+
+                    $filePath = "package.json"                    
+                    $Jsonfile = Get-Content $filePath -raw | ConvertFrom-Json
+                    $Jsonfile.version = "$(versionNo)"
+                    ConvertTo-Json $Jsonfile -Depth 5 | Set-Content $filePath
+
+                    # output the contents of the updated file
+                    Get-Content $filePath
+
+                    Write-Host "End of Module Configuration File Output: $($directory.Name)"
+                }
+
+                # Write-Host "Go back to AdminPortal Folder"       
+                Set-Location -Path $(System.DefaultWorkingDirectory)/adminportal                
+
+                # Write-Host "Set AdminPortal Version"       
+                # npm version $(versionNo) --allow-same-version --no-git-tag-version                       
+
+                # npm steps on root adminportal
+                Write-Host "Install dependencies"
+                npm install
+
+                Write-Host "Build project"       
+                npm run build
+
+                if ("$(currentBranch)" -like "*/main"){
+                    Write-Host "Publish library"
+                    npm publish --workspace=*                        
+                }
+
+              workingDirectory: 'adminportal'
+          - task: ArchiveFiles@2
+            inputs:
+              rootFolderOrFile: 'adminportal'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/adminportal.zip'
+              replaceExistingArchive: true
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Artifact: shesha-adminportal'
+            inputs:
+              ArtifactName: adminportal
