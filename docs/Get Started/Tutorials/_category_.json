@@ -1,0 +1,8 @@
+{
+  "label": "Tutorials",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "This tutorial guides you through the process of building a 'Membership Management' application. The Membership Management could typically be used by a Club to track its members, payment of membership fees and processing of applications. We take you through the process of building the application, step-by-step, whilst exposing you to the key concepts."
+  }
+}

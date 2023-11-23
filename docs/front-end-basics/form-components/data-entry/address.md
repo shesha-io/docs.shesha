@@ -1,0 +1,48 @@
+# Address
+
+The address component is a generic component that is useful in any instance where an address field is required and must be stored.
+
+In the above example, the address component was configured with a name of `address`. Two text fields were dragged into the form. The text fields were named `lat` and `lng` respectively and displayed the data as a user selected the relevant address.
+
+It is important to note that in order for this to happen, a script/instruction was inserted in the On Select event which instructed the `lat` and `lng` fields to be populated once the data is retrieved from the external map service.
+
+`
+setFormData({
+  values: {
+    address: event.address,
+    lat: event.lat,
+    lng: event.lng
+  },
+  mergeValues: true
+})`
+
+## Content Properties
+
+These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
+
+- **Min Characters Before Search**
+
+  - The minimum number of characters needed before the search can begin.
+
+- **Debounce (MS)**
+
+  - Debouncing prevents extra activations/inputs from triggering too often. This is the time in milliseconds the call will be delayed by.
+
+- **Google Maps Key**
+
+  - An API key for authorization. The Google Maps key which is required to make successful calls to Google services.
+
+- **Open Cage Key**
+
+  - An API key for authorization. The OpenCage key which is required to make successful calls to OpenCage services.
+
+- **Country Restriction (Area restriction)**
+
+  - A filter which will only allow searches that fall within the country/countries selected. Multiple countries can be selected.
+
+- **Prefix (Area restriction)**
+  - A simple prefix which is appended in the search but not the input search field, often used to create a biased search in address.
+
+```
+
+```

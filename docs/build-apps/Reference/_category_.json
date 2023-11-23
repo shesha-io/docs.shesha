@@ -1,0 +1,8 @@
+{
+  "label": "Reference",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Shesha offers a powerful set of components to help you build dynamic and functional app layouts. You can simply drag and drop them onto the canvas and edit the properties of each widget to customize its data, style, and actions."
+  }
+}
