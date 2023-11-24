@@ -40,4 +40,4 @@ This is for when Inline actions are enabled. This column will be used to trigger
 
 ## Customize Filters
 
-Customizable filters on a child table refer to a feature that enables users to refine and narrow down the data displayed within a nested or child table component. These filters are adjustable, allowing users to set specific criteria to control the information displayed within the child table. This exposes a view where you can define a list of views or filters using a query builder, that also has dynamic mustache values functionality.
+Customizable filters on a child table refer to a feature that enables users to refine and narrow down the data displayed within a nested or child table component. These filters are adjustable, allowing users to set specific criteria to control the information displayed within the child table. This exposes a view where you can define a list of views or filters using a query builder, that also has dynamic mustache values functionality. Implementation can be found [here](/docs/front-end-basics/how-to-guides/filtering).

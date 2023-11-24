@@ -20,7 +20,7 @@ These properties are customizable options present in the property pane of the co
 
 - **Entity Filter**
 
-  - The JavaScript Query Builder is a rich and responsive UI for filtering large amounts of data by creating or editing conditions. It outputs structured JSON filters that can be easily parsed to create SQL queries. It allows you to create conditions and group them using AND/OR logic. This was explained in an earlier section.
+  - The JavaScript Query Builder is a rich and responsive UI for filtering large amounts of data by creating or editing conditions. It outputs structured JSON filters that can be easily parsed to create SQL queries. It allows you to create conditions and group them using AND/OR logic. This was explained in an earlier section. Implementation can be found [here](/docs/front-end-basics/how-to-guides/filtering).
 
 - **Use Raw Values**
 
