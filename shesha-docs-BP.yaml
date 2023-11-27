@@ -83,7 +83,7 @@ stages:
             displayName: 'Npm Update Version'
             inputs:
               command: custom
-              workingDir: adminportal
+              workingDir: main
               verbose: false
               customCommand: 'version $(versionNo) --allow-same-version'
           - task: npmAuthenticate@0
