@@ -11,7 +11,7 @@ These events contain a standard list of variables that give the user access to c
 - `form data`
 - `event` callback when an input is made
 - current `mode` of the form
-- A function used `setFormData`
+- A function used to `setFormData`
 - `moment` function for DateTime operations
 - `ParentFormValues`
 - `InitialValues`

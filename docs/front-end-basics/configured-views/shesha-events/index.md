@@ -13,6 +13,7 @@ These events contain a standard list of variables that give the user access to c
 - `toast message` functionality
 - `form instance`
 - `axios instance used to make http requests`
+- A function used to `setFormData`
 
 <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gridRowGap: '50px'}}>
   <Card title='On Initialized' url='on-initialized' description='Initializes tasks and conditions when a component or feature is initialized.'/>
