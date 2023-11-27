@@ -97,7 +97,7 @@ stages:
                 write-host "The current version is: $(versionNo)"
 
                 # get the list of directories under packages
-                $directories = Get-ChildItem -Path ./packages -Directory
+                # $directories = Get-ChildItem -Path ./packages -Directory
 
                 # iterate over each directory
                 foreach ($directory in $directories) {
