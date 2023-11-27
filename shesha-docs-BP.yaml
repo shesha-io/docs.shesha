@@ -135,7 +135,7 @@ stages:
                 #if ("$(currentBranch)" -like "*/main"){
                 #    Write-Host "Publish library"
                 #    npm publish --workspace=*                        
-                }
+                #}
 
               workingDirectory: '$(System.DefaultWorkingDirectory)'
           - task: ArchiveFiles@2
