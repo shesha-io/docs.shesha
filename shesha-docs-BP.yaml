@@ -79,16 +79,13 @@ stages:
             retryCountOnTaskFailure: 3
             inputs:
               versionSpec: 18.15.0
-          - task: Npm@1
-            displayName: 'Npm Update Version'
-            inputs:
-              command: custom
-              workingDir: .\
-              verbose: false
-              customCommand: 'version $(versionNo) --allow-same-version'
-          - task: npmAuthenticate@0
-            inputs:
-              workingFile: 'adminportal/.npmrc'
+          #- task: Npm@1
+          #  displayName: 'Npm Update Version'
+          #  inputs:
+          #    command: custom
+          #    workingDir: .\
+          #    verbose: false
+          #    customCommand: 'version $(versionNo) --allow-same-version'
           - task: PowerShell@2
             displayName: Version Module and NPM Install, Build and Publish
             inputs:
