@@ -16,3 +16,8 @@ These properties are customizable options present in the property pane of the co
 
 - **Owner Type**
   - Type of owner if you want to create a note for another Entity instead of form model/Entity. E.g., `Shesha.Core.Person` (This is the namespace of the entity).
+
+
+
+# See Also:
+- [Notes Fundamentals](/fundamentals/notes)
