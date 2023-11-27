@@ -120,7 +120,7 @@ stages:
                 }
 
                 # Write-Host "Go back to AdminPortal Folder"       
-                Set-Location -Path $(System.DefaultWorkingDirectory)/adminportal                
+                Set-Location -Path $(System.DefaultWorkingDirectory)               
 
                 # Write-Host "Set AdminPortal Version"       
                 # npm version $(versionNo) --allow-same-version --no-git-tag-version                       
@@ -137,10 +137,10 @@ stages:
                     npm publish --workspace=*                        
                 }
 
-              workingDirectory: 'adminportal'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
           - task: ArchiveFiles@2
             inputs:
-              rootFolderOrFile: 'adminportal'
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/adminportal.zip'
