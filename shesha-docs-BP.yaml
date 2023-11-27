@@ -132,9 +132,9 @@ stages:
                 Write-Host "Build project"       
                 npm run build
 
-                if ("$(currentBranch)" -like "*/main"){
-                    Write-Host "Publish library"
-                    npm publish --workspace=*                        
+                #if ("$(currentBranch)" -like "*/main"){
+                #    Write-Host "Publish library"
+                #    npm publish --workspace=*                        
                 }
 
               workingDirectory: '$(System.DefaultWorkingDirectory)'
