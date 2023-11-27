@@ -79,16 +79,13 @@ stages:
             retryCountOnTaskFailure: 3
             inputs:
               versionSpec: 18.15.0
-          - task: Npm@1
-            displayName: 'Npm Update Version'
-            inputs:
-              command: custom
-              workingDir: adminportal
-              verbose: false
-              customCommand: 'version $(versionNo) --allow-same-version'
-          - task: npmAuthenticate@0
-            inputs:
-              workingFile: 'adminportal/.npmrc'
+          #- task: Npm@1
+          #  displayName: 'Npm Update Version'
+          #  inputs:
+          #    command: custom
+          #    workingDir: .\
+          #    verbose: false
+          #    customCommand: 'version $(versionNo) --allow-same-version'
           - task: PowerShell@2
             displayName: Version Module and NPM Install, Build and Publish
             inputs:
@@ -100,7 +97,7 @@ stages:
                 write-host "The current version is: $(versionNo)"
 
                 # get the list of directories under packages
-                $directories = Get-ChildItem -Path ./packages -Directory
+                # $directories = Get-ChildItem -Path ./packages -Directory
 
                 # iterate over each directory
                 foreach ($directory in $directories) {
@@ -123,7 +120,7 @@ stages:
                 }
 
                 # Write-Host "Go back to AdminPortal Folder"       
-                Set-Location -Path $(System.DefaultWorkingDirectory)/adminportal                
+                Set-Location -Path $(System.DefaultWorkingDirectory)               
 
                 # Write-Host "Set AdminPortal Version"       
                 # npm version $(versionNo) --allow-same-version --no-git-tag-version                       
@@ -135,15 +132,15 @@ stages:
                 Write-Host "Build project"       
                 npm run build
 
-                if ("$(currentBranch)" -like "*/main"){
-                    Write-Host "Publish library"
-                    npm publish --workspace=*                        
-                }
+                #if ("$(currentBranch)" -like "*/main"){
+                #    Write-Host "Publish library"
+                #    npm publish --workspace=*                        
+                #}
 
-              workingDirectory: 'adminportal'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
           - task: ArchiveFiles@2
             inputs:
-              rootFolderOrFile: 'adminportal'
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/adminportal.zip'
