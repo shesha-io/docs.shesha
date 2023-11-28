@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Setting Up
 
 ## 1. Download the Shesha Starter Template:
