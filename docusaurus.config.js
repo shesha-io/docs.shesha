@@ -16,7 +16,7 @@ const config = {
   url: 'https://docs-shesha.azurewebsites.net/',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: 'https://github.com/shesha-io/docs.shesha/',
+  baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
@@ -60,11 +60,11 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/SheshaLogo.png',
+      image: 'img/docusaurus.png',
       navbar: {
         logo: {
           alt: 'My Site Logo',
-          src: 'img/SheshaLogo1.png',
+          src: 'img/SheshaLogo.png',
         },
         items: [
           {
