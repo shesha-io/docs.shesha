@@ -1,4 +1,9 @@
-# 1. Overview 
+---
+sidebar_label: Overview
+sidebar_position: 1
+---
+
+# Overview 
 The heart of a Shesha application is the domain. The domain is the set of entities that represent the core business concepts of your application. 
 
 ## The Core Domain Model
@@ -7,11 +12,11 @@ The heart of a Shesha application is the domain. The domain is the set of entiti
 
 | Entity | Description |
 |--------|-------------|
-| Person | Represents a person in the application. This may or may not represent a User in the system but this is expanded on in [User Management Fundamentals](/fundamentals/user-management). |
+| Person | Represents a person in the application. This may or may not represent a User in the system but this is expanded on in [User Management Fundamentals](/docs/fundamentals/user-management). |
 | Address | Represents an address. |
 | Organisation | Represents an organization unit, organisation/company, team or similar. |
 | Site | Sites may be used to represent point locations, areas or buildings/structures or similar. It has a hierarchical structure so may represent |
-| StoredFile | Represents a file stored in the system. More details on how to manage files are provided [file storage fundamentals](/fundamentals/file-storage). |
+| StoredFile | Represents a file stored in the system. More details on how to manage files are provided [file storage fundamentals](/docs/fundamentals/file-storage). |
 | ReferenceList | Represents a standard reference list (sometimes also known as lookup lists). |
 | ReferenceListItem | Represents an item in a reference list. |
 | Account | Represents an account. |
@@ -75,12 +80,12 @@ FullAuditedEntity
 
 # Mapping to the Table Structure
 * Explaining table and column naming conventions
-* Table naming - {database prefix}_{entity name pluralised} e.g Core_Persons
+* Table naming - `{database prefix}_{entity name pluralised}` e.g Core_Persons
 * Column naming
-    * Ordinary column - {property name as-is from entity} e.g Firstname
-    * Foreign key column - {property name as-is from entity}{Id} e.g AddressId
-    * Reference list based column - {property name as-is from entity}{Lkp} e.g GenderLkp
-    * Inheritence column - {database prefix}_{column name with the above conventions} e.g  Mem_ProvinceId,  Mem_MembershipNo, Mem_MemberTypeLkp
+    * Ordinary column - `{property name as-is from entity}` e.g Firstname
+    * Foreign key column - `{property name as-is from entity}{Id}` e.g AddressId
+    * Reference list based column - `{property name as-is from entity}{Lkp}` e.g GenderLkp
+    * Inheritence column - `{database prefix}_{column name with the above conventions}` e.g  Mem_ProvinceId,  Mem_MembershipNo, Mem_MemberTypeLkp
 
 - Table naming conventions
   * DB table prefix

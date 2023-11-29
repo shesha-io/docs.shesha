@@ -25,7 +25,7 @@ On the front-end you can then use the `File` form component and bind it to your 
 TODO: INSERT SCREENSHOT WITH FILE COMPONENT
 ```
 
-Refer for the [File form component](/docs/front-end-basics/form-components/data-entry/file.md) for more details on how to configure the component.
+Refer for the [File form component](/docs/front-end-basics/form-components/data-entry/files) for more details on how to configure the component.
 
 # Adding a list of files to an entity
 
@@ -35,7 +35,7 @@ TODO: INSERT SCREENSHOT WITH FILE COMPONENT
 ```
 
 The `FileList` component will automatically track which files are part of the list using the `OwnerType`, `OwnerId` and `Category` properties of the `StoredFile` entity.
-Note that the `FileList` component will only be able to update these properties accurately if properly configured. Refer for the [FileList form component](/docs/front-end-basics/form-components/data-entry/filelist.md) for more details on how to configure the component.
+Note that the `FileList` component will only be able to update these properties accurately if properly configured. Refer for the [FileList form component](/docs/front-end-basics/form-components/data-entry/files) for more details on how to configure the component.
 
 **Note:** In cases where files are upload files before the owner entity has been persisted and therefore assigned an Id, the dynamically generated Create end-point will automatically the update of `OwnerType`, `OwnerId` and `Category` properties for all previously created `StoredFile` entities created once the owner entity has been persisted and assigned an Id. If you are not using the default Create end-point, you will need to ensure that these properties are updated manually on your custom end-point using the `TODO: Ask Ernest for the name of the method` method.
 
@@ -96,6 +96,6 @@ TODO
 ```
 
 # See Also
-- Configuring the [File form component](/docs/front-end-basics/form-components/data-entry/file.md)
-- Configuring the [FileList form component](/docs/front-end-basics/form-components/data-entry/filelist.md)
+- Configuring the [File form component](/docs/front-end-basics/form-components/data-entry/files)
+- Configuring the [FileList form component](/docs/front-end-basics/form-components/data-entry/files)
 
