@@ -1,4 +1,9 @@
-# 2. Domain classes attributes
+---
+sidebar_label: Domain Class Attributes
+sidebar_position: 2
+---
+
+# Domain Attributes
 
 |  **Attribute**  | **Description** |
 |--|--|

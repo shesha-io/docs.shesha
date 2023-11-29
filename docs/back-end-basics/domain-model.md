@@ -1,9 +1,9 @@
 ---
-sidebar_label: Overview
+sidebar_label: Domain Model
 sidebar_position: 1
 ---
 
-# Overview 
+# Domain Model
 The heart of a Shesha application is the domain. The domain is the set of entities that represent the core business concepts of your application. 
 
 ## The Core Domain Model

@@ -1,4 +1,6 @@
-# 4. Calculated Properties
+---
+sidebar_label: Calculated Properties
+---
 
 Sometimes a property needs to return the result of a calculation rather than the value of data stored in the database. To implement this type of property there are usually a couple of different approaches.
 

@@ -1,4 +1,6 @@
-# 5. Flattened Entities for Improved Performance
+---
+sidebar_label: Improving table view performance with flattened entities
+---
 
 Performance issues can commonly occur on Table Views due to <a href="https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping" target="_blank">the 'N + 1' problem</a>.
 

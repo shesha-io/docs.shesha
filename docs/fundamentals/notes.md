@@ -1,10 +1,16 @@
+---
+sidebar_label: Notes
+---
+
+# Notes
+
 The ability to capture notes arbritrarily against almost any entity is such a common requirement that the Shesha framework provides a generic Notes component and `Note` entity and API to store and manage captured notes.
 
 Allowing notes to be captured on a form is as simple as	adding the `Notes` component to the form. The `Notes` component will automatically display any notes that have been captured against the entity that the form is bound to. 
 
 [INSERT NOTES SCREEN SHOT OF A FORM WITH A NOTES]
 
-More details on how to use and configure the `Notes` component can be found [here](/front-end-basics/form-components/data-entry/notes).
+More details on how to use and configure the `Notes` component can be found [here](/docs/front-end-basics/form-components/data-entry/notes).
 
 
 # The Note entity
@@ -29,4 +35,4 @@ Any notes captured are stored in the `Note` entity. The `Note` entity has the fo
 
 
 # See Also
-- Configuring the [Notes form component](/front-end-basics/form-components/data-entry/notes)
+- Configuring the [Notes form component](/docs/front-end-basics/form-components/data-entry/notes)

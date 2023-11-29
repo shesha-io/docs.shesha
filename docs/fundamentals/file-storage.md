@@ -1,3 +1,9 @@
+---
+sidebar_label: File Storage
+---
+
+# File Storage
+
 The storage, display and management files is a very common requirement in most business applications and Shesha provides for this requirement out of the box. The file management module provides for the following features:
 1. APIs for the uploading, downloading, deletion, updating (incl. version management) of files
 1. UI components that can bind to entities and allow uploading, downloading and viewing of files

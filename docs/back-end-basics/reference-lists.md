@@ -1,4 +1,9 @@
-# 3. Reference Lists (List of Values)
+---
+sidebar_label: Reference Lists (List of Values)
+sidebar_position: 3
+---
+
+# Reference Lists (List of Values)
 
 A Reference List (sometimes referred to elsewhere as Lookup values, or List of Values) refers to a standard list of values usually displayed to end-users as dropdown lists (e.g. **Titles**: Mr, Mrs, Miss, etc...; **Gender**: Male, Female; **Colour**: Red,Blue, etc...).
 
