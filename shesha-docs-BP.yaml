@@ -79,51 +79,12 @@ stages:
             retryCountOnTaskFailure: 3
             inputs:
               versionSpec: 18.15.0
-          #- task: Npm@1
-          #  displayName: 'Npm Update Version'
-          #  inputs:
-          #    command: custom
-          #    workingDir: .\
-          #    verbose: false
-          #    customCommand: 'version $(versionNo) --allow-same-version'
           - task: PowerShell@2
             displayName: Version Module and NPM Install, Build and Publish
             inputs:
               targetType: 'inline'
               script: |
                 $PSVersionTable
-
-                write-host "The current branch is: $(currentBranch)"
-                write-host "The current version is: $(versionNo)"
-
-                # get the list of directories under packages
-                # $directories = Get-ChildItem -Path ./packages -Directory
-
-                # iterate over each directory
-                foreach ($directory in $directories) {
-                    Write-Host "Start of Module Processing: $($directory.Name)"
-
-                    Set-Location -Path $directory.FullName
-
-                    Write-Host "Set Module Version"       
-                    # npm version $(versionNo) --allow-same-version --no-git-tag-version
-
-                    $filePath = "package.json"                    
-                    $Jsonfile = Get-Content $filePath -raw | ConvertFrom-Json
-                    $Jsonfile.version = "$(versionNo)"
-                    ConvertTo-Json $Jsonfile -Depth 5 | Set-Content $filePath
-
-                    # output the contents of the updated file
-                    Get-Content $filePath
-
-                    Write-Host "End of Module Configuration File Output: $($directory.Name)"
-                }
-
-                # Write-Host "Go back to AdminPortal Folder"       
-                Set-Location -Path $(System.DefaultWorkingDirectory)               
-
-                # Write-Host "Set AdminPortal Version"       
-                # npm version $(versionNo) --allow-same-version --no-git-tag-version                       
 
                 # npm steps on root adminportal
                 Write-Host "Install dependencies"
@@ -132,15 +93,10 @@ stages:
                 Write-Host "Build project"       
                 npm run build
 
-                #if ("$(currentBranch)" -like "*/main"){
-                #    Write-Host "Publish library"
-                #    npm publish --workspace=*                        
-                #}
-
               workingDirectory: '$(System.DefaultWorkingDirectory)'
           - task: ArchiveFiles@2
             inputs:
-              rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+              rootFolderOrFile: '$(System.DefaultWorkingDirectory)/build'
               includeRootFolder: false
               archiveType: 'zip'
               archiveFile: '$(Build.ArtifactStagingDirectory)/adminportal.zip'
