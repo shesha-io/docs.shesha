@@ -5,6 +5,8 @@ sidebar_position: 2
 
 # Domain Attributes
 
+# Entity Class Attributes
+
 |  **Attribute**  | **Description** |
 |--|--|
 | `[Entity]` | Provides important parameters controlling how, and if, dynamic APIs should be generated for the entity. Also supports `TypeShortAlias` parameter. |
