@@ -60,7 +60,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       // Replace with your project's social card
-      image: 'img/docusaurus.png',
+      image: 'img/SheshaLogo.png',
       navbar: {
         logo: {
           alt: 'My Site Logo',
@@ -136,6 +136,7 @@ const config = {
       prism: {
         theme: prismThemes.github,
         darkTheme: prismThemes.dracula,
+        additionalLanguages: ['csharp'],
       },
     }),
 };
