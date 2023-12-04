@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Adding New Entities and Child Tables
 
 This membership isn't free! Let's create a `Membership Payment` entity to track all the payments related to a Member.
@@ -8,6 +12,7 @@ In this section, you learn how to:
 - Create a Migration Class
 - Configure a Child Table
 - Configure a Filter for the Table
+- Implement a Script to Call an Endpoint
 
 ## Create a New Entity
 

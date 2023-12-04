@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Extending the Domain Model
 
 Let's customize the model so we can update the information we need to properly track the status and location of members.
