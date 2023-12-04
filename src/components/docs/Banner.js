@@ -1,8 +1,9 @@
 import { Image } from 'antd';
 import React, { useState } from 'react';
 import bannerImage from './images/get-to-know-shesha-banner.png';
+import membershipBanner from './images/membership-management-banner.png';
 
-export default function Banner({ }) {
+export default function Banner({ url, type }) {
     const [showImage, setShowImage] = useState(true);
 
     const handleClick = () => {
@@ -13,7 +14,7 @@ export default function Banner({ }) {
         <div>
             {showImage ? (
                 <Image
-                    src={bannerImage}
+                    src={type == 1 ? bannerImage : membershipBanner}
                     alt="Clickable Image"
                     onClick={handleClick}
                     style={{ cursor: 'pointer' }}
@@ -23,7 +24,7 @@ export default function Banner({ }) {
             ) : (
                 <iframe
                     title="Embedded Iframe"
-                    src="https://www.youtube.com/embed/JGy7lc5WAwE?autoplay=1&controls=0"
+                    src={url}
                     width="100%"
                     height="500"
                     frameBorder="0"

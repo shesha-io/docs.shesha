@@ -10,8 +10,9 @@ import Card from '@site/src/components/docs/Card';
 
 Shesha is a Low Code Application Framework designed to significantly reduce the effort needed for typical business application implementation by over 80%. By leveraging frameworks like ASP.NET Core, Abp.io, React, and NextJs, it adds Low-Code capabilities to expedite the development of business applications. Ideal for those familiar with ASP.NET Core and React who dislike mundane tasks, Shesha caters to both developers and less technical users. It serves as a rapid application delivery platform, allowing agile enterprises to swiftly build, model, and deploy multi-experience apps.
 
-<!-- <iframe width="100%" height="500" src="https://www.youtube.com/embed/JGy7lc5WAwE?si=yuJtH251wiYGz-md" title="Shesha in 100 seconds" ></iframe> -->
-<Banner/>
+[Launch Form Designer](http://localhost:4000/shesha/forms-designer?id=b3067f58-921a-4e66-a609-5509617f3ce4)
+
+<Banner url="https://www.youtube.com/embed/JGy7lc5WAwE?autoplay=1&controls=0" type={1}/>
 
 ## Why Choose Shesha
 
@@ -35,4 +36,4 @@ Shesha simplifies the process of creating a user interface that interacts with a
 
 2. Take the Quick Tutorial to Learn the Basics
 
-<Card title='Build your first app' url='tutorials/the-basics' description='A quickstart guide to help you build an app using Shesha'/>
+<Card title='Build your first app' url='/docs/get-started/tutorial/the-basics' description='A quickstart guide to help you build an app using Shesha'/>

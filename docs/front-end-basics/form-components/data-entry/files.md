@@ -2,45 +2,48 @@
 
 This enables the uploading of one or more files. It also showcases the process of uploading by selecting or dragging a file.
 
+<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=d3aef1f8-0e46-4e9e-a62d-9555d47e887c" title="File / Filelist component" ></iframe>
+
 ## Content Properties
 
 These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
 
-- **IsDragger**
+### IsDragger
 
-  - When toggled on, this will render the uploader as a dragger instead of a button.
+- When toggled on, this will render the uploader as a dragger instead of a button.
 
-- **Allow Upload**
+### Allow Upload
 
-  - When checked, the component will be allowed to upload a new file.
+- When checked, the component will be allowed to upload a new file.
 
-- **Allow Replace**
+### Allow Replace
 
-  - When checked, the component will be allowed to replace uploaded files with another one.
+- When checked, the component will be allowed to replace uploaded files with another one.
 
-- **Allow Delete**
+### Allow Delete
 
-  - When checked, the component will be allowed to delete uploaded files.
+- When checked, the component will be allowed to delete uploaded files.
 
-- **Synchronous upload**
+### Synchronous upload
 
-  - It's a checkbox that, when checked, the component will upload files synchronously (together with form data). This allows the framework to determine the Owner Id and Owner Type automatically based on the Entity the form is bound to, which supports cases where the owner entity has not yet been created.
+- It's a checkbox that, when checked, the component will upload files synchronously (together with form data). This allows the framework to determine the Owner Id and Owner Type automatically based on the Entity the form is bound to, which supports cases where the owner entity has not yet been created.
 
-- **Owner Id**
+### Owner Id
 
-  - Id of owner if you want to upload files to another Entity instead of the form model/Entity. E.g., `{data.id}`.
+- Id of owner if you want to upload files to another Entity instead of the form model/Entity. E.g., `{data.id}`.
 
-- **Owner Type**
+### Owner Type
 
-  - Type of owner if you want to upload files to another Entity instead of the form model/Entity. E.g., `Shesha.Core.Person` (This is the namespace of the entity).
+- Type of owner if you want to upload files to another Entity instead of the form model/Entity. E.g., `Shesha.Core.Person` (This is the namespace of the entity).
 
-- **Property Name**
+### Property Name
 
-  - Property of the owner where files will be uploaded if you want to upload files to another Entity instead of the form model/Entity.
+- Property of the owner where files will be uploaded if you want to upload files to another Entity instead of the form model/Entity.
 
-- **Allowed File Types**
+### Allowed File Types
 
-  - File types that can be accepted. See [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers) for unique file type specifiers.
+- File types that can be accepted. See [Mozilla Developer Network](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#unique_file_type_specifiers) for unique file type specifiers.
 
-- **Files Category**
-  - Allows grouping files by some categories (string value).
+### Files Category
+
+- Allows grouping files by some categories (string value).
