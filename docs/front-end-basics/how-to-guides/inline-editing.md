@@ -72,7 +72,7 @@ Users can edit or update existing data within the table. Clicking on a cell or r
 
 On each column configuration on a table, there is an ‘Edit Component’ property setting that allows the user to select which component they would like to use as a form of data entry on the table. Each option provides standard configuration properties relevant to the component for a better user experience.
 
-### Additional Configurations
+## Additional Configurations
 
 - **Can Add / Edit / Delete Inline:** Controls the visibility of the CRUD operation icons based on the enabled action under certain conditions. Options: Yes, No, Inherit, Expression (provides a Javascript code editor to return true or false based on a condition).
 - **Row Edit Mode:** Specifies how the editing in the table is to be applied. Options: One by one, All at once.
@@ -94,6 +94,6 @@ This adds the member ID to the payload for inclusion in the API call.
 - **On Row Save:** Allows custom business logic to be executed on saving a new/updated row (e.g., custom validation/calculations).
 - **On Row Save Success:** Custom logic to be executed after successfully saving a new/updated row, exposing standard 'Action Configurations' as previously discussed.
 
-### Example Usage
+## Example Usage
 
 In the provided example, a child table is configured to display membership payments, and the details of the member are stored on the parent form. To access member information, the logic is configured as follows:

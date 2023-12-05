@@ -19,10 +19,19 @@ These properties are customizable options present in the property pane of the co
 ### Form Selection
 
 - Options:
+
   - **Name**
+
     - User selects a specific form to be bound to the subform by typing the form name onto the autocomplete.
+
+    ![Image](./images/entityR1.png)
+
   - **Dynamic**
+
     - User selects the form type. These forms are specified in the 'Entity Configurations' view, which provides a centralized repository of the different types of views and which form should be rendered based on the scenario.
+
+    ![Image](./images/entityR2.png)
+    ![Image](./images/entityR3.png)
 
 ### Data Source
 
@@ -44,12 +53,7 @@ These properties are customizable options present in the property pane of the co
 
 - This provides an editor for the user to enter the values that they want to be able to tap into on the binded for. For example, if you have binded a form which is supposed to get 'Organisation' information from the 'Organisation' entity scheme, you would list out that you would like to access the following information like this:
 
-  ```json
-  {
-    "property1": "value1",
-    "property2": "value2"
-  }
-  ```
+  ![Image](./images/sub1.png)
 
 ### URL
 

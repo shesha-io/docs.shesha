@@ -96,3 +96,11 @@ Use the configurations under this section to override the layout settings of a c
 ## Entity Filter/ Query Builder
 
 The JavaScript Query Builder is a rich and responsive UI for filtering large amounts of data by creating or editing conditions. Outputs structured JSON filters that can be easily parsed to create SQL queries. Allows creating conditions and grouping them using AND/OR logic. Supports executing `{{mustache templating}}` to tap into dynamic values on the designer form. Implementation can be found [here](/docs/front-end-basics/how-to-guides/filtering).
+
+## Padding
+
+- The padding property is used to define the space between the content of an element and its border. It is essentially the inner spacing within an element.
+
+## Margin
+
+- The margin property, on the other hand, is used to define the space outside an element's border. It controls the spacing between elements, affecting their layout in relation to one another.

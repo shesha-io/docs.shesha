@@ -39,7 +39,16 @@ These properties are customizable options present in the property pane of the co
 ### Form Selection
 
 - Options:
+
   - **Name**
+
     - User selects a specific form to drill-down into.
+
+    ![Image](./images/entityR1.png)
+
   - **Dynamic**
+
     - User selects the form type. These forms are specified in the 'Entity Configurations' view, which provides a centralized repository of the different types of views and which form should be rendered based on the scenario.
+
+    ![Image](./images/entityR2.png)
+    ![Image](./images/entityR3.png)
