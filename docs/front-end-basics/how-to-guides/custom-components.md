@@ -13,7 +13,7 @@ Before diving into the code, we need to briefly mention a few topic areas.
 
 > **NOTE**: It is important to note that in the JSON schema in the above image, two properties are depicted (`components`, `formSettings`). Also take note that the components property is an `array` and if we had more than one component in the UI form it would be shown in this array.
 
-### Folder Structure
+## Folder Structure
 
 - Looking at the file structure, we have gone with the [monorepo](https://monorepo.tools/) approach. NPM allows for [workspaces](https://dev.to/ynwd/how-to-create-react-monorepo-with-npm-workspace-webpack-and-create-react-app-2dhn) to be used in a single project. The use of workspaces allows us to share dependencies (node_modules) between projects/modules in a single application.
 - The recommended naming conventions is to name the root workspace directory as `packages` and create all relevant modules in this `packages` directory.
@@ -42,7 +42,7 @@ Before diving into the code, we need to briefly mention a few topic areas.
 
 _The square bracket after the interface means it is an array of the [IToolboxComponentGroup](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) interface._
 
-### Implementation
+## Implementation
 
 - A simple example was constructed for demo purposes
   <!-- figure 6 -->
@@ -51,15 +51,15 @@ _The square bracket after the interface means it is an array of the [IToolboxCom
 
 - `SampleComponent` is an object which implements the [IToolboxComponent](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) interface, this is to ensure consistency.
 
-### Type
+## Type
 
 - A key which is used to find specific components, it is essential that this is unique
 
-### Name
+## Name
 
 - Property name is displayed on the components toolbox and is often the default value of the label once dragged to the form
 
-### Icon
+## Icon
 
 - Icon property refers to the selected icon on the toolbox
 
@@ -67,7 +67,7 @@ _The square bracket after the interface means it is an array of the [IToolboxCom
 
   ![Image](./images/figure7.png)
 
-### Form Configuration
+## Form Configuration
 
 - Form configuration are the configurations that render the side menu or metadata of the component
 
@@ -86,7 +86,7 @@ _shown on lines 10, 40, 41_
 
 ![Image](./images/figure6.png)
 
-### Factory
+## Factory
 
 - The `factory` property is arguably the most important property implemented from the `IToolboxComponent` interface. In essence, the property returns a JSX element and is what will be rendered in the forms.
 - Property `factory` is actually a method that returns a JSX element/component, the first and only parameter is an object of type [ComponentFactoryArguments](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts).
@@ -101,7 +101,7 @@ _shown on lines 10, 40, 41_
 
 > **NOTE**: It is important to note that `ConfigurableFormItem` is a form item and is responsible for handling state, validation, visibility and many more features on the Shesha Form Builder.
 
-### Model
+## Model
 
 - The model property is the values which were set in component form configuration
 
@@ -144,7 +144,7 @@ _See working example below_
 
 ![Image](./images/figure7.png)
 
-### Init Model
+## Init Model
 
 - Initial values can be set using the initModel property. These values will be initialized on the form configuration
 
@@ -157,7 +157,7 @@ _See working example below_
 
   ![Image](./images/figure8.png)
 
-### Exposing Component
+## Exposing Component
 
 - Navigate to the `app.tsx` file from the root directory of the `adminportal` directory. `src` > `pages` > `app.tsx`
   <!-- figure 11 -->

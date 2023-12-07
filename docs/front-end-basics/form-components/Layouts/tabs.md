@@ -11,14 +11,6 @@ These properties are customizable options present in the property pane of the co
 - The tab type can either be a card or a line.
 - Both the line and card tabs disable tabs that are currently not active, and the tab that is currently visible is seen by having a different color than the rest of the tabs.
 
-<!-- ![Tab Type Card]() -->
-
-_The image below represents a tab that is of type card._
-
-<!-- ![Tab Type Line]() -->
-
-_The tab below represents a tab that is of type line._
-
 ### Size
 
 - This will set the size for all buttons

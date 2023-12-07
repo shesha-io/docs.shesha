@@ -8,6 +8,14 @@ sidebar_position: 1
 
 Component Identifier
 
+## Property Name
+
+Allows to assign component to some field of stored object
+
+## Context
+
+Allows to choose storage where assigned data will be stored. [Form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/data) is used if empty, else [App Context](/docs/front-end-basics/configured-views/data-types/shesha-objects/app-context)
+
 ## Label
 
 Component Label

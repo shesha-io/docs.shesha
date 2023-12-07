@@ -3,6 +3,8 @@
 This object contains the values collected from the current form in question.
 
 **Data Entry:**
+This take in all the properties that just have a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name), or an empty [context](http://localhost:3000/docs/front-end-basics/form-components/common-component-properties#context) property.
+
 The object from the below example will look like this:
 
 ![Data Entry](./images/data1.png)

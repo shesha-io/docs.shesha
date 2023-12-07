@@ -120,7 +120,7 @@ _You can find more information about implementation of the Datatable Context com
 
 ![Image](./images/child2.png)
 
-_You can find more information about implementation of the Panel component [here](/docs/front-end-basics/form-components/Layouts/panel)_
+_You can find more information about implementation of the Panel component here_
 
 6.  Search and drag in a `Datatable` component from the `Builder Widgets` onto the `Panel`
 7.  Configure columns with the following information:
