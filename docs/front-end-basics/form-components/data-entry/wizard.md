@@ -18,13 +18,6 @@ The Wizard Component is designed to guide users through a series of steps or tas
 
 ## Direction
 
-- To specify the direction of the step bar.
-- **Options**:
-  - Vertical
-  - Horizonal (Default)
-
-## Direction
-
 - To specify the placement of the step labels.
 - **Options**:
   - Vertical
@@ -116,3 +109,34 @@ function isValidProperty(value) {
   return value !== undefined && value !== "";
 }
 ```
+
+## Using JS code
+- You can use JS script of some controls (Buttons, etc.) to manage Wizard Component
+
+`contexts.wizardName.current` - get the current step index (zero-based)
+`contexts.wizardName.visibleSteps` - get the list of visible steps (object `IWizardStepProps`)
+
+```javascript
+interface IWizardStepProps extends IConfigurableItemBase {
+  id: string;
+  icon?: string;
+  key: string;
+  title: string;
+  subTitle: string;
+  description: string;
+  allowCancel?: boolean;
+
+  cancelButtonText?: string;
+  nextButtonText?: string;
+  backButtonText?: string;
+  doneButtonText?: string;
+  ...
+}
+```
+
+Actions to move between steps
+`contexts.wizardName.api.next()` - to the next step
+`contexts.wizardName.api.back()` - to the previous step
+`contexts.wizardName.api.done()` - finish the wizard (execute Done configurable actions)
+`contexts.wizardName.api.cancel()` - canel the wizard (execute Cancel configurable actions)
+`contexts.wizardName.api.setStep(index)` - move to the step with Index (will be executed `On Before Render` configurable action)
