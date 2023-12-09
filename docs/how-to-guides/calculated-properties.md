@@ -50,7 +50,7 @@ Some disadvantages that implementers should take note of:
 Add the property that needs be based on a calculated value as follows. In particluar:
 
    1. Add `[ReadonlyProperty]` attribute to the property
-   1. Make the property getter protected so that users cannot inadvertently update the property e.g. `public virtual int? RemainingCapacity { get; protected set; }`
+   1. Make the property setter protected so that users cannot inadvertently update the property e.g. `public virtual int? RemainingCapacity { get; protected set; }`
 
 #### Example
 ```
