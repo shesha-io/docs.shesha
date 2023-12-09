@@ -50,23 +50,28 @@ These properties are customizable options present in the property pane of the co
 
   - This allows you to provide a ‘GET ALL’ URL to bind to the table as a datasource if you do not want to bind the context to an entity but to a custom endpoint.
 
-- **Data Fetching Mode:**
+### Data Fetching Mode
 
-  - Options:
-    - **Paging:**
-      - Paging is a technique used to manage large datasets by breaking them into smaller, manageable chunks or pages.
-      - Default Page Size specifies how much fetched data should be displayed per request.
-    - **Fetch All:**
-      - Fetch all involves retrieving the entire dataset in one go.
+- Options:
+  - **Paging:**
+    - Paging is a technique used to manage large datasets by breaking them into smaller, manageable chunks or pages.
+    - Default Page Size specifies how much fetched data should be displayed per request.
+  - **Fetch All:**
+    - Fetch all involves retrieving the entire dataset in one go.
 
-- **Sort Mode:**
+### Sort Mode
 
-  - Options:
-    - **Standard:**
-      - In standard mode, users can sort the table data by clicking on column headers or by specifying one or more sorting properties and the sorting order.
-      - 'Allow sorting' option enables users to sort the table by clicking on the column header.
-    - **Strict:**
-      - Strict mode allows users to specify one or more properties for ordering the table data.
+![Image](./images/data1.png)
 
-- **Grouping:**
-  - The grouping feature allows users to group table data by specifying one or more properties and the desired sort mode for each grouping. If one or more grouping rows are specified, these properties will always appear first in the sort by clause prior to any other manually ordered columns.
+- Options:
+  - **Standard:**
+    - In standard mode, users can sort the table data by clicking on column headers or by specifying one or more sorting properties and the sorting order.
+    - 'Allow sorting' option enables users to sort the table by clicking on the column header.
+  - **Strict:**
+    - Strict mode allows users to specify one or more properties for ordering the table data.
+
+![Image](./images/data2.png)
+
+### Grouping
+
+- The grouping feature allows users to group table data by specifying one or more properties and the desired sort mode for each grouping. If one or more grouping rows are specified, these properties will always appear first in the sort by clause prior to any other manually ordered columns.

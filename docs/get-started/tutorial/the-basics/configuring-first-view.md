@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Configuring Your First View
 
 In this section, we are configuring the most common types of views purely through the highly efficient Shesha Core entities and the drag-and-drop interface. We are going to take you through the process of configuring some basic views to allow the user to:

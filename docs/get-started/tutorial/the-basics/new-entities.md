@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Adding New Entities and Child Tables
 
 This membership isn't free! Let's create a `Membership Payment` entity to track all the payments related to a Member.
@@ -8,6 +12,7 @@ In this section, you learn how to:
 - Create a Migration Class
 - Configure a Child Table
 - Configure a Filter for the Table
+- Implement a Script to Call an Endpoint
 
 ## Create a New Entity
 
@@ -115,7 +120,7 @@ _You can find more information about implementation of the Datatable Context com
 
 ![Image](./images/child2.png)
 
-_You can find more information about implementation of the Panel component [here](/docs/front-end-basics/form-components/Layouts/panel)_
+_You can find more information about implementation of the Panel component here_
 
 6.  Search and drag in a `Datatable` component from the `Builder Widgets` onto the `Panel`
 7.  Configure columns with the following information:

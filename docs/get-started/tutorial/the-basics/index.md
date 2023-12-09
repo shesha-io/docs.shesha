@@ -1,3 +1,5 @@
+import Banner from '@site/src/components/docs/Banner';
+
 # The Basics
 
 This tutorial covers the basic concepts of Shesha and takes you through a series of steps to build a simple Shesha-based application. You'll learn to:
@@ -8,7 +10,7 @@ This tutorial covers the basic concepts of Shesha and takes you through a series
 - Adding new entities and child tables
 - Creating and calling custom APIs
 
-_Insert screenshots of the final result here_
+<Banner url="https://www.youtube.com/embed/JGy7lc5WAwE?autoplay=1&controls=0" type={2}/>
 
 ## Prerequisites
 

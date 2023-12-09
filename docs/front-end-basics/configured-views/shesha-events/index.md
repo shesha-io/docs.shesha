@@ -1,6 +1,6 @@
 import Card from '@site/src/components/docs/Card';
 
-# Shesha Events
+# Form Events
 
 Event handlers are functions or methods that are designed to respond to specific events or triggers within a software application. These events can be user interactions, system events, or changes in the application state. Event handlers play a crucial role in controlling the flow of an application and responding to various scenarios. Let's explore the benefits of event handlers in the context of: `onInitialized`, `PreparedValues`, `OnUpdate`, and `OnDataLoaded`.
 

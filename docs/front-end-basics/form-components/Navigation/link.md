@@ -6,22 +6,25 @@ Used to move between web pages, explore different sections of a website, or visi
 
 These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
 
-- **Name**
-  "Name" is typically used as a label to identify the link. However, when it comes to links, we don't usually use "Name" directly with the link itself. Instead, we use the href attribute to indicate where the link should go. "Name" is more commonly used as a tag to identify the link.
+### Content
 
-- **Href**
-  The href attribute (Hypertext Reference) is used to define the hyperlink reference, which is the address or URL of the linked resource. This can be a web page, an image, a downloadable file, or any other online resource.
+The written content of hyperlink.
 
-- **Target**
-  The target attribute determines where the linked content will be displayed when the link is clicked. It is optional, and if not specified, the default behavior is usually to open the link in the same browser window or tab.
+### Href
 
-  - **Values:**
+The href attribute (Hypertext Reference) is used to define the hyperlink reference, which is the address or URL of the linked resource. This can be a web page, an image, a downloadable file, or any other online resource.
 
-    - \_self: Opens the linked document in the same frame or tab.
-    - \_blank: Opens the linked document in a new browser window or tab.
-    - \_parent: Opens the linked document in the parent frame (if the page is in a frame).
-    - \_top: Opens the linked document in the full body of the window, breaking out of any frames.
+### Target
 
-- **Has Children**
+The target attribute determines where the linked content will be displayed when the link is clicked. It is optional, and if not specified, the default behavior is usually to open the link in the same browser window or tab.
 
-  When the 'Has Children' property is checked, the link transforms into a container that can have various elements nestled inside it. These elements could be additional content such as words, images, or even other interactive features. Essentially, the link evolves from a standalone entity to a versatile container capable of encapsulating and presenting a richer set of elements, making it a more dynamic and engaging component. However, when you click on any of these elements, it will still redirect you to a different location as specified by the link.
+- **Values:**
+
+  - \_self: Opens the linked document in the same frame or tab.
+  - \_blank: Opens the linked document in a new browser window or tab.
+  - \_parent: Opens the linked document in the parent frame (if the page is in a frame).
+  - \_top: Opens the linked document in the full body of the window, breaking out of any frames.
+
+### Has Children
+
+When the 'Has Children' property is checked, the link transforms into a container that can have various elements nestled inside it. These elements could be additional content such as words, images, or even other interactive features. Essentially, the link evolves from a standalone entity to a versatile container capable of encapsulating and presenting a richer set of elements, making it a more dynamic and engaging component. However, when you click on any of these elements, it will still redirect you to a different location as specified by the link.

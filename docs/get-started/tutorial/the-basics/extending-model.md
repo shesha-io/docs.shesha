@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Extending the Domain Model
 
 Let's customize the model so we can update the information we need to properly track the status and location of members.
@@ -189,7 +193,7 @@ This can be done by updating the Model Type property in all our views from `Shes
 
 With the addition of properties to our entity, to facilitate for an overall cleaner and more managable UI, we are going to be utilizing a `wizard` component for properly delinating the different sections of information required for the member registration.
 
-_You can find more information about implementation of the wizard component [here](/docs/front-end-basics/form-components/Layouts/wizard)_
+_You can find more information about implementation of the wizard component [here](/docs/front-end-basics/form-components/data-entry/wizard.md)_
 
 3. Search and drag in a `wizard` component from the `Builder Widgets`
 4. Drag in all the existing components onto the `wizard` component's draggable area
