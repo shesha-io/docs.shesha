@@ -14,23 +14,23 @@ In addition to forms and reference lists, other items such as menu structures, a
 
 The most import distiguisihing feature of a configuration item is that they are stored as data in the application database, but can be exported and imported between different instances in a Json format.
 
-# Distributing Configurations Manually
+## Deploying configurations manually
 Configuration can be manually exported and imported between different instances of Shesha.
 
-## Exporting Configuration
+### Exporting configuration
 
 #TODO: Add more details on how to import configuration
 
-## Importing Configuration Manually
+### Importing configuration
 
 #TODO: Add more details and screenshots on how to import configuration
 
 
-# Distributing Configurations Automatically
+## Deploying configurations automatically
 
-Configuration has become an integral part of applications, akin to code. As such, it's crucial to have a convenient and seamless method to distribute configuration changes across different environments, just as you would with code changes. To aid in this, configuration packages can be embedded as a resource in the back-end application. Upon application startup, the configuration package is automatically imported, and the configuration is updated. This process is similar to how database migrations operate.
+Configuration has become an integral part of applications, akin to code. As such, it's crucial to have a convenient and seamless method to deploy configuration changes across different environments, just as you would with code changes. To aid in this, configuration packages can be embedded as a resource in a [Shesha module](modules) in the back-end application. Upon application startup, the configuration package is automatically imported, and the configuration is updated. This process is similar to how database migrations operate.
 
-## Embeding a Configuration Package
+### Embeding a configuration package
 
 #TODO: Add more details and screenshots on how to embed configuration changes
 
@@ -39,16 +39,16 @@ How to include package into the back-end solution:
 1. Configure required items using corresponding configurators (e.g. forms designer, reference list editor).
 2. Export items as a package using the `Export` function. It generates a zip file with the name `package[yyyy][MM][dd]_[HH][mm].shaconfig`.
 3. Include the `.spaconfig` file into the module project as an embedded resource.
-[Show screenshot]
+
+[TODO: Show screenshot]
 
 
-## Importing Configuration On Application Startup
+### Importing configuration on application startup
 
 To trigger the import of embeded configuration packages on application startup, simply call the `InitializeConfigurationAsync` method from the `Initialize` method of your module class. For example:
 ``` cs
-public class SuperAppModule : SheshaSubModule<SuperAppModule>
+public class SuperAppModule : SheshaModule<SuperAppModule>
 {
-
     public override async Task<bool> InitializeConfigurationAsync()
     {
         // Will import all embedded configuration packages automatically
@@ -63,3 +63,6 @@ public class SuperAppModule : SheshaSubModule<SuperAppModule>
     
 }
 ```
+
+## See also
+- [Shesha Modules](modules)
