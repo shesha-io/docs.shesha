@@ -23,7 +23,7 @@ For reference lists that are not expected to change **ever**, for example, 'Days
 1. Make sure the Reference List property's type is the newly created enum
 1.If the item is alphanumeric e.g "Stage 1" instead of pulling it as "Stage1" from the backend, the [Display(Name = "Stage 1")] attribute gives the user flexibility to write these items as readable text.
 #### Example
-```
+``` csharp
 public class Person
 {
    ...
@@ -33,7 +33,7 @@ public class Person
 }
 ```
 where
-```
+``` csharp
 [ReferenceList("MyModule", "Gender")]
 public enum RefListGender: long
 {
@@ -59,7 +59,7 @@ If the values of a Reference List are expected to change in the future perhaps t
 1. Add Database Migration script to load the list in the database
 
 #### Example
-```
+``` csharp
 public class Person
 {
    ...
@@ -71,7 +71,7 @@ public class Person
 Because the list is data-driven to remain flexible, the list will be defined in the database (in the `Frwk_ReferenceLists` and `Frwk_RefrenceListItems` tables) instead of being hard-coded as an enum.
 
 The add a reference list to the database create a Database migration class as follows:
-```
+``` csharp
     [Migration(20220317111700)]
     public class M20220317111700 : Migration
     {
@@ -120,12 +120,12 @@ To implement a Multi-value reference list:
 * Define your reference list items and ensure items are assigned values that are powers of two (e.g. 1, 2, 4, 8, 16, etc...)
 * Ensure that there are **no more than 64 items** in the list
 #### Example on Entity Class
-```
+``` csharp
 [MultiValueReferenceList("MyApp","DaysOfTheWeek")]
 property RefListDaysOfTheWeek DaysOpen { get; set; }
 ```
 #### Example for enum based reference list
-```
+``` csharp
 [RefrenceList("MyApp","DaysOfTheWeek")]
 [Flags]  \\ For multi-value ref list enums ensure the [Flags] attribute is added 
 public enum RefListDaysOfTheWeek
@@ -145,7 +145,7 @@ public enum RefListDaysOfTheWeek
 ## Useful functions for working with Multi-value reference lists
 if you include the `Shesha.Extensions` namespace you will have access to a couple of useful extension functions useful for working with multi-value reference lists.
 
-```
+``` csharp
 using Shesha.Extensions
 
 ....
