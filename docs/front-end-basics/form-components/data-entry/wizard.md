@@ -111,7 +111,7 @@ function isValidProperty(value) {
 ```
 
 ## Using JS code
-- You can use JS script of some controls (Buttons, etc.) to manage Wizard Component
+You can use JS script of some controls (Buttons, etc.) to manage Wizard Component
 
 `contexts.wizardName.current` - get the current step index (zero-based)
 `contexts.wizardName.visibleSteps` - get the list of visible steps (object `IWizardStepProps`)
@@ -134,9 +134,9 @@ interface IWizardStepProps extends IConfigurableItemBase {
 }
 ```
 
-Actions to move between steps
-`contexts.wizardName.api.next()` - to the next step
-`contexts.wizardName.api.back()` - to the previous step
-`contexts.wizardName.api.done()` - finish the wizard (execute Done configurable actions)
-`contexts.wizardName.api.cancel()` - canel the wizard (execute Cancel configurable actions)
-`contexts.wizardName.api.setStep(index)` - move to the step with Index (will be executed `On Before Render` configurable action)
+Actions to move between steps:
+- `contexts.wizardName.api.next()` - to the next step
+- `contexts.wizardName.api.back()` - to the previous step
+- `contexts.wizardName.api.done()` - finish the wizard (execute Done configurable actions)
+- `contexts.wizardName.api.cancel()` - canel the wizard (execute Cancel configurable actions)
+- `contexts.wizardName.api.setStep(index)` - move to the step with Index (will be executed `On Before Render` configurable action)
