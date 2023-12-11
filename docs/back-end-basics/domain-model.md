@@ -25,11 +25,10 @@ The heart of a Shesha application is the domain. The domain is the set of entiti
 Though it is not a requirement to use the base domain, it is highly recommended to do so as it will accelerate the development of your application and you will be able to leverage other modules that also assume you use those entities.
 
 
-# Extending the Domain Model
+## Extend the Domain Model
 
 
-## Updating the Domain Model
-### Adding a new entity
+### Create a new entity
 
 - Standard base classes to inherit from
 - 
@@ -41,7 +40,7 @@ FullAuditedEntity
 
 
 
-### Adding a new property to an existing entity
+### Add a new property to an existing entity
 
 * How to extend an existing entity
   * Add DB Migration
@@ -60,7 +59,7 @@ FullAuditedEntity
 ## Domain Repositories
 
 
-# Shesha ORM
+## Shesha ORM
 
 Though there are plans to migrate Shesha to use EFCore, Shesha currently uses NHibernate as its ORM. NHibernate is a mature ORM that has been around for many years and is used in many enterprise applications. Unlike EFCore, NHibernate does not have the ability to generate database migration classes automatically. Any changes to the domain model must therefore be accompannied by a manually created database migration class to implement the necesary changes at the database level.
 
@@ -72,9 +71,6 @@ Shesha apps use [Fluent Migrator](https://fluentmigrator.github.io/) for the cre
 using System;
 using FluentMigrator;
 using Shesha.FluentMigrator;
-
-[assembly: DefaultIntentManaged(Mode.Fully)]
-[assembly: IntentTemplate("Boxfusion.Modules.FluentMigrator.Migration", Version = "1.0")]
 
 namespace Shesha.Enterprise
 {
@@ -151,7 +147,7 @@ namespace Shesha.Enterprise
 }
 
 ```
-## Updating an existing entity
+### Update an existing entity
 
 ``` csharp
 using System;
