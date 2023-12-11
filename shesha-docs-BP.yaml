@@ -16,7 +16,6 @@ pr:
 trigger:
   branches:
     include:
-      - releases/*
       - main
   paths:
     include:
