@@ -2,7 +2,7 @@
 
 EntityPicker displays an entity instance in a text field and performs actions when the user clicks buttons on the right.
 
-<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=f7bd1dce-fd86-45f2-9177-b3c489b886c3" title="Entity Picker Component" ></iframe>
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=78cf2cab-724b-43cb-a370-7b71e2f215e6" title="Entity Picker Component" ></iframe>
 
 Use EntityPicker if:
 

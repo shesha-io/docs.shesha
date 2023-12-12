@@ -2,7 +2,7 @@
 
 The Notes component is used to capture and view details such as the order history or any other additional information associated with the details you want to preview on your form.
 
-<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=4e9f0548-a4df-4744-a2eb-182af4956969" title="Notes Component" ></iframe>
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=edaf6336-94e0-4883-be85-ffa500fd474b" title="Notes Component" ></iframe>
 
 ## Content Properties
 

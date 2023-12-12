@@ -4,7 +4,7 @@ Entity Reference component renders an entity reference (foreign key reference) a
 
 In the below example, the entity reference component was configured with a name of 'organisation', and the 'autocomplete' field was dragged onto the designer as a data source for the entity reference since we are on the form designer.
 
-<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=f0b41f86-755a-449f-a839-d33b5d952913" title="Entity Reference Component" ></iframe>
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=b0bf7ab6-5ef8-4a76-8610-fcac32b5953b" title="Entity Reference Component" ></iframe>
 
 ## Content Properties
 

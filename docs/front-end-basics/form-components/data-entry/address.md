@@ -2,6 +2,8 @@
 
 The address component is a generic component that is useful in any instance where an address field is required and must be stored.
 
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=d1a61bc8-6960-4426-9e00-b0637f39d8b1" title="Address Component" ></iframe>
+
 In the above example, the address component was configured with a name of `address`. Two text fields were dragged into the form. The text fields were named `lat` and `lng` respectively and displayed the data as a user selected the relevant address.
 
 It is important to note that in order for this to happen, a script/instruction was inserted in the On Select event which instructed the `lat` and `lng` fields to be populated once the data is retrieved from the external map service.

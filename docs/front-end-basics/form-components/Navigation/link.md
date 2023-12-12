@@ -2,6 +2,8 @@
 
 Used to move between web pages, explore different sections of a website, or visit entirely different online resources. Links are formed by embedding hyperlinks within text. When users click on these links, they can access specified web pages or resources. This makes browsing the internet easier and more intuitive.
 
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=b20997d3-cd89-4bd6-98ca-135a63bf388b" title="Link Component" ></iframe>
+
 ## Content Properties
 
 These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.

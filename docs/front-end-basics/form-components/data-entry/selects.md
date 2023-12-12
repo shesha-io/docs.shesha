@@ -2,7 +2,7 @@
 
 Used for selecting multiple values from several options. If you use only one checkbox, it is the same as using Switch to toggle between two states. The difference is that Switch will trigger the state change directly, but Checkbox just marks the state as changed and this needs to be submitted.
 
-<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=ff674104-5b19-4a4b-a705-3aac5f874881" title="Shesha in 100 seconds" ></iframe>
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=f8794ef7-d146-4422-b523-4f34474c4fa3" title="Selects Components" ></iframe>
 
 ## Content Properties
 

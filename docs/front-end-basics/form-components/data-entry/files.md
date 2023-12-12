@@ -2,7 +2,7 @@
 
 This enables the uploading of one or more files. It also showcases the process of uploading by selecting or dragging a file.
 
-<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=d3aef1f8-0e46-4e9e-a62d-9555d47e887c" title="File / Filelist component" ></iframe>
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=3745cb52-d48c-478c-8d34-b5743f7c9388" title="File / Filelist component" ></iframe>
 
 ## Content Properties
 

@@ -4,6 +4,8 @@
 
 These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
 
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=21208187-d0bf-40e8-a749-fa9def96f5ec" title="Container Component" ></iframe>
+
 ### No Default Styling
 
 - This means that the element doesn't inherently come with any predefined appearance characteristics, and its visual presentation must be explicitly defined by the user or developer.
