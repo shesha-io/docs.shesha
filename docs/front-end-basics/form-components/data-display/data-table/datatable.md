@@ -2,6 +2,8 @@
 
 A Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
 
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=552accec-84dc-4841-962f-ff263b5ade73" title="Columns Component" ></iframe>
+
 This can be used within a child table, which comes with default table pager, filtering, and sorting capabilities, or can be used in isolation to create your desired view. It is fully customizable using stand-alone components that can be integrated into a datatable context.
 
 There is also a 'Datatable (Full)' component that comes pre-populated with most of the components for a more comprehensive user experience, which are also available separately, should you want to construct your own layout. It is important to note that these components need to be used within a datatable context, so as to source data from the same context.

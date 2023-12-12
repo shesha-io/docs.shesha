@@ -2,7 +2,7 @@
 
 This component is used when you need to show alert messages to users. It is also useful when you need a persistent static container that is closable by user actions.
 
-<iframe width="100%" height="500" src="http://localhost:4000/shesha/forms-designer?id=e6222497-bd20-42d3-893b-6cdbbcc70801" title="Alert Component" ></iframe>
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=793ec3d1-04c1-4253-adec-6521f82be88b" title="Alert Component" ></iframe>
 
 ## Content Properties
 

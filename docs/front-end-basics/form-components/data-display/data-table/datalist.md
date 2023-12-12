@@ -2,6 +2,8 @@
 
 The DataList component should be placed inside the DatatableContext component. This component is intended to get a list of data (similar to using it with the Datatable component). It shows data from the DatatableContext as a list of sub-forms. Note that other DatatableContext-specific components (Pager, Quick Search, Table view selector) can also affect the DataList, similar to the Datatable.
 
+<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=cf652775-9c95-44e4-8152-8c52f174d830" title="Columns Component" ></iframe>
+
 ## On Double Click
 
 This is triggered when there is a type of user interaction that occurs when a user rapidly clicks a mouse button twice in quick succession. It includes a list of ‘Action Configurations’ as discussed previously. In cases where the user is trying to perform an action on a specific row, the content of the currently selected row will be saved in the ‘selectedRow’ object and can be accessed like this (Action Configuration - Navigate). <br/>
