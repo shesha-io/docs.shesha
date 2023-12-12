@@ -12,14 +12,14 @@ pr:
       - main
   paths:
     include:
-    - main
+      - main
 trigger:
   branches:
     include:
       - main
   paths:
     include:
-    - main
+      - main
 
 pool:
   name: Azure Pipelines

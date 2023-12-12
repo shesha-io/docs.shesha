@@ -15,15 +15,15 @@ A Shesha module can include various components, such as a domain model, services
 If the module relies on custom front-end components and pages, the NuGet installation should be accompanied by a corresponding NPM package containing the required front-end components.
 
 
-## Viewing installed modules
+## View installed modules
 
 To view the modules installed in the application, navigate to the Admin portal and select the Modules menu item.
 
 **TODO: Add screenshot**
 
-## Creating a new module
+## Create a new module
 
-### Adding the SheshaModule class
+### Add the SheshaModule class
 
 Creating a new module in Shesha is a straightforward process. It involves creating a new class library project and implementing the `SheshaModule` class. A Shesha module can be composed of one or more ASP.NET Boilerplate modules and assemblies. The decision to make an assembly a Shesha module depends on whether you need the ability to associate configuration to it for easy distribution. If configuration distribution is not required, the assembly can be a regular ASP.NET Boilerplate module. 
 
@@ -90,7 +90,7 @@ Options available for the `SheshaModuleInfo` class are shown below:
 |VersionNo|Version number. This property is used for manual versioning, for automatical versioning you can use `UseAssemblyVersion` property|
 |UseAssemblyVersion|If true, indicates that the module version is equal to the assembly file version|
 
-### Specifying the database prefix
+### Specify the database prefix
 
 If your module also contains domain classes, you should also specify the [database prefix](/docs/back-end-basics/domain-model#module-database-prefix) by adding the following lines to the `AssemblyInfo.cs` file.
 ``` csharp title="/Properties/AssemblyInfo.cs"
@@ -103,11 +103,11 @@ If your module also contains domain classes, you should also specify the [databa
 ...
 ```
 
-### Embedding configuration
+### Embed configuration
 
 To embed configuration in the module, to be distributed automatically during application startup refer to the [configuration distribution documentation](configuration.md).
 
-## Installing a module
+## Install a module
 
 To install a module, follow these steps:
 
