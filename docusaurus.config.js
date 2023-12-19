@@ -139,6 +139,13 @@ const config = {
         additionalLanguages: ['csharp'],
       },
     }),
+  scripts: [
+    {
+      src:
+        '/scripts/analyticsEvents.js',
+      defer: true,
+    }
+  ],
 };
 
 export default config;  
