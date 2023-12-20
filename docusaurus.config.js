@@ -40,6 +40,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
@@ -50,7 +51,13 @@ const config = {
           // Remove this to remove the "edit this page" links.
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: require.resolve('./src/css/custom.css'),
+        },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
         },
       }),
     ],
@@ -61,19 +68,36 @@ const config = {
     ({
       // Replace with your project's social card
       image: 'img/SheshaLogo.png',
+      colorMode: {
+        defaultMode: 'light',
+        disableSwitch: true,
+        respectPrefersColorScheme: false,
+      },
+      algolia: {
+        appId: 'MOO4DA27N6',
+        apiKey: '4e0cf72842305511591eaa243c6a0c50',
+        indexName: 'shesha',
+        contextualSearch: true,
+
+        //... other Algolia params
+      },
       navbar: {
         logo: {
           alt: 'My Site Logo',
           src: 'img/SheshaLogo.png',
         },
         items: [
+          // {
+          //   type: 'docSidebar',
+          //   sidebarId: 'tutorialSidebar',
+          //   position: 'left',
+          //   label: 'Tutorial',
+          // },
+          // { to: '/blog', label: 'Blog', position: 'left' },
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Tutorial',
+            type: 'search',
+            position: 'right',
           },
-          { to: '/blog', label: 'Blog', position: 'left' },
           {
             to: 'https://www.shesha.io/get-started-with-shesha',
             label: 'Try Shesha',
