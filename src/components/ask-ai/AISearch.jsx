@@ -19,9 +19,9 @@ const AISearch = forwardRef((props, ref) => {
     const commonSearchQueries = [
         "What is Shesha?",
         "What version of Node do I need installed?",
-        "How do I pass inputs from a widget to a query?",
-        "How do I trigger multiple queries conditionally?",
-        "How do I fix the error: This value does not evaluate to type Array<Object>?"
+        "How do I validate a South African phone number?",
+        "How do I filter with dynamic properties or input?",
+        "How do I see which properties are exposed for a on a code editor?",
     ];
 
     const resetState = () => {
