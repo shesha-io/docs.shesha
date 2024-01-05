@@ -5,6 +5,23 @@ sidebar_position: 20
 
 # Dynamic CRUD APIs
 
+Shesha provides a feature to auto-generate a set of CRUD (Create, Read, Update, Delete) and GraphQL APIs for any selected entity. These APIs can be utilized to carry out CRUD and GraphQL query operations on that entity. Furthermore, you can link these APIs from the form configurator, enabling you to swiftly construct a user interface for managing these entities.
+
+## Generated APIs
+
+The following APIs may be  auto-generated for each entity:
+
+- **Get** - returns a single entity by its Id
+- **GetAll** - returns a list of entities
+- **Create** - creates a new entity
+- **Update** - updates an existing entity
+- **Delete** - deletes an existing entity
+- **Query** - returns a single entity by its Id
+- **QueryAll** - returns a list of entities
+- **GraphQL** - returns a single entity by its Id
+- **GraphQLList** - returns a list of entities
+
+
 # TODO:
 - List Standard End-points;
 - How to generate/ or not;
