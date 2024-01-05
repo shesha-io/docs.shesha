@@ -4,7 +4,26 @@ sidebar_position: 2
 
 # Event Handlers
 
-Event handlers are functions or methods that are designed to respond to specific events or triggers within a software application. These events can be user interactions, system events, or changes in the application state. Event handlers play a crucial role in controlling the flow of an application and responding to various scenarios. Let's explore the benefits of event handlers in the context of: `onChange`, `onFocus`, `onBlur`, and `onSelect`.
+Event handlers are functions that get triggered on on specific envents in a component lifecycle.
+
+All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
+
+## onChange
+
+Triggered on change of the component's value such as on input changes or change of selection in the case of selected based components such as radio buttons, check boxes or drop down list.
+
+## onFocus
+
+Triggered on the component receives the focus.
+
+## onBlur
+
+Triggered when a previously selected component loses focus.
+
+## onSelect
+
+An event which is triggered every time an address is selected.
+
 
 These events contain a standard list of variables that give the user access to certain variables and functions facilitating the need to respond to various scenarios. Namely:
 
@@ -18,19 +37,3 @@ These events contain a standard list of variables that give the user access to c
 - `toast message` functionality
 - `form instance`
 - `axios instance used to make http requests`
-
-## onChange
-
-Supports Javascript expressions used for handling input changes such as typed text or selected option values.
-
-## onFocus
-
-Supports Javascript expressions used when an element gets focus.
-
-## onBlur
-
-Supports Javascript expressions used when an element loses focus.
-
-## onSelect
-
-An event which is triggered every time an address is selected.

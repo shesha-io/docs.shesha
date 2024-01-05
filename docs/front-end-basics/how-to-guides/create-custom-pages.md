@@ -1,10 +1,14 @@
 # Custom Pages
 
-Custom pages are a way of integrating custom logic into a React application. A custom page is related to the Shesha framework front-end boilerplate. While the entire front-end framework is designed to work with drag-and-drop features, there are cases where creating a custom page becomes necessary.
+As much as much of the power of Shesha is the ability to create application pages in a no-code manner, purely through configuration, there are times when you need to create a custom page. Custom pages allow you create a page using more traditional 'pro-code' based methods, namely as using React and TypeScript and are therefore unrestricted by the Shesha framework.
+
+:::info Next.js
+The Shesha front-end framework is based on the very popular and powerful [Next.js](https://nextjs.org/). The handling of custom pages is therefore all done by Next.js. If Next.js is not available in the packages, this feature will not work. Familiarity with Next.js is therefore also recommended.
+:::
 
 ### Custom Pages vs Custom Components
 
-To avoid confusion, there is a difference between custom pages and custom components. Custom pages integrate our own logic into the entire page, while custom components integrate our own logic into the Shesha form designer.
+To avoid confusion, there is a difference between custom pages and custom components. Custom pages integrate our own logic into the entire page, while custom components integrate our own logic into components that may be placed onto configured pages using the Shesha form designer.
 
 ## Implementation
 
@@ -19,7 +23,8 @@ To create a custom page:
 
 ![Image](./images/customPage2.png)
 
-> **Note:** This implementation is done by Next.js, and there is a direct dependency on Next.js. The handling of the pages and folder structure is all done by Next.js. If Next.js is not available in the packages, this feature would not work. Figure 2 shows a snippet of code that will be added in the `index.tsx` page. If a consistent layout is required, it can be set using `Page.getLayout` as seen in the illustration below.
+
+Figure 2 shows a snippet of code that will be added in the `index.tsx` page. If a consistent layout is required, it can be set using `Page.getLayout` as seen in the illustration below.
 
 ![Image](./images/customPage1.png)
 

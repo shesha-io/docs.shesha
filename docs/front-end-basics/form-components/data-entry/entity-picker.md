@@ -2,16 +2,16 @@
 
 EntityPicker displays an entity instance in a text field and performs actions when the user clicks buttons on the right.
 
-<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=78cf2cab-724b-43cb-a370-7b71e2f215e6" title="Entity Picker Component" ></iframe>
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=78cf2cab-724b-43cb-a370-7b71e2f215e6" title="Entity Picker Component" ></iframe>)
 
 Use EntityPicker if:
 
 - The field value is a reference to an entity instance.
 - Users need to select or create an entity instance via the lookup screen or enter a specific value.
 
-## Content Properties
+## Properties
 
-These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
 
 ### Entity Type
 

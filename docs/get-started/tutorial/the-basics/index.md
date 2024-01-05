@@ -4,17 +4,15 @@ import Banner from '@site/src/components/docs/Banner';
 
 This tutorial covers the basic concepts of Shesha and takes you through a series of steps to build a simple Shesha-based application. You'll learn to:
 
-- Setting up the project
-- Configuring your first view
-- Extending the domain model
-- Adding new entities and child tables
-- Creating and calling custom APIs
-
-<Banner url="https://www.youtube.com/embed/JGy7lc5WAwE?autoplay=1&controls=0" type={2}/>
+- Set up a new Shesha project
+- Configure your first view
+- Extend the domain model
+- Add new entities and child tables
+- Create and call custom APIs
 
 ## Prerequisites
 
-To successfully complete the tutorial, you should have some understanding of ASP.NET Core and React, and the following tools installed:
+To successfully complete the tutorial, you should have some understanding of ASP.NET Core, and the following tools installed:
 
 - **Visual Studio Code (Frontend):**
 

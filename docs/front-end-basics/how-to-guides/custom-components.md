@@ -1,6 +1,6 @@
 # Custom Components
 
-The Shesha Form Builder is an application which contains multiple form components for many common use cases. It is however impossible to cater for every single use case, that is why the ability to create custom components for any use case is optional. Creating your own components integrates with Shesha’s Form Builder allowing you to drag and drop your custom component inside the widget area.
+The Shesha Form Builder is a powerful feature that includes a variety of form components to cover a wide range of common scenarios. However, given the diversity of use cases, it's not feasible to address all of them. Therefore, Shesha provides an option to develop custom components for any unique requirements. These custom components can be seamlessly integrated withing the Form Builder, enabling you to easily add them to any form through the drag-and-drop interface.
 
 ## Background
 

@@ -4,11 +4,11 @@ Entity Reference component renders an entity reference (foreign key reference) a
 
 In the below example, the entity reference component was configured with a name of 'organisation', and the 'autocomplete' field was dragged onto the designer as a data source for the entity reference since we are on the form designer.
 
-<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=b0bf7ab6-5ef8-4a76-8610-fcac32b5953b" title="Entity Reference Component" ></iframe>
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=b0bf7ab6-5ef8-4a76-8610-fcac32b5953b" title="Entity Reference Component" ></iframe>)
 
-## Content Properties
+## Properties
 
-These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
 
 ### Get Entity Url
 

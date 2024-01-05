@@ -1,6 +1,10 @@
 # Basic Scripting
 
-## GET Http Request
+Scripting can be added to your configured views to add more advanced functionality to your application. Scripts are typically added to the various events exposed by the form or form components. All scripting is done using JavaScript and a number of standard objects and functions are available to the script to facilitate the need to respond to various scenarios.
+
+The sections below provides sample code for common use cases where scripting is typically required:
+
+## Calling an API using the GET method to retrieve data from the back-end
 
 ```javascript
 (function () {
@@ -17,7 +21,7 @@ function onError(_e) {
 }
 ```
 
-## POST Http Request with [form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/data.md)
+## Calling an API using the POST method to submit [form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/data.md) to the back-end
 
 ```javascript
 (function () {
@@ -34,27 +38,34 @@ function onError(_e) {
 }
 ```
 
-## POST Http Request with some values removed from [form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/data)
+## Modifying the [form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/data) before calling an API using the POST method to submit the modified form data to the back-end
 
-> NOTE: You can also manipulate what gets added onto your form data by using [appContexts](/docs/front-end-basics/configured-views/data-types/shesha-objects/app-context)
+It is sometimes useful to modify the form data before submitting it to the back-end, for example to submit calculated values. This can be achieved in the following ways.
+
+:::tip Use AppContexts
+To avoid adding uncessary data to the form that you then remove programmatically before posting to the back-end, you can also bind your form components to [appContexts](/docs/front-end-basics/configured-views/data-types/shesha-objects/app-context) instead.
+:::
 
 ```javascript
 (function () {
   const PATH = `/api/dynamic/Shesha/Person/Create`;
 
   //   constructing your payload can be achieved in the following ways:
-  //   1. Delete your unwanted properties from the form data
-       E.g. delete data.isSingle // This deletes the `isSingle` property from the form data if it was just used as a form of manipulating the data entry.
+  //   1. Delete your unwanted properties from the form data E.g.
+       delete data.isSingle // This deletes the `isSingle` property from the form data if it was just used as a form of manipulating the data entry.
 
-  //   2. Adding additional properties to the form data
-       E.g. if (data.title == 1) {
+  //   2. Adding additional properties to the form data based on some condition E.g. 
+       if (data.title == 1) {
           data.gender = 'male';
        } else {
           data.gender = 'female';
        }
          // This adds the `gender` property to the form data based on the value of `data.title`
 
-  http.post(`${PATH}`, data).then(onSuccess).catch(onError); // You pass in your already constructed form data object as the request body
+  http
+    .post(`${PATH}`, data)  // You pass in your already constructed form data object as the request body
+    .then(onSuccess)
+    .catch(onError); 
 })();
 
 function onSuccess(resp) {
@@ -66,11 +77,11 @@ function onError(_e) {
 }
 ```
 
-## Deconstructing the request body payload
+## Call an API using the POST method and a custom payload
 
-This allows you to deconstruct your payload and source data required for your payload from different objects or hard-code certain values.
+This is an example of making a custom API call using the POST method. In this example, the payload is constructed using a combination of the form data and the selected row from the index table.
 
-_Read also: [form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/selectedRow)_
+_Read also: [SelectedRow](/docs/front-end-basics/configured-views/data-types/shesha-objects/selectedRow)_
 
 ```javascript
 (function () {
@@ -95,23 +106,19 @@ function onError(_e) {
 }
 ```
 
-## Navigating to another page
+## Navigate to another page
 
 ### Using window.location.href
 
 The `window.location` object provides information about the current URL and allows you to navigate to a new URL by setting the `href` property.
 
-E.g.
-
-```javascript
+ ```javascript
 window.location.href = "https://www.shesha.io";
 ```
 
 ### Using window.location.replace
 
 This method is similar to setting window.location.href, but it does not create a new entry in the browser's navigation history. Instead, it replaces the current history entry.
-
-E.g.
 
 ```javascript
 window.location.replace("https://www.shesha.io");
@@ -120,8 +127,6 @@ window.location.replace("https://www.shesha.io");
 ### Using window.location.assign
 
 This method is also used for navigation and is similar to window.location.href. It loads a new document.
-
-E.g.
 
 ```javascript
 window.location.assign("https://www.shesha.io");

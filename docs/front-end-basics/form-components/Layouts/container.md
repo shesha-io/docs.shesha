@@ -1,14 +1,16 @@
 # Container
 
-## Content Properties
+The Container component is used to group components together. It is a wrapper component that can contain other components apply styling to the group as a whole.
 
-These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
+## Properties
 
-<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=21208187-d0bf-40e8-a749-fa9def96f5ec" title="Container Component" ></iframe>
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
+
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=21208187-d0bf-40e8-a749-fa9def96f5ec" title="Container Component" ></iframe>)
 
 ### No Default Styling
 
-- This means that the element doesn't inherently come with any predefined appearance characteristics, and its visual presentation must be explicitly defined by the user or developer.
+- If checked, the component will not have any predefined styling, and its visual presentation will have to be fully defined by the configurator.
 
 ### Display
 

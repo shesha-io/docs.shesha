@@ -2,11 +2,11 @@
 
 This page provides information on using the Text Field component to gather and validate user input such as text, numbers, emails, and passwords.
 
-<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=e3191b51-4a87-4187-910e-177bcbed657b" title="Text Field Component" ></iframe>
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=e3191b51-4a87-4187-910e-177bcbed657b" title="Text Field Component" ></iframe>)
 
-## Content Properties
+## Properties
 
-These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
 
 ### Type
 

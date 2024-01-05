@@ -1,8 +1,8 @@
-# DataList Component
+# DataList
 
 The DataList component should be placed inside the DatatableContext component. This component is intended to get a list of data (similar to using it with the Datatable component). It shows data from the DatatableContext as a list of sub-forms. Note that other DatatableContext-specific components (Pager, Quick Search, Table view selector) can also affect the DataList, similar to the Datatable.
 
-<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=cf652775-9c95-44e4-8152-8c52f174d830" title="Columns Component" ></iframe>
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=cf652775-9c95-44e4-8152-8c52f174d830" title="Columns Component" ></iframe>)
 
 ## On Double Click
 

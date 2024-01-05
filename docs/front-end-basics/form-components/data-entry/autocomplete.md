@@ -2,11 +2,12 @@
 
 Autocomplete is used when you need an input box instead of a selector. It is an input box with text hints, and users can type freely. The keyword is aiding input.
 
-<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=6a35ce34-26f4-4643-bd2a-146b62594d19" title="Autocomplete Component" ></iframe>
 
-## Content Properties
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=6a35ce34-26f4-4643-bd2a-146b62594d19" title="Autocomplete Component" ></iframe>)
 
-These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All of the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
+## Properties
+
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
 
 ### Selection Mode
 

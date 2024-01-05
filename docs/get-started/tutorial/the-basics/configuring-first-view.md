@@ -4,12 +4,12 @@ sidebar_position: 2
 
 # Configuring Your First View
 
-In this section, we are configuring the most common types of views purely through the highly efficient Shesha Core entities and the drag-and-drop interface. We are going to take you through the process of configuring some basic views to allow the user to:
+In this section, we are configuring the most common types of views taking advantage of the base domain model and the drag-and-drop form configuration interface. We are going to take you through the process of configuring some basic views to allow the user to:
 
 - View a list of people
 - Register a new person
-- View the details of the registered person
-- Access the people information from the main menu
+- View the details of the registered persons
+- Access the list view from the main menu
 
 ## Creating a New Form
 
@@ -19,11 +19,11 @@ In this section, we are configuring the most common types of views purely throug
 ### Form Fields
 
 - **Module:** Specifies the Shesha module the new form configuration will be saved under.
-- **Template:** Specifies the template to use for the new form. (TODO: put create template link)
+- **Template:** Specifies the template to use for the new form (e.g. table or form view).
 - **Name:** A name for the form. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
 - **Label:** A user-friendly name for the form.
-- **Description:** More information about the form.
-- **Model Type:** Specify the type of Entity you want the form to bind to. This determines the information that the form will be able to access and display.
+- **Description:** Additional information about the form.
+- **Model Type:** Specifies the type of Entity you want the form to bind to. This determines the information that the form will be able to access and display.
 
 ## Form Versioning
 
