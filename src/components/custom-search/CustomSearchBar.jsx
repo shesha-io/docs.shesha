@@ -32,12 +32,12 @@ const CustomSearchBar = () => {
                     <img src="../../../img/ask-ai-robot-icon.svg" alt="Ask AI" className='ai-search-icon'></img> Ask AI
                 </div>
 
-                <div
+                {/* <div
                     className={`custom-search-option ${searchType === 'docs' ? 'selected' : ''}`}
                     onClick={() => setSearchType('docs')}
                 >
                     <img src="../../../img/search-in-docs-icon.svg" alt="Search" className='doc-search-icon'></img> Search
-                </div>
+                </div> */}
             </div>
             <AISearchButton />
             <div style={{ display: 'none' }}>

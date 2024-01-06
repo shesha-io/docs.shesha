@@ -192,7 +192,7 @@ const AISearch = forwardRef((props, ref) => {
                     <input
                         id="question-input"
                         name="question-input"
-                        placeholder="How do I upload a file to S3?"
+                        placeholder="What is Shesha?"
                         type="text"
                         value={termSelected ? searchTerm : inputValue}
                         onKeyDown={handleKeyDown}
