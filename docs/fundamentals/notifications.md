@@ -4,9 +4,9 @@ sidebar_label: Notifications
 
 # Notifications
 
-The sending of notifications via SMS, Email or other channels (e.g. mobile Push, WhatsApp) is a common requirement within enterprise applications.
+Enterprise applications often need to send notifications through various channels such as SMS, Email, mobile Push, or WhatsApp. 
 
-Shesha therefore provides strong capabilities which make it easy to send out notifications in a scalable, fault-tolerant and auditable manner. Shesha's notification framework provides the following benefits:
+To cater to this need, Shesha offers robust and user-friendly features for sending notifications. These features are designed to be scalable, fault-tolerant, and auditable, ensuring reliable and efficient notification delivery. Shesha's notification framework provides the following benefits:
 
 1. Supports queuing of notifications and automated retries in case of failure (e.g. network or gateway unavailability)
 1. Provides an audit trail with visibility of all the notifications sent out

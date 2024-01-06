@@ -46,7 +46,7 @@ On the action level you can disable all specifications using **DisableSpecificat
 
 ![image](https://user-images.githubusercontent.com/85956374/222995043-c7eb748d-04be-45b2-adae-3275d6f80c28.png)
 
-##Front-end support
+## Front-end support
 
 The Query Builder component allows to use a specifications defined on the back-end as a filter parameter. Specifications are listed in the property list, see the image. Query Builder supports two operations for specifications:
   

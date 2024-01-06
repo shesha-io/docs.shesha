@@ -6,20 +6,6 @@ sidebar_label: Audit Logging
 
 Shesha 3 Entity History framework is based on Abp.EntityHistory <a href="https://aspnetboilerplate.com/Pages/Documents/Entity-History" target="_blank">https://aspnetboilerplate.com/Pages/Documents/Entity-History</a>
 
-
-:::tip Sample tip
-This is just a sample tip
-:::
-
-:::warning Sample Warning
-This is just a sample warning
-:::
-
-:::info Sample Info
-This is just a sample info box
-:::
-
-
 In addition, were added some Shesha specific features.
 
 ## Log Changes to Entity Properties in Audit trail

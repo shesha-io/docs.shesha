@@ -10,10 +10,10 @@ Although there seems to be <a href="https://softwareengineering.stackexchange.co
 
 Shesha applications tend to be very domain-centric and try to minimise the amount of Application level code (including AppServices) that needs to be hand-written. Instead, Shesha applications try to rely as much as possible on auto-generated APIs, which means that there are no physical AppService classes in which validation logic may be inserted. Over and above this, implementing validation logic on the Domain layer also ensures that as much of the business logic as possible is centralised and minimises the possibility of duplication and potential inconsistencies that may arise from this. The bulk of the validation logic should therefore be implemented in the domain layer.
 
-Notwithstanding the above, where custom APIs have been implemented that accept custom DTOs, it is often quite appropriate to implement additional validation logic at the Application Layer (within the AppService). In particular, this would be necessary if very application or end-point specific business logic needs to be applied that would not be covered by validation enforced within the Domain Layer.
+Notwithstanding the above, where custom APIs have been implemented that accept custom DTOs, it is often quite appropriate and necessary to implement additional validation logic at the Application Layer (within the AppService). In particular, this would be necessary if very application or end-point specific business logic needs to be applied that would not be covered by validation enforced within the Domain Layer.
 
 ## Validation Approaches
-There are multiple schools of thought on the best ways to implement validation logic (check-out articles <a href="https://enterprisecraftsmanship.com/posts/validation-and-ddd/" target="_blank">here</a> and <a href="https://lostechies.com/jimmybogard/2007/10/24/entity-validation-with-visitors-and-extension-methods/" target="_blank">here</a>) and there is no clear consensus.
+There are multiple schools of thought on the best ways to implement validation logic (check-out articles [here](https://enterprisecraftsmanship.com/posts/validation-and-ddd/) and [here](https://lostechies.com/jimmybogard/2007/10/24/entity-validation-with-visitors-and-extension-methods/) and there is no clear consensus.
 
 For the purposes of consistency, the following approaches are recommended for Shesha applications:
 
@@ -23,13 +23,13 @@ For the purposes of consistency, the following approaches are recommended for Sh
 | **Validation attributes** on domain classes | Validation rules are specified in code by adding ASP. NET Core <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#validation-attributes" target="_blank">Validation Attributes</a> to the entity properties to be validated | When common single property validation rules need to be specified. Standard attributes supported include: Required, EmailAddress, Range, StringLength, Url, RegularExpression. It is also possible to create <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#custom-attributes" target="_blank">custom validation attributes</a> for easy reusability of validation logic. | Mostly limited to validation logic that depends on a single property value only. |  |
 | Implement **`IValidatableObject`** interface | Validation rules are specified in code by implementing the <a href="https://docs.microsoft.com/en-us/aspnet/core/mvc/models/validation?view=aspnetcore-6.0#ivalidatableobject" target="_blank">IValidatableObject.Validate()</a> method on the entity class.| When complex, 'once-off' validation logic is required, or logic that depends on the value of multiple properties simultaneously, and where such logic needs to be part of the entity class. | Validation logic is 'baked into' the entity class and forces any project using the class to enforce the same validation logic, or otherwise create sub-classes. | See sample code below |
 | Implement **FluentValidation** classes |Using <a href="https://docs.abp.io/en/abp/latest/FluentValidation" target="_blank">FluentValidation</a> Library | When validation logic needs to be implemented separately from the domain classes. This is usually when either: 1) Validation logic needs to be added to entities whose source code is not available e.g. when validation needs to be implemented as customisations on top of entity classes imported via Nuget, or, 2) Validation logic contained within the FluentValidation class should be optional (functionality in the future will be provided to allow configurators to enable or disable FluentValidation classes) | Adds a bit more complexity to the solution as new classes need to be created. | <a href="https://fluentvalidation.net/" target="_blank">FluentValidation project web-site</a>
-**Prevent domain entities from becoming invalid** in the first place | Entity properties that are at risk of becoming invalid are made read-only by making the relevant property setters private. Properties can then only be updated through methods that enforce the validation logic before updating the properties e.g. `UpdateEmail(string newEmail)` could check if Email address is unique before updating the Email property. This is the approach that seems to be promoted by <a href="https://abp.io/" target="_blank"> ABP.IO</a> and is illustrated in their BookStore sample app. | This approach is generally not recommended because of the limitations specified in the next column.  <br/>The only case where this approach is recommended is where updating of the property value is NOT expected to be done through a form or CRUD operation, but through an explicit user action on the front-end such as clicking a toolbar button. For example, imagine a Content management application, where `Content` objects have a `Status` property with possible values of `Draft`, `Ready`, `Approved`, `Published`, `Retracted`. In such a case you typically would not want to expose the `Status` property as part of an editable form for the user to be able to update arbitrarily as you would want to ensure specific business logic is applied (e.g. send notifications and ensure approval is not by-passed). Instead, you would probably want to add a 'Publish' toolbar button, which when clicked would call a custom end-point, `/content/{id}/publish`, which then calls the `Content.Publish()` entity method which updates the `Content. Status` after checking that current Status is `Approved`. | Much of the Low-Code features of Shesha rely on the use of standard CRUD based operations. Because this approach by definition deviates from the use of CRUD operations, it would add significantly to the configuration effort. Moreover, similarly to the `IValidatableObject` approach, Validation logic is 'baked into' the entity class and forces any project using the class to enforce the same validation logic, or otherwise create sub-classes. | <a href="https://abp.io/" target="_blank">ABP.IO</a> Bookstore sample app
+**Prevent domain entities from becoming invalid** in the first place | Entity properties that are at risk of becoming invalid are made read-only by making the relevant property setters private. Properties can then only be updated through methods that enforce the validation logic before updating the properties e.g. `UpdateEmail(string newEmail)` could check if Email address is unique before updating the Email property. This is the approach is better aligned with DDD principles and is promoted by frameworks such as [ABP.IO](https://abp.io/) as illustrated in their BookStore sample app. | This approach is generally not recommended because of the limitations specified in the next column.  <br/>The only case where this approach is recommended is where updating of the property value is NOT expected to be done through a form or CRUD operation, but through an explicit user action on the front-end such as clicking a toolbar button. For example, imagine a Content management application, where `Content` objects have a `Status` property with possible values of `Draft`, `Ready`, `Approved`, `Published`, `Retracted`. In such a case you typically would not want to expose the `Status` property as part of an editable form for the user to be able to update arbitrarily as you would want to ensure specific business logic is applied (e.g. send notifications and ensure approval is not by-passed). Instead, you would probably want to add a 'Publish' toolbar button, which when clicked would call a custom end-point, `/content/{id}/publish`, which then calls the `Content.Publish()` entity method which updates the `Content. Status` after checking that current Status is `Approved`. | Much of the Low-Code features of Shesha rely on the use of standard CRUD based operations. Because this approach by definition deviates from the use of CRUD operations, it would add significantly to the configuration effort. Moreover, similarly to the `IValidatableObject` approach, Validation logic is 'baked into' the entity class and forces any project using the class to enforce the same validation logic, or otherwise create sub-classes. | <a href="https://abp.io/" target="_blank">ABP.IO</a> Bookstore sample app
 
 
 **Notes:**
 
 - The approaches above are not mutually exclusive. Most projects would be expected to utilise a mix of the above approaches depending on the specific requirements.
-- Although validation approaches above are described in the context of the Domain class validation Validation attributes, IValidatableObject and FluentValidation validation approaches may all be employed for the validation of DTOs. See <a href="https://docs.abp.io/en/abp/latest/Validation" target="_blank">ABP.IO documentation</a> for more information.
+- Although validation approaches above are described in the context of the Domain class validation Validation attributes, IValidatableObject and FluentValidation validation approaches may all be employed for the validation of DTOs. See [ABP.IO documentation](https://docs.abp.io/en/abp/latest/Validation) for more information.
 
 ## Applying Validation on Auto-generated CRUD APIs
 
@@ -37,10 +37,10 @@ With the exception of the last approach in the table above (which depends on the
 If the entity violates any validation rules, the Create(Post) or Update(Put) APIs will throw an `AbpValidationException` and return the appropriate validation information.
 
 ## Implementing Validations through FluentValidation
-In order for the implemented EntityValidator to trigger as mentioned in <a href="https://docs.fluentvalidation.net/en/latest/" target="_blank">https://docs.fluentvalidation.net/en/latest/</a>. Make sure to inlcude the `AbpFluentValidationModule` in the `WebCoreModule` class of the solution as a dependency.
+In order for the implemented EntityValidator to trigger as mentioned in [https://docs.fluentvalidation.net/en/latest/](https://docs.fluentvalidation.net/en/latest/). Make sure to inlcude the `AbpFluentValidationModule` in the `WebCoreModule` class of the solution as a dependency.
 
 ##### Example
-```
+``` csharp
  [DependsOn(
         typeof(AbpFluentValidationModule)
 	 )]
@@ -52,7 +52,7 @@ In order for the implemented EntityValidator to trigger as mentioned in <a href=
 * For CustomAPIs two ways of doing it is either through declaring a new instance of the `EntityValidator`/`EntityDtoValidator` class as and use `Validate()` method as below
 
 ##### Example
-```
+``` csharp
 [HttpPost, Route("CustomAPIMethod")]
 public async Task<CustomDto> CustomAPIMethod(CustomInput input)
 {
@@ -66,7 +66,7 @@ public async Task<CustomDto> CustomAPIMethod(CustomInput input)
 Or by through dependency injection of `IValidator<EntityValidator>`/`IValidator<EntityDtoValidator>` in the `AppService` class as below
 
 ##### Example
-```
+``` csharp
 /// <summary>
 /// 
 /// </summary>
@@ -103,7 +103,7 @@ The sample code below illustrates the implementation of common custom validation
 - Making calls to the database
 
 ##### Example
-```
+``` csharp
     public class Schedule: FullAuditedEntity<Guid>, IValidatableObject    // Implements IValidatableObject interface to enforce custom validation logic
     {
         ...

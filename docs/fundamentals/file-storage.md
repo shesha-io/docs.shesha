@@ -4,7 +4,7 @@ sidebar_label: File Storage
 
 # File Storage
 
-The storage, display and management files is a very common requirement in most business applications and Shesha provides for this requirement out of the box. The file management module provides for the following features:
+File storage, display, and management are common needs in many business applications. Shesha caters to these needs with its built-in file management features. These include:
 1. APIs for the uploading, downloading, deletion, updating (incl. version management) of files
 1. UI components that can bind to entities and allow uploading, downloading and viewing of files
 1. Storage providers that allow files to be stored in various types of storage locations. Currently, local file storage and Azure Blob Storage are supported, with the option for custom providers to be implemented.
