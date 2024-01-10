@@ -1,6 +1,6 @@
 # SetFormData
 
-This function is used to update the [form data](/docs/front-end-basics/configured-views/data-types/shesha-objects/data.md) as part of [executing a script](/docs/front-end-basics/configured-views/action-configurations#execute-script-accepts-javascript-expressions).
+This function is used to update the [form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) as part of [executing a script](/docs/front-end-basics/configured-views/action-configurations#execute-script-accepts-javascript-expressions).
 
 This function signature is a `TypeScript arrow function` that takes a single parameter, which is an object with two properties: `values` and `mergeValues`. Here's an explanation of each part:
 
@@ -53,3 +53,7 @@ setFormData({
   mergeValues: true,
 });
 ```
+
+# See Also
+
+- [Form Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data)

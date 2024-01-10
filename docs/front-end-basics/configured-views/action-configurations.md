@@ -21,7 +21,7 @@ This provides a code editor that allows the user to enter custom JavaScript code
 ![Image](./images/action3.png)
 ![Image](./images/action4.png)
 
-_Read more about custom javascript scripting [here](/docs/front-end-basics/how-to-guides/basic-scripting)_
+_Read more about custom javascript scripting [here](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting)_
 
 ### API call
 

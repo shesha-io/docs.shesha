@@ -73,6 +73,14 @@ const config = {
         disableSwitch: true,
         respectPrefersColorScheme: false,
       },
+      algolia: {
+        appId: 'MOO4DA27N6',
+        apiKey: '4e0cf72842305511591eaa243c6a0c50',
+        indexName: 'shesha',
+        contextualSearch: true,
+
+        //... other Algolia params
+      },
       navbar: {
         logo: {
           alt: 'My Site Logo',
