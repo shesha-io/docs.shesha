@@ -24,11 +24,19 @@
 .ai-search-result-wrapper {
     margin-top: 0;
     width: 100%;
+    background-color: rgb(241, 241, 241);
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.ai-result-container.scrolled {
+    overflow-x: hidden !important;
 }
 
 .ai-search-bar-header {
     display: flex;
-    padding: var(--docsearch-spacing) var(--docsearch-spacing) 0;
+    padding: 5px;
+    background-color: white;
 }
 
 .custom-search-container {
