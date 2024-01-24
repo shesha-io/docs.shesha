@@ -9,25 +9,28 @@ sidebar_position: 2
 
 |  **Attribute**  | **Description** |
 |--|--|
-| `[Entity]` | Provides important parameters controlling how, and if, dynamic APIs should be generated for the entity. Also supports `TypeShortAlias` parameter. |
-| `[Discriminator]` | This attribute applies on base classes whose subclasses inherit from. <br/> Example: Entities – Patient, Practitioner are all of type Person hence they would use the Person table on the database and a discriminator column to specify the type of Person(Patient, Practitioner) that is being referred to.|
-| `[Table(“TableName”)]` | Specifies the database table that the entity data will be persisted to. |
-| `[Audited]` | Identifies fields whose changes should be logged for easy tracking of when the change was made and the user responsible for that change. When used on the class level, all properties of that entity will be audited. |
+| `[Audited]` | When applied at the class level, all properties of that entity will be logged indicating when the change was made, the user responsible for that change as well as the original and new value(s). See also [audit logging](/docs/fundamentals/audit-logging.md). |
+| `[Discriminator]` | This attribute should be applied to any entity that you would expect to inherit from so that a Discriminator column can be added at the database layer. By default Shesha uses a 'Table per Hierarchy' inheritance strategy. This means that all entity subclasses will be stored in the same table as the base class, and a discriminator column will be used to identify the type of entity being stored. |
+| `[DiscriminatorValue("DiscriminatorName")]` | This attribute should only be applied to entities that inherit from another entity class. It specifies the value to be used as its discriminator when stored in the database. By default Shesha uses a 'Table per Hierarchy' inheritance strategy. This means that all entity subclasses will be stored in the same table as the base class, and a discriminator column will be used to identify the type of entity being stored. If this attribute is ommitted, Shesha will use the entity class' namespace and name e.g. `MyOrg.MyApp.` |
+| `[Entity]` | Provides parameters to add additional metadata to the entity and control additional aspects of the beharior of the entity: <br/> **`GenerateApplicationService`** - Specifies whether CRUD APIs for this entity should be generated. See also [CRUD APIs](/docs/back-end-basics/crud-apis.md). <br/> **`ApplicationServiceName`** - The name of the application service to be generated for the entity. This will be reflected in the url of the dynamically generated CRUD API. If not specified, the name of the entity will be used. See also [CRUD APIs](/docs/back-end-basics/crud-apis.md). <br/> **`FriendlyName`** - A more user friendly name for the entity to be used in the UI. If not specified, the name of the entity will be used. <br/> **`TypeShortAlias`** - (For internal use) Alias sometimes used by the framework instead of the fully qualified type name to identify the type of the entity.
+ |
+| `[Table(“TableName”)]` | Specifies the database table that the entity data will be persisted to. If ommitted, the framework will assume the normal naming conventions. |
 
 # Properties Attributes
 
 |  **Attribute**  | **Description** |
 |--|--|
-|`[Description(“Description of Property name”)]`  | Description of Class/Property Name. |
-| `[Required]` | Used to specify fields that are mandatory for the user to enter, usually denoted by * on applications. |
-| `[ReadonlyProperty]` | Identifies properties which Shesha should read from the database, but not attempt to update. This is typically used for properties based calculated columns at the database level.  |
-| `[NotMapped]` | Identifies properties which Shesha should not attempt to map to the database. This is typically used for properties calculated at the application level. |
-| `[StringLength(maxLength)] / [StringLength(minLength, maxLength)` | Used to specify a field length(in number of bytes required to store the string) that needs to be limited to maximum length or both minimum and maximum lengths. Its default parameter is maxLength and is used by properties with the _string_ data type. |
-| `[ReferenceList(“ModuleName”, “RefListName”)]` | Used to denote properties of referencelist data type. |
-| `[Audited]` | Identifies fields whose changes should be logged for easy tracking of when the change was made and the user responsible for that change. When used on the class level, all properties of that entity will be audited. |
-| `[SaveAsJson]` | Applies to properties that reference child objects and causes them to be saved in the database as a Json string rather than as a regular entity. |
+| `[Audited]` | When applied to a property, any changes to that property will be logged indicating when the change was made, the user responsible for that change as well as the original and new value(s). See also [audit logging](/docs/fundamentals/audit-logging.md). |
+Identifies fields whose changes should be logged for easy tracking of when the change was made and the user responsible for that change. When used on the class level, all properties of that entity will be audited. See also [audit logging](/docs/fundamentals/audit-logging.md). |
 | `[CascadeUpdateRules]` | Applies to properties that reference other entities in order to specify if updates and creates actions should be cascaded to the referenced entity. |
+| `[Description(“Description of Property name”)]`  | Description of Class/Property Name. |
 | `[Encrypt]` | Identifies fields which should be persisted in the database as an encrypted string. 
+| `[NotMapped]` | Identifies properties which Shesha should not attempt to map to the database for read or write purposes. This is typically used for properties calculated at the application level. |
+| `[ReadonlyProperty]` | Identifies properties which Shesha should read from the database, but not attempt to update. This is typically used for properties based calculated columns at the database level.  |
+| `[ReferenceList(“ModuleName”, “RefListName”)]` | Used to denote properties of referencelist data type.  See also [reference lists](/docs/back-end-basics/reference-lists.md).  |
+| `[Required]` | Used to specify fields that are mandatory for the user to enter, usually denoted by * on applications. |
+| `[StringLength(maxLength)] / [StringLength(minLength, maxLength)` | Used to specify a field length(in number of bytes required to store the string) that needs to be limited to maximum length or both minimum and maximum lengths. Its default parameter is maxLength and is used by properties with the _string_ data type. |
+| `[SaveAsJson]` | Applies to properties that reference child objects and causes them to be saved in the database as a Json string rather than as a regular entity. |
 
 
 # Sample Domain Entity Class with Attributes
