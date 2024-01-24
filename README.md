@@ -1,4 +1,4 @@
-# Appsmith Documentation
+# Shesha Documentation
 
 This is the source of documentation for [Shesha](https://www.shesha.io/), hosted at [docs.shesha.io](https://docs.shesha.io/get-started/Introduction), powered by Docusaurus v2.
 

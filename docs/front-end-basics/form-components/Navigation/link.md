@@ -2,11 +2,11 @@
 
 Used to move between web pages, explore different sections of a website, or visit entirely different online resources. Links are formed by embedding hyperlinks within text. When users click on these links, they can access specified web pages or resources. This makes browsing the internet easier and more intuitive.
 
-[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=b20997d3-cd89-4bd6-98ca-135a63bf388b" title="Link Component" ></iframe>)
+[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=b20997d3-cd89-4bd6-98ca-135a63bf388b" title="Link Component" ></iframe>'
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md)).
 
 ### Content
 

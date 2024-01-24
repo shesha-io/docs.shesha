@@ -6,11 +6,11 @@ The Divider is used to create a sense of order, separate different types of cont
 - Divide inline text and links such as the operation column of a table.
 - Differentiating Between Comments or Notes.
 
-[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=fd020433-5ec7-41b2-9ddc-d86e3ed2c1ae" title="Divider Component" ></iframe>)
+[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=fd020433-5ec7-41b2-9ddc-d86e3ed2c1ae" title="Divider Component" ></iframe>'
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md)).
 
 ### Container
 

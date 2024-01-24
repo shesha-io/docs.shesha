@@ -1,3 +1,7 @@
+---
+draft: true
+---
+
 # Basic
 
 Basic data types refer to the fundamental categories of values that programming languages use to represent different kinds of information. These data types define the nature of the values that variables can hold and determine the operations that can be performed on those values. Common basic data types include:

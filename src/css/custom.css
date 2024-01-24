@@ -31,6 +31,10 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+.ant-list-item {
+  padding: 5px !important;
+}
+
 .theme-doc-sidebar-item-category-level-1>.menu__list-item-collapsible>.menu__link--sublist {
   margin-bottom: 6px;
   font-size: 0.938rem;

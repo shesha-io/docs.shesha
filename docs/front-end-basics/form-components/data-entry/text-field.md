@@ -2,7 +2,7 @@
 
 This page provides information on using the Text Field component to gather and validate user input such as text, numbers, emails, and passwords.
 
-[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=e3191b51-4a87-4187-910e-177bcbed657b" title="Text Field Component" ></iframe>)
+[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=e3191b51-4a87-4187-910e-177bcbed657b" title="Text Field Component" ></iframe>'
 
 ## Properties
 
@@ -25,7 +25,7 @@ The following properties are available to configure the behavior of the componen
 
 ### Default Value
 
-- This allows you to set the default value for the input field. _[formData](/docs/front-end-basics/configured-views/data-types/shesha-objects/data) is exposed_.
+- This allows you to set the default value for the input field. _[formData](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) is exposed_.
 
 ### Empty as Default
 
