@@ -18,12 +18,11 @@ In this section, we are configuring the most common types of views taking advant
 
 ### Form Fields
 
-- **Module:** Specifies the Shesha module the new form configuration will be saved under.
-- **Template:** Specifies the template to use for the new form (e.g. table or form view).
-- **Name:** A name for the form. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
-- **Label:** A user-friendly name for the form.
+- **Module:** Specifies the application module the new form configuration will be saved under.
+- **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
+- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
 - **Description:** Additional information about the form.
-- **Model Type:** Specifies the type of Entity you want the form to bind to. This determines the information that the form will be able to access and display.
+- **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
 
 ## Form Versioning
 

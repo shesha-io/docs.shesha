@@ -34,7 +34,13 @@ This section describes the properties which are common to all form components.
 
 ### Hidden
 
-- Controls the visibility of the component. If turned off, the component is not visible in View mode.
+- Controls the visibility of the component.
+  - `return true` if you want to hide the component
+  - `return false` if you want to show the component
+
+:::tip
+`return data.gender != 2` - This shows the component if the gender is 2
+:::
 
 ### Description
 
