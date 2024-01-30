@@ -11,7 +11,9 @@ If an Entity's property is expected to only accept a standard list of values, a 
 
 For efficiency and maintainability reasons, properties that store a selection from a Reference List, will store the selected item as an integer, rather than the text value of the items selected. That is why a Reference List Entity properties are usually either of type `enum` or `long`.
 
-## When to use Code-based (enum) vs Data based (long) Reference Lists?
+## Code-based (enum) vs Data based (long) Reference Lists
+
+Reference Lists can be implemented in two ways:
 
 ### Code-based (enum) Reference Lists
 For reference lists that are not expected to change **ever**, for example, 'Days Of The Week' or 'Gender', an enum should be used.
@@ -48,6 +50,8 @@ public enum RefListGender: long
 ```
 
 **Important Note:** Shesha automatically looks for all enums with the `ReferenceList` attribute and creates the equivalent values in the database during the start-up process. For this reason, it is not necessary to create the values manually through DB Migrator classes. Additionally, if you attempt to update the list of values through the administration views or directly in the database, changes will get undone by Shesha through this automated synching process.
+
+
 
 ### Data-Based Reference List 
 If the values of a Reference List are expected to change in the future perhaps to allow future customisation for clients or evolving needs, a Data-Driven reference list should be used.

@@ -64,5 +64,9 @@ public class SuperAppModule : SheshaModule<SuperAppModule>
 }
 ```
 
+:::tip Best Practices for Exporting Configurations 
+It is advisable to export and embed configuration changes in a fairly granular manner, rather than exporting infrequently and in bulk. This approach is particularly beneficial when configuration changes are meant to coincide with corresponding code modifications, ensuring that both are deployed simultaneously. Additionally, this method enhances traceability to specific features. 
+:::
+
 ## See also
 - [Shesha Modules](modules)
