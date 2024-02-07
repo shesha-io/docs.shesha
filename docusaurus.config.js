@@ -165,6 +165,11 @@ const config = {
       src:
         '/scripts/hotjarTracking.js',
       defer: true,
+    },
+    {
+      src:
+        '/scripts/googleTag.js',
+      defer: true,
     }
   ],
 };

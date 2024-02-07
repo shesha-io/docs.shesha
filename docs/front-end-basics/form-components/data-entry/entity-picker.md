@@ -2,7 +2,7 @@
 
 EntityPicker displays an entity instance in a text field and performs actions when the user clicks buttons on the right.
 
-[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=78cf2cab-724b-43cb-a370-7b71e2f215e6" title="Entity Picker Component" ></iframe>)
+[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=78cf2cab-724b-43cb-a370-7b71e2f215e6" title="Entity Picker Component" ></iframe>'
 
 Use EntityPicker if:
 
@@ -11,7 +11,7 @@ Use EntityPicker if:
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
 
 ### Entity Type
 

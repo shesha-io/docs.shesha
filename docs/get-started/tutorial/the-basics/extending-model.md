@@ -44,7 +44,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Boxfusion.Membership.Common.Domain.Enums
+namespace Shesha.Membership.Common.Domain.Enums
 {
     /// <summary>
     /// Statuses for a Members Membership
@@ -193,7 +193,7 @@ This can be done by updating the Model Type property in all our views from `Shes
 
 With the addition of properties to our entity, to facilitate for an overall cleaner and more managable UI, we are going to be utilizing a `wizard` component for properly delinating the different sections of information required for the member registration.
 
-_You can find more information about implementation of the wizard component [here](/docs/front-end-basics/form-components/data-entry/wizard.md)_
+_You can find more information about implementation of the wizard component [here](/docs/front-end-basics/form-components/data-entry/wizard)_
 
 3. Search and drag in a `wizard` component from the `Builder Widgets`
 4. Drag in all the existing components onto the `wizard` component's draggable area
@@ -229,7 +229,7 @@ function onError(_e) {
 
 7. While on the `Biographical Information` step of the wizard, search and drag in the `File` component from the `Builder Widgets`.
 
-_You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/data-entry/files.md)_
+_You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/data-entry/files)_
 
 7. Configure the `File` component with the following:
 

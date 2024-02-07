@@ -6,7 +6,7 @@ This page provides information on using the Text Field component to gather and v
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
 
 ### Type
 

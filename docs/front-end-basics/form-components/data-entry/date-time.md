@@ -2,11 +2,11 @@
 
 By clicking the input box, you can select a date or time from a popup calendar.
 
-[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=0eba72ca-fd57-46cf-82d0-efcf30765166" title="Date time" ></iframe>)
+[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=0eba72ca-fd57-46cf-82d0-efcf30765166" title="Date time" ></iframe>'
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties.md).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
 
 ### Range
 
