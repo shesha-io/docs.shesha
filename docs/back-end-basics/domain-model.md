@@ -324,27 +324,9 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 
 There are several ways to model inheritance in a database. In this document, we will discuss two approaches implemented in the Shesha Framework to date.
 
-**1.Table-Per-Hierarchy (TPH)**
+**1. Table-Per-Hierarchy (TPH)**
 
    There is a single table representing the entire inheritance hierarchy, leading to potentially sparse columns. A discriminator column is added to indicate the type of row.
-
-   Given the classes above, you end up with this table:
-
-   ```sql
-   table Person
-   ------------
-   int id (PK)
-   int rowtype (0 = "Person", 1 = "Employee")
-   string firstname
-   string lastname
-   datetime startdate
-For any rows with rowtype 0 (Person), the startdate will always be null.
-
-Table-Per-Type (TPT)
-
-Each class has its own table. The base class contains all base class elements, and each derived class has its own table, with a primary key that is also a foreign key to the base class table. The derived table's class contains only the different elements.
-
-For example:
 ```csharp
 class Person {
     public int ID;
@@ -356,8 +338,25 @@ class Employee : Person {
     public DateTime StartDate;
 }
 ```
+   Given the classes above, you end up with this table:
 
-This results in tables like:
+   ```sql
+   table Person
+   ------------
+   int id (PK)
+   int rowtype (0 = "Person", 1 = "Employee")
+   string firstname
+   string lastname
+   datetime startdate
+For any rows with rowtype 0 (Person), the startdate will always be null.
+```
+**2. Table-Per-Type (TPT)**
+
+Each class has its own table. The base class contains all base class elements, and each derived class has its own table, with a primary key that is also a foreign key to the base class table. The derived table's class contains only the different elements.
+
+For example:
+
+This results in tables would be like:
 
 ```csharp
 table Person
@@ -372,9 +371,9 @@ int id (PK, FK)
 datetime startdate
 ```
 
-Advantages of the Different Strategies
+**Advantages of the Different Strategies**
 
-**2.Table-Per-Hierarchy (TPH)**
+**Table-Per-Hierarchy (TPH)**
 
   **Advantages:**
 
@@ -385,7 +384,8 @@ Best Suited for:
 Simple inheritance hierarchies with a small number of derived classes.
 Scenarios where performance is a primary concern, especially for read operations.
 Situations where the inheritance hierarchy is unlikely to change frequently.
-Table-Per-Type (TPT):
+
+**Table-Per-Type (TPT):**
 
 **Advantages:**
 
