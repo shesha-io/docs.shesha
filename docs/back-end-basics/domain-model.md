@@ -324,7 +324,7 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 
 There are several ways to model inheritance in a database. In this document, we will discuss two approaches implemented in the Shesha Framework to date.
 
-1. **Table-Per-Hierarchy (TPH)**
+**1.Table-Per-Hierarchy (TPH)**
 
    There is a single table representing the entire inheritance hierarchy, leading to potentially sparse columns. A discriminator column is added to indicate the type of row.
 
@@ -373,9 +373,10 @@ datetime startdate
 ```
 
 Advantages of the Different Strategies
-Table-Per-Hierarchy (TPH):
 
-Advantages:
+**2.Table-Per-Hierarchy (TPH)**
+
+  **Advantages:**
 
 Simplifies the database schema by storing all classes in a single table, utilizing NULL values for non-existent attributes in derived classes.
 Typically results in better performance for read-heavy workloads since it requires fewer joins to retrieve data.
@@ -386,7 +387,7 @@ Scenarios where performance is a primary concern, especially for read operations
 Situations where the inheritance hierarchy is unlikely to change frequently.
 Table-Per-Type (TPT):
 
-Advantages:
+**Advantages:**
 
 Maintains a normalized schema by storing each class in its own table, reducing data redundancy.
 Facilitates better performance for write-heavy workloads or scenarios where updates to derived classes are frequent.
@@ -400,7 +401,7 @@ In summary, TPH is often favored for its simplicity and better performance for r
 Implementing a Class that Inherits from ContentItem
 In Shesha, when inheriting from ContentItemBase, the Table-Per-Type approach is used. Below is an example of how you would implement such entities.
 
-1. Example - Entity
+**1. Example - Entity**
 
 ```csharp
 using Boxfusion.Projectmanagement.Domain.Enums;
@@ -439,7 +440,7 @@ namespace Boxfusion.Projectmanagement.Domain.ProgressReports
 }
 ```
 
-2. Example - Migration
+**2. Example - Migration**
 
 ```csharp
 using FluentMigrator;
