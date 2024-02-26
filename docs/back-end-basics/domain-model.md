@@ -320,7 +320,7 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 - [Reference Lists](/docs/back-end-basics/reference-lists)
 - [Domain Class Attributes](/docs/back-end-basics/domain-classes-attributes)
 -
-## Inheriting from ContentItem entity
+## Inheriting from ConfigurationItem entity
 
 There are several ways to model inheritance in a database. In this document, we will discuss two approaches implemented in the Shesha Framework to date.
 
@@ -398,8 +398,8 @@ Applications where data integrity and normalization are critical.
 Scenarios where the schema is subject to frequent changes, as it allows for more flexibility in modifying individual tables without affecting others.
 In summary, TPH is often favored for its simplicity and better performance for read operations, while TPT is preferred when data integrity, schema flexibility, and write performance are more important considerations. Ultimately, the choice should be made based on a careful analysis of the specific requirements and characteristics of the application. TPH is more common in Shesha development, and the purpose of this documentation is to clarify when to use the second approach.
 
-Implementing a Class that Inherits from ContentItem
-In Shesha, when inheriting from ContentItemBase, the Table-Per-Type approach is used. Below is an example of how you would implement such entities.
+Implementing a Class that Inherits from ConfigurationItem
+In Shesha, when inheriting from ConfigurationItemBase, the Table-Per-Type approach is used. Below is an example of how you would implement such entities.
 
 **1. Example - Entity**
 
