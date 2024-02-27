@@ -379,7 +379,8 @@ datetime startdate
 
 Simplifies the database schema by storing all classes in a single table, utilizing NULL values for non-existent attributes in derived classes.
 Typically results in better performance for read-heavy workloads since it requires fewer joins to retrieve data.
-Best Suited for:
+
+**Best Suited for:**
 
 Simple inheritance hierarchies with a small number of derived classes.
 Scenarios where performance is a primary concern, especially for read operations.
@@ -391,7 +392,8 @@ Situations where the inheritance hierarchy is unlikely to change frequently.
 
 Maintains a normalized schema by storing each class in its own table, reducing data redundancy.
 Facilitates better performance for write-heavy workloads or scenarios where updates to derived classes are frequent.
-Best Suited for:
+
+**Best Suited for:**
 
 Complex inheritance hierarchies with many derived classes or where derived classes have significantly different attributes.
 Applications where data integrity and normalization are critical.
