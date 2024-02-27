@@ -401,7 +401,9 @@ Scenarios where the schema is subject to frequent changes, as it allows for more
 In summary, TPH is often favored for its simplicity and better performance for read operations, while TPT is preferred when data integrity, schema flexibility, and write performance are more important considerations. Ultimately, the choice should be made based on a careful analysis of the specific requirements and characteristics of the application. TPH is more common in Shesha development, and the purpose of this documentation is to clarify when to use the second approach.
 
 Implementing a Class that Inherits from ConfigurationItem
-In Shesha, when inheriting from ConfigurationItemBase, the Table-Per-Type approach is used. Below is an example of how you would implement such entities.
+In Shesha, when inheriting from ConfigurationItemBase, the Table-Per-Type approach is used. 
+
+Below is an example of how you would implement such entities.
 
 **1. Example - Entity**
 
