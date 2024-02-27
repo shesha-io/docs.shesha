@@ -319,7 +319,7 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 
 - [Reference Lists](/docs/back-end-basics/reference-lists)
 - [Domain Class Attributes](/docs/back-end-basics/domain-classes-attributes)
--
+
 ## Inheriting from ConfigurationItem entity
 
 There are several ways to model inheritance in a database. In this document, we will discuss two approaches implemented in the Shesha Framework to date.
