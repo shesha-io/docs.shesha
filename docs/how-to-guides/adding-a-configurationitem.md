@@ -9,7 +9,7 @@ The entity(configuration item) must inherit from ConfigurationItemBase
 
 **Step 2**
 
-The entity must use class attributes, [JoinedProperty("Test_DocumentTemplates")] and [DiscriminatorValue(ItemTypeName)]
+The entity must use class attributes, `[JoinedProperty("Test_DocumentTemplates")]` and `[DiscriminatorValue(ItemTypeName)]`
 
 **Step 3**
 
