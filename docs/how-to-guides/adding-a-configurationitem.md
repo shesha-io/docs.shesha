@@ -9,7 +9,7 @@ The entity(configuration item) must inherit from ConfigurationItemBase
 
 **Step 2**
 
-The entity must use class attributes, [JoinedProperty("Test_DocumentTemplates")] and [DiscriminatorValue(ItemTypeName)]
+The entity must use class attributes, `[JoinedProperty("Test_DocumentTemplates")]` and `[DiscriminatorValue(ItemTypeName)]`
 
 **Step 3**
 
@@ -34,10 +34,10 @@ namespace Boxfusion.Projectmanagement.Domain.ProgressReports
 {
 
     [DiscriminatorValue(ItemTypeName)]
-    [JoinedProperty("PM_ProgressReportTemplates")]
-    public class ProgressReportTemplate : ConfigurationItemBase
+    [JoinedProperty("Test_DocumentTemplates")]
+    public class DocumentTemplate : ConfigurationItemBase
     {
-       public const string ItemTypeName = "progress-report-templates";
+       public const string ItemTypeName = "document-templates";
     
         public override string ItemType => ItemTypeName;
 
@@ -73,7 +73,7 @@ namespace Boxfusion.Projectmanagement.Domain.Migrations
     {
         public override void Up()
         {
-            Create.Table("PM_ProgressReportTemplates")
+            Create.Table("Test_DocumentTemplates")
                 .WithIdAsGuid()
                 .WithColumn("PM_Name").AsString(200).Nullable()
                 .WithColumn("PM_Description").AsString(2000).Nullable()
@@ -82,8 +82,8 @@ namespace Boxfusion.Projectmanagement.Domain.Migrations
                 .WithColumn("PM_DetailsForm").AsString(200).Nullable()
                 .WithColumn("PM_ReportingCycleLkp").AsBoolean().Nullable();
 
-          Create.ForeignKey("FK_PM_ProgressReportTemplates_Frwk_ConfigurationItems_Id")
-                .FromTable("PM_ProgressReportTemplates")
+          Create.ForeignKey("FK_Test_DocumentTemplates_Frwk_ConfigurationItems_Id")
+                .FromTable("Test_DocumentTemplates")
                 .ForeignColumn("Id")
                 .ToTable("Frwk_ConfigurationItems")
                 .PrimaryColumn("Id");
