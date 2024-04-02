@@ -16,8 +16,8 @@ To successfully complete the tutorial, you should have some understanding of ASP
 
 - **Visual Studio Code (Frontend):**
 
-  - Node.js: To run your frontend, version 18.17.0 of Node.js should be installed. If you already have another version of Node installed, you can use Node Version Manager to toggle between versions to avoid conflicts with other projects. More information on node version management can be found [here](https://github.com/nvm-sh/nvm).
-  - Npm: Version 9.6.7
+  - Node.js: To run your frontend, version 20.11.1 of Node.js should be installed. If you already have another version of Node installed, you can use Node Version Manager to toggle between versions to avoid conflicts with other projects. More information on node version management can be found [here](https://github.com/nvm-sh/nvm).
+  - Npm: Version 10.2.4
   - Next.js: Version 14.1.0
 
 - **Visual Studio (Backend):**

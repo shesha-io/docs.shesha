@@ -49,7 +49,7 @@ sidebar_position: 1
 - Open Microsoft Visual Studio Code
 - Navigate to `File > Open Folder` and open the adminportal folder from your downloaded starter project
 - Open a new terminal by going to `Terminal > New Terminal`
-- Check if you have Node.js version `18.5.0` installed by running `node -v`
+- Check if you have Node.js version `20.11.1` installed by running `node -v`
 - Install node_modules by running `npm i --legacy-peer-deps -f` in the terminal
 - Run your frontend application by typing `npm run dev` in your terminal
 - To login to the admin portal, use the username `admin` and password `123qwe`
