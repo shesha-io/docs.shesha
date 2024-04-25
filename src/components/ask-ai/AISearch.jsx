@@ -19,6 +19,7 @@ const AISearch = forwardRef((props, ref) => {
   const [isAnswerComplete, setIsAnswerComplete] = useState(false);
   const [termSelected, setTermSelected] = useState(false);
   const [sources, setSources] = useState([]);
+  const [chatHistory, setChatHistory] = useState([]);
 
   const commonSearchQueries = [
     "What is Shesha?",
@@ -36,6 +37,7 @@ const AISearch = forwardRef((props, ref) => {
     setShowExamples(true);
     setTermSelected(false);
     setIsAnswerComplete(false);
+    setChatHistory([]);
   };
 
   const resetGeneratedResponse = () => {
@@ -79,9 +81,12 @@ const AISearch = forwardRef((props, ref) => {
     setIsAnswerComplete(false);
     // setUserSearchTerm(query);
     // registerAISearch(query);
+    const newChatHistory = [...chatHistory, { user: query }];
+    const updatedChatHistory = newChatHistory.slice(-3);
+    setChatHistory(updatedChatHistory);
 
     try {
-      const apiUrl = "https://vutomibrain.azurewebsites.net/shesha";
+      const apiUrl = "botsa.azurewebsites.net/shesha_ai";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
@@ -89,22 +94,30 @@ const AISearch = forwardRef((props, ref) => {
         },
         body: JSON.stringify({
           userinput: query,
-          chathistory:
-            "'User': 'Hello', 'vutomi': 'Good day, how can I help you?'",
+          chathistory: JSON.stringify(updatedChatHistory),
+          index_name: "shesha"
         }),
       });
+
+      console.log("response", response)
 
       if (response.ok) {
         const data = await response.json();
         console.log(`AI response: ${data.message.response_message}`);
         setIsLoading(false);
         setAnswer(data.message.response_message);
-        data.message.source.forEach(item => {
-            setSources(prevArray => [...prevArray, `https://docs.shesha.io${item.substring(item.indexOf(`\\docs\\`), item.length).replace(/\\/g, "/").slice(0, -3)}`]);
-        });
+        setSources(data.message.source);
         setIsAnswerComplete(true);
         setInputValue("");
         setSearchTerm("");
+        const nextChatHistory = [...updatedChatHistory, { sheshaAI: data.message.response_message }];
+
+        if (nextChatHistory.length > 3) {
+          setChatHistory(nextChatHistory.slice(-3));
+        } else {
+          setChatHistory(nextChatHistory);
+        }
+
         return;
       }
 
