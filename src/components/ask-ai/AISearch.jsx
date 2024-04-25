@@ -86,7 +86,7 @@ const AISearch = forwardRef((props, ref) => {
     setChatHistory(updatedChatHistory);
 
     try {
-      const apiUrl = "botsa.azurewebsites.net/shesha_ai";
+      const apiUrl = "https://botsa.azurewebsites.net/shesha_ai";
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
