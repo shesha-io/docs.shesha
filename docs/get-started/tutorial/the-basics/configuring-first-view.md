@@ -11,18 +11,6 @@ In this section, we are configuring the most common types of views taking advant
 - View the details of the registered persons
 - Access the list view from the main menu
 
-## Creating a New Form
-
-- On the `Main Menu`, navigate to `Configurations > Forms`.
-- Click on the `Create New` button on the toolbar.
-
-### Form Fields
-
-- **Module:** Specifies the application module the new form configuration will be saved under.
-- **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
-- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
-- **Description:** Additional information about the form.
-- **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
 
 ## Form Versioning
 
@@ -44,6 +32,19 @@ The typical workflow involves creating or modifying a form in the "Draft" state,
 
 This versioning system helps organizations manage changes to forms in a controlled manner, preventing unintended modifications to live forms and allowing for a structured development and deployment process. It also provides a clear distinction between the different stages of a form's life cycle, making it easier to track and manage changes.
 
+## Creating a New Form
+
+- On the `Main Menu`, navigate to `Configurations > Forms`.
+- Click on the `Create New` button on the toolbar.
+
+### Form Fields
+
+- **Module:** Specifies the application module the new form configuration will be saved under.
+- **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
+- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
+- **Description:** Additional information about the form.
+- **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
+
 ## Table View
 
 To manage the information of the people registered onto the system, we need to create a table view.
@@ -51,11 +52,12 @@ To manage the information of the people registered onto the system, we need to c
 1. **Create a new form with the following information:**
 
    - Module: `Shesha.Membership`
+   - Entity: `Shesha.Domain.Person`
    - Template: `table-view`
    - Name: `members-table`
    - Label: `Members Table`
    - Description: `This table view is used to display a list of all members`
-   - Model Type: `Shesha.Domain.Person (Shesha.Core.Person)`
+   
 
 ![Image](./images/memberTable.png)
 
@@ -189,7 +191,7 @@ This can be achieved in 2 ways:
 2. **Custom Validator Script:**
 
    - Navigate to the `validator` property on the text field.
-   - Execute custom JavaScript code that returns a promise. E.g.
+   - Copy the code and paste inside the given validator function to execute custom JavaScript code that returns a promise. E.g.
 
      ```javascript
      function isValidPhoneNumber(number) {
@@ -209,7 +211,7 @@ This can be achieved in 2 ways:
 **Custom Validator Script:**
 
 - Navigate to the `validator` property on the text field.
-- Execute custom JavaScript code that returns a promise. E.g.
+- Copy the code and paste inside the given validator function to execute custom JavaScript code that returns a promise. E.g.
 
   ```javascript
   function isValidEmailAddress(email) {
@@ -227,7 +229,7 @@ This can be achieved in 2 ways:
 ### Disabling Dates before year 2000
 
 1. In the spirit of discriminating against people born before 1990, we will be disabling dates before then. On the `Datetime` component, navigate to the `Disabled Date Mode` > `Custom function`.
-2. On the `Disabled Date func` code editor, execute the following JavaScript expression. E.g.
+2. On the `Disabled Date func` code editor, copy the code and paste inside the given isDateDisabled function to execute the following JavaScript expression. E.g.
 
    ```javascript
    // disabling before year 1900
