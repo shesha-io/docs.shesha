@@ -42,6 +42,7 @@ sidebar_position: 1
   3.  The application should open in your browser on the default Swagger API page.
 
 ![Get Shesha](./images/swagger1.png)
+
 ![Get Shesha](./images/swagger2.png)
 
 ## 4. Setup the Frontend (Visual Studio Code):
