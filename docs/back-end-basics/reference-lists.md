@@ -159,8 +159,7 @@ var res = myEntity.GetMultiValueReferenceListItemNames("MyMultiValProperty");
 
 
 // Returns an string array listing all the items selected.
-var res = myEntity.GetMultiValueReferenceListItemNamesAr
-("MyMultiValProperty");
+var res = myEntity.GetMultiValueReferenceListItemNamesAr("MyMultiValProperty");
 ...
 ```
 
