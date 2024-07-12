@@ -41,7 +41,7 @@ A typical Shesha module class is shown below:
 public class CrmApplicationModule : SheshaModule
 {
     public override SheshaModuleInfo ModuleInfo => new SheshaModuleInfo("Crm") {
-        FriendlyName = "Customer Relationship Management",
+        Name = "Customer Relationship Management",
         FriendlyName = "Module help manage customer relationships and interactions.",
         Publisher = "AcmeCorp"
     };
@@ -62,6 +62,7 @@ public class CrmApplicationModule : SheshaModule
         // Scan the assembly for classes which inherit from AutoMapper.Profile
         Configuration.Modules.AbpAutoMapper().Configurators.Add(
             cfg => cfg.AddMaps(thisAssembly)
+        );
     }
 
 
@@ -71,7 +72,7 @@ public class CrmApplicationModule : SheshaModule
 
         // Create Controllers for all AppServices classes in the assembly
         Configuration.Modules.AbpAspNetCore().CreateControllersForAppServices(
-            typeof(SheshaFormsDesignerModule).GetAssembly(),
+            typeof(SheshaFormsDesignerModule).Assembly,
             moduleName: "Crm",      // Specifies the module name to use for the controller route
             useConventionalHttpVerbs: true);
     }
