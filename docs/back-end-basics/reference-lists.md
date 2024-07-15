@@ -29,8 +29,8 @@ For reference lists that are not expected to change **ever**, for example, 'Days
 public class Person
 {
    ...
-   [ReferenceList("MyModuleName", "Gender")]
-   public RefListDaysOfTheWeek Gender { get; set; } 
+   [ReferenceList("MyModule", "Gender")]
+   public RefListGender Gender { get; set; } 
    ...
 }
 ```
