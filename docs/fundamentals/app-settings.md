@@ -137,7 +137,7 @@ Setting definitions and values are stored in the DB, see the diagram below. Shes
 All migrator expressions are available using `this.Shesha()` extension:
 1. `SettingCreate` - create setting configuration
 2. `SettingUpdate` - update setting configuration and/or set value
-3. `SettingUpdate` - delete setting configuration
+3. `SettingDelete` - delete setting configuration
 
 Examples provided below:
 
