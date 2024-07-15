@@ -8,25 +8,13 @@ In this section, we are configuring the most common types of views taking advant
 
 - View a list of people
 - Register a new person
-- View the details of the registered persons
-- Access the list view from the main menu
+- View the details of the registered person
+- Access the list view of the persons from the main menu
 
-## Creating a New Form
-
-- On the `Main Menu`, navigate to `Configurations > Forms`.
-- Click on the `Create New` button on the toolbar.
-
-### Form Fields
-
-- **Module:** Specifies the application module the new form configuration will be saved under.
-- **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
-- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
-- **Description:** Additional information about the form.
-- **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
 
 ## Form Versioning
 
-Form versioning refers to the practice of managing different versions of a form. Each version represents a distinct state of the form, and organizations often use multiple versions to handle changes, updates, or different stages of the form's life cycle. The three versions available —Live, Ready, and Draft—suggest a common workflow for form versioning. Let's break down their meanings:
+Form versioning refers to the practice of managing different versions of a form. Each version represents a distinct state of the form, and organizations often use multiple versions to handle changes, updates, or different stages of the form's life cycle. The three versions available —Live, Ready, and Draft— suggest a common workflow for form versioning. Let's break down their meanings:
 
 ### Draft
 
@@ -44,6 +32,20 @@ The typical workflow involves creating or modifying a form in the "Draft" state,
 
 This versioning system helps organizations manage changes to forms in a controlled manner, preventing unintended modifications to live forms and allowing for a structured development and deployment process. It also provides a clear distinction between the different stages of a form's life cycle, making it easier to track and manage changes.
 
+## Creating a New Form
+
+- On the `Main Menu`, navigate to `Configurations > Forms`.
+- Click on the `Create New` button on the toolbar.
+
+### Form Fields
+
+- **Module:** Specifies the application module the new form configuration will be saved under.
+- **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
+- **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
+- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
+- **Label:** Label of the item, can be used as a user friendly name.
+- **Description:** Additional information about the form.
+
 ## Table View
 
 To manage the information of the people registered onto the system, we need to create a table view.
@@ -51,28 +53,27 @@ To manage the information of the people registered onto the system, we need to c
 1. **Create a new form with the following information:**
 
    - Module: `Shesha.Membership`
+   - Entity: `Shesha.Domain.Person`
    - Template: `table-view`
    - Name: `members-table`
    - Label: `Members Table`
    - Description: `This table view is used to display a list of all members`
-   - Model Type: `Shesha.Domain.Person (Shesha.Core.Person)`
+   
 
 ![Image](./images/memberTable.png)
 
-2. You will then be redirected to the **Form Designer**, which should have basic table components readily configured for your convenience based on the selected template. All that’s left to do is to configure the columns you want visible and add a title!
+2. You will then be redirected to the **Form Designer**, which should have basic table components readily configured for your convenience based on the selected template. All that’s left to do is to configure the columns you want visible, and add a title!
 
 ![Image](./images/formdesigner.png)
 
 - ### Configuring Table Columns
 
-  - Hover over the `datatable` component handle on your forms components and click it to see the properties of the `datatable` component in the `Properties` sidebar.
+  - Hover over the `datatable` component handle on your form's components and click it to see the properties of the `datatable` component in the `Properties` sidebar.
   - Click on `Configure Columns` > `Add Column`
 
     ![Image](./images/table1.png)
 
   - On the Property Name setting on the Properties sidebar, this provides an autocomplete of all the properties available on the chosen `Model Type`. If the property name selected is what you would like your caption to be, you can use the suffixed lightning bolt icon button to autocomplete the column caption to match the property name. You also have the option to modify the caption if need be.
-
-    ![Image](./images/table2.png)
 
   - Add the following columns by searching and selecting on the `Property Name`:
     - title
@@ -81,6 +82,8 @@ To manage the information of the people registered onto the system, we need to c
     - mobileNumber1
     - emailAddress1
     - gender
+
+    ![Image](./images/table2.png)
   - Click `save` on the `configure columns` modal.
 
 - The `member-table` should now be populated with pre-populated data from the `Person` entity, which is part of the base Shesha Model as included in the Starter Project database.
@@ -112,7 +115,7 @@ To manage the information of the people registered onto the system, we need to c
 
   ![Image](./images/table6.png)
 
-- Click the now `dash-bordered` main menu to toggle the `Main Menu Configuration` dialog box
+- Click the now `highlighted` main menu to toggle the `Main Menu Configuration` dialog box
 - Click on `Add New Item`
 - Configure your new menu item with the following information:
 
@@ -132,6 +135,7 @@ To manage the information of the people registered onto the system, we need to c
 
   ![Image](./images/table7.png)
 
+  - Toggle the switch to go back to live mode  
   - Since our `table-view` has not been published and is still on `Draft` mode, it is **important** to toggle the `form versioning` from `Live` to `Latest` to be able to view the form since it has not been published. Read more on form versioning [here](#form-versioning).
 
   ![Image](./images/table8.png)
@@ -143,11 +147,11 @@ Now that we have a way to view a list of our Members in a table and can access t
 1. **Create a new form with the following information:**
 
    - Module: `Shesha.Membership`
+   - Entity: `Shesha.Domain.Person`
    - Template: `form-view`
    - Name: `member-create`
    - Label: `Member Create`
    - Description: `This create view is used to register a new member`
-   - Model Type: `Shesha.Domain.Person (Shesha.Core.Person)`
 
 2. Once on the form designer, on the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
 
@@ -162,7 +166,7 @@ Now that we have a way to view a list of our Members in a table and can access t
 
    ![Image](./images/create1.png)
 
-3. In the cases where you want to use a different component than the one that is bound to your property by default, you have the choice of searching for a component on the `Builder Widgets`, bind to the relevant property, and modify accordingly. To showcase:
+3. In cases where you want to use a different component than the one that is bound to your property by default, you have the choice of searching for a component on the `Builder Widgets`, bind to the relevant property, and modify accordingly. To showcase:
 
    - Search for `dropdown` on the `Builder Widgets` and drag it onto the edit area.
    - Bind it to the `Title` property in your `Person` entity by searching and selecting from the `Property Name` autocomplete.
@@ -189,7 +193,7 @@ This can be achieved in 2 ways:
 2. **Custom Validator Script:**
 
    - Navigate to the `validator` property on the text field.
-   - Execute custom JavaScript code that returns a promise. E.g.
+   - Copy the code and paste inside the given validator function to execute custom JavaScript code that returns a promise. 
 
      ```javascript
      function isValidPhoneNumber(number) {
@@ -209,7 +213,7 @@ This can be achieved in 2 ways:
 **Custom Validator Script:**
 
 - Navigate to the `validator` property on the text field.
-- Execute custom JavaScript code that returns a promise. E.g.
+- Copy the code and paste inside the given validator function to execute custom JavaScript code that returns a promise. 
 
   ```javascript
   function isValidEmailAddress(email) {
@@ -226,8 +230,8 @@ This can be achieved in 2 ways:
 
 ### Disabling Dates before year 2000
 
-1. In the spirit of discriminating against people born before 1990, we will be disabling dates before then. On the `Datetime` component, navigate to the `Disabled Date Mode` > `Custom function`.
-2. On the `Disabled Date func` code editor, execute the following JavaScript expression. E.g.
+1. In the spirit of discriminating against people born before 1990 :), we will be disabling dates before then. On the `Datetime` component, navigate to the `Disabled Date Mode` > `Custom function`.
+2. On the `Disabled Date func` code editor, copy the code and paste inside the given isDateDisabled function to execute the following JavaScript expression. 
 
    ```javascript
    // disabling before year 1900
@@ -295,11 +299,11 @@ Let’s create a form to enable viewing and editing of our newly registered memb
 1. **Create a new form with the following information:**
 
    - Module: `Shesha.Membership`
+   - Entity: `Shesha.Domain.Person`
    - Template: `details-view`
    - Name: `member-details`
    - Label: `Member Details`
    - Description: `This details view is used to view the details of a member`
-   - Model Type: `Shesha.Domain.Person (Shesha.Core.Person)`
 
 2. You will then be redirected to the **Form Designer**, which should have basic details view components readily configured for your convenience based on the selected template. Let’s drag-and-drop all the properties we want visible!
 3. Delete the default `name` text field that comes standard with the `details-view`.
@@ -311,14 +315,13 @@ Let’s create a form to enable viewing and editing of our newly registered memb
 
 6. On the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
 
+   - title
    - firstName
    - lastName
    - mobileNumber1
    - emailAddress1
    - dateOfBirth
    - gender
-
-7. Bind the `title` property to the dropdown component as shown in the [previous](#create-view) section.
 
 ![Image](./images/details1.png)
 
