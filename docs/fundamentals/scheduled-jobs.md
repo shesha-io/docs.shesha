@@ -4,7 +4,7 @@ sidebar_label: Scheduled Jobs
 
 # Scheduled Jobs
 
-Many enterprise applications require that certain actions are performed in the background and triggered on a set schedule (e.g. every night, every week, or even every few minutes). We call these **Scheduled Jobs** and build on top of Shesha's support for <a href="https://shesha-documentation.readthedocs.io/en/latest/5.%20Fundamentals/5.3.%20Background%20Jobs/" target="_blank">Background Jobs</a>. Such operations may include:
+Many enterprise applications require that certain actions are performed in the background and triggered on a set schedule (e.g. every night, every week, or even every few minutes). We call these **Scheduled Jobs** and build on top of Shesha's support for [Background Jobs](/docs/fundamentals/background-jobs). Such operations may include:
 
 - Sending of bulk notifications such as reminders
 - Data update and clean-up after a certain timeframe (e.g. looking for expired shopping carts, data synchronisation)
