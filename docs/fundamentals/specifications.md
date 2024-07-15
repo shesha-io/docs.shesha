@@ -21,7 +21,7 @@ Shesha provides base class for specifications - `ShaSpecification<T>`. The key d
   
 Example of specification class:
 
-![image](https://user-images.githubusercontent.com/85956374/222995031-48d05f98-6b94-46b7-81de-f6f7a477a5da.png)
+![image](https://user-images.githubusercontent.com/85956374/222995032-20c4f1c4-f26a-49aa-8787-e11548d9ffad.png)
 
 ## Global specifications
   
@@ -40,7 +40,7 @@ The affect of the specifications activated using the **SpecificationManager** is
 ## Disable specifications
 In some cases it may be useful to disable all specifications. The **SpecificationManager** allows to do it using **DisableSpecifications()** method, see example below.
 
-![image](https://user-images.githubusercontent.com/85956374/222995032-20c4f1c4-f26a-49aa-8787-e11548d9ffad.png)
+![image](https://user-images.githubusercontent.com/85956374/222995031-48d05f98-6b94-46b7-81de-f6f7a477a5da.png)
 
 On the action level you can disable all specifications using **DisableSpecificationsAttribute**:
 
