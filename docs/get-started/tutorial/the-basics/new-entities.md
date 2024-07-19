@@ -32,7 +32,7 @@ namespace Shesha.Membership.Domain.Domain
     /// <summary>
     ///
     /// </summary>
-    [Entity(TypeShortAlias = "Mem.MembershipPayment")]
+    [Entity(TypeShortAlias = "Mem_.MembershipPayment")]
     public class MembershipPayment : FullAuditedEntity<Guid>
     {
         /// <summary>

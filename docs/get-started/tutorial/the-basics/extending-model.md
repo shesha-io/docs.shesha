@@ -30,7 +30,7 @@ The concept of a `table prefix` on the backend is often associated with database
 
 ### Create a Reference List
 
-1. Create a folder called Enums in Module > Boxfusion.Membership.Common.Domain.
+1. Create a folder called Enums in Module > Shesha.Membership.Common.Domain.
 2. Right click on the Enums folder, Add > Class.
 3. Give your class the name of: RefListMembershipStatuses.cs, and click on Add.
 4. Add the below code:
@@ -49,7 +49,7 @@ namespace Shesha.Membership.Common.Domain.Enums
     /// <summary>
     /// Statuses for a Members Membership
     /// </summary>
-    [ReferenceList("Mem", "MembershipStatuses")]
+    [ReferenceList("Mem_", "MembershipStatuses")]
     public enum RefListMembershipStatuses : long
     {
         /// <summary>
@@ -73,7 +73,7 @@ namespace Shesha.Membership.Common.Domain.Enums
 
 ### Create a New Entity
 
-1. Navigate to `Boxfusion.Membership.Common.Domain` > `Domain`
+1. Navigate to `Shesha.Membership.Common.Domain` > `Domain`
 2. Right click on the `Domain` folder, `Add` > `Class`
 3. Give your class the name of: `Member.cs`, and click on `Add`- This is where we will be adding properties we want as an addition to the Person table.
 
@@ -90,7 +90,7 @@ namespace Shesha.Membership.Domain.Domain
     /// <summary>
     /// A person within the application that is a Member
     /// </summary>
-    [Entity(TypeShortAlias = "Mem.Member")]
+    [Entity(TypeShortAlias = "Mem_.Member")]
     public class Member : Person
     {
         /// <summary>
@@ -112,7 +112,7 @@ namespace Shesha.Membership.Domain.Domain
         /// <summary>
         /// The status of the membership
         /// </summary>
-        [ReferenceList("Mem", "MembershipStatuses")]
+        [ReferenceList("Mem_", "MembershipStatuses")]
         public virtual RefListMembershipStatuses? MembershipStatus { get; set; }
     }
 }
@@ -121,7 +121,7 @@ namespace Shesha.Membership.Domain.Domain
 
 ### Create a Migration Class
 
-1. Navigate to `Boxfusion.Membership.Common.Domain` > `Migrations`
+1. Navigate to `Shesha.Membership.Common.Domain` > `Migrations`
 2. Right click on the `Migrations` folder, `Add` > `Class`
 3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124085300.cs for 24 November 2023 08:53:00**.
 4. Add the below code:
@@ -231,23 +231,23 @@ function onError(_e) {
 
 _You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/data-entry/files)_
 
-7. Configure the `File` component with the following:
+8. Configure the `File` component with the following:
 
    - Property Name : `idDocument`
    - Label : `Id Document`
    - Owner Id: _leave empty_
 
-8. While on the `Biographical Information` step of the wizard, search and drag in the `Entity Picker` component from the `Builder Widgets`.
+9. While on the `Biographical Information` step of the wizard, search and drag in the `Entity Picker` component from the `Builder Widgets`.
 
 _You can find more information about implementation of the entity picker component [here](/docs/front-end-basics/form-components/data-entry/entity-picker)_
 
-8. Configure the `Entity Picker` component with the following:
+10. Configure the `Entity Picker` component with the following:
 
    - Property Name : `address`
    - Label : `Address`
    - Entity Type: `Shesha.Domain.Address (Shesha.Core.Address)`
 
-9. `Configure Columns` of the wizard to include the following columns:
+11. `Configure Columns` of the wizard to include the following columns:
    - addressLine1
    - suburb
    - town

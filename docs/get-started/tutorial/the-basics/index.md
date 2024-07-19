@@ -14,14 +14,18 @@ This tutorial covers the basic concepts of Shesha and takes you through a series
 
 To successfully complete the tutorial, you should have some understanding of ASP.NET Core, and the following tools installed:
 
-- **Visual Studio Code (Frontend):**
+- **Frontend:**
 
-  - Node.js: To run your frontend, version 20.11.1 of Node.js should be installed. If you already have another version of Node installed, you can use Node Version Manager to toggle between versions to avoid conflicts with other projects. More information on node version management can be found [here](https://github.com/nvm-sh/nvm).
-  - Npm: Version 10.2.4
-  - Next.js: Version 14.1.0
+  - **Visual Studio Code**: Free powerful lightweight source code editor that supports multiple programming languages. You can download and install Visual Studio code [here](https://code.visualstudio.com/Download).
+  - **Node.js**: To run your frontend, version 20.11.1 of Node.js should be installed. If you already have another version of Node installed, you can use Node Version Manager to toggle between versions to avoid conflicts with other projects. More information on node version management can be found [here](https://github.com/nvm-sh/nvm).
+  - **Npm**: Version 10.2.4
+  - **Next.js**: Version 14.1.0
 
-- **Visual Studio (Backend):**
+- **Backend:**
 
-  - .NET: Version 8.0
+  - **Visual Studio**: Feature rich IDE for editing, building, and debugging .NET projects. Download the community version [here](https://visualstudio.microsoft.com/) if you don't have it installed on your machine.
+  - **.NET**: Version 8.0
 
-- **SQL Server Management Studio (Database)**
+- **Database:**
+
+  - **SQL Server Management Studio**: Powerful integrated environment for managing SQL Server databases. You can download the latest version for SSMS on your machine [here](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16).
