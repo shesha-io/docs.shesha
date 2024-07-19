@@ -9,32 +9,25 @@ This section describes the properties which are common to all form components.
 ## Display
 
 ### Component Name
-
-- Name of the component. This should be unqiue within the form, contain only alphanumeric characters and underscores and should not contain any spaces. This name is used to access the component programmatically through its parent form's context property.
+ Name of the component. This should be unqiue within the form, contain only alphanumeric characters and underscores and should not contain any spaces. This name is used to access the component programmatically through its parent form's context property.
 
 ### Property Name
-
-- Specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
+ Specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
 
 ### Context
-
-- Speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty. Otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
+ Speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty. Otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
 
 ### Label
-
-- The label to display next to the form component. This will be displayed unless the [Hide Label](#hide-label) property is set to true.
+ The label to display next to the form component. This will be displayed unless the [Hide Label](#hide-label) property is set to true.
 
 ### Label Align
-
-- Positioning of label relative to the component. **Options**: 'Left', 'Right', 'Top'
+ Positioning of label relative to the component. **Options**: 'Left', 'Right', 'Top'
 
 ### Hide Label
-
-- Controls the visibility of the component label. If turned off, the component label is not visible in View mode.
+ Controls the visibility of the component label. If turned off, the component label is not visible in View mode.
 
 ### Hidden
-
-- Controls the visibility of the component.
+ Controls the visibility of the component.
   - `return true` if you want to hide the component
   - `return false` if you want to show the component
 
@@ -43,8 +36,7 @@ This section describes the properties which are common to all form components.
 :::
 
 ### Description
-
-- Additional description for the component, more for internal configurator/developer use.
+ Additional description for the component, more for internal configurator/developer use.
 
 ### Edit Mode
 
@@ -55,32 +47,26 @@ Options:
 - **Read Only** - The component serves as a form of data display, and the user cannot edit the component's value or the component functionality will be disabled (greyed out).
 
 ### Hide Border
-
-- Removes the border from the styling of the component.
+ Removes the border from the styling of the component.
 
 ### Tooltip
-
-- Additional information to display to the user as a tooltip.
+ Additional information to display to the user as a tooltip.
 
 ### Placeholder
-
-- Placeholder text to display to the user when no value is specified.
+ Placeholder text to display to the user when no value is specified.
 
 ### Default Value
-
-- Specifies the default value of the component.
+ Specifies the default value of the component.
 
 ## Validation
 
 ### Required
-
-- If checked, prohibits form submission if the component does not have a value (mandatory). Indicated by a red asterisk mark next to the component.
+ If checked, prohibits form submission if the component does not have a value (mandatory). Indicated by a red asterisk mark next to the component.
 
 ## Style
 
 ### Style
-
-- Allows configurators to specify custom CSS styling through code. May be used when standard styling properties are insufficient to achieve the required look and feel.
+ Allows configurators to specify custom CSS styling through code. May be used when standard styling properties are insufficient to achieve the required look and feel.
 
 Example:
 
@@ -92,12 +78,10 @@ return {
 ```
 
 ### Size
-
-- The size of the component. **Options**: 'Small', 'Middle', 'Large'
+ The size of the component. **Options**: 'Small', 'Middle', 'Large'
 
 ### Layout
-
-- Allows the configurator to specify the width of the label and content (i.e. input) portions of the form component.
+ Allows the configurator to specify the width of the label and content (i.e. input) portions of the form component.
   If not provided, the default settings specified at the form level will apply.
 
   - **Label Col** : The with of the label portion of the component (Should be a value between 0 and 24).
@@ -108,22 +92,18 @@ Shesha uses Ant Design's 24 columns' grid system. The values of the **Label Col*
 :::
 
 ### Padding
-
-- The padding property is used to define the space between the content of an element and its border. It is essentially the inner spacing within an element.
+ The padding property is used to define the space between the content of an element and its border. It is essentially the inner spacing within an element.
 
 ### Margin
-
-- The margin property, on the other hand, is used to define the space outside an element's border. It controls the spacing between elements, affecting their layout in relation to one another.
+ The margin property, on the other hand, is used to define the space outside an element's border. It controls the spacing between elements, affecting their layout in relation to one another.
 
 ## Permissions
+ Specifies the permissions required to access the component. The component will be hidden from any user that does not have any of the specified permissions.
 
-- Specifies the permissions required to access the component. The component will be hidden from any user that does not have any of the specified permissions.
-
-- **Example**: 'user:Roles'
+ **Example**: 'user:Roles'
 
 ## Events
-
-- Event handlers are functions that get triggered on on specific envents in a component lifecycle.
+ Event handlers are functions that get triggered on on specific envents in a component lifecycle.
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 

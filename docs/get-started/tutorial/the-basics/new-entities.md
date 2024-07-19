@@ -6,7 +6,7 @@ sidebar_position: 4
 
 This membership isn't free! Let's create a `Membership Payment` entity to track all the payments related to a Member.
 
-In this section, you learn how to:
+In this section, you'll learn how to:
 
 - Create a New Entity
 - Create a Migration Class
@@ -30,13 +30,13 @@ using System;
 namespace Shesha.Membership.Domain.Domain
 {
     /// <summary>
-    ///
+    /// A member's membership payment
     /// </summary>
     [Entity(TypeShortAlias = "Mem_.MembershipPayment")]
     public class MembershipPayment : FullAuditedEntity<Guid>
     {
         /// <summary>
-        ///
+        /// The unique member
         /// </summary>
         public virtual Member Member { get; set; }
         /// <summary>

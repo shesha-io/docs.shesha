@@ -24,28 +24,24 @@ The following properties are available to configure the behavior of the componen
 
 ### Min Characters Before Search
 
-- The minimum number of characters needed before the search can begin.
+ The minimum number of characters needed before the search can begin.
 
 ### Debounce (MS)
 
-- Debouncing prevents extra activations/inputs from triggering too often. This is the time in milliseconds the call will be delayed by.
+ Debouncing prevents extra activations/inputs from triggering too often. This is the time in milliseconds the call will be delayed by.
 
 ### Google Maps Key
 
-- An API key for authorization. The Google Maps key which is required to make successful calls to Google services.
+ An API key for authorization. The Google Maps key which is required to make successful calls to Google services.
 
 ### Open Cage Key
 
-- An API key for authorization. The OpenCage key which is required to make successful calls to OpenCage services.
+ An API key for authorization. The OpenCage key which is required to make successful calls to OpenCage services.
 
 ### Country Restriction (Area restriction)
 
-- A filter which will only allow searches that fall within the country/countries selected. Multiple countries can be selected.
+ A filter which will only allow searches that fall within the country/countries selected. Multiple countries can be selected.
 
 ### Prefix (Area restriction)
 
-- A simple prefix which is appended in the search but not the input search field, often used to create a biased search in address.
-
-```
-
-```
+ A simple prefix which is appended in the search but not the input search field, often used to create a biased search in address.
