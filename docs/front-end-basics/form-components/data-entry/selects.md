@@ -10,11 +10,11 @@ The following properties are available to configure the behavior of the componen
 
 ### Default Checked
 
-- Specifies the initial state: whether or not the checkbox is selected
+ Specifies the initial state: whether or not the checkbox is selected
 
 ### Selection Mode
 
-- Set mode of selection. Options: Single (Single value), Multiple (Array of values)
+ Set mode of selection. Options: Single (Single value), Multiple (Array of values)
 
 ### DataSourceType
 
