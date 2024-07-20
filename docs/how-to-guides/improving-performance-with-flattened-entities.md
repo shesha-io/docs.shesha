@@ -4,7 +4,7 @@ sidebar_label: Improving table view performance with flattened entities
 
 Performance issues can commonly occur on Table Views due to <a href="https://stackoverflow.com/questions/97197/what-is-the-n1-selects-problem-in-orm-object-relational-mapping" target="_blank">the 'N + 1' problem</a>.
 
-The best way to address this is bind the Table that needs to be optimised to a 'flattened' version of the entity you wish to display in the table. Flattened entities map onto a database views that join in all the data you wish to display in the table at the database level so that all the required data can be retrieved using a single call to the database rather than a large number of calls from the application. 
+The best way to address this is to bind the Table that needs to be optimised to a 'flattened' version of the entity you wish to display in the table. Flattened entities map onto a database views that join in all the data you wish to display in the table at the database level so that all the required data can be retrieved using a single call to the database rather than a large number of calls from the application. 
 
 The naming convention for 'flattened' entities is `Flattened{entity name}` e.g. `FlattenedCustomer`.
 
@@ -20,7 +20,7 @@ The naming convention for 'flattened' entities is `Flattened{entity name}` e.g. 
 
 
 #### Example
-```
+```cs
     [Migration(20220306151900)]
     public class M20220306151900 : Migration
     {
@@ -71,7 +71,7 @@ The naming convention for 'flattened' entities is `Flattened{entity name}` e.g. 
 1. This class is part of the domain and should be placed in the same folder as other entity classes
 
 #### Example
-```
+```cs
     [Table("vw_His_FlattenedAppointments")]
     [ImMutable]    // Indicates that the ORM should not attempt to update the database
     public class FlattenedAppointment: Entity<Guid>

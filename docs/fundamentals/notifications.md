@@ -31,7 +31,7 @@ Additional classes that may need to be added may look as follows:
 Create utility class to provide the template GUIDs. Each of the GUIDs simply need to be unique and can be generated using a utility <a href="https://www.guidgenerator.com/" target="_blank">such as this</a>.
 
 #### Example - NotificationTemplateIds.cs
-```
+```cs
 namespace MyProject.Notifications
 {
     /// <summary>
@@ -56,7 +56,7 @@ namespace MyProject.Notifications
 ### Step 1b
 Implement a class(es) for the notification model. This class is used to pass data that will then be used to populate the dynamic parts of the notification template(s).
 #### Example - AppointmentNotificationModel.cs
-```
+```cs
 namespace MyProject.Notifications.Models
 {
     /// <summary>
@@ -92,7 +92,7 @@ notificationData["FullName"] = "John Smith";
 Notification Templates define the contents of the notifications that will be sent. Templates are saved in the database and are therefore added through Database Migration classes using special Helper methods.
 
 #### Example - M20220316231301.cs
-```
+```cs
     /// <summary>
     /// Adding notification templates for new notifications
     /// </summary>
@@ -152,7 +152,7 @@ Notification Templates define the contents of the notifications that will be sen
 This class exposes simple methods to allow the application to send notifications. It performs any checks or validation logic that may be required prior to sending a notification, prepares the data required by the notification template then calls the underlying notification framework to generate and queue up the notification to be sent.
 
 ### Example - BookingNotificationSender.cs
-```
+```cs
 namespace MyProject.Notifications
 {
     /// <summary>
@@ -231,7 +231,7 @@ namespace MyProject.Notifications
 
 ### Example - IBookingNotificationSender.cs
 It's usually good practice to implement an interface to the notification sender in case where the notification logic may need to be overridden in the future. E.g. client specific notification logic beyond simple changes to the template.
-```
+```cs
 namespace MyProject.Bookings.Notifications
 {
     /// <summary>
@@ -258,7 +258,7 @@ namespace MyProject.Bookings.Notifications
 Once the previous steps have been completed it is just a matter of calling the notification method from the appropriate points in the application.
 
 ### Example
-```
+```cs
     var appointment = new Appointment();
     ...
 

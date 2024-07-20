@@ -144,11 +144,11 @@ public virtual RefListSchoolInformationStatus? SchoolInformationStatus { get; se
 ```
 
 This change will be shown in the audit trail as:
-`School information status changed: Not submitted` instead of `"SchoolInformationStatus" was changed from "" to "Draft"`
+**`School information status changed: Not submitted`** instead of **`"SchoolInformationStatus" was changed from "" to "Draft"`**
 or
-`School information status changed: Submitted for verification` instead of `"SchoolInformationStatus" was changed from "Draft" to "Submitted"`
+**`School information status changed: Submitted for verification`** instead of **`"SchoolInformationStatus" was changed from "Draft" to "Submitted"`**
 or
-`School information status changed: Submitted as final` instead of `"SchoolInformationStatus" was changed from "Submitted" to "Approved"`
+**`School information status changed: Submitted as final`** instead of **`"SchoolInformationStatus" was changed from "Submitted" to "Approved"`**
 
 ## Audit trail of related or child entities
 
@@ -313,24 +313,24 @@ Show events from related `Role` entities as `Role Appointment` changes. `ShaRole
 
 ```cs
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class DisplayManyToOneAuditTrailAttribute : Attribute
-{
-	public Type ManyToOneEntityType { get; set; }
+ public class DisplayManyToOneAuditTrailAttribute : Attribute
+ {
+     public Type ManyToOneEntityType { get; set; }
 
-	public string DisplayName { get; set; }
+     public string DisplayName { get; set; }
 
-	public string RelatedEntityField { get; set; }
+     public string RelatedEntityField { get; set; }
 
-	public string NameField { get; set; }
+     public string NameField { get; set; }
 
-    public string[] AuditedFields { get; set; }
+     public string[] AuditedFields { get; set; }
 
-	public DisplayManyToOneAuditTrailAttribute(Type manyToOneEntityType)
-    {
-    	ManyToOneEntityType = manyToOneEntityType;
-        DisplayName = manyToOneEntityType.Name.ToFriendlyName();
-    }
-}
+     public DisplayManyToOneAuditTrailAttribute(Type manyToOneEntityType)
+     {
+         ManyToOneEntityType = manyToOneEntityType;
+         DisplayName = manyToOneEntityType.Name.ToFriendlyName();
+     }
+ }
 ```
 
 **`ManyToOneEntityType`** - type of related entities
@@ -439,7 +439,7 @@ Example:
 
 Unlock all locked users - set IsLocked to false for all users with IsLocked with true.
 
-With property changes data. It will be displayed as a property change in the Audtit trail (Like `User updated` event type with description `'IsLocked' was changed from 'true' to 'false'` or `User updated` event type with description `User unlocked`)
+With property changes data. It will be displayed as a property change in the Audit trail (Like `User updated` event type with description `'IsLocked' was changed from 'true' to 'false'` or `User updated` event type with description `User unlocked`)
 
 ```sql
 	Declare @changes Core_EntityHistoryItem
@@ -471,23 +471,26 @@ Without property changes date. It will be displayed as a Entity change event (Li
 exec [dbo].[Core_AddEntityHistoryEvents] @changeTime, @reason, @tenantId, @userId, @changeType, @entityId, @entityTypeFullName, @propertyName, @propertyTypeFullName, @newValue, @oldValue, @description
 ```
 
-**@changeTime** - Date and time of changes
-**@reason** - Reason of changes
-**@tenantId** - Tenant Id
-**@userId** - User Id
-**@changeType** - type of changes - 0 - Created, 1 - Updated, 2 - Deleted
-**@entityId** - Id of changed entity
-**@entityTypeFullName** - fully qualified name of the entity type, including its namespace but not its assembly (C# - `entity.GetType().FullName.FullName` or `typeof(EntityType).FullName`)
-**@propertyName** - name of changed property
-**@propertyTypeFullName** - Fully qualified name of the property type, including its namespace but not its assembly
-**@newValue** - new value
-**@oldValue** - old value
-**@description** - optional description
+| Field        | Description                |
+|--------------|----------------------------|
+| **@changeTime**     | Date and time of changes   |
+| **@reason**      | Reason of changes   |
+| **@tenantId**    | Tenant Id    |
+| **@userId**     | User Id   |
+| **@changeType**    | type of changes - 0 - Created, 1 - Updated, 2 - Deleted   |
+| **@entityId**     | Id of changed entity   |
+| **@entityTypeFullName**      | fully qualified name of the entity type, including its namespace but not its assembly (C# - `entity.GetType().FullName.FullName` or `typeof(EntityType).FullName`)  |
+| **@propertyName**     | name of changed property   |
+| **@propertyTypeFullName**   | Fully qualified name of the property type, including its namespace but not its    |
+| **@newValue**    | new value  |
+| **@oldValue**    | old value   |
+| **@description**     | optional description  |
 
-Example
+
+Example:
 Unlock specific user - set IsLocked to false for user
 
-With property changes data. It will be displayed as a property change in the Audtit trail (Like `User updated` event type with description `'IsLocked' was changed from 'true' to 'false'` or `User updated` event type with description `User unlocked`)
+With property changes data. It will be displayed as a property change in the Audit trail (Like `User updated` event type with description `'IsLocked' was changed from 'true' to 'false'` or `User updated` event type with description `User unlocked`)
 
 ```sql
 	exec [dbo].[Core_AddSingleEntityHistoryEvent] null /* will be used current time */, 'Support ticket #12345: Unlock all users', null, 1 /* Admin user ID*/, 1/* update*/, 123456 /* User Id */, 'Shesha.Authorization.Users.User', 'IsLocked', 'System.Boolean', 'false', 'true', 'User unlocked' /* optional description */

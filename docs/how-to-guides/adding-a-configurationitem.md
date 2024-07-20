@@ -5,7 +5,7 @@ title: Adding a ConfigurationItem
 
 **Step 1**
 
-The entity(configuration item) must inherit from ConfigurationItemBase
+The entity(configuration item) must inherit from `ConfigurationItemBase`.
 
 **Step 2**
 
