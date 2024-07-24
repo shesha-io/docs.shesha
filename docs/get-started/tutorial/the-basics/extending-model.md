@@ -49,7 +49,7 @@ namespace Shesha.Membership.Common.Domain.Enums
     /// <summary>
     /// Statuses for a Members Membership
     /// </summary>
-    [ReferenceList("Mem_", "MembershipStatuses")]
+    [ReferenceList("Mem", "MembershipStatuses")]
     public enum RefListMembershipStatuses : long
     {
         /// <summary>
@@ -90,7 +90,7 @@ namespace Shesha.Membership.Domain.Domain
     /// <summary>
     /// A person within the application that is a Member
     /// </summary>
-    [Entity(TypeShortAlias = "Mem_.Member")]
+    [Entity(TypeShortAlias = "Mem.Member")]
     public class Member : Person
     {
         /// <summary>
@@ -112,7 +112,7 @@ namespace Shesha.Membership.Domain.Domain
         /// <summary>
         /// The status of the membership
         /// </summary>
-        [ReferenceList("Mem_", "MembershipStatuses")]
+        [ReferenceList("Mem", "MembershipStatuses")]
         public virtual RefListMembershipStatuses? MembershipStatus { get; set; }
     }
 }
