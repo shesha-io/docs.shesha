@@ -9,7 +9,7 @@ Specification Pattern is used to define **named, reusable, combinable and testab
 
 Specification manager allows to manipulate specifications and apply them automatically to any Repository instantiated by the IOC.
 
-Example of usage:
+#### Example of usage:
 
 ![image](https://user-images.githubusercontent.com/85956374/222994846-08bc32b2-cb05-4532-89bc-63c72240d045.png)
 
@@ -33,7 +33,7 @@ Global specifications allow to filter data irrespective of the execution context
   
 The affect of the specifications activated using the **SpecificationManager** is limited by the execution context. **SpecificationManager** allows to activate context specifications by two ways:
   
-1. Manually using `Use<>()` and  `Use()` methods (see examples above)
+1. Manually using `Use<>()` and  `Use()` methods [(see examples above)](#example-of-usage)
 2. Automatically on the action level
 (IH: Missing Image was here)
 

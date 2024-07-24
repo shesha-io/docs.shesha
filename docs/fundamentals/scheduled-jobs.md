@@ -29,7 +29,7 @@ To implement a Scheduled Job simply create a new class that inherits from `Sched
 One of the most types of background jobs are those to send bulk notifications of some sort.
 
 ### Example
-```
+```cs
 /// <summary>
 /// Sends reminders of appointments the day before the appointments.
 /// </summary>
@@ -124,7 +124,7 @@ public class SendAppointmentReminderNotificationJob : ScheduledJobBase, ITransie
 ## Responding to ScheduledJob Events
 The `ScheduledJobBase` class exposes three events, namely the `OnSuccess`, `OnFail` and `OnLog` events. You can override these events inside the scheduled job, in order to use them. 
 
-```C#
+```Cs
 [ScheduledJob("1FF7882E-0A3B-4F88-A8B3-C3C20AFAFBDE", StartUpMode.Manual)]
 public class MyJob: ScheduledJobBase, ITransientDependency
 {
@@ -160,7 +160,7 @@ public class MyJob: ScheduledJobBase, ITransientDependency
 By default, the `ScheduledJobBase` class inherits from a generic class of the same name, and includes `JobStatistic` property, which is of type `ScheduledJobStatistic`. This property exposes the following properties: `NumSucceeded`, `NumSkipped` and `NumErrors`. 
 
 You can also implement a custom statistic class, but **it should inherit from `ScheduledJobStatistic`**. The following is how you can implement a job with custom statistics:
-```C#
+```Cs
 public class MyJobStats: ScheduledJobStatistic
 {
      public int TotalProcessedRecords { get; set; }
@@ -195,7 +195,7 @@ There are two methods which can be used to save log files for any scheduled job.
 
 To change the logging method, do the following:
 
-```C#
+```Cs
 [ScheduledJob("1FF7882E-0A3B-4F88-A8B3-C3C20AFAFBDE", StartUpMode.Manual, LogMode = LogMode.StoredFile, LogFolder = "ThisJob/Awesome")]
 public class TestJob: ScheduledJobBase, ITransientDependency
 {

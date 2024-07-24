@@ -10,15 +10,15 @@ The following properties are available to configure the behavior of the componen
 
 ### Save Placement
 
-- This is used to determine the placement of the save button. Options: Left, Right.
+ This is used to determine the placement of the save button. Options: Left, Right.
 
 ### Owner Id
 
-- Id of owner if you want to create a note for another Entity instead of form model/Entity. E.g., `{data.id}`.
+ Id of owner if you want to create a note for another Entity instead of form model/Entity. E.g., `{data.id}`.
 
 ### Owner Type
 
-- Type of owner if you want to create a note for another Entity instead of form model/Entity. E.g., `Shesha.Core.Person` (This is the namespace of the entity).
+ Type of owner if you want to create a note for another Entity instead of form model/Entity. E.g., `Shesha.Core.Person` (This is the namespace of the entity).
 
 ## See Also:
 

@@ -6,6 +6,7 @@ sidebar_position: 1
 
 ## 1. Download the Shesha Starter Template:
 
+- To get started, click the **Try Shesha** button at the top of the page.
 - Customize the Namespace of the starter project by providing parameters. It is important to note that there should be no spacing in both the inputs. For example:
   - **Company Name**: `Shesha`
   - **Project Name**: `Membership`
@@ -22,12 +23,13 @@ sidebar_position: 1
 ## 2. Setup the Database (SQL Server Management Studio) - From a .bacpac file:
 
 1.  Open `Microsoft SQL Server Management Studio`
-2.  Right-click `Databases`
-3.  Select `Import Data-tier Application`... and then click Next
-4.  Click Browse, locate your `Membership.bacpac` file, and click Next
-5.  In the `New database` name field, type `Membership` and click Next
-6.  Click `Finish` in the Summary step
-7.  Verify the successful import by navigating to the generated `database > Tables > dbo.Core_Persons` and querying the top 1000 rows.
+2.  Connect to a server i.e localhost
+3.  Right-click `Databases`
+4.  Select `Import Data-tier Application`... and then click Next
+5.  Click Browse, locate your `Membership.bacpac` file, and click Next
+6.  In the `New database` name field, type `Membership` and click Next
+7.  Click `Finish` in the Summary step
+8.  Verify the successful import by navigating to the generated `database > Tables > dbo.Core_Persons` and querying the top 1000 rows.
 
 ![Get Shesha](./images/sql.png)
 

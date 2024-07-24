@@ -11,7 +11,7 @@ There are several types of filtering that are supported through Shesha which can
 
 Filtering with static values refers to the process of filtering and displaying data based on predefined, fixed criteria or values, rather than dynamically changing criteria based on user input or other variables. This static approach is often used when certain data subsets are known in advance and can be hardcoded or predefined in the application.
 
-### How Filtering with Static Values Works:
+### How Filtering with Static Values Work:
 
 ![Static Filtering](./images/filterStatic.png)
 

@@ -12,11 +12,11 @@ The following properties are available to configure the behavior of the componen
 
 ### Get Entity Url
 
-- Endpoint Url to use in the cases where you would want to use a different endpoint than the one that is stored in the meta-data.
+ Endpoint Url to use in the cases where you would want to use a different endpoint than the one that is stored in the meta-data.
 
 ### Entity Type
 
-- This brings a dropdown of entities available in the system in the cases where you would want to use a different entity than the one that is stored in the meta-data.
+ This brings a dropdown of entities available in the system in the cases where you would want to use a different entity than the one that is stored in the meta-data.
 
 ### Entity Reference Type
 

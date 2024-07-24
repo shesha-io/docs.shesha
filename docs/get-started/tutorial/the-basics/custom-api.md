@@ -87,7 +87,7 @@ _Learn more about Shesha Dynamic Dtos amd Dynamic Dto Mapping [here](/docs/back-
 
 ### Configuring an action button
 
-We need to configure an action button in order to be able to call the `custom API` we just created. We will be doing this in a `member-details` to be able to activate membership for that specific member.
+We need to configure an action button so we can call the `custom API` we just created. We will be doing this in a `member-details` to be able to activate membership for that specific member.
 
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
 2. Select the 'Button Group` component` and `Customize Button Group` to include the following button:

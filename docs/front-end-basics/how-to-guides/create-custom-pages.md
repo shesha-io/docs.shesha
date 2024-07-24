@@ -1,6 +1,6 @@
 # Custom Pages
 
-As much as much of the power of Shesha is the ability to create application pages in a no-code manner, purely through configuration, there are times when you need to create a custom page. Custom pages allow you create a page using more traditional 'pro-code' based methods, namely as using React and TypeScript and are therefore unrestricted by the Shesha framework.
+In as much as the power of Shesha is the ability to create application pages in a no-code manner, purely through configuration, there are times when you need to create a custom page. Custom pages allow you create a page using more traditional 'pro-code' based methods, namely as using React and TypeScript and are therefore unrestricted by the Shesha framework.
 
 :::info Next.js
 The Shesha front-end framework is based on the very popular and powerful [Next.js](https://nextjs.org/). The handling of custom pages is therefore all done by Next.js. If Next.js is not available in the packages, this feature will not work. Familiarity with Next.js is therefore also recommended.

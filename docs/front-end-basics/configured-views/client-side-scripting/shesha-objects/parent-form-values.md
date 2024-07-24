@@ -1,6 +1,6 @@
 # ParentFormValues
 
-The term "ParentFormValues" indicates that these are the values collected from the form that is considered the parent or source of the dialog. In the context of a dialog, the parent form is the form that triggers or initiates the dialog's appearance. If we have a dialog rendering on top of a form, this is considered a `parent-child` relationship. The base `invoice-details` form acts as the `parent`, and the rendered `invoice-line-item-create` form is a child. Therefore, the current context of the application looks like this:
+The term **ParentFormValues** indicates that these are the values collected from the form that is considered the parent or source of the dialog. In the context of a dialog, the parent form is the form that triggers or initiates the dialog's appearance. If we have a dialog rendering on top of a form, this is considered a `parent-child` relationship. The base `invoice-details` form acts as the `parent`, and the rendered `invoice-line-item-create` form is a child. Therefore, the current context of the application looks like this:
 
 ![Data Entry](./images/parentForm1.png)
 

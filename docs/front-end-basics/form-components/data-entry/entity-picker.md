@@ -15,17 +15,17 @@ The following properties are available to configure the behavior of the componen
 
 ### Entity Type
 
-- Drop down of all the entities available in the systems to bind to the component as options.
+ Drop down of all the entities available in the systems to bind to the component as options.
 
 ### Columns
 
-- Adding columns relevant to your entity selected so you can see more information of the field to help you make the correct selection.
+ Adding columns relevant to your entity selected so you can see more information of the field to help you make the correct selection.
 
 ![Image](./images/entity-picker-columns.png)
 
 ### Allow New Record
 
-- When this is toggled on, it allows for the creation of an entity instance via the lookup screen.
+ When this is toggled on, it allows for the creation of an entity instance via the lookup screen.
 
 ![Image](./images/entity-picker-new.png)
 
