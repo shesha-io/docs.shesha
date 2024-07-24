@@ -33,8 +33,6 @@ sidebar_position: 1
 
 ![Get Shesha](./images/sql.png)
 
-*NB: If you run into problems setting up the database, make sure you have the latest version of Microsoft SQL Server Management Studio running.*
-
 ## 3. Setup the Backend (Visual Studio):
 
 - Open the starter project folder
