@@ -28,7 +28,7 @@ Additional classes that may need to be added may look as follows:
 ## Step 1 - Set-up the notification template(s)
 
 ### Step 1a
-Create utility class to provide the template GUIDs. Each of the GUIDs simply need to be unique and can be generated using a utility <a href="https://www.guidgenerator.com/" target="_blank">such as this</a>.
+Create a utility class to provide the template GUIDs. Each of the GUIDs simply need to be unique and can be generated using a utility <a href="https://www.guidgenerator.com/" target="_blank">such as this</a>.
 
 #### Example - NotificationTemplateIds.cs
 ```cs
@@ -54,7 +54,7 @@ namespace MyProject.Notifications
 ```
 
 ### Step 1b
-Implement a class(es) for the notification model. This class is used to pass data that will then be used to populate the dynamic parts of the notification template(s).
+Implement the class(es) for the notification model. This class is used to pass data that will then be used to populate the dynamic parts of the notification template(s).
 #### Example - AppointmentNotificationModel.cs
 ```cs
 namespace MyProject.Notifications.Models
@@ -82,7 +82,7 @@ namespace MyProject.Notifications.Models
 }
 ```
 
-**Note** Instead of creating a separate notifications model class, it is also possible to use the `NotificationData` base class directly as it can store a dictionary of data elements for the template.
+**Note:** Instead of creating a separate notifications model class, it is also possible to use the `NotificationData` base class directly as it can store a dictionary of data elements for the template.
 ```
 var notificationData = new NotificationData();
 notificationData["FullName"] = "John Smith";
