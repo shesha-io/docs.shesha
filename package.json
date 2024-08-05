@@ -20,6 +20,7 @@
     "@mdx-js/react": "^3.0.1",
     "antd": "^5.20.0",
     "clsx": "^2.1.1",
+    "docusaurus-lunr-search": "^3.4.0",
     "markdown-to-jsx": "^7.4.7",
     "package.json": "^2.0.1",
     "prism-react-renderer": "^2.3.1",
