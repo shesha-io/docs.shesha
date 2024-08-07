@@ -460,6 +460,10 @@ ul.circle>li:before {
   }
 }
 
+.search-bar {
+  border-radius: 5px;
+}
+
 html[data-theme='light'] .algolia-docsearch-suggestion--category-header {
     font-size: small;
 }
