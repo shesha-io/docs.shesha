@@ -1,6 +1,6 @@
 # Audit Logging
 
-Shesha 3 Entity History framework is based on Abp.EntityHistory (https://aspnetboilerplate.com/Pages/Documents/Entity-History)
+Shesha Entity History framework is based on Abp.EntityHistory (https://aspnetboilerplate.com/Pages/Documents/Entity-History)
 
 In addition, were added some Shesha specific features.
 
