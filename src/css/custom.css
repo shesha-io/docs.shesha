@@ -460,6 +460,14 @@ ul.circle>li:before {
   }
 }
 
+html[data-theme='light'] .algolia-docsearch-suggestion--category-header {
+    font-size: small;
+}
+
+html[data-theme='datk'] .algolia-docsearch-suggestion--category-header {
+  font-size: small;
+}
+
 .footerWrapper {
   margin-top: 20px;
 }
