@@ -88,7 +88,11 @@ const config = {
           // { to: '/blog', label: 'Blog', position: 'left' },
           {
             type: 'search',
-            position: 'right',
+            position: 'left',
+          },
+          {
+            type: 'custom-customSearchBar', 
+            position: "right",
           },
           {
             to: 'https://www.shesha.io/get-started-with-shesha',
@@ -172,6 +176,7 @@ const config = {
       defer: true,
     }
   ],
+  plugins: [require.resolve('docusaurus-lunr-search')]
 };
 
 export default config;  

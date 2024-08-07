@@ -6,6 +6,7 @@
     box-sizing: border-box;
     border-radius: 4px;
     flex-direction: row;
+    margin-right: 8px;
 }
 
 .custom-search-option {
