@@ -3,6 +3,6 @@
   "position": 3,
   "link": {
     "type": "generated-index",
-    "description": "Data Display components are components that are used to display application data or present information in a read-only fashion."
+    "description": "Data Display components are used to display application data or present information in a read-only fashion."
   }
 }
