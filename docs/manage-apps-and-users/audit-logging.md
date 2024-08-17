@@ -164,9 +164,9 @@ public class DisplayChildAuditTrailAttribute : Attribute
 }
 ```
 
-**'AuditedFields'** - an array of the child entity field names to be displayed. If this array is provided then the action types that should be shown in the audit have to be added - `Created`, `Updated` or `Deleted`.
+**AuditedFields** - an array of the child entity field names to be displayed. If this array is provided then the action types that should be shown in the audit have to be added - `Created`, `Updated` or `Deleted`.
 
-Example
+Example:
 
 ```cs
 [DisplayChildAuditTrail]
