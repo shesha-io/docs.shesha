@@ -68,7 +68,10 @@ To manage the information of the people registered onto the system, we need to c
 
 - ### Configuring Table Columns
 
-  - Hover over the `datatable` component handle on your form's components and click it to see the properties of the `datatable` component in the `Properties` sidebar.
+  - First, click the `Tables and Lists` dropdown and then hover over the `datatable` component handle on your form's components and click it to see the properties of the `datatable` component in the `Properties` sidebar.
+  
+    ![Image](./images/table0.png)
+
   - Click on `Configure Columns` > `Add Column`
 
     ![Image](./images/table1.png)

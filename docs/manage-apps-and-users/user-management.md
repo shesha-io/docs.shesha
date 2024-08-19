@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # User Management
 
-## Understanding 'Person' and 'User' Entities
+## Understanding **Person** and **User** Entities
 
 Shesha comes with both `Person` and `User` entities as part of its core domain model, and it is important to understand the difference and relationship between both. Whereas the `Person` entity is used to store and manage information relating to persons (whether the Person is a system user or not), the `User` entity is specifically used to manage system users.
 

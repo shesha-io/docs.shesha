@@ -16,7 +16,7 @@ In this section, you'll learn how to:
 
 ## Create a New Entity
 
-1. Navigate to `Boxfusion.Membership.Common.Domain` > `Domain`
+1. Navigate to `Shesha.Membership.Domain` > `Domain`
 2. Right click on the `Domain` folder, `Add` > `Class`
 3. Give your class the name of: `MembershipPayment.cs`, and click on `Add`
 
@@ -54,7 +54,7 @@ namespace Shesha.Membership.Domain.Domain
 
 ## Create a Migration Class
 
-1. Navigate to `Boxfusion.Membership.Common.Domain` > `Migrations`
+1. Navigate to `Shesha.Membership.Domain` > `Migrations`
 2. Right click on the `Migrations` folder, `Add` > `Class`
 3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124090300.cs for 24 November 2023 08:53:00**.
 4. Add the below code:
@@ -64,7 +64,7 @@ using FluentMigrator;
 using Shesha.FluentMigrator;
 using System;
 
-namespace Boxfusion.Membership.Common.Domain.Migrations
+namespace Shesha.Membership.Domain.Migrations
 {
     [Migration(20231124090300)]
     public class M20231124090300 : Migration

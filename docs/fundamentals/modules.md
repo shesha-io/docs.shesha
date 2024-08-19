@@ -18,7 +18,11 @@ If the module relies on custom front-end components and pages, the NuGet install
 
 To view the modules installed in the application, navigate to the Admin portal and select the Modules menu item.
 
-**TODO: Add screenshot**
+![Image](./images/modules1.png)
+
+You should then see the list of installed modules
+
+![Image](./images/modules2.png)
 
 ## Create a new module
 

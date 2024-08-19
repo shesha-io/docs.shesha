@@ -10,7 +10,7 @@ This is because Shesha, automatically creates `CRUD APIs` for all entities in yo
 
 Imagine that we want `MembershipStatus` property to be updated through a more controlled process instead of allowing the end-user to simply select the status. E.g. Before activating the membership, you would check if an initial payment of **R100** has been received.
 
-In this section, you learn how to:
+In this section, you'll learn how to:
 
     - Create a Custom App Service
     - Expose a New Endpoint
@@ -20,7 +20,7 @@ In this section, you learn how to:
 
 ## Creating an App Service
 
-1. Navigate to `Boxfusion.Membership.Common.Application`
+1. Navigate to `Shesha.Membership.Application`
 2. Create a new `Services` folder
 3. Right click on the newly created `Services` folder, `Add` > `Class`
 4. Give your class the name of: `MemberActions.cs`, and click on `Add`
@@ -87,7 +87,7 @@ _Learn more about Shesha Dynamic Dtos amd Dynamic Dto Mapping [here](/docs/back-
 
 ### Configuring an action button
 
-We need to configure an action button so we can call the `custom API` we just created. We will be doing this in a `member-details` to be able to activate membership for that specific member.
+We need to configure an action button so we can call the `custom API` we just created. We will be doing this in `member-details` to be able to activate membership for that specific member.
 
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
 2. Select the 'Button Group` component` and `Customize Button Group` to include the following button:
