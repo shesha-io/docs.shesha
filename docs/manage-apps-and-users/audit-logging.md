@@ -17,7 +17,7 @@ Allow to show Audit trail for specific object in the DataTable control.
     - **User** – full name of user who made changes or triggered an event
     - **Date** – date of event
 
-## EventHistory Configuration for anynomous users (e.g. background Job)
+## EventHistory Configuration for anonymous users (e.g. background Job)
 
 Add the following code snippet in the sheshaWebHostModule.cs file in the `Shesha.Web.Host` module in the Startup folder.
 
