@@ -1,5 +1,7 @@
 # Custom Components
 
+## Overview
+
 The Shesha Form Builder is a powerful feature that includes a variety of form components to cover a wide range of common scenarios. However, given the diversity of use cases, it's not feasible to address all of them. Therefore, Shesha provides an option to develop custom components for any unique requirements. These custom components can be seamlessly integrated withing the Form Builder, enabling you to easily add them to any form through the drag-and-drop interface.
 
 ## Background
@@ -10,6 +12,37 @@ Before diving into the code, we need to briefly mention a few topic areas.
 
   ![Image](./images/figure1.png)
   ![Image](./images/figure2.png)
+
+``` ts
+{
+  "components": [
+    {
+      "id": "LAuoz8VcEzPdMTc5zFK-n",
+      "type": "rate",
+      "propertyName": "ratings",
+      "componentName": "ratings",
+      "label": "Ratings",
+      "labelAlign": "right",
+      "parentId": "root",
+      "hidden": false,
+      "isDynamic": false,
+      "version": 1,
+      "count": 8,
+      "settingsValidationErrors": []
+    }
+  ],
+  "formSettings": {
+    "layout": "horizontal",
+    "colon": true,
+    "labelCol": {
+      "span": 6
+    },
+    "wrapperCol": {
+      "span": 18
+    }
+  }
+}
+```
 
 > **NOTE**: It is important to note that in the JSON schema in the above image, two properties are depicted (`components`, `formSettings`). Also take note that the components property is an `array` and if we had more than one component in the UI form it would be shown in this array.
 
@@ -23,9 +56,29 @@ Before diving into the code, we need to briefly mention a few topic areas.
   _Above image shows the `packages` folder in the root of the `adminportal` directory_
 
 - Inside the `packages` directory we can see that only one module exists, namely the `his` module.
-- The `index.ts` file inside of the `src` folder is the entry point to the packaged modules, meaning that whatever is exposed here can be imported from this module.
+- The `hisApplicationPlugin.tsx` file inside of the `src/providers` folder is where components are exposed. `HisApplicationPlugin` will need to be wrapped around the main application's provider.
 
   ![Image](./images/figure4.png)
+
+``` ts
+import React, { FC, PropsWithChildren, useEffect } from 'react';
+import { useSheshaApplication } from '@shesha-io/reactjs';
+import { allComponents } from '@/designer';
+
+export interface HisApplicationPluginProps {}
+
+export const HIS_PLUGIN_NAME = 'His-Plugnin';
+
+export const HisApplicationPlugin: FC<PropsWithChildren<HisApplicationPluginProps>> = ({ children }) => {
+  const { registerFormDesignerComponents } = useSheshaApplication();
+
+  useEffect(() => {
+    registerFormDesignerComponents(HIS_PLUGIN_NAME, allComponents);
+  }, []);
+
+  return <>{children}</>;
+};
+```
 
 - By opening the `allComponents` file as shown in the image below, we can see the list of exposed components to the Shesha Form Builder.
   <!-- figure 5 -->
@@ -40,6 +93,31 @@ Before diving into the code, we need to briefly mention a few topic areas.
   <!-- figure 5 -->
   ![Image](./images/figure5.png)
 
+``` ts
+import { IToolboxComponentGroup } from '@shesha-io/reactjs';
+import CalendarComponent from 'components/global/bookingCalendar/formComponent';
+import FacilityContextPickerComponent from 'components/global/facilityContextPicker/formComponent';
+import StatsListComponent from 'components/global/statsList/formComponent';
+import TableFormComponent from 'components/global/tableBuilder/formComponent';
+import UrinalysisComponent from 'components/global/urinalysis';
+import SampleComponent from 'components/global/urinalysis';
+
+export const allComponents: IToolboxComponentGroup[] = [
+  {
+    name: 'HIS Components',
+    components: [
+      CalendarComponent,
+      FacilityContextPickerComponent,
+      StatsListComponent,
+      TableFormComponent,
+      UrinalysisComponent,
+      SampleComponent,
+    ],
+    visible: true,
+  },
+];
+```
+
 _The square bracket after the interface means it is an array of the [IToolboxComponentGroup](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) interface._
 
 ## Implementation
@@ -48,6 +126,55 @@ _The square bracket after the interface means it is an array of the [IToolboxCom
   <!-- figure 6 -->
 
   ![Image](./images/figure6.png)
+
+``` ts
+import { DingtalkOutlined } from '@ant-design/icons';
+import {
+  ComponentFactoryArguements,
+  ConfigurableFormItem,
+  IToolboxComponent,
+  validateConfigurableComponentSettings,
+} from '@shesha-io/reactjs';
+import React from 'react';
+import { settingsForm } from './settings';
+
+const SampleComponent: IToolboxComponent<ISampleComponentProps> = {
+  type: 'sampleComponent',
+  name: 'Sample Component',
+  icon: <DingtalkOutlined />,
+  Factory: ({ model }: ComponentFactoryArguements<ISampleComponentProps>) => {
+    const style = {
+      height: model.height,
+      width: model.width,
+      border: model.hasBorder ? '1px solid black' : 'none'
+    };
+
+    const onMouseMove = (event: MouseEvent, onChange: Function) => {
+      onChange({ x: event.movementx, y: event.movementy });
+    };
+
+    return (
+      <ConfigurableFormItem model={model}>
+        {(value, onChange) => (
+          <div style={style} onMouseMove={(e: any) => onMouseMove(e, onChange)}>
+            <div>{model.title}</div>
+            <span>X: {value?.x}</span>
+            <span>Y: {value?.y}</span>
+          </div>
+        )}
+      </ConfigurableFormItem>
+    );
+  },
+  initModel: (model) => ({
+    ...model,
+    hasBorder: true,
+  }),
+  settingsFormMarkup: settingsForm,
+  validateSettings: (model) => validateConfigurableComponentSettings(settingsForm, model),
+};
+
+export default SampleComponent;
+```
 
 - `SampleComponent` is an object which implements the [IToolboxComponent](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) interface, this is to ensure consistency.
 
@@ -74,6 +201,68 @@ _The square bracket after the interface means it is an array of the [IToolboxCom
   <!-- figure 8 -->
 
   ![Image](./images/figure8.png)
+
+``` ts
+import { DesignerToolbarSettings } from '@shesha-io/reactjs';
+import { nanoid } from 'nanoid';
+
+export const settingsForm = new DesignerToolbarSettings()
+  .addSectionSeparator({
+    id: nanoid(),
+    propertyName: 'separatorl',
+    parentld: 'root',
+    label: 'Display',
+  })
+  .addContextPropertyAutocomplete({
+    id: nanoid(),
+    propertyName: 'propertyName',
+    parentld: 'root',
+    label: 'Property name',
+    validate: {
+      required: true,
+    },
+  })
+  .addTextField({
+    id: nanoid(),
+    propertyName: 'title',
+    parentld: 'root',
+    label: 'Title',
+  })
+  .addCheckbox({
+    id: nanoid(),
+    propertyName: 'hideLabel',
+    parentld: 'root',
+    label: 'Hide Label',
+  })
+  .addNumberField({
+    id: nanoid(),
+    propertyName: 'height',
+    parentld: 'root',
+    description: 'This property determines the height of the selector in question.',
+    label: "Selector's Height",
+    validate: {
+      required: true,
+    },
+  })
+  .addNumberField({
+    id: nanoid(),
+    propertyName: 'width',
+    parentld: 'root',
+    description: 'This property determines the width of the selector in question.',
+    label: "Selector's Width",
+    validate: {
+      required: true,
+    },
+  })
+  .addCheckbox({
+    id: nanoid(),
+    propertyName: 'hasBorder',
+    parentld: 'root',
+    label: 'Has Border',
+  })
+  .tolson();
+```
+
   <!-- figure 9 -->
 
   ![Image](./images/figure9.png)
@@ -122,6 +311,17 @@ _shown on lines 10, 40, 41_
 
   ![Image](./images/figure10.png)
 
+``` ts
+import { IConfigurableFormComponent } from '@shesha-io/reactjs';
+
+export interface ISampleComponentProps extends IConfigurableFormComponent {
+  title: string;
+  height: string;
+  width: string;
+  hasBorder: boolean;
+}
+```
+
 Rending of the `factory` property includes the `ConfigurableFormItem` component as the top parent, this is not mandatory only but done as preference. The children of `ConfigurableFormItem` return a function of parameters `value` and `onChange`. value is the current value of the active component, `onChange` is the event which will trigger the value to change
 
   <!-- figure 6 -->
@@ -159,15 +359,57 @@ _See working example below_
 
 ## Exposing Component
 
-- Navigate to the `app.tsx` file from the root directory of the `adminportal` directory. `src` > `pages` > `app.tsx`
+- Navigate to the `app-provider.tsx` file from the root directory of the `adminportal` directory. `src` > `app` > `app-provider.tsx`
   <!-- figure 11 -->
 
   ![Image](./images/figure11.png)
 
-- This file includes the Shesha [providers](https://react-redux.js.org/api/provider) which are responsible for the majority functionality on the Shesha Builder.
-- Import allComponents from the relevant modules
-  <!-- figure 7 -->
+- The `HisApplicationPlugin` is wrapped around the main application's provider as seen in the illustration below. Simply import the hook and wrap it around the `ShaApplicationProvider`.
 
-  ![Image](./images/figure7.png)
+  <!-- figure 13 -->
 
-- Remember that `allComponents` is an array, either spread the values to a variable or pass it to the `toolboxComponentGroups` on the `ShaApplicationProvider`
+  ![Image](./images/figure13.png)
+
+``` ts
+"use client";
+
+import React, { FC, PropsWithChildren } from "react";
+import {
+  GlobalStateProvider,
+  ShaApplicationProvider,
+  StoredFilesProvider,
+  useNextRouter,
+} from "@shesha-io/reactjs";
+import { HisApplicationPlugin } from "@shesha-io/pd-publicportal";
+import { AppProgressBar } from "next-nprogress-bar";
+import { useTheme } from "antd-style";
+
+export interface IAppProviderProps {
+  backendUrl: string;
+}
+
+export const AppProvider: FC<PropsWithChildren<IAppProviderProps>> = ({
+  children,
+  backendUrl,
+}) => {
+  const nextRouter = useNextRouter();
+  const theme = useTheme();
+
+  return (
+    <GlobalStateProvider>
+      <AppProgressBar height="4px" color={theme.colorPrimary} shallowRouting />
+      <ShaApplicationProvider
+        backendUrl={backendUrl}
+        router={nextRouter}
+        noAuth={nextRouter.path?.includes("/no-auth")}
+      >
+        <HisApplicationPlugin>
+          <StoredFilesProvider baseUrl={backendUrl} ownerId={""} ownerType={""}>
+            {children}
+          </StoredFilesProvider>
+        </HisApplicationPlugin>
+      </ShaApplicationProvider>
+    </GlobalStateProvider>
+  );
+};
+```
