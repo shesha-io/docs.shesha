@@ -53,7 +53,7 @@ It also runs asynchronously as the form waits for completion of this handler bef
 
 
 ### 2. Data Save
-This section configures to logic of data submission.
+This section configures the logic of data submission.
 
 #### Submit Type 
 
@@ -72,7 +72,7 @@ Below is a breakdown of the different submit types;
 2.	**Custom**: This submits the data using custom JavaScript.
 3.	**None**: This is used when a form shouldn’t submit any data. For instance, when form is used only to display some data. **i.e.** Prepare Submit Data.
 
-The Submit handler transforms the data that should be submitted. If the handler is specified, it should return the full data to be submitted as forms don’t merge/modify the data return by this handler.
+The Submit handler transforms the data that should be submitted. If the handler is specified, it should return the full data to be submitted as forms don’t modify the data return by this handler.
 
 #### On Before Submit 
 
@@ -115,7 +115,7 @@ export interface IApiEndpoint {
 
 Also, the Shesha public JavaScript API has been extended with new functions which allow to simplify operations with default endpoints, let’s run through them;
 
--   The **defaultApiEndpoints** property added to the form instance. It contains default CRUD endpoints of the current entity type specified on the form settings. See below Code example: 
+-   The **defaultApiEndpoints** property added to the form instance contains default CRUD endpoints of the current entity type specified on the form settings. See below Code example: 
 ``` ts
 const getSubmitterEndpoint = async () => { 
     return data?.id  
@@ -124,7 +124,7 @@ const getSubmitterEndpoint = async () => {
 }; 
 ```   
 
--   The **getApiEndpointsAsync()** method added to the entities, it allows to get CRUD endpoints of the specified entity type. Here’s an example: 
+-   The **getApiEndpointsAsync()** method added to the entities allows to get CRUD endpoints of the specified entity type. Here’s an example: 
 ``` ts
 const getSubmitterEndpoint = async () => { 
     const defaultEndpoints = await application.entities.shesha.Person.getApiEndpointsAsync(); 
