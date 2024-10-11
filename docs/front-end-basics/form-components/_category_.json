@@ -1,6 +1,6 @@
 {
   "label": "Form Components",
-  "position": 3,
+  "position": 1,
   "link": {
     "type": "generated-index",
     "description": "Shesha provides a wide variety of form components to enhance the functionality of applications via its form builder. These components can be easily added to the canvas through a drag-and-drop interface. Each component's data, style, and behavior can be customized by editing its properties."
