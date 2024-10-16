@@ -151,7 +151,7 @@ Now that we have a way to view a list of our Members in a table and can access t
 
    - Module: `Shesha.Membership`
    - Entity: `Shesha.Domain.Person`
-   - Template: `form-view`
+   - Template: `blank-view`
    - Name: `member-create`
    - Label: `Member Create`
    - Description: `This create view is used to register a new member`
