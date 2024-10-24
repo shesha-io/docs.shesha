@@ -143,24 +143,18 @@ If you want to prepare your own data for the chart from your own service, you ne
 Example  
 
 ```json
-  {
-  result: {
-    labels: ["January", "February", "March", "April", "May", "June", "July"],
-    dataset: [
+{
+  "result": {
+    "labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"],
+    "datasets": [
       {
-        label: "Sales",
-        data: [65, 59, 80, 81, 56, 55, 40],
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)", 
-          "rgba(54, 162, 235, 0.2)", 
-          "rgba(255, 206, 86, 0.2)", 
-          "rgba(75, 192, 192, 0.2)", 
-          "rgba(153, 102, 255, 0.2)", 
-          "rgba(255, 159, 64, 0.2)", 
-          "rgba(99, 255, 132, 0.2)"
+        "label": "sales (count)",
+        "data": [560, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500],     "backgroundColor": [
+          "hsla(250.84687042236328, 70.84687042236328%, 67.84687042236328%, 0.75)",
+          "hsla(53.773223876953125, 83.77322387695312%, 70.77322387695312%, 0.75)",
+          "hsla(227.58676147460938, 77.58676147460938%, 64.58676147460938%, 0.75)"
         ],
-        borderColor: "rgba(255, 99, 132, 1)"       ],
-        borderWidth: 1
+        "borderColor": "black"
       }
     ]
   }
@@ -176,7 +170,7 @@ A ASP.Net Core action can look like this:
       {
           return new
           {
-              labels = new[] { "Boxfire", "Brown Org", "HlayiOrg" },
+              labels = new[] { "Boxfire", "Meta Org", "SpaceTech" },
               datasets = new[]
               {
                   new
@@ -198,8 +192,8 @@ A ASP.Net Core action can look like this:
 ![Line Chart 1](images/chart/image-6.png)  
 **Line Chart (Simple)**
 
-![settings 1a](images/chart/image-7.png)
-![settings 1b](images/chart/image-8.png)  
+![settings 1a](images/chart/image-7.png)  
+![settings 1b](images/chart/image-8.png)
 **Settings for Line Chart (Simple)**
 
 ### Line Chart 2
@@ -207,7 +201,7 @@ A ASP.Net Core action can look like this:
 ![Line Chart 2](images/chart/image-9.png)  
 **Line Chart (Pivot)**
 
-![settings 2a](images/chart/image-10.png)
+![settings 2a](images/chart/image-10.png)  
 ![settings 2b](images/chart/image-11.png)  
 **Settings for Line Chart (Pivot)**
 
@@ -216,7 +210,7 @@ A ASP.Net Core action can look like this:
 ![Bar Chart 3](images/chart/image-12.png)  
 **Bar Chart (Pivot)**
 
-![settings 3a](images/chart/image-13.png)
+![settings 3a](images/chart/image-13.png)  
 ![settings 3b](images/chart/image-14.png)  
 **Settings for Bar Chart (Pivot)**
 
@@ -225,7 +219,7 @@ A ASP.Net Core action can look like this:
 ![Line Chart 4](images/chart/image-15.png)  
 **Line Chart (Pivot)**
 
-![settings 4a](images/chart/image-16.png)
+![settings 4a](images/chart/image-16.png)  
 ![settings 4b](images/chart/image-17.png)  
 **Settings for Line Chart (Pivot)**
 
@@ -234,6 +228,6 @@ A ASP.Net Core action can look like this:
 ![Pie Chart 5](images/chart/image-18.png)  
 **Simnle Pie Chart**
 
-![settings 5a](images/chart/image-19.png)
+![settings 5a](images/chart/image-19.png)  
 ![settings 5b](images/chart/image-20.png)  
 **Settings for Pie Chart**
