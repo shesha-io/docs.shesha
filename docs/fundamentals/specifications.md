@@ -9,7 +9,7 @@ Specification Pattern is used to define **named, reusable, combinable and testab
 
 Specification manager allows to manipulate specifications and apply them automatically to any Repository instantiated by the IOC.
 
-Example of usage:
+#### Example of usage:
 
 ![image](https://user-images.githubusercontent.com/85956374/222994846-08bc32b2-cb05-4532-89bc-63c72240d045.png)
 
@@ -21,7 +21,7 @@ Shesha provides base class for specifications - `ShaSpecification<T>`. The key d
   
 Example of specification class:
 
-![image](https://user-images.githubusercontent.com/85956374/222995031-48d05f98-6b94-46b7-81de-f6f7a477a5da.png)
+![image](https://user-images.githubusercontent.com/85956374/222995032-20c4f1c4-f26a-49aa-8787-e11548d9ffad.png)
 
 ## Global specifications
   
@@ -33,14 +33,14 @@ Global specifications allow to filter data irrespective of the execution context
   
 The affect of the specifications activated using the **SpecificationManager** is limited by the execution context. **SpecificationManager** allows to activate context specifications by two ways:
   
-1. Manually using `Use<>()` and  `Use()` methods (see examples above)
+1. Manually using `Use<>()` and  `Use()` methods [(see examples above)](#example-of-usage)
 2. Automatically on the action level
 (IH: Missing Image was here)
 
 ## Disable specifications
 In some cases it may be useful to disable all specifications. The **SpecificationManager** allows to do it using **DisableSpecifications()** method, see example below.
 
-![image](https://user-images.githubusercontent.com/85956374/222995032-20c4f1c4-f26a-49aa-8787-e11548d9ffad.png)
+![image](https://user-images.githubusercontent.com/85956374/222995031-48d05f98-6b94-46b7-81de-f6f7a477a5da.png)
 
 On the action level you can disable all specifications using **DisableSpecificationsAttribute**:
 

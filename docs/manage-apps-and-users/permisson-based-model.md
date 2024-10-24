@@ -8,7 +8,7 @@ sidebar_position: 2
 
 In more advanced applications, ensuring that specific actions are only performed by authorized users is crucial. This concept is commonly known as `Authorization` or `Access Control`. Shesha employs a `Permissions-based security model` to enforce authorization, where restricted actions can only be executed by users assigned the relevant permission. However, assigning permissions directly to users is not the standard practice; instead, it is done through roles. Roles are associated with one or more permissions, and by assigning a role to a user, the user automatically inherits all linked permissions.
 
-Consider a scenario where access to the `Reset Password` functionality needs restriction. In this case, the 'Reset Password' button on the form configurator is a restricted action. The form configurator allows specifying the required permission(s) for a component to be visible through the 'Required permissions' property. For example, it could be set to the permission `User.ResetPassword`. This permission would then be linked to the role `User Administrator`. To grant user Joe the ability to reset passwords, you would assign the role `User Administrator` to Joe. The scenario is illustrated in the diagram below:
+Consider a scenario where access to the `Reset Password` functionality needs restriction. In this case, the **Reset Password** button on the form configurator is a restricted action. The form configurator allows specifying the required permission(s) for a component to be visible through the **Required permissions** property. For example, it could be set to the permission `User.ResetPassword`. This permission would then be linked to the role `User Administrator`. To grant user Joe the ability to reset passwords, you would assign the role `User Administrator` to Joe. The scenario is illustrated in the diagram below:
 
 ![Permission Based Security Model](./images/security.png)
 
@@ -54,7 +54,7 @@ To manage permissions, including defining new ones, follow these steps:
 
 To manage roles and associate permissions with each role:
 
-1. Access the Roles Configurator from the Configuration main menu, then select 'Roles'.
+1. Access the Roles Configurator from the Configuration main menu, then select **Roles**.
 2. On the Roles table, navigate into into the details view of the selected role and toggle edit to select the permissions associated to that role.
 
 ![Managing Roles](./images/roles.png)
@@ -89,11 +89,11 @@ To restrict access to form components based on user permissions:
 
 To limit access to an API based on user permissions:
 
-1. From the Configuration main menu, select 'Entity Configurations'
+1. From the Configuration main menu, select **Entity Configurations**
 2. Search through the list of enities available in your application and select the applicable one
-3. Navigate to the 'Application Service' tab and select the endpoint to secure
+3. Navigate to the **Application Service** tab and select the endpoint to secure
 
-   - Ensure 'Requires permissions' is selected for the 'Access' property
+   - Ensure **Requires permission** is selected for the **Access** property
    - Select the permission(s) required for users to access the endpoint.
 
      _Note: Users need any one of the specified permissions to access the API._

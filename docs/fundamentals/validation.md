@@ -10,10 +10,10 @@ Although there seems to be <a href="https://softwareengineering.stackexchange.co
 
 Shesha applications tend to be very domain-centric and try to minimise the amount of Application level code (including AppServices) that needs to be hand-written. Instead, Shesha applications try to rely as much as possible on auto-generated APIs, which means that there are no physical AppService classes in which validation logic may be inserted. Over and above this, implementing validation logic on the Domain layer also ensures that as much of the business logic as possible is centralised and minimises the possibility of duplication and potential inconsistencies that may arise from this. The bulk of the validation logic should therefore be implemented in the domain layer.
 
-Notwithstanding the above, where custom APIs have been implemented that accept custom DTOs, it is often quite appropriate and necessary to implement additional validation logic at the Application Layer (within the AppService). In particular, this would be necessary if very application or end-point specific business logic needs to be applied that would not be covered by validation enforced within the Domain Layer.
+Notwithstanding the above, where custom APIs have been implemented that accept custom DTOs, it is often quite appropriate and necessary to implement additional validation logic at the Application Layer (within the AppService). In particular, this would be necessary if every application or end-point specific business logic needs to be applied that would not be covered by validation enforced within the Domain Layer.
 
 ## Validation Approaches
-There are multiple schools of thought on the best ways to implement validation logic (check-out articles [here](https://enterprisecraftsmanship.com/posts/validation-and-ddd/) and [here](https://lostechies.com/jimmybogard/2007/10/24/entity-validation-with-visitors-and-extension-methods/) and there is no clear consensus.
+There are multiple schools of thought on the best ways to implement validation logic (check-out articles [here](https://enterprisecraftsmanship.com/posts/validation-and-ddd/) and [here](https://lostechies.com/jimmybogard/2007/10/24/entity-validation-with-visitors-and-extension-methods/) as there is no clear consensus on this topic.
 
 For the purposes of consistency, the following approaches are recommended for Shesha applications:
 
@@ -63,7 +63,7 @@ public async Task<CustomDto> CustomAPIMethod(CustomInput input)
     //...throw exception
 }
 ```
-Or by through dependency injection of `IValidator<EntityValidator>`/`IValidator<EntityDtoValidator>` in the `AppService` class as below
+Or through dependency injection of `IValidator<EntityValidator>`/`IValidator<EntityDtoValidator>` in the `AppService` class as below
 
 ##### Example
 ``` csharp

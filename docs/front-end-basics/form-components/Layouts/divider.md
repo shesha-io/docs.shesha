@@ -2,6 +2,8 @@
 
 The Divider is used to create a sense of order, separate different types of content, and improve the overall reading experience by guiding the reader through the document.
 
+### The Divider can help you:
+
 - Divide sections of an article.
 - Divide inline text and links such as the operation column of a table.
 - Differentiating Between Comments or Notes.

@@ -5,13 +5,13 @@ Filtering in an application refers to the process of narrowing down a set of dat
 There are several types of filtering that are supported through Shesha which can be accessed though a variety of components, namely:
 
 1. [Table View Selector](/docs/front-end-basics/form-components/data-display/data-table/table-view-selector) (should be used within a [Datatable Context](/docs/front-end-basics/form-components/data-display/data-table/datatable-context))
-2. [Entity Filter / Query Builder](/docs/front-end-basics/form-components/common-component-properties#entity-filter-query-builder)
+2. [Entity Filter / Query Builder](/docs/front-end-basics/form-components/common-component-properties)
 
 ## Filtering Using Static Values
 
 Filtering with static values refers to the process of filtering and displaying data based on predefined, fixed criteria or values, rather than dynamically changing criteria based on user input or other variables. This static approach is often used when certain data subsets are known in advance and can be hardcoded or predefined in the application.
 
-### How Filtering with Static Values Works:
+### How Filtering with Static Values Work:
 
 ![Static Filtering](./images/filterStatic.png)
 

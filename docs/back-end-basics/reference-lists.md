@@ -11,11 +11,9 @@ If an Entity's property is expected to only accept a standard list of values, a 
 
 For efficiency and maintainability reasons, properties that store a selection from a Reference List, will store the selected item as an integer, rather than the text value of the items selected. That is why a Reference List Entity properties are usually either of type `enum` or `long`.
 
-## Code-based (enum) vs Data based (long) Reference Lists
+## Reference Lists can be implemented in two ways:
 
-Reference Lists can be implemented in two ways:
-
-### Code-based (enum) Reference Lists
+### 1. Code-based (enum) Reference Lists
 For reference lists that are not expected to change **ever**, for example, 'Days Of The Week' or 'Gender', an enum should be used.
 
 #### Implementation Steps:
@@ -29,8 +27,8 @@ For reference lists that are not expected to change **ever**, for example, 'Days
 public class Person
 {
    ...
-   [ReferenceList("MyModuleName", "Gender")]
-   public RefListDaysOfTheWeek Gender { get; set; } 
+   [ReferenceList("MyModule", "Gender")]
+   public RefListGender Gender { get; set; } 
    ...
 }
 ```
@@ -53,7 +51,7 @@ public enum RefListGender: long
 
 
 
-### Data-Based Reference List 
+### 2. Data-Based Reference List 
 If the values of a Reference List are expected to change in the future perhaps to allow future customisation for clients or evolving needs, a Data-Driven reference list should be used.
 
 #### Implementation Steps:
@@ -147,7 +145,7 @@ public enum RefListDaysOfTheWeek
 
 
 ## Useful functions for working with Multi-value reference lists
-if you include the `Shesha.Extensions` namespace you will have access to a couple of useful extension functions useful for working with multi-value reference lists.
+If you include the `Shesha.Extensions` namespace you will have access to a couple of useful extension functions useful for working with multi-value reference lists.
 
 ``` csharp
 using Shesha.Extensions
@@ -159,8 +157,7 @@ var res = myEntity.GetMultiValueReferenceListItemNames("MyMultiValProperty");
 
 
 // Returns an string array listing all the items selected.
-var res = myEntity.GetMultiValueReferenceListItemNamesAr
-("MyMultiValProperty");
+var res = myEntity.GetMultiValueReferenceListItemNamesAr("MyMultiValProperty");
 ...
 ```
 

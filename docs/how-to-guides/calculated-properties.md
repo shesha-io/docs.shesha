@@ -9,7 +9,7 @@ Sometimes a property needs to return the result of a calculation rather than the
 When calculations are fairly straightforward and can be done without having to retrieve lots of other data from the database, then adding the calculation within the property getter is the simplest approach.
 
 #### Example
-```
+```cs
     public int Age { get; set; }
 
     /// <summary>
@@ -53,7 +53,7 @@ Add the property that needs be based on a calculated value as follows. In partic
    1. Make the property setter protected so that users cannot inadvertently update the property e.g. `public virtual int? RemainingCapacity { get; protected set; }`
 
 #### Example
-```
+```cs
         /// <summary>
         /// Specifies the remaining capacity. Calculated column based on: Capacity less SUM of all Active appointments.
         /// </summary>
@@ -72,7 +72,7 @@ The migrator file should:
 
 #### Example
 
-```
+```cs
     [Migration(20220303180801)]
     public class M20220303180801 : Migration
     {

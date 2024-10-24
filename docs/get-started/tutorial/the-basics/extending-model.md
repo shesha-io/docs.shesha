@@ -23,14 +23,14 @@ Navigate to the `backend` > `Shesha.Membership.sln` folder in your project direc
 
 The concept of a `table prefix` on the backend is often associated with database management systems, where it involves adding a specific string or identifier to the names of database tables. This is typically done to avoid naming conflicts and to organize tables based on certain criteria.
 
-1. Navigate to `Shesha.Membership.Common.Domain` > `Domain` > `Properties` > `AssemblyInfo.cs`
+1. Navigate to `Shesha.Membership.Domain` > `Domain` > `Properties` > `AssemblyInfo.cs`
 2. Modify the table prefix attribute tag to be `[assembly: TablePrefix("Mem_")]`, instead of `[assembly: TablePrefix("Membership_")]`
 
 > **Note:** While short prefixes offer these advantages, it's also crucial to strike a balance. The prefix should be long enough to be meaningful and avoid potential conflicts, but not so long that it becomes burdensome. A well-chosen, concise prefix enhances the overall quality and maintainability of the codebase.
 
 ### Create a Reference List
 
-1. Create a folder called Enums in Module > Boxfusion.Membership.Common.Domain.
+1. Create a folder called Enums in Module > Shesha.Membership.Domain.
 2. Right click on the Enums folder, Add > Class.
 3. Give your class the name of: RefListMembershipStatuses.cs, and click on Add.
 4. Add the below code:
@@ -44,7 +44,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shesha.Membership.Common.Domain.Enums
+namespace Shesha.Membership.Domain.Enums
 {
     /// <summary>
     /// Statuses for a Members Membership
@@ -73,7 +73,7 @@ namespace Shesha.Membership.Common.Domain.Enums
 
 ### Create a New Entity
 
-1. Navigate to `Boxfusion.Membership.Common.Domain` > `Domain`
+1. Navigate to `Shesha.Membership.Domain` > `Domain`
 2. Right click on the `Domain` folder, `Add` > `Class`
 3. Give your class the name of: `Member.cs`, and click on `Add`- This is where we will be adding properties we want as an addition to the Person table.
 
@@ -121,7 +121,7 @@ namespace Shesha.Membership.Domain.Domain
 
 ### Create a Migration Class
 
-1. Navigate to `Boxfusion.Membership.Common.Domain` > `Migrations`
+1. Navigate to `Shesha.Membership.Domain` > `Migrations`
 2. Right click on the `Migrations` folder, `Add` > `Class`
 3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124085300.cs for 24 November 2023 08:53:00**.
 4. Add the below code:
@@ -178,7 +178,7 @@ _Read more about dynamic APIs [here](/docs/back-end-basics/crud-apis)_
 
 Now that we have fully extended our domain model, it is time to go back and update our views so that we can reference our newly created fields in the `Member` entity.
 
-This can be done by updating the Model Type property in all our views from `Shesha.Domain.Person (Shesha.Core.Person)` to `Shesha.Membership.Common.Domain.Member (Mem.Member)`, changing CRUD endpoints to point to the relevant model type, and adding the following fields:
+This can be done by updating the Model Type property in all our views from `Shesha.Domain.Person (Shesha.Core.Person)` to `Shesha.Membership.Domain.Member (Mem.Member)`, changing CRUD endpoints to point to the relevant model type, and adding the following fields:
 
     - MembershipNumber - `Textfield`: `string`
     - MembershipStatus - `RadioButton`: `RefListMembershipStatuses`
@@ -189,7 +189,7 @@ This can be done by updating the Model Type property in all our views from `Shes
 ## Create View
 
 1. Navigate to the `member-create` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select `Settings` and change the `Entity` to `Shesha.Membership.Common.Domain.Member (Mem.Member)`
+2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
 
 With the addition of properties to our entity, to facilitate for an overall cleaner and more managable UI, we are going to be utilizing a `wizard` component for properly delinating the different sections of information required for the member registration.
 
@@ -231,23 +231,23 @@ function onError(_e) {
 
 _You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/data-entry/files)_
 
-7. Configure the `File` component with the following:
+8. Configure the `File` component with the following:
 
    - Property Name : `idDocument`
    - Label : `Id Document`
    - Owner Id: _leave empty_
 
-8. While on the `Biographical Information` step of the wizard, search and drag in the `Entity Picker` component from the `Builder Widgets`.
+9. While on the `Biographical Information` step of the wizard, search and drag in the `Entity Picker` component from the `Builder Widgets`.
 
 _You can find more information about implementation of the entity picker component [here](/docs/front-end-basics/form-components/data-entry/entity-picker)_
 
-8. Configure the `Entity Picker` component with the following:
+10. Configure the `Entity Picker` component with the following:
 
    - Property Name : `address`
    - Label : `Address`
    - Entity Type: `Shesha.Domain.Address (Shesha.Core.Address)`
 
-9. `Configure Columns` of the wizard to include the following columns:
+11. `Configure Columns` of the wizard to include the following columns:
    - addressLine1
    - suburb
    - town
@@ -305,11 +305,11 @@ Save your form and head back to the `member-create` form designer
 ## Table View
 
 1. Navigate to the `members-table` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select `Settings` and change the `Entity` to `Shesha.Membership.Common.Domain.Member (Mem.Member)`
+2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
 
 ![Image](./images/extendTable.png)
 
-3. Select the `Datatable Context` component and change the `Entity Type` to `Shesha.Membership.Common.Domain.Member (Mem.Member)`
+3. Select the `Datatable Context` component and change the `Entity Type` to `Shesha.Membership.Domain.Member (Mem.Member)`
 
 ![Image](./images/extendTable1.png)
 
@@ -329,7 +329,7 @@ _This is because we will be using the default `wizard` buttons that were configu
 ## Details View
 
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select `Settings` and change the `Entity` to `Shesha.Membership.Common.Domain.Member (Mem.Member)`
+2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
 
 With the addition of properties to our entity, to facilitate for an overall cleaner and more managable UI, we are going to be utilizing a `tab` component for properly delinating the different sections of the membership information.
 

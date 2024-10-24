@@ -1,6 +1,6 @@
 # Action Configurations
 
-Configuring action to be triggered upon button click.
+This section covers configuring actions to be triggered upon button click.
 
 ## Common
 

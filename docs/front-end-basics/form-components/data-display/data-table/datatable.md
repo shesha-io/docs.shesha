@@ -29,8 +29,8 @@ All columns come with a standard set of properties used to configure look and fe
 
 ## Table container style
 
-The style that will be applied to the table container/wrapper
+The style that will be applied to the table container/wrapper.
 
 ## Table style
 
-The style that will be applied to the table
+The style that will be applied to the table.

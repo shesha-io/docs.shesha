@@ -20,11 +20,11 @@ Please note as per [GitHub Issue 838](https://github.com/shesha-io/shesha-framew
 ### Get
 
 Returns a single entity by its Id
-Return single entity by it's Id. Here [entity] - is a camel cased name of the entity class
+Return single entity by it's Id. Here [entity] - is a camel cased name of the entity class.
 
 ### QueryAll
 
-Returns a list of entities using GraphQL
+Returns a list of entities using GraphQL.
 | Argument | Description|
 |--|--|
 | properties | Specifies which properties to return. The format is the same as for GQL queries e.g. `id firstName lastName`. Employing the GQL format allows you to also specify nested properties for referenced entities. For example, if you wish to also return `id firstName lastName primaryOrganisation { id name }` If left blank, all top level properties for the entity will be returned. |
@@ -37,15 +37,15 @@ Returns a list of entities using GraphQL
 
 ### Create
 
-Creates a new entity
+Creates a new entity.
 
 ### Update
 
-Updates an existing entity
+Updates an existing entity.
 
 ### Delete
 
-Deletes an existing entity
+Deletes an existing entity.
 
 ## Preventing the generation of CRUD APIs through code
 
