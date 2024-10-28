@@ -6,7 +6,7 @@ Columns are used to organize content horizontally, allowing for a flexible and r
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Gutter X
  Gutter X helps you to create gaps between column content for horizontal padding.
