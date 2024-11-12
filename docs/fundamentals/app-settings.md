@@ -182,3 +182,60 @@ Examples provided below:
 Shesha provides default Settings Administration UI as part of the application template. It's available here: http://localhost:3000/shesha/settings/
 
 ![image.png](/img/app-settings-admin-view.png)
+
+# Simple Application Settings
+
+We'll kick off this section by configuring a simple setting that defines a **Debit day** , which is the day a customer's membership payment is debited from their bank account.
+
+In your Shesha Backend Application, Navigate to the `domain` layer and create a folder called `Configurations`. Then while in the `Configurations` folder, add another folder called `Membership` which gives us some flexibility, in case we want to add other types of settings
+
+![Image](./images/modules3.png)
+
+In the `Membership` folder, create a new file called `MembershipSettingNames` and add the below code snippet to it 
+
+```cs
+    public class MembershipSettingNames
+    {
+        public const string DebitDay = "Shesha.Membership.DebitDay";
+    }
+```
+
+This file will store our **Debit day** setting, as well as an additional setting we want to add to the module.
+
+Next, create an Interface class called `IMembershipSettings` that extends the [ISettingAccessors](#define-a-settings-accessor) class and then add the code below to it; 
+
+```cs
+    [Category("Membership")]
+    public interface IMembershipSettings : ISettingAccessors
+    {
+        ///<summary>
+        ///
+        ///</summary>
+        [Display(Name = "Debit day", Description = "Specific day on which a financial transaction is processed.")]
+        [Setting(MembershipSettingNames.DebitDay)]   
+        ISettingAccessor<int> DebitDay { get; set; }
+
+    }
+```
+
+Next is to head over to your Module file, depending on what your application name is;
+
+![Image](./images/modules4.png)
+
+And then in the `PreInitialize` method, add the following code;
+
+```cs
+    public override void PreInitialize()
+    {
+        base.PreInitialize();
+        IocManager.RegisterSettingAccessor<IMembershipSettings>(x => x.DebitDay.WithDefaultValue(1));
+    }
+```
+
+Here, we have registered the **Debit day** setting and given it a default value of One(1), which means we want the debit to occur on the first day of each month.
+
+Now, run your backend and head over to your local build to see the setting we've just created.
+
+Under `Configurations` and then `Settings` you should see the new **Debit day** setting under the module `Membership`.
+
+![Image](./images/modules5.png)
