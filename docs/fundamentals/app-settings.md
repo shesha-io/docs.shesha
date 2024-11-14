@@ -3,10 +3,6 @@ sidebar_label: App Settings
 ---
 # App Settings
 
-# TODO:
-- Start with Admin Panel
-
----
 Shesha uses custom implementation of the application settings. Key features:
 1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings
 2. Auto-registration of setting accessors
@@ -181,7 +177,7 @@ Shesha provides default Settings Administration UI as part of the application te
 
 ![image.png](/img/app-settings-admin-view.png)
 
-# Simple Application Settings
+## Simple Application Settings
 
 We'll kick off this section by configuring a simple setting that defines a **Debit day** , which is the day a customer's membership payment is debited from their bank account.
 
@@ -238,9 +234,9 @@ Under `Configurations` and then `Settings` you should see the new **Debit day** 
 
 ![Image](./images/modules5.png)
 
-# Compound Application Settings
+## Compound Application Settings
 
-Let's create some more settings to give the user more control of the application. We're going to create some Compound settings that will handle more of the payment model. This section builds upon the Simple settings section to help differentiate and understand both more easily, so please review that that section first if you haven’t already.
+Let's create some more settings to give the user more control of the application. We're going to create some Compound settings that will handle more of the payment model. This section builds upon the [Simple settings](#simple-application-settings) section to help differentiate and understand both more easily, so please review that that section first if you haven’t already.
 
 First thing is to create a new `MembershipSettingName` called `MembershipPayments`, like so;
 
@@ -255,7 +251,7 @@ First thing is to create a new `MembershipSettingName` called `MembershipPayment
 
 **MembershipPayments** is the name of the Compound Setting, similar to how **Debit day** was the name of our simple setting. 
 
-Next, in the Domain Layer, under the **Configuration** and then **Membership** folders, create a new class called `MembershipPaymentSettings` with this piece of code added.
+Next, in the Domain Layer, under the **Configuration** and then **Membership** folders, create a new class called `MembershipPaymentSettings` with this piece of code added;
 
 ```cs
     public class MembershipPaymentSettings
@@ -340,7 +336,7 @@ To be able to check out the new Compound setting, create a new form and set its 
 
 ![Image](./images/modules6.png)
 
-Next, add all the properties in `MembershipPaymentSettings` class to the new form. Make sure to camelCase the property name and add a tool description so that the end user has an idea what a property does.
+Next, add all the properties in `MembershipPaymentSettings` class to the new form. Make sure to camelCase the property name and add tool descriptions so that the end user has an idea what a property does.
 
 ![Image](./images/modules7.png)
 
