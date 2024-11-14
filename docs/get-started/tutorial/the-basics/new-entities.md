@@ -149,7 +149,7 @@ _Check out the inline-editing [how-to-guide](/docs/front-end-basics/how-to-guide
 - New row init:
   ```javascript
   return {
-    member: formData.id,
+    member: form.data.id,
   };
   ```
 
