@@ -3,12 +3,6 @@ sidebar_label: App Settings
 ---
 # App Settings
 
-# TODO:
-- Start with Admin Panel
-- Simple App Setting
-- Compound App Setting
-
----
 Shesha uses custom implementation of the application settings. Key features:
 1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings
 2. Auto-registration of setting accessors
@@ -182,3 +176,170 @@ Examples provided below:
 Shesha provides default Settings Administration UI as part of the application template. It's available here: http://localhost:3000/shesha/settings/
 
 ![image.png](/img/app-settings-admin-view.png)
+
+## Simple Application Settings
+
+We'll kick off this section by configuring a simple setting that defines a **Debit day** , which is the day a customer's membership payment is debited from their bank account.
+
+In your Shesha Backend Application, Navigate to the `domain` layer and create a folder called `Configurations`. Then while in the `Configurations` folder, add another folder called `Membership` which gives us some flexibility, in case we want to add other types of settings
+
+![Image](./images/modules3.png)
+
+In the `Membership` folder, create a new file called `MembershipSettingNames` and add the below code snippet to it 
+
+```cs
+    public class MembershipSettingNames
+    {
+        public const string DebitDay = "Shesha.Membership.DebitDay";
+    }
+```
+
+This file will store our **Debit day** setting, as well as an additional setting we want to add to the module.
+
+Next, create an Interface class called `IMembershipSettings` that extends the [ISettingAccessors](#define-a-settings-accessor) class and then add the code below to it; 
+
+```cs
+    [Category("Membership")]
+    public interface IMembershipSettings : ISettingAccessors
+    {
+        ///<summary>
+        ///
+        ///</summary>
+        [Display(Name = "Debit day", Description = "Specific day on which a financial transaction is processed.")]
+        [Setting(MembershipSettingNames.DebitDay)]   
+        ISettingAccessor<int> DebitDay { get; set; }
+
+    }
+```
+
+Next is to head over to your Module file, depending on what your application name is;
+
+![Image](./images/modules4.png)
+
+And then in the `PreInitialize` method, add the following code;
+
+```cs
+    public override void PreInitialize()
+    {
+        base.PreInitialize();
+        IocManager.RegisterSettingAccessor<IMembershipSettings>(x => x.DebitDay.WithDefaultValue(1));
+    }
+```
+
+Here, we have registered the **Debit day** setting and given it a default value of One(1), which means we want the debit to occur on the first day of each month.
+
+Now, run your backend and head over to your local build to see the setting we've just created.
+
+Under `Configurations` and then `Settings` you should see the new **Debit day** setting under the module `Membership`.
+
+![Image](./images/modules5.png)
+
+## Compound Application Settings
+
+Let's create some more settings to give the user more control of the application. We're going to create some Compound settings that will handle more of the payment model. This section builds upon the [Simple settings](#simple-application-settings) section to help differentiate and understand both more easily, so please review that that section first if you haven’t already.
+
+First thing is to create a new `MembershipSettingName` called `MembershipPayments`, like so;
+
+```cs
+    public class MembershipSettingNames
+    {
+        public const string DebitDay = "Shesha.Membership.DebitDay";
+
+        public const string MembershipPayments = "Shesha.Membership.Payments";
+    }
+```
+
+**MembershipPayments** is the name of the Compound Setting, similar to how **Debit day** was the name of our simple setting. 
+
+Next, in the Domain Layer, under the **Configuration** and then **Membership** folders, create a new class called `MembershipPaymentSettings` with this piece of code added;
+
+```cs
+    public class MembershipPaymentSettings
+    {
+        /// <summary>
+        /// Specific day on which a financial transaction is processed, resulting in the withdrawal of funds from an account.
+        /// </summary>
+        public int DebitDay { get; set; }
+
+        /// <summary>
+        /// Sent a few days before the payment due date to remind the debtor of upcoming payment.
+        /// </summary>
+        public int InitialReminder { get; set; }
+
+        /// <summary>
+        /// Sent on the due date to remind the debtor that the payment is due today.
+        /// </summary>
+        public bool DueDateReminder { get; set; }
+
+        /// <summary>
+        /// Sent immediately after the payment is overdue, typically 1-3 days after the due date.
+        /// </summary>
+        public int FirstOverdueReminder { get; set; }
+
+        /// <summary>
+        /// Sent at regular intervals (e.g every 7, 14, or 30 days) until the payment is made or further action is taken.
+        /// </summary>
+        public int SubsequentOverdueReminder { get; set; }
+
+        /// <summary>
+        /// A stern reminder sent when the payment is significantly overdue, often indicating potential legal action.
+        /// </summary>
+        public int FinalNotice {  get; set; }
+    }
+```
+
+Now, let's add a new property to the `IMembershipSettings` class;
+
+```cs
+    [Category("Membership")]
+    public interface IMembershipSettings : ISettingAccessors
+    {
+
+        ......
+
+        ///<summary>
+        ///
+        ///</summary>
+        [Display(Name = "Membership Payments", Description = "Membership Payment debit days and reminder frequencies.")]
+        [Setting(MembershipSettingNames.MembershipPayments, EditorFormName = "membership-payment-settings")]
+        ISettingAccessor<MembershipPaymentSettings> MembershipPayments { get; set; }
+    }
+```
+
+We have created a new property `MembershipPayments`, with its `ISettingAccessor<T>` type set to the `MembershipPaymentSettings` class we just created.
+
+Please take note of the `EditorFormName` property, as with Compound settings, we'll need to bind that particular property to a configurable Form on the frontend, so the `EditorFormName` property name must match the exact form name that was configured.
+
+Just like the Simple Settings before, the last step is to register our new Compound Settings in the module file with default values, so modify the `PreInitialize` method so it looks like this;
+
+```cs
+        public override void PreInitialize()
+        {
+            base.PreInitialize();
+            IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
+            {
+                x.DebitDay.WithDefaultValue(1);
+                x.MembershipPayments.WithDefaultValue(new MembershipPaymentSettings
+                {
+                    DebitDay = 1,
+                    InitialReminder = 3,
+                    DueDateReminder = true,
+                    FirstOverdueReminder = 1,
+                    SubsequentOverdueReminder = 7,
+                    FinalNotice = 30
+                });
+            });
+        }
+```
+
+To be able to check out the new Compound setting, create a new form and set its name to the same name as the `EditorFormName` we discussed earlier. 
+
+![Image](./images/modules6.png)
+
+Next, add all the properties in `MembershipPaymentSettings` class to the new form. Make sure to camelCase the property name and add tool descriptions so that the end user has an idea what a property does.
+
+![Image](./images/modules7.png)
+
+When you navigate to `Configurations` and then `Settings` you should see the new **Membership Payments** compound settings under the module `Membership`.
+
+![Image](./images/modules8.png)
