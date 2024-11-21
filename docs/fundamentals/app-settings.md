@@ -343,3 +343,38 @@ Next, add all the properties in `MembershipPaymentSettings` class to the new for
 When you navigate to `Configurations` and then `Settings` you should see the new **Membership Payments** compound settings under the module `Membership`.
 
 ![Image](./images/modules8.png)
+
+
+## Configuration Migrations
+
+In this section, we'll look at how we can make configurations, which are available in one environment, and have them deployed to another(i.e Test, QA or Production)
+
+We'll try to export the Compound Application Setting we just defined above and then have then deployed in any environment we want.
+
+First, we'll navigate to our **Forms** view and click the **Export** button
+
+![Image](./images/modules9.png)
+
+Make sure to toggle the version of your Form to make what you're working with. In our case we will use **Latest** just because we have not published our form and there is not a live version as yet.
+
+![Image](./images/modules10.png)
+
+Next is select the module and then select our configured form, which in our case is the **membership-payment-settings** form and then click **Export**.
+
+![Image](./images/modules11.png)
+
+Clicking this create a *.shaconfig* file that provides the configuration in Json format.
+
+![Image](./images/modules12.png)
+
+To have the configuration available as part of our application, we need to add it as sort of a migration. 
+
+Now, in the **Application** layer in your backend, create a folder called **ConfigMigrations** and paste in the downloaded *.shaconfig* file
+
+![Image](./images/modules13.png)
+
+Next, is to set the Build Action of the *.shaconfig* file to **Embedded Resource** in the file properties pane.
+This makes sure the configuration file is embedded within the *.dll* that gets compiled.
+
+![Image](./images/modules14.png)
+
