@@ -315,7 +315,7 @@ For Simple settings, it is enough to simply await the `GetValueAsync` method to 
 Updating Settings follows a similar pattern. For Simple settings, we can await the `SetValueAsync` method and provide a single updated value by incrementing its current value by **1**. For Compound Settings, we need to create a new instance of the Compound setting object, in our case this is `MembershipPaymentSettings`, and set each property of the object individually.
 
 
-Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing. Shesha recognizes a current application automatically using the `sha-frontend-application`, see details [here](https://dev.azure.com/boxfusion/Shesha%20Web%20v3.0/_wiki/wikis/Shesha-Web-v3.0.wiki/791/Multiple-front-end-applications-support)
+Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing.
 
 ## Read setting values on front-end
 The read and write functionalities are accessible via the frontend under the **application** object, which is available on all the code editors across all forms.
