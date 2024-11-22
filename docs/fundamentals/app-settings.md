@@ -4,12 +4,12 @@ sidebar_label: App Settings
 # App Settings
 
 Shesha uses custom implementation of the application settings. Key features:
-1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings
-2. Auto-registration of setting accessors
-3. Setting definitions are stored in the DB
-4. Settings defined in the code gets saved to the DB at the application start
-4. Support of client specific settings
-5. Unlimited length of the setting value
+1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings.
+2. Auto-registration of setting accessors.
+3. Setting definitions are stored in the DB.
+4. Settings defined in the code gets saved to the DB at the application start.
+4. Support of client specific settings.
+5. Unlimited length of the setting value.
 
 # How to define a setting
 A setting must be defined before its use, it should be done in two steps:
@@ -21,165 +21,58 @@ Settings accessor is an interface that provides an access to settings values, al
 You just need to create and interface that extends `ISettingAccessors` and add property for each setting as `ISettingAccessor<T>` where T - type of the setting.
 
 ```cs
-    /// <summary>
-    /// Email settings
-    /// </summary>
-    [Category("Email")]
-    public interface IEmailSettings : ISettingAccessors
+    [Category("Membership")]
+    public interface IMembershipSettings : ISettingAccessors
     {
-        /// <summary>
-        /// Emails enabled
-        /// </summary>
-        [Display(Name = "Emails enabled", Description = "If true, all emails are enabled")]
-        [Setting(SheshaSettingNames.Email.EmailsEnabled)]
-        ISettingAccessor<bool> EmailsEnabled { get; }
+        ///<summary>
+        ///
+        ///</summary>
+        [Display(Name = "Debit day", Description = "Specific day on which a financial transaction is processed.")]
+        [Setting(MembershipSettingNames.DebitDay)]   
+        ISettingAccessor<int> DebitDay { get; set; }
 
-        /// <summary>
-        /// Redirect all emails to
-        /// </summary>
-        [Display(Name = "Redirect all emails to", Description = "If not null or empty the all outgoing emails will be sent to this email address, is used for testing only")]
-        [Setting(SheshaSettingNames.Email.RedirectAllMessagesTo)]
-        ISettingAccessor<string> RedirectAllMessagesTo { get; }
-
-        /// <summary>
-        /// SMTP Settings
-        /// </summary>
-        [Display(Name = "SMTP Settings")]
-        [Setting(SheshaSettingNames.Email.SmtpSettings, EditorFormName = "smtp-settings")]
-        ISettingAccessor<SmtpSettings> SmtpSettings { get; }
+        ///<summary>
+        ///
+        ///</summary>
+        [Display(Name = "Membership Payments", Description = "Membership Payment debit days and reminder frequencies.")]
+        [Setting(MembershipSettingNames.MembershipPayments, EditorFormName = "membership-payment-settings")]
+        ISettingAccessor<MembershipPaymentSettings> MembershipPayments { get; set; }
     }
 ``` 
 
-On the example above you can see the `IEmailSettings` interface, it has 3 strongly types properties:
-1. EmailEnabled - bool
-2. RedirectAllMessagesTo - string
-3. SmtpSettings - complex object of type `SmtpSettings`
+On the example above you can see the `IMembershipSettings` interface, it has 2 strongly typed properties:
+1. DebitDay - int
+2. MembershipPayments - complex object of type `MembershipPaymentSettings`
 
 Properties and the interface itself are decorated with the following attributes:
 1. `DisplayAttribute` - is used to define a `Display Name`, `Description` and `Category` (using `GroupName` property)
 2. `Category` - defines `Category` of the setting, can be applied on the interface level. Note: if the `CategoryAttribute` and `DisplayAttribute` are defined at the same time on the property level the value from `CategoryAttribute` will be applied.
 3. `Setting` - defines setting-specific properties:
-3.1 `Name` - name of the setting. Property name is used when attribute is missing
-3.2 `IsClientSpecific` - indicates that the setting is a client-specific
-3.3 `EditorFormName` - name of the custom form that is used as a setting editor
+    - 3.1 `Name` - name of the setting. Property name is used when attribute is missing
+    - 3.2 `IsClientSpecific` - indicates that the setting is a client-specific
+    - 3.3 `EditorFormName` - name of the custom form that is used as a setting editor
 
 ### Register a settings accessor
 After creating a settings accessor, we must register it in the PreInitialize method of our module:
 ```cs
-IocManager.RegisterSettingAccessor<IEmailSettings>(s => {
-        // set default value
-	s.SmtpSettings.WithDefaultValue(new SmtpSettings
-	{
-		Port = 25,
-		UseSmtpRelay = false,
-		EnableSsl = false,
-	});
-});
+            IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
+            {
+                x.DebitDay.WithDefaultValue(1);
+                x.MembershipPayments.WithDefaultValue(new MembershipPaymentSettings
+                {
+                    DebitDay = 1,
+                    InitialReminder = 3,
+                    DueDateReminder = true,
+                    FirstOverdueReminder = 1,
+                    SubsequentOverdueReminder = 7,
+                    FinalNotice = 30
+                });
+            });
 ```
-
-# Read and write setting values on back-end
-To read and write setting values you just need to resolve your settings interface (`IEmailSettings` from the example above) and use it's properties. Shesha generates an implementation of the interface automatically when you call `RegisterSettingAccessor`.
-
-In the example below we resolve `IEmailSettings` using constructor injection. The `TestSetting` method reads and writes the `SmtpSetting`, the value is strongly typed and we needn't perform any conversions manually.
-
-```cs
-private readonly IEmailSettings _emailSettings;
-public SheshaEmailSender(IEmailSettings emailSettings)
-{
-	_emailSettings = emailSettings;
-}
-
-public async Task TestSetting() 
-{ 
-	// get value
-	var smtpSettings = await _emailSettings.SmtpSettings.GetValueAsync();
-
-	// update setting
-	smtpSettings.Host = "localhost";
-	await _emailSettings.SmtpSettings.SetValueAsync(smtpSettings);
-}
-```
-
-Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing. Shesha recognizes a current application automatically using the `sha-frontend-application`, see details [here](https://dev.azure.com/boxfusion/Shesha%20Web%20v3.0/_wiki/wikis/Shesha-Web-v3.0.wiki/791/Multiple-front-end-applications-support)
-
-# Read setting values on front-end
-`SettingsProvider` is responsibel for reading settings on the front-end. You can use one of these react hooks: 
-1. `useSettings` - provides an access to the `SettingsProvider` context
-2. `useSettingValue` - reads a single setting from the back-end, see example of the usage below
-
-```ts
-const autoLogoffTimeoutSettingId: ISettingIdentifier = { name: 'Shesha.Security.AutoLogoffTimeout', module: 'Shesha' };
-
-export const IdleTimerRenderer: FC<PropsWithChildren<IIdleTimerRendererProps>> = ({ children }) => {
-  const { 
-    value: autoLogoffTimeout, // contains undefined when setting is not loaded and setting value when loaded
-    loadingState, // contains loadingstate ('waiting' | 'loading' | 'ready' | 'failed')
-    error // contains error returned by the back-end if http request are failed 
-  } = useSettingValue<number>(autoLogoffTimeoutSettingId);
-
-  // note: autoLogoffTimeout contains `undefined` when settings is not yet loaded
-  const timeoutSeconds = autoLogoffTimeout ?? 0;
-```
-
-# Settings storage and SettingsBootstrapper
-Setting definitions and values are stored in the DB, see the diagram below. Shesha saves all settings defined in code to the DB at the application startup using `SettingsBootstrapper`.
-
-
-# Migrations
-
-`Shesha.FluentMigrator` provides a fluent interface that allows to addition, updating and deletion of application settings.
-All migrator expressions are available using `this.Shesha()` extension:
-1. `SettingCreate` - create setting configuration
-2. `SettingUpdate` - update setting configuration and/or set value
-3. `SettingDelete` - delete setting configuration
-
-Examples provided below:
-
-```cs
-    [Migration(20230313090500)]
-    public class M20230313090500 : AutoReversingMigration
-    {
-        public override void Up()
-        {
-            // create a `Greeting` setting in the current module
-            this.Shesha().SettingCreate("Greeting", "Login greeting template")
-                .WithCategory("Logon") // set category, is unsed in the generic settings UI
-                .IsClientSpecific() // mark setting as application specific 
-                .AsString(); // set datatype of the setting
-
-            // update value of the `Greeting` setting for the `admin-portal` application
-            this.Shesha().SettingUpdate("Greeting")
-                .SetValueForApplication("admin-portal", "Welcome!");
-
-            // create a `AutoLogoffTimeout` setting on module `TestModule`
-            this.Shesha().SettingCreate("AutoLogoffTimeout", "Auto logoff timeout")
-                .OnModule("TestModule")
-                .WithDescription("Auto logoff timeout (seconds)")
-                .AsInt64();
-
-            // update value of the `AutoLogoffTimeout` setting
-            this.Shesha().SettingUpdate("AutoLogoffTimeout")
-                // define a module explicitly
-                .OnModule("TestModule")
-                .SetValue("300");
-
-            // delete setting
-            this.Shesha().SettingDelete("AutoLogoffTimeout").FromModule("TestModule");
-        }
-    }
-```
-
-**Note**: if the module is not specified explicitly, Shesha automatically populates it based on the assembly the Migrator file is defined in.
-
-# Settings Administration UI
-
-Shesha provides default Settings Administration UI as part of the application template. It's available here: http://localhost:3000/shesha/settings/
-
-![image.png](/img/app-settings-admin-view.png)
 
 ## Simple Application Settings
 
-We'll kick off this section by configuring a simple setting that defines a **Debit day** , which is the day a customer's membership payment is debited from their bank account.
+We'll kick off this section by configuring the simple setting that describes a **Debit day**, which we have previously [defined](#define-a-settings-accessor). This is the day a customer's membership payment is debited from their bank account.
 
 In your Shesha Backend Application, Navigate to the `domain` layer and create a folder called `Configurations`. Then while in the `Configurations` folder, add another folder called `Membership` which gives us some flexibility, in case we want to add other types of settings
 
@@ -343,3 +236,90 @@ Next, add all the properties in `MembershipPaymentSettings` class to the new for
 When you navigate to `Configurations` and then `Settings` you should see the new **Membership Payments** compound settings under the module `Membership`.
 
 ![Image](./images/modules8.png)
+
+
+## Configuration Migrations
+
+In this section, we'll look at how we can make configurations, which are available in one environment, and have them deployed to another(i.e Test, QA or Production)
+
+We'll try to export the Compound Application Setting we just defined above and then have then deployed in any environment we want.
+
+First, we'll navigate to our **Forms** view and click the **Export** button
+
+![Image](./images/modules9.png)
+
+Make sure to toggle the version of your Form to make what you're working with. In our case we will use **Latest** just because we have not published our form and there is not a live version as yet.
+
+![Image](./images/modules10.png)
+
+Next is select the module and then select our configured form, which in our case is the **membership-payment-settings** form and then click **Export**.
+
+![Image](./images/modules11.png)
+
+Clicking this create a *.shaconfig* file that provides the configuration in Json format.
+
+![Image](./images/modules12.png)
+
+To have the configuration available as part of our application, we need to add it as sort of a migration. 
+
+Now, in the **Application** layer in your backend, create a folder called **ConfigMigrations** and paste in the downloaded *.shaconfig* file
+
+![Image](./images/modules13.png)
+
+Next, is to set the Build Action of the *.shaconfig* file to **Embedded Resource** in the file properties pane.
+This makes sure the configuration file is embedded within the *.dll* that gets compiled.
+
+![Image](./images/modules14.png)
+
+## Read and write setting values on back-end
+To read and write setting values you just need to resolve your settings interface (`IMembershipSettings` from the example above) and use it's properties. Shesha generates an implementation of the interface automatically when you call `RegisterSettingAccessor`.
+
+In the example below we resolve `IMembershipSettings` using constructor injection. The `TestSetting` method reads and writes both the `DebitDay` and `MembershipPayments`, 
+
+```cs
+  private readonly IMembershipSettings _membershipSettings;
+
+  public PaymentReminderJob(IMembershipSettings membershipSettings)
+  {
+          _membershipSettings = membershipSettings;
+  }
+
+  public async Task TestSetting()
+  {
+      //Get Simple application settings
+      var simpleSettings = await _membershipSettings.DebitDay.GetValueAsync();
+
+      //Get Compound application settings
+      var compoundSettings = await _membershipSettings.MembershipPayments.GetValueAsync();
+
+      var finalNotice =compoundSettings.FinalNotice;
+
+      //Update Simple application settings
+      await _membershipSettings.DebitDay.SetValueAsync(simpleSettings + 1);
+
+      //Update Compound application settings
+      await _membershipSettings.MembershipPayments.SetValueAsync(new MembershipPaymentSettings
+      {
+          DebitDay = compoundSettings.DebitDay + 1,
+          InitialReminder = compoundSettings.InitialReminder + 1,
+          DueDateReminder = compoundSettings.DueDateReminder,
+          FirstOverdueReminder = compoundSettings.FirstOverdueReminder + 1,
+          SubsequentOverdueReminder = compoundSettings.SubsequentOverdueReminder + 1,
+          FinalNotice = compoundSettings.FinalNotice + 1
+      });
+  }
+```
+
+For Simple settings, it is enough to simply await the `GetValueAsync` method to get the values that have been set. However, for Compound settings, awaiting the `GetValueAsync` method returns an object that contains all the properties contained. This is the `compoundSettings` object from the snippet above.
+
+Updating Settings follows a similar pattern. For Simple settings, we can await the `SetValueAsync` method and provide a single updated value by incrementing its current value by **1**. For Compound Settings, we need to create a new instance of the Compound setting object, in our case this is `MembershipPaymentSettings`, and set each property of the object individually.
+
+
+Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing.
+
+## Read setting values on front-end
+The read and write functionalities are accessible via the frontend under the **application** object, which is available on all the code editors across all forms.
+
+The **application** object gives you access to the different settings that have been registered on the application, giving you flexibility to read or write to your settings from anywhere on your application.
+
+![Image](./images/modules15.png)
