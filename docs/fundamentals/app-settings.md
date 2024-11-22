@@ -77,50 +77,6 @@ IocManager.RegisterSettingAccessor<IEmailSettings>(s => {
 });
 ```
 
-# Read and write setting values on back-end
-To read and write setting values you just need to resolve your settings interface (`IEmailSettings` from the example above) and use it's properties. Shesha generates an implementation of the interface automatically when you call `RegisterSettingAccessor`.
-
-In the example below we resolve `IEmailSettings` using constructor injection. The `TestSetting` method reads and writes the `SmtpSetting`, the value is strongly typed and we needn't perform any conversions manually.
-
-```cs
-private readonly IEmailSettings _emailSettings;
-public SheshaEmailSender(IEmailSettings emailSettings)
-{
-	_emailSettings = emailSettings;
-}
-
-public async Task TestSetting() 
-{ 
-	// get value
-	var smtpSettings = await _emailSettings.SmtpSettings.GetValueAsync();
-
-	// update setting
-	smtpSettings.Host = "localhost";
-	await _emailSettings.SmtpSettings.SetValueAsync(smtpSettings);
-}
-```
-
-Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing. Shesha recognizes a current application automatically using the `sha-frontend-application`, see details [here](https://dev.azure.com/boxfusion/Shesha%20Web%20v3.0/_wiki/wikis/Shesha-Web-v3.0.wiki/791/Multiple-front-end-applications-support)
-
-# Read setting values on front-end
-`SettingsProvider` is responsibel for reading settings on the front-end. You can use one of these react hooks: 
-1. `useSettings` - provides an access to the `SettingsProvider` context
-2. `useSettingValue` - reads a single setting from the back-end, see example of the usage below
-
-```ts
-const autoLogoffTimeoutSettingId: ISettingIdentifier = { name: 'Shesha.Security.AutoLogoffTimeout', module: 'Shesha' };
-
-export const IdleTimerRenderer: FC<PropsWithChildren<IIdleTimerRendererProps>> = ({ children }) => {
-  const { 
-    value: autoLogoffTimeout, // contains undefined when setting is not loaded and setting value when loaded
-    loadingState, // contains loadingstate ('waiting' | 'loading' | 'ready' | 'failed')
-    error // contains error returned by the back-end if http request are failed 
-  } = useSettingValue<number>(autoLogoffTimeoutSettingId);
-
-  // note: autoLogoffTimeout contains `undefined` when settings is not yet loaded
-  const timeoutSeconds = autoLogoffTimeout ?? 0;
-```
-
 # Settings storage and SettingsBootstrapper
 Setting definitions and values are stored in the DB, see the diagram below. Shesha saves all settings defined in code to the DB at the application startup using `SettingsBootstrapper`.
 
@@ -378,3 +334,55 @@ This makes sure the configuration file is embedded within the *.dll* that gets c
 
 ![Image](./images/modules14.png)
 
+# Read and write setting values on back-end
+To read and write setting values you just need to resolve your settings interface (`IMembershipSettings` from the example above) and use it's properties. Shesha generates an implementation of the interface automatically when you call `RegisterSettingAccessor`.
+
+In the example below we resolve `IMembershipSettings` using constructor injection. The `TestSetting` method reads and writes both the `DebitDay` and `MembershipPayments`, 
+
+```cs
+  private readonly IMembershipSettings _membershipSettings;
+
+  public PaymentReminderJob(IMembershipSettings membershipSettings)
+  {
+          _membershipSettings = membershipSettings;
+  }
+
+  public async Task TestSetting()
+  {
+      //Get Simple application settings
+      var simpleSettings = await _membershipSettings.DebitDay.GetValueAsync();
+
+      //Get Compound application settings
+      var compoundSettings = await _membershipSettings.MembershipPayments.GetValueAsync();
+
+      var finalNotice =compoundSettings.FinalNotice;
+
+      //Update Simple application settings
+      await _membershipSettings.DebitDay.SetValueAsync(simpleSettings + 1);
+
+      //Update Compound application settings
+      await _membershipSettings.MembershipPayments.SetValueAsync(new MembershipPaymentSettings
+      {
+          DebitDay = compoundSettings.DebitDay + 1,
+          InitialReminder = compoundSettings.InitialReminder + 1,
+          DueDateReminder = compoundSettings.DueDateReminder,
+          FirstOverdueReminder = compoundSettings.FirstOverdueReminder + 1,
+          SubsequentOverdueReminder = compoundSettings.SubsequentOverdueReminder + 1,
+          FinalNotice = compoundSettings.FinalNotice + 1
+      });
+  }
+```
+
+For Simple settings, it is enough to simply await the `GetValueAsync` method to get the values that have been set. However, for Compound settings, awaiting the `GetValueAsync` method returns an object that contains all the properties contained. This is the `compoundSettings` object from the snippet above.
+
+Updating Settings follows a similar pattern. For Simple settings, we can await the `SetValueAsync` method and provide a single updated value by incrementing its current value by **1**. For Compound Settings, we need to create a new instance of the Compound setting object, in our case this is `MembershipPaymentSettings`, and set each property of the object individually.
+
+
+Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing. Shesha recognizes a current application automatically using the `sha-frontend-application`, see details [here](https://dev.azure.com/boxfusion/Shesha%20Web%20v3.0/_wiki/wikis/Shesha-Web-v3.0.wiki/791/Multiple-front-end-applications-support)
+
+# Read setting values on front-end
+The read and write functionalities are accessible via the frontend under the **application** object, which is available on all the code editors across all forms.
+
+The **application** object gives you access to the different settings that have been registered on the application, giving you flexibility to read or write to your settings from anywhere on your application.
+
+![Image](./images/modules15.png)
