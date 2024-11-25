@@ -41,7 +41,7 @@ You just need to create and interface that extends `ISettingAccessors` and add p
 ``` 
 
 On the example above you can see the `IMembershipSettings` interface, it has 2 strongly typed properties:
-1. DebitDay - int
+1. DebitDay - `int`
 2. MembershipPayments - complex object of type `MembershipPaymentSettings`
 
 Properties and the interface itself are decorated with the following attributes:
@@ -51,6 +51,7 @@ Properties and the interface itself are decorated with the following attributes:
     - 3.1 `Name` - name of the setting. Property name is used when attribute is missing
     - 3.2 `IsClientSpecific` - indicates that the setting is a client-specific
     - 3.3 `EditorFormName` - name of the custom form that is used as a setting editor
+    - 3.4 `IsUserSpecific` - settings that are tailored to individual users
 
 ### Register a settings accessor
 After creating a settings accessor, we must register it in the PreInitialize method of our module:
@@ -323,3 +324,122 @@ The read and write functionalities are accessible via the frontend under the **a
 The **application** object gives you access to the different settings that have been registered on the application, giving you flexibility to read or write to your settings from anywhere on your application.
 
 ![Image](./images/modules15.png)
+
+
+## User Specific Settings
+Shesha also supports user-specific settings, allowing you to define and manage settings that are tailored to individual users. These settings can be used for personal preferences or user-specific configurations, offering greater flexibility and personalization.
+
+Practical examples of this implementation could be `Notification Preferences`
+- `Email Notifications`: Users can configure how frequently they receive email updates (e.g., daily, weekly, or instant).
+    - Example: LinkedIn lets users adjust email notifications for connections, messages, and job recommendations.
+- `Push Notifications`: Allow users to enable or disable specific push notifications, such as reminders or promotional messages.
+    - Example: A weather app like AccuWeather enables users to choose notifications for severe weather alerts.
+
+### Define User Specific Settings
+Defining user-specific settings is similar to the process for global settings but includes an additional step to specify that the setting is tied to a particular user.
+
+#### 1. Define the User Setting Names
+Add a static class to define the user-specific setting names. This helps ensure consistency when referencing the settings.
+
+``` csharp
+public class UserSettingNames
+{
+    public const string NotificationFrequency = "Shesha.User.NotificationFrequency";
+    public const string EnablePushNotifications = "Shesha.User.EnablePushNotifications";
+}
+
+```
+
+#### 2. Define a User-Specific Settings Accessor
+
+Create an interface that extends `ISettingAccessors`, just like other settings. Use the `IsUserSpecific` property of the `Setting` attribute to indicate that the setting is user-specific.
+
+Example: 
+```csharp
+[Category("Notification Preferences")]
+public interface IUserNotificationPreferenceSettings : ISettingAccessors
+{
+    ///<summary>
+    /// 
+    ///</summary>
+    [Display(Name = "Notification Frequency", Description = "Users can configure how frequently they receive email updates (e.g., daily, weekly, or instant).")]
+    [Setting(UserSettingNames.NotificationFrequency, IsUserSpecific = true)]
+    ISettingAccessor<string> NotificationFrequency { get; set; }
+
+    ///<summary>
+    /// 
+    ///</summary>
+    [Display(Name = "Enable Push Notifications", Description = "Allow users to enable or disable specific push notifications, such as reminders or promotional messages.")]
+    [Setting(UserSettingNames.EnablePushNotifications, IsUserSpecific = true)]
+    ISettingAccessor<bool> EnablePushNotifications { get; set; }
+}
+```
+#### 3. Register the User Settings Accessor
+Just like with global settings, register the user-specific settings accessor in the PreInitialize method of your module. Provide default values that will be applied if a user-specific value has not been set.
+
+```csharp
+public override void PreInitialize()
+{
+    base.PreInitialize();
+
+    IocManager.RegisterSettingAccessor<IUserSettings>(x =>
+    {
+        x.NotificationFrequency.WithDefaultValue("Weekly");
+        x.EnablePushNotifications.WithDefaultValue(true);
+    });
+}
+```
+
+### Back-End API Design
+
+#### Get Endpoint
+- URL: `/api/services/app/Settings/GetUserValue`
+- Method: `GET`
+- Parameters:
+    - `moduleName` (string) - Specifies the module name to which the setting belongs.
+    - `settingName` (string) - Name of the setting to retrieve.
+    - `defaultValue` (optional, string) - Value to use if the setting does not already exist.
+    - `dataType` (optional, string) - Specifies the data type for validation before saving.
+
+- Behavior:
+    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](/docs/fundamentals/app-settings#2-define-a-user-specific-settings-accessor)
+    - If it does not exist:
+        - Create the setting with the provided `defaultValue`,  if specified.
+        - If `defaultValue` is not provided, use the `defaultValue` from the [UserSettingConfig](/docs/fundamentals/app-settings#3-register-the-user-settings-accessor) (if it exists).
+        - If no `defaultValue` is found, use an empty string ("").
+
+#### Update Endpoint
+- URL: `/api/services/app/Settings/UpdateUserValue`
+- Method: `POST`
+- Parameters:
+    - `moduleName` (string) - Specifies the module name to which the setting belongs.
+    - `settingName` (string) - Name of the setting to update.
+    - `defaultValue` (optional, string) - Value to set for the setting.
+    - `dataType` (optional, string) - Specifies the data type for validation before saving.
+    
+- Behavior:
+    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](/docs/fundamentals/app-settings#2-define-a-user-specific-settings-accessor)
+    - If it does not exist:
+        - Create the setting with the provided `defaultValue`.
+        - Validate the `defaultValue` by attempting to deserialize it into the `dataType` (if provided). If validation fails, return an error.
+    - If it exists, update the setting with the new value.
+    - Save the updated setting in the database.
+
+### Read user setting values on front-end
+The read and write functionalities are accessible via the frontend under the application object, which is available on all the code editors across all forms.
+
+The `application.user` object gives you access to the different endpoints exposed for reading and updating user specific settings, giving you flexibility to read or write to your settings from anywhere on your application.
+
+#### Get Endpoint
+``` javascript
+(method) UserApi.getUserSettingValueAsync(name: string, module: string, defaultValue?: any, dataType?: string): Promise<any>
+Get User Setting
+```
+
+#### Update Endpoint
+``` javascript
+(method) UserApi.updateUserSettingValueAsync(name: string, module: string, value: any, dataType?: string): Promise<void>
+Update User Setting
+```
+
+![Image](./images/user-settings-UI.png)
