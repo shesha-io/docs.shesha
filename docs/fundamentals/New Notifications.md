@@ -1,29 +1,29 @@
-# New Notification Framework Implementation
+# Notification Framework Implementation
 
 ## Overview
 The new notification framework addresses the limitations of the current system by providing a more robust, extensible, and configurable solution. It ensures flexibility in notification channels, supports user preferences, and simplifies integration with consuming applications.
 
 ## Key Features
 
-### Default Channels
+#### Default Channels
 - SMS and Email supported by Shesha Core
 
-### Extensible Architecture
+#### Extensible Architecture
 - Ease of configuration for new channels (e.g., Slack, Teams, WhatsApp)
 
-### Channel Determination
+#### Channel Determination
 - Based on user preferences, system defaults, or explicit application settings
 
-### Multiple Notification Mechanisms
+#### Multiple Notification Mechanisms
 - Direct messaging is currently supported
 - Ease of configuration for new notification mechanisms (bulk; broadcast)
 
-### Asynchronous Message Sending
+#### Asynchronous Message Sending
 - Includes optional synchronous mode for time-sensitive messages
 
 ## Key Entities
 
-### NotificationChannelConfig
+#### NotificationChannelConfig
 The NotificationChannelConfig entity plays a critical role in the notification framework by defining the capabilities, limitations, and configurations of each notification channel. It ensures the system can manage various channels (like SMS, Email, Slack, Teams, etc.) effectively and consistently while providing flexibility for future channel additions.
 
 The Notification framework comes standard with 2 per-configured channels: SMS and Email.
@@ -43,7 +43,7 @@ For example, to register channels such as email and SMS, you can add the followi
 ### NotificationTypes
 The NotificationTypeConfig entity is a key component in the notification framework. It defines the configuration for specific types of notifications, allowing the system to handle various notification requirements based on type. This ensures flexibility, consistency, and the ability to override defaults for specific use cases.
 
-![alt text](images/notification-images/NotificationTypes.png)
+![alt text](images/notification-images/TypesTV.png)
 
 ### UserNotificationPreference
 Stores user-specific preferences for notification types and default channels.
@@ -289,8 +289,7 @@ If no channel is passed as a parameter:
 ![alt text](images/notification-images/NotificationSettings.png)
 
 
-#### 
-## Asynchronous Message Sending
+## Asynchronous and Synchronous Message Sending
 
 ### How It Works
 
@@ -306,3 +305,11 @@ If no channel is passed as a parameter:
 
 #### Determining Time Sensitivity
 - The NotificationType entity includes an `IsTimeSensitive` flag which defines whether a message is time-sensitive
+
+## Disabling `Notification` and `NotificationMessage` entities Creation and Updates.
+
+Users should not manually create or update notification messages as these are preconfigured within the framework.
+To prevent accidental modifications, navigate to the entity configuration settings of your project and disable both the Create and Update options.
+Example:
+
+![alt text](images/disable.png)
