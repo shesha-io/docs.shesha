@@ -259,7 +259,7 @@ One of the `Entity Picker` components many benefits is that it provides the flex
 **In another tab, go create a new form with the following information:**
 
 - Module: `Shesha`
-- Template: `form-view`
+- Template: `blank-view`
 - Name: `address-create`
 - Label: `Address Create`
 - Description: `This create view is used to create a new address`
