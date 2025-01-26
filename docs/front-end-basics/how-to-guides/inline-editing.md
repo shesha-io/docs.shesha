@@ -96,4 +96,4 @@ This adds the member ID to the payload for inclusion in the API call.
 
 ## Example Usage
 
-In the provided example, a child table is configured to display membership payments, and the details of the member are stored on the parent form. To access member information, the logic is configured as follows:
+For an implementation example, please refer to the 'How-To Guide: [Inline Editing Initialization](../../how-to-guides/inline-editing-initialization.md)'
