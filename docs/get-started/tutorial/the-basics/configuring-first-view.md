@@ -268,7 +268,7 @@ Let’s create a form to enable viewing and editing of our newly registered memb
 
 ![Image](./images/details05.png)
 
-5. Since we want to create a 2-column layout, the default settings fit our specifications. There is also an option to configure the columns to fit your UI requirements. Read more about the implementation [here](#) (TODO: insert columns link).
+5. Since we want to create a 2-column layout, the default settings fit our specifications. There is also an option to configure the columns to fit your UI requirements. Read more about the implementation [here](../../../front-end-basics/form-components/Layouts/columns.md).
 
 6. On the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
 
