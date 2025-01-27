@@ -3,7 +3,7 @@ sidebar_label: Initializing dialog with edit properties
 title: Initializing dialog with edit properties
 ---
 
-Consider a situation where you made an error on a table and you don't want to drill all the wa down into the details view to be able to edit your information. 
+Consider a situation where you made an error on a table and you don't want to drill all the way down into the details view to be able to edit your information. 
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue1.png)
 
