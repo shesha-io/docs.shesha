@@ -183,53 +183,7 @@ Now that we have a way to view a list of our Members in a table and can access t
 
 ## Custom Validations
 
-### Validating South African phone numbers
-
-This can be achieved in 2 ways:
-
-1. **Min Length property:**
-
-   - This will bring a default validation message using the component `Label` property for content.
-     ![Image](./images/create4.png)
-     ![Image](./images/create5.png)
-
-2. **Custom Validator Script:**
-
-   - Navigate to the `validator` property on the text field.
-   - Copy the code and paste inside the given validator function to execute custom JavaScript code that returns a promise. 
-
-     ```javascript
-     function isValidPhoneNumber(number) {
-       const regex = /^(?:\+27|0)[1-9]\d{8}$/; //South African phone number regex pattern
-       return regex.test(number);
-     }
-
-     if (isValidPhoneNumber(value)) {
-       return Promise.resolve();
-     } else {
-       return Promise.reject("Please enter a valid cellphone number");
-     }
-     ```
-
-### Validating Email Addresses
-
-**Custom Validator Script:**
-
-- Navigate to the `validator` property on the text field.
-- Copy the code and paste inside the given validator function to execute custom JavaScript code that returns a promise. 
-
-  ```javascript
-  function isValidEmailAddress(email) {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //South African phone number regex pattern
-    return regex.test(email);
-  }
-
-  if (isValidEmailAddress(value)) {
-    return Promise.resolve();
-  } else {
-    return Promise.reject("Please enter a valid email address");
-  }
-  ```
+For Custom Validations, please see the How-To guide [Adding custom validations](../../../how-to-guides/adding-custom-validation-on-the-frontend.md).
 
 ### Disabling Dates before year 2000
 
@@ -314,7 +268,7 @@ Let’s create a form to enable viewing and editing of our newly registered memb
 
 ![Image](./images/details05.png)
 
-5. Since we want to create a 2-column layout, the default settings fit our specifications. There is also an option to configure the columns to fit your UI requirements. Read more about the implementation [here](#) (TODO: insert columns link).
+5. Since we want to create a 2-column layout, the default settings fit our specifications. There is also an option to configure the columns to fit your UI requirements. Read more about the implementation [here](../../../front-end-basics/form-components/Layouts/columns.md).
 
 6. On the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
 

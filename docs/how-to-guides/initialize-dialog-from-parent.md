@@ -6,7 +6,7 @@ In the example below, we are on an `invoice-details` view, which contains an `in
 
 On the `invoice-line-items` create view form designer, navigate to `Settings` and select `Initial Values`. Since we are on the details view of the `invoice`, and the creation of the `line item` happens on a dialog, we can initialize the `invoice` foreign key on the `invoice-line-item` by using the `ParentFormValues` object.
 
-![Initial Values](./images/initializeDialog1.png)
+![Initial Values](./images/initialize-dialog-from-parent/initializeDialog1.png)
 
 ## 2. Using "on Initialized" Event
 
@@ -14,4 +14,4 @@ On the `invoice-line-items` create view form designer, navigate to `Settings` an
 
 The [SetFormData](/docs/front-end-basics/configured-views/client-side-scripting/set-form-data) function, as explained in an earlier section, can be used. For example:
 
-![Initial Values](./images/initializeDialog2.png)
+![Initial Values](./images/initialize-dialog-from-parent/initializeDialog2.png)
