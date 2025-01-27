@@ -2,17 +2,16 @@
 
 ## Overview
 
-The Shesha Form Builder is a powerful feature that includes a variety of form components to cover a wide range of common scenarios. However, given the diversity of use cases, it's not feasible to address all of them. Therefore, Shesha provides an option to develop custom components for any unique requirements. These custom components can be seamlessly integrated withing the Form Builder, enabling you to easily add them to any form through the drag-and-drop interface.
+The Shesha Form Builder is a versatile tool offering a wide range of form components to cover most common scenarios. However, to meet unique requirements, Shesha allows the creation of custom components. These custom components can be seamlessly integrated into the Form Builder, enabling easy addition via a drag-and-drop interface.
 
 ## Background
 
-Before diving into the code, we need to briefly mention a few topic areas.
-
-- The form is assembled using a JSON schema. Once this JSON data is available it is injected into the Form Builder and interpreted to render specific components with exact configurations.
+Shesha Form Builder uses a JSON schema to assemble the form structure. Once the schema is available, it is injected into the builder, where it is interpreted to render components with their specific configurations.
 
   ![Image](./images/figure1.png)
-  ![Image](./images/figure2.png)
 
+
+#### Example JSON Schema
 ``` ts
 {
   "components": [
@@ -44,21 +43,20 @@ Before diving into the code, we need to briefly mention a few topic areas.
 }
 ```
 
-> **NOTE**: It is important to note that in the JSON schema in the above image, two properties are depicted (`components`, `formSettings`). Also take note that the components property is an `array` and if we had more than one component in the UI form it would be shown in this array.
+> **NOTE**: The JSON schema above shows two properties: `components` (an array of form components) and `formSettings`. If there are multiple components in the UI form, they would appear as additional entries within the `components` array.
 
 ## Folder Structure
 
-- Looking at the file structure, we have gone with the [monorepo](https://monorepo.tools/) approach. NPM allows for [workspaces](https://dev.to/ynwd/how-to-create-react-monorepo-with-npm-workspace-webpack-and-create-react-app-2dhn) to be used in a single project. The use of workspaces allows us to share dependencies (node_modules) between projects/modules in a single application.
-- The recommended naming conventions is to name the root workspace directory as `packages` and create all relevant modules in this `packages` directory.
+Shesha adopts a [monorepo](https://monorepo.tools) structure with [NPM workspaces](https://www.geeksforgeeks.org/getting-started-with-npm-workspaces), allowing shared dependencies between multiple projects or modules within a single application.
+
+- The root workspace directory is typically named packages, where all relevant modules are stored.
+- In the above example, the his module is the only one in the packages directory.
+- Components are exposed through the `hisApplicationPlugin.tsx` file inside `src/providers`, which needs to be wrapped around the main application's provider.
 
   ![Image](./images/figure3.png)
 
-  _Above image shows the `packages` folder in the root of the `adminportal` directory_
+#### Example Code: Exposing Components
 
-- Inside the `packages` directory we can see that only one module exists, namely the `his` module.
-- The `hisApplicationPlugin.tsx` file inside of the `src/providers` folder is where components are exposed. `HisApplicationPlugin` will need to be wrapped around the main application's provider.
-
-  ![Image](./images/figure4.png)
 
 ``` ts
 import React, { FC, PropsWithChildren, useEffect } from 'react';
@@ -80,19 +78,19 @@ export const HisApplicationPlugin: FC<PropsWithChildren<HisApplicationPluginProp
 };
 ```
 
-- By opening the `allComponents` file as shown in the image below, we can see the list of exposed components to the Shesha Form Builder.
-  <!-- figure 5 -->
+#### Viewing Exposed Components
+To view the list of exposed components in the Shesha Form Builder, open the `allComponents` file, as shown in the image below:
 
-  ![Image](./images/figure5.png)
   <!-- figure 7 -->
 
   ![Image](./images/figure7.png)
+  
+#### Data Structure
+The `allComponents` file uses an array to group components. This structure allows for organizing multiple component modules when needed.
 
-- An array is the data structure used for `allComponents`, this allows us to group components and create multiple component modules if needed.
-- The array is typed with a IToolboxComponentGroup interface which enforces that we follow the correct pattern. It is recommended that allComponents be typed as shown in the image below
-  <!-- figure 5 -->
-  ![Image](./images/figure5.png)
+The array is typed using the `IToolboxComponentGroup` interface, ensuring that the correct structure is followed. It is recommended to type `allComponents` as demonstrated in the example below:
 
+#### Example Code: `allComponents`
 ``` ts
 import { IToolboxComponentGroup } from '@shesha-io/reactjs';
 import CalendarComponent from 'components/global/bookingCalendar/formComponent';
@@ -118,15 +116,13 @@ export const allComponents: IToolboxComponentGroup[] = [
 ];
 ```
 
-_The square bracket after the interface means it is an array of the [IToolboxComponentGroup](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) interface._
+> **NOTE**: An example of this folder structure can be found [here](https://github.com/shesha-io/shesha-framework/tree/main/shesha-starter/frontend-packages).
 
-## Implementation
+## Component Definition
 
-- A simple example was constructed for demo purposes
-  <!-- figure 6 -->
+Custom components must implement the IToolboxComponent interface to maintain consistency within the Form Builder.
 
-  ![Image](./images/figure6.png)
-
+#### Example Component: `SampleComponent`
 ``` ts
 import { DingtalkOutlined } from '@ant-design/icons';
 import {
@@ -176,19 +172,13 @@ const SampleComponent: IToolboxComponent<ISampleComponentProps> = {
 export default SampleComponent;
 ```
 
-- `SampleComponent` is an object which implements the [IToolboxComponent](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) interface, this is to ensure consistency.
-
-## Type
-
-- A key which is used to find specific components, it is essential that this is unique
-
-## Name
-
-- Property name is displayed on the components toolbox and is often the default value of the label once dragged to the form
-
-## Icon
-
-- Icon property refers to the selected icon on the toolbox
+#### Key Properties of [IToolboxComponent](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts):
+- `Type`: Unique identifier for the component.
+- `Name`: Displayed in the toolbox, often set as the default label.
+- `Icon`: The icon shown in the toolbox.
+- `Factory`: A method that returns a JSX element and defines how the component is rendered in the form.
+- `Settings`: Used to configure form-specific settings like size, label visibility, etc.
+- `initModel`: Initial values can be defined and will be applied during the form configuration initialization.
 
   <!-- figure 7 -->
 
@@ -196,12 +186,10 @@ export default SampleComponent;
 
 ## Form Configuration
 
-- Form configuration are the configurations that render the side menu or metadata of the component
+- The `settingsForm` property defines the component's configuration, typically displayed in the side menu or metadata section of the builder.
+- [`DesignerToolbarSettings`](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/toolbarSettings.ts) is a helper class for building configurations. To create a configuration, simply add the appropriate method to the class and provide the necessary options. Then, import the configuration settings and inject them into the builder.
 
-  <!-- figure 8 -->
-
-  ![Image](./images/figure8.png)
-
+#### Example: `settingsForm` Configuration
 ``` ts
 import { DesignerToolbarSettings } from '@shesha-io/reactjs';
 import { nanoid } from 'nanoid';
@@ -267,50 +255,55 @@ export const settingsForm = new DesignerToolbarSettings()
 
   ![Image](./images/figure9.png)
 
-- [DesignerToolbarSettings](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/toolbarSettings.ts) is a class that assists to create the configuration. Simply append the relevant method to the class to build the configuration and pass the relevant options to the method. Import the configuration settings and inject it to the builder.
+## Factory Method
 
-_shown on lines 10, 40, 41_
+The `factory` property is a key method in the `IToolboxComponent` interface. It returns a JSX element and handles rendering in the form.
 
-  <!-- figure 6 -->
+#### How Factory Works:
+- The `factory` method takes a [`ComponentFactoryArguments`](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts) object as an argument. The primary property of interest is `model`, which holds the component's configuration values.
+- The `ConfigurableFormItem` component is responsible for managing the form's state, validation, visibility, and more.
 
-![Image](./images/figure6.png)
+> **NOTE**: It is important to note that [`ConfigurableFormItem`](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/components/formDesigner/components/formItem.tsx) is a form item and is responsible for handling state, validation, visibility and many more features on the Shesha Form Builder.
 
-## Factory
+#### Example of Factory Method Usage:
+``` ts
+const SampleComponent: IToolboxComponent<ISampleComponentProps> = {
+  ...
+  Factory: ({ model }: ComponentFactoryArguements<ISampleComponentProps>) => {
+    const style = {
+      height: model.height,
+      width: model.width,
+      border: model.hasBorder ? '1px solid black' : 'none',
+    };
 
-- The `factory` property is arguably the most important property implemented from the `IToolboxComponent` interface. In essence, the property returns a JSX element and is what will be rendered in the forms.
-- Property `factory` is actually a method that returns a JSX element/component, the first and only parameter is an object of type [ComponentFactoryArguments](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/interfaces/formDesigner.ts).
-- We will be focusing on the model property that is inside the `ComponentFactoryArguments` interface and neglect the rest of the properties.
-- From our parameter we destructure the model property. Property of model is passed to the [ConfigurableFormItem](https://github.com/shesha-io/shesha-framework/blob/d4959da52f3285067f3269d7f9a14a0259281afb/shesha-reactjs/src/components/formDesigner/components/formItem.tsx) component
+    return (
+      <ConfigurableFormItem model={model}>
+        {(value, onChange) => (
+          <div style={style}>
+            <div>{model.title}</div>
+            <span>X: {value?.x}</span>
+            <span>Y: {value?.y}</span>
+          </div>
+        )}
+      </ConfigurableFormItem>
+    );
+  },
+  ...
+};
+```
 
-    <!-- figure 6 -->
+## Rendering the Factory Property
+The factory property includes the `ConfigurableFormItem` component as its top-level parent. While using `ConfigurableFormItem` is not mandatory, it is the preferred approach. The children of `ConfigurableFormItem` receive a function with two parameters: `value` and `onChange`.
 
-  _shown on line 25_
+- `value`: Represents the current value of the active component.
+- `onChange`: The event handler that triggers value changes.
 
-  ![Image](./images/figure6.png)
-
-> **NOTE**: It is important to note that `ConfigurableFormItem` is a form item and is responsible for handling state, validation, visibility and many more features on the Shesha Form Builder.
+The function that is the child of `ConfigurableFormItem` must return the component that will be rendered in the form builder. The component can either receive values directly or mute them, depending on the specification. In the provided example, the values from the model are directly passed to the components.
 
 ## Model
+The model contains the component’s configuration values (e.g., title, size, border settings). The model is passed to the `ConfigurableFormItem`, and it reflects changes made via the form builder interface.
 
-- The model property is the values which were set in component form configuration
-
-  <!-- figure 8 -->
-
-  ![Image](./images/figure8.png)
-
-- Once this is set the values are available on the model property
-  <!-- figure 6 -->
-
-  _shown on line 17_
-
-  ![Image](./images/figure6.png)
-
-- It is important to note the type of the model, the model is an object of type ISampleComponentProps. This is passed as a generic type on the ComponentFactoryArguements interface.
-
-  <!-- figure 10 -->
-
-  ![Image](./images/figure10.png)
-
+#### Example of Model Definition:
 ``` ts
 import { IConfigurableFormComponent } from '@shesha-io/reactjs';
 
@@ -322,54 +315,17 @@ export interface ISampleComponentProps extends IConfigurableFormComponent {
 }
 ```
 
-Rending of the `factory` property includes the `ConfigurableFormItem` component as the top parent, this is not mandatory only but done as preference. The children of `ConfigurableFormItem` return a function of parameters `value` and `onChange`. value is the current value of the active component, `onChange` is the event which will trigger the value to change
-
-  <!-- figure 6 -->
-
-_shown on line 26_
-
-![Image](./images/figure6.png)
-
-The function which is the child of `ConfigurableFormItem` is required to return the component which will be rendered on the form builder. Direct values can be passed down or muted depending on the specification, in the example used the values from model were directly used in the components
-
-  <!-- figure 6 -->
-
-_shown on lines 28, 29, 30_
-
-![Image](./images/figure6.png)
-
-_See working example below_
-
-  <!-- figure 7 -->
-
-![Image](./images/figure7.png)
-
-## Init Model
-
-- Initial values can be set using the initModel property. These values will be initialized on the form configuration
-
-    <!-- figure 6 -->
-
-  _shown on line 36_
-
-  ![Image](./images/figure6.png)
-  <!-- figure 8 -->
-
-  ![Image](./images/figure8.png)
-
 ## Exposing Component
 
-- Navigate to the `app-provider.tsx` file from the root directory of the `adminportal` directory. `src` > `app` > `app-provider.tsx`
+To expose custom components, wrap your application's root provider with the `HisApplicationPlugin`. This step makes the components available in the form builder.
+
+Navigate to the `app-provider.tsx` file located in the `adminportal` directory: `src > app > app-provider.tsx`
+
   <!-- figure 11 -->
 
   ![Image](./images/figure11.png)
 
-- The `HisApplicationPlugin` is wrapped around the main application's provider as seen in the illustration below. Simply import the hook and wrap it around the `ShaApplicationProvider`.
-
-  <!-- figure 13 -->
-
-  ![Image](./images/figure13.png)
-
+#### Example: Wrapping with `HisApplicationPlugin`
 ``` ts
 "use client";
 
