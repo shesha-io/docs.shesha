@@ -1,110 +1,151 @@
 # Basic Scripting
 
-Scripting can be added to your configured views to add more advanced functionality to your application. Scripts are typically added to the various events exposed by the form or form components. All scripting is done using JavaScript and a number of standard objects and functions are available to the script to facilitate the need to respond to various scenarios.
+Scripting can be added to your configured views to add more advanced functionality to your application. Scripts are typically added to the various events exposed by the form or form components. All scripting is done using JavaScript and a number of standard objects and functions are available to the script to facilitate the need to respond to various scenarios. 
+Scripts are separated into 
+1. Action Scripts - these are found on the `Action configuration` section of a clickable component (*e.g. buttons*).  Are asynchronous and return promises (*see [here](https://www.w3schools.com/js/js_async.asp)*). Most common usage of Action Scripts is making http calls.
+2. Expression Scripts - are found on sections of components where dynamic validation is required, or dynamic configuration is done. For example, if you want a button to be hidden when a global state variable is set, you use an Expression Script. These start with `get` followed by what the script is supposed to do, e.g. for scripts that hide components, it will be `getHidden` etc.
+
+Where to find Action Scripts
+![[Action-Script-button-section.png]]
+
 
 The sections below provides sample code for common use cases where scripting is typically required:
 
-## Calling an API using the GET method to retrieve data from the back-end
+### Making API calls
+For more information, see [here](/docs/front-end-basics/how-to-guides/http-requests).
 
-```javascript
-(function () {
-  const PATH = `/api/dynamic/Shesha/Person/GetAll`;
-  http.get(`${PATH}`).then(onSuccess).catch(onError);
-})();
-
-function onSuccess(resp) {
-  message.success(`Successfully retrived all the people`, 10); // A toast message indicating success of API call
-}
-
-function onError(_e) {
-  message.error(`Error: ${_e.response.data.error.message}`); // Catches the error message from the backend and displays in a `toast` message popup
-}
+Since Action Scripts are **asynchronous**, you need to return a **Promise**. For example, say you want to create a book on your API server, your action script would typically look like the following:
+```JavaScript
+// This is what the Action script looks like
+// Notice the async() and the Promise<any> ?
+const executeScriptAsync = async (): Promise<any> => {
+  const bookData = { name: "Artemis Fowl", author: "Some Irish dude", genre: "dunno" };
+  const bookCreationApi = `/api/services/app/Books/Create`;
+  return http.post(bookCreationApi, bookData)
+			  .then(response => {
+					return Promise.resolve(response);			  
+			  })
+			  .catch(error => {
+					return Promise.reject(error);
+			  });
+};
 ```
 
-## Calling an API using the POST method to submit [form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) to the back-end
+The reason for returning a `Promise.resolve` / `Promise.reject`, is as mentioned above the script. 
 
-```javascript
-(function () {
-  const PATH = `/api/dynamic/Shesha/Person/Create`;
-  http.post(`${PATH}`, data).then(onSuccess).catch(onError);
-})();
+:::tip Response Actions
+Instead of chaining requests or manually showing messages, it's better to make your script send a single request, then use the "Handle Success" action to perform a follow up action. For example, say you want to create a book on your API, and after creating the book, you want to  show the user a success / failure message. You would do the following:
+-> On Action Configuration, you specify the Action Script which makes the http call
+-> Select Handle Success / Handle Fail
+-> On Success Handler / Fail handler, choose Common > Show message, and then input the message.
 
-function onSuccess(resp) {
-  message.success(`Person created:`, resp.data.result.fullName); // Will display the full name of the person created.
-}
+It is better to use this method, and limit one http call per script. This makes it easier to debug any issues that crop up, and avoids issues where the follow up call is finished before the subsequent call has finished executing. To share data across the scripts, you can use store the data in the `pageContext`. 
+:::
 
-function onError(_e) {
-  message.error(`Error: ${_e.response.data.error.message}`); // Catches the error message from the backend and displays in a `toast` message popup
-}
-```
+:::tip
+In other scenarios, you might want to use the configuration API Call (*see [here](/docs/front-end-basics/configured-views/action-configurations#api-call)*) instead of manually writing Execution Scripts. If you want to change the payload structure before submission, you can use the form's Prepared Values event. (*see [here](/docs/front-end-basics/configured-views/shesha-events/prepared-values)*)
+:::
 
-## Modifying the [form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) before calling an API using the POST method to submit the modified form data to the back-end
-
+###  Useful data manipulation tricks
 It is sometimes useful to modify the form data before submitting it to the back-end, for example to submit calculated values. This can be achieved in the following ways.
 
 :::tip Use AppContexts
-To avoid adding uncessary data to the form that you then remove programmatically before posting to the back-end, you can also bind your form components to [appContexts](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) instead.
+To avoid adding unnecessary data to the form that you then remove programmatically before posting to the back-end, you can also bind your form components to [appContexts](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) instead.
 :::
 
-```javascript
-(function () {
-  const PATH = `/api/dynamic/Shesha/Person/Create`;
+3. Object Destructuring (*see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment#object_destructuring)*)
+```JavaScript
+// Assume you have this data object coming from the form. I'm just going to declare it here
+// to show what it looks like
+const formData = { 
+	name: "Lloyd", 
+	middlename: "Something", 
+	lastname: "Frontera", 
+	gender: "Unknown", 
+	age: 455, 
+	dateOfBirth: "unknown", 
+	organisation: {
+		name: "Frontera Estate",
+		parentOrganisation: "Magentano Kingdom"
+	} 
+};
 
-  //   constructing your payload can be achieved in the following ways:
-  //   1. Delete your unwanted properties from the form data E.g.
-  delete data.isSingle; // This deletes the `isSingle` property from the form data if it was just used as a form of manipulating the data entry.
+// If our API accepts only the name, middlename, lastname, we can do the following
+const { name, middlename, lastname, ...restOfStuff } = formData;
+const payload = { name, middlename, lastname };
 
-  //   2. Adding additional properties to the form data based on some condition E.g.
-  if (data.title == 1) {
-    data.gender = "male";
-  } else {
-    data.gender = "female";
-  }
-  // This adds the `gender` property to the form data based on the value of `data.title`
-
-  http
-    .post(`${PATH}`, data) // You pass in your already constructed form data object as the request body
-    .then(onSuccess)
-    .catch(onError);
-})();
-
-function onSuccess(resp) {
-  message.success(`Person created:`, resp.data.result.fullName); // Will display the full name of the person created.
-}
-
-function onError(_e) {
-  message.error(`Error: ${_e.response.data.error.message}`); // Catches the error message from the backend and displays in a `toast` message popup
-}
+// Or if your API doesn't have the Organisation, but the other parameters, you can do this
+const { organisation, ...apiStuff } = formData; 
+// The following code will show
+// { 
+//	 name: "Lloyd", 
+//	 middlename: "Something", 
+//	 lastname: "Frontera", 
+//	 gender: "Unknown", 
+//	 age: 455, 
+//	 dateOfBirth: "unknown"
+// }
+console.log(apiStuff); 
 ```
 
-## Call an API using the POST method and a custom payload
+4. Object Re-assignment
+There are cases where you would like to add a new property to your API payload before submitting. 
+```JavaScript
+// Assume you have your data object which looks like the following:
+const formData = { 
+	name: "Takumi", 
+	middlename: "Drift-King", 
+	lastname: "Fujiwara", 
+	gender: "Male", 
+	dateOfBirth: "22/01/1896",
+	salary: 200
+};
 
-This is an example of making a custom API call using the POST method. In this example, the payload is constructed using a combination of the form data and the selected row from the index table.
-
-_Read also: [SelectedRow](/docs/front-end-basics/form-components/data-display/data-table/datatable-context#selectedrow)_
-
-```javascript
-(function () {
-  const PATH = `/api/dynamic/Shesha/Person/Create`;
-
-  http
-    .post(`${PATH}`, {
-      status: 2, // hard-coded status
-      parent: contexts.indexTable.selectedRow.id, // sources the parent from the selected row value
-      startDate: data.startDate, // sources the start date from the form data
-    })
-    .then(onSuccess)
-    .catch(onError); // You pass in your already constructed form data object as the request body
-})();
-
-function onSuccess(resp) {
-  message.success(`Person created:`, resp.data.result.fullName); // Will display the full name of the person created.
-}
-
-function onError(_e) {
-  message.error(`Error: ${_e.response.data.error.message}`); // Catches the error message from the backend and displays in a `toast` message popup
-}
+// Now you want to add tax calculations to the object because ... well, everybody pays taxes
+// and your API would crash without them for some bad reason.
+// Let's say the tax is at 50%
+// The resulting object uses the rest operator (the funny dots before the formData) to copy
+// the object's properties. So it contains all the form properties as well as the tax deduction.
+const apiPayload = { ...formData, tax: 0.5 * formData.salary };
 ```
+
+
+###  Hiding / Disabling buttons / components
+As mentioned before, Expression Scripts provide a way to programmatically change a component. You could change anything from visibility to size to even the styling. ![[button_expose_script.png]]
+![[button_script_after_toggle.png]]
+
+For example, say you want to hide a button if a certain global state variable is set, in the code editor, you can use the following script:
+
+```JavaScript
+const getHidden = () => {
+	// Assume the property in the globalState is a number called numTries, and you want 
+	// to hide the button if the number of tries gets to a certain number.
+	// You can do the following
+	return globalState.numTries === 10;
+};
+```
+
+**NB**: **All expression scripts must return a value, and while the nature of the value differs with the script, a value should be returned either way.**
+
+### Script arguments
+There are various objects which are part of Scripts. Shesha provides objects such as `globalState`, `pageContext`, `form`, `http`, etc. In order to check which objects are available in the script you wish to execute, you can log the `arguments` keyword.
+
+```JavaScript
+
+// In Action Scripts, you can do the following:
+const executeScriptAsync = async () => {
+    console.log("LOG::executeScript:arguments: ", arguments);
+};
+
+// Same thing to Expression Scripts
+const getHidden = () => {
+	console.log("LOG::getHidden:arguments: ", arguments);
+};
+```
+
+If you view your browser's console, you should see something like the following:
+![[form_arguments.png]]
+Of course, the data shown will be different to what you see in the console window, but it doesn't really matter since the objects reflect the data that's on your system.
 
 ## Navigate to another page
 
