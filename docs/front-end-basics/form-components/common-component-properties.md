@@ -131,7 +131,7 @@ These events contain a standard list of variables that give the user access to c
 - A function used to [setFormData](/docs/front-end-basics/configured-views/client-side-scripting/set-form-data)
 - `moment` function for DateTime operations
 - `ParentFormValues`
-- [initialValues](/docs/front-end-basics/how-to-guides/initialize-dialog-from-parent)
+- [initialValues](/docs/how-to-guides/initialize-dialog-from-parent)
 - [toast message](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting#calling-an-api-using-the-get-method-to-retrieve-data-from-the-back-end) functionality
 - `form instance`
 - axios instance used to make [http](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting#calling-an-api-using-the-get-method-to-retrieve-data-from-the-back-end) requests
