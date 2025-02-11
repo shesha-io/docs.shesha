@@ -340,3 +340,53 @@ Once a template has been selected, the user will be redirected to the `member-en
 **4. Feedback**
 
 ![Image](./images/template4.png)
+
+
+## Alternative Approach 
+
+You can also configure your dynamic menu items, this approach requires no code.
+
+**Step 1** - Drag in your button or button group, add an item and select `Dynamic item(s)` as the Item type.
+
+![alt text](images/DynamicMenu1.png)
+
+**Step 2** - From the options, select either:
+
+ - `URL`: Fetch data from a custom endpoint.
+ - `Entity`: Fetch data from a specified entity with filters.
+ 
+ ![alt text](images/DynamicMenu2.png)
+
+**Step 3** - Depending on which method you chose, you can fill in the settings. for example:
+
+  If `URL` is chosen:
+  - Specify the custom endpoint to fetch data from.
+  - Define query parameters for the request, e.g., maxResultCount.
+  - Set the button type to define its style.
+
+  ![alt text](images/url.png)
+
+  - You can now view your buttons:
+
+  ![alt text](images/view.png)
+
+  - You can also display them in a group, this allows the buttons to be displayed in a dropdown format.
+
+  ![alt text](images/group1.png)
+
+  ![alt text](images/groupResult.png)
+
+  - Configure actions for the buttons, e.g., navigate to a form dynamically based on the data from the clicked button.
+  - To access metadata from the clicked button, log `dynamicItem`
+
+  ![alt text](images/dynamicItem.png)
+
+  ![alt text](images/dynamicItemData.png)
+
+  If `ENTITY` is chosen:
+  - Specify the entity type.
+  - Specify the `maxResultCount` of your data.
+  - You can also include filters on your data. e.g.
+
+  ![alt text](images/filters.png)
+  - Configure actions for the buttons, e.g., navigate to a form dynamically based on the data from the clicked button.
