@@ -106,7 +106,7 @@ To save changes of this property in the audit trail, you can use the attributes:
 public virtual List<Employees> Employees { get; set; }
 ```
 
-- Audited - Saves changes only for the parent entity.
+- **Audited** - Saves changes only for the parent entity.
 
 Example for organization ***Main office***
 
