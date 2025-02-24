@@ -7,7 +7,7 @@ Multi Entity Reference allows an entity to maintain references to multiple relat
 If an Entity has a list property of entities
 
 ```cs
-public virtual List<Employees> Employees { get; set; }
+public virtual IList<Employees> Employees { get; set; }
 ```
 
 Then you can map this property to the database using the `[ManyToMany]` attribute.
@@ -43,7 +43,7 @@ public class Organisation : Entity
 {
     public string Name { get; set; }
 
-    public List<Employee> Employees { get; set; } = new List<Employee>();
+    public IList<Employee> Employees { get; set; } = new List<Employee>();
 }
 ```
 
@@ -66,13 +66,13 @@ And for this table, you should use;
 
 ```cs
 [ManyToMany("OrganisationEmployeesRef", "EmployeeId", "OrganisationId")]
-public virtual List<Employees> Employees { get; set; }
+public virtual IList<Employees> Employees { get; set; }
 ```
 If you don't want to create the table manually, you can use the `autoGeneration` parameter of `ManyToMany` attribute:
 
 ```cs
 [ManyToMany("OrganisationEmployeeRef", "EmployeeId", "OrganisationId", true)]
-public virtual List<Employees> Employees { get; set; }
+public virtual IList<Employees> Employees { get; set; }
 ```
 
 In this case, the table from the above example will be created automatically when starting the Shesha application. All automatically generated tables are created in the `auto_gen` schema by default.
@@ -106,7 +106,7 @@ To save changes of this property in the audit trail, you can use the attributes:
 public virtual List<Employees> Employees { get; set; }
 ```
 
-- **Audited** - Saves changes only for the parent entity.
+- Audited - Saves changes only for the parent entity.
 
 Example for organization ***Main office***
 
