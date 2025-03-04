@@ -1,6 +1,6 @@
 # Multi Entity Reference (Many-to-Many Reference)
 
-Multi Entity Reference allows an entity to maintain references to multiple related entities simultaneously, as opposed to a single entity reference. Currently, this implementation is supported on both [AutoComplete](../data-entry/autocomplete.md) and [Entity Picker](../data-entry/entity-picker.md).
+Multi Entity Reference allows an entity to maintain references to multiple related entities simultaneously, as opposed to a single entity reference. Currently, this implementation is supported on both [AutoComplete](../front-end-basics/form-components/data-entry/autocomplete.md) and [Entity Picker](../front-end-basics/form-components/data-entry/entity-picker.md).
 
 ### When to use this Feature?
 
@@ -83,7 +83,7 @@ Also, when using the `autoGeneration` parameter, you don't have to specify all o
 The simplest way is to specify:
 ```cs
 [ManyToMany(true)]
-public virtual List<Employees> Employees { get; set; }
+public virtual IList<Employees> Employees { get; set; }
 ```
 
 and a table will be automatically created in the database:
@@ -103,7 +103,7 @@ To save changes of this property in the audit trail, you can use the attributes:
 // or
 [AuditedAsManyToMany]
 [ManyToMany(true)]
-public virtual List<Employees> Employees { get; set; }
+public virtual IList<Employees> Employees { get; set; }
 ```
 
 - Audited - Saves changes only for the parent entity.
