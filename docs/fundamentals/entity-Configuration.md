@@ -30,7 +30,19 @@ This tab lists all properties related to the entity and allows for quick configu
 
 ### CRUD APIs
 
-- TODO
+This tab lists all the endpoints exposed by the application and specifies what permission(s) should be required to access them.
+
+![Image](./images/entity-configuration-images/entity_configuration_5.png)
+
+There are mainly **four (4)** types of access levels;
+
+![Image](./images/entity-configuration-images/entity_configuration_6.png)
+
+
+- **Disabled**: The application should not expose the Service or Endpoint.
+- **Any Authenticated User**: Any authenticated user can access the Endpoint.
+- **Requires Permissions**: The `Required Permissions` component is displayed, and the user must select one or more permissions.
+- **Allow Anonymous**: No authentication is required for access.
 
 ### Views
 
