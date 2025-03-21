@@ -44,6 +44,10 @@ There are mainly **four (4)** types of access levels;
 - **Requires Permissions**: The `Required Permissions` component is displayed, and the user must select one or more permissions.
 - **Allow Anonymous**: No authentication is required for access.
 
+*NB: These restriction levels also apply to  [Custom APIs](/docs/back-end-basics/custom-apis).*
+*Custom APIs can be accessed from `dynamic/Shesha/permissioned-objects`.*
+![Image](./images/entity-configuration-images/entity_configuration_7.png)
+
 ### Views
 
 Supports **dynamic rendering** of subforms. Users can define **views** for an entity, ensuring that components call the correct form configuration upon rendering.
