@@ -49,11 +49,11 @@ Deletes an existing entity.
 
 ## Preventing the generation of CRUD APIs through code
 
-To prevent the generation of CRUD APIs for a specific entity, simply add the `Entity` attribute to the entity class and provide the appropriate value for the `GenerateApplicationService` parameter:
+To prevent the generation of CRUD APIs for a specific entity, simply add the `CrudDisableActions` attribute to the entity class and provide the appropriate value (`All`, `Create`, `Read`, `Update`, `Delete`; these are bit values and can be used together):
 
 ```csharp
 // highlight-start
-[Entity(GenerateApplicationService = GenerateApplicationServiceState.DisableGenerateApplicationService)]
+[CrudDisableActions(CrudActions.Update | CrudActions.Delete)]
 // highlight-end
 public class MyEntity : FullAuditedEntity<Guid>
 {
@@ -68,9 +68,26 @@ Alternatively, you may also prevent the generation of CRUD APIs through configur
 From your running Shesha application, go to 'Administration > Entity Configuration' on the main menu. Select the entity for which you wish to prevent the generation of CRUD APIs. Click the 'CRUD APIs' tab, then uncheck the 'Generate CRUD APIs' property as illustrated below:
 ![Image](./images/crud-apis-entityconfigurator-generate.jpg)
 
-## Securing CRUD APIs
+## Securing CRUD APIs through code
 
-To secure the generated CRUD APIs, you can use the entity configuration view to specify the required permissions for each of the CRUD APIs.
+To secure the generated CRUD APIs, you can use `CrudAccess` addtibute to specify the required permissions for each of the CRUD APIs. You can use multiple `CrudAccess` attibute for one entity:
+
+```csharp
+// highlight-start
+[CrudAccess(CrudActions.Create, Shesha.Domain.Enums.RefListPermissionedAccess.AnyAuthenticated)]
+[CrudAccess(CrudActions.Read, Shesha.Domain.Enums.RefListPermissionedAccess.AllowAnonymous)]
+[CrudAccess(CrudActions.Update, Shesha.Domain.Enums.RefListPermissionedAccess.RequiresPermissions, ["MyProject.MyPermission", "MyProject.Editor"])]
+[CrudAccess(CrudActions.Delete, Shesha.Domain.Enums.RefListPermissionedAccess.Disable)]
+// highlight-end
+public class MyEntity : FullAuditedEntity<Guid>
+{
+      ...
+}
+```
+
+## Securing CRUD APIs through configuration
+
+Alternatively, you may also use the entity configuration view to specify the required permissions for each of the CRUD APIs.
 From your running Shesha application, go to 'Administration > Entity Configuration' on the main menu. Select the entity you wish to secure. Click the 'CRUD APIs' tab, then specify the required permissions for each of the CRUD APIs as illustrated below:
 ![Image](./images/crud-apis-entityconfigurator-permissions.jpg)
 
