@@ -30,15 +30,16 @@ This tab lists all properties related to the entity and allows for quick configu
 
 ### CRUD APIs
 
-This tab lists all the endpoints exposed by the application and specifies what permission(s) should be required to access them.
+This tab displays the CRUD actions available for the selected entity in the application and specifies the required permissions for accessing each action.
 
 ![Image](./images/entity-configuration-images/entity_configuration_5.png)
 
-There are mainly **four (4)** types of access levels;
+There are mainly **five (5)** types of access levels;
 
 ![Image](./images/entity-configuration-images/entity_configuration_6.png)
 
 
+- **Inherited**: The endpoint follows rules defined for the parent configuration.
 - **Disabled**: The application should not expose the Service or Endpoint.
 - **Any Authenticated User**: Any authenticated user can access the Endpoint.
 - **Requires Permissions**: The `Required Permissions` component is displayed, and the user must select one or more permissions.
@@ -56,6 +57,6 @@ Supports **dynamic rendering** of subforms. Users can define **views** for an en
 If a subform is bound to the **Address** entity and is rendered within the **Person** entity, and the subform is configured to dynamically call the **QuickView** of **Address**, then upon render:
         1. The subform checks the **ClassName** and **View Type**.
         2. It retrieves and applies the configured form accordingly.
-
+![Image](./images/entity-configuration-images/entity_configuration_8.png)
 
 
