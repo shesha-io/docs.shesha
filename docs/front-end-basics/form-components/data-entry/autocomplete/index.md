@@ -10,7 +10,7 @@ The following properties are available to configure the behavior of the componen
 
 Set mode of selection. Options: `Single` (Single value), `Multiple` (Array of values)
 
-![1742845271269](images/autocomplete/1742845271269.png)
+![1742845271269](images/1742845271269.png)
 
 ### Disable search
 
@@ -38,9 +38,7 @@ Format of field value
 
 `Simple Id` - field value contains only simple Id, eg `autocomplete1 : "7eaeebdb-e6df-4ed9-ae29-af0f833e1169"`
 
-`Entity reference` - field value contains object with additional Entity Reference data, eg `autocomplete1 : { "id" : "7eaeebdb-e6df-4ed9-ae29-af0f833e1169", _className : "Shesha.Domain.Person", _displayName : "John Doe" }`
-
-`Autocomplete` - field value contains object with specific autocomplete data, eg `autocomplete : { value : "7eaeebdb-e6df-4ed9-ae29-af0f833e1169", displayText : "John Doe"}`
+`Entity reference` - field value contains object with additional Entity Reference data, eg `autocomplete1 : { "id" : "7eaeebdb-e6df-4ed9-ae29-af0f833e1169", _className : "Shesha.Domain.Person", _displayName : "John Doe" }`. Available only for `Entities List` **Data Source Type**.
 
 `Custom` - formats of field value and formats of options can be configured by scripts (`Key value Function`, `Value Function`, `Display value Function`)
 
@@ -52,9 +50,9 @@ Name of the property that should be displayed in the autocomplete. Live empty to
 
 A script to get the displayed name of the elements. It can be used for custom display of options.
 
-![1742846723881](images/autocomplete/1742846723881.png)
+![1742846723881](images/1742846723881.png)
 
-![1742846752828](images/autocomplete/1742846752828.png)
+![1742846752828](images/1742846752828.png)
 
 ### Key Property Name
 
@@ -66,7 +64,7 @@ Allows to specify entty properties that should be received from the backend.
 
 To use `firstName` and `lastName` from the previous example need to get these properties from the backend
 
-![1742847003527](images/autocomplete/1742847003527.png)
+![1742847003527](images/1742847003527.png)
 
 ### Sort By
 
@@ -76,7 +74,7 @@ Adds additional information to the request about sorting the data on the backend
 
 Allows to group options in the Autocopmlete list
 
-![1742849171048](images/autocomplete/1742849171048.png)
+![1742849171048](images/1742849171048.png)
 
 ### Use Quickview
 
@@ -98,5 +96,3 @@ Allows to group options in the Autocopmlete list
   #### Width
 
   - The display width of the quickview on hover
-
-[//]: #
