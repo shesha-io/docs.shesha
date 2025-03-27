@@ -21,11 +21,11 @@ To use data from the context of any of these types, it is also enough to use the
 
 ![1742645589900](images/app-page-form-context/1742645589900.png)
 
-## Form context features
+## The specifics of form contexts
 
 Please note that one `appContext` and one `pageContext` are always available for use. However, there may be multiple `formContext`. For example, if two SubForms are used on a main form, then the main form has its own `formContext`, and each subform has its own `formContext`. The components on each of the forms (SubForms) will only have access to the `formContext` of their form.
 
-## Form context example
+### Example
 
 There is a Form with TextField and Text components.
 
