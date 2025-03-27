@@ -1,6 +1,6 @@
 # Multi Entity Reference (Many-to-Many Reference)
 
-Multi Entity Reference allows an entity to maintain references to multiple related entities simultaneously, as opposed to a single entity reference. Currently, this implementation is supported on both [AutoComplete](../front-end-basics/form-components/data-entry/autocomplete.md) and [Entity Picker](../front-end-basics/form-components/data-entry/entity-picker.md).
+Multi Entity Reference allows an entity to maintain references to multiple related entities simultaneously, as opposed to a single entity reference. Currently, this implementation is supported on both [AutoComplete](../front-end-basics/form-components/data-entry/autocomplete/index.md) and [Entity Picker](../front-end-basics/form-components/data-entry/entity-picker.md).
 
 ### When to use this Feature?
 
@@ -68,6 +68,7 @@ And for this table, you should use;
 [ManyToMany("OrganisationEmployeesRef", "EmployeeId", "OrganisationId")]
 public virtual IList<Employees> Employees { get; set; }
 ```
+
 If you don't want to create the table manually, you can use the `autoGeneration` parameter of `ManyToMany` attribute:
 
 ```cs
@@ -77,16 +78,17 @@ public virtual IList<Employees> Employees { get; set; }
 
 In this case, the table from the above example will be created automatically when starting the Shesha application. All automatically generated tables are created in the `auto_gen` schema by default.
 
-
 Also, when using the `autoGeneration` parameter, you don't have to specify all or some of the  names for the table. In this case, the names  of the table and/or columns will be generated automatically.
 
 The simplest way is to specify:
+
 ```cs
 [ManyToMany(true)]
 public virtual IList<Employees> Employees { get; set; }
 ```
 
 and a table will be automatically created in the database:
+
 ```sql
 CREATE TABLE auto_gen.module_prefix_organisation_employees_ref (
     organisation_id int NOT NULL,
@@ -94,7 +96,7 @@ CREATE TABLE auto_gen.module_prefix_organisation_employees_ref (
 );
 ```
 
-**Entity History Audit** 
+**Entity History Audit**
 
 To save changes of this property in the audit trail, you can use the attributes:
 
@@ -110,17 +112,18 @@ public virtual IList<Employees> Employees { get; set; }
 
 Example for organization ***Main office***
 
-| EventName | Description |
-|-----------|------------|
-| *Employees* updated    | *Employees* updated. Added: John Doe. Removed: Jane Doe.  |
+
+| EventName           | Description                                              |
+| ------------------- | -------------------------------------------------------- |
+| *Employees* updated | *Employees* updated. Added: John Doe. Removed: Jane Doe. |
 
 - **AuditedAsManyToMany** - saves changes for the parent entity and for  child entities.
 
-Example: 
-In addition to the organization's events for each  employee will also added: 
+Example:
+In addition to the organization's events for each  employee will also added:
 
-| EventName | Description  |
-|---|---|
-| *John Doe* added to... | *John Doe* added to *Employees* of ***Main office*** |
+
+| EventName                  | Description                                              |
+| -------------------------- | -------------------------------------------------------- |
+| *John Doe* added to...     | *John Doe* added to *Employees* of ***Main office***     |
 | *Jane Doe* removed from... | *Jane Doe* removed from *Employees* of ***Main office*** |
-
