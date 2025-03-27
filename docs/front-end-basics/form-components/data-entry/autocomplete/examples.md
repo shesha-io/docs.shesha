@@ -99,7 +99,7 @@ But you can use source with any other format of items. To do this, you need to s
 
 ## • General Display value Function
 
-Regardless of the selected value of **Data Source type** you can use **Display value Function**. This is a script to get the displayed name of items. In this script, you can use any field from the received data. For`Entities list` mode, you can request additional fields using the  `Fields to fetch` setting. For `URL` mode you can use only fields provided by the endpoint.
+Regardless of the selected value of **Data Source type** you can use **Display value Function**. This is a script to get the displayed name of items. In this script, you can use any field from the received data. For `Entities list` mode, you can request additional fields using the  `Fields to fetch` setting. For `URL` mode you can use only fields provided by the endpoint.
 
 ![1742846723881](images/1742846723881.png)
 
@@ -155,7 +155,6 @@ In the example above, we use only one `firstName` field. However, one field may 
 
 ```ts
 const filterSelectedFunc = () => {
-    //debugger;
     const parts = value?.split('|');
     if (parts.length < 2)
         return null;
