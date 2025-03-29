@@ -12,6 +12,6 @@ Select `OK` to proceed with the edit mode.
 
 Once you have entered edit mode, there are three main edit areas that you can interact with:
 
-1. [Main Menu](/docs/front-end-basics/main-menu)
+1. [Main Menu](/docs/settings/settings-overview#main-menu-settings)
 2. **Logo**
 3. **View**
