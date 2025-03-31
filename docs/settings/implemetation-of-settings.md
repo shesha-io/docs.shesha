@@ -4,7 +4,9 @@ sidebar_label: Implementation of Settings
 
 # Implementation of Settings
 
-Shesha uses custom implementation of the application settings. Key features:
+Shesha uses custom implementation of the application settings.
+
+**Key features**:
 1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings.
 2. Auto-registration of setting accessors.
 3. Setting definitions are stored in the DB.
