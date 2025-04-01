@@ -405,10 +405,10 @@ public override void PreInitialize()
     - `dataType` (optional, string) - Specifies the data type for validation before saving.
 
 - Behavior:
-    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](/docs/fundamentals/app-settings#2-define-a-user-specific-settings-accessor)
+    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](#2-define-a-user-specific-settings-accessor)
     - If it does not exist:
         - Create the setting with the provided `defaultValue`,  if specified.
-        - If `defaultValue` is not provided, use the `defaultValue` from the [UserSettingConfig](/docs/fundamentals/app-settings#3-register-the-user-settings-accessor) (if it exists).
+        - If `defaultValue` is not provided, use the `defaultValue` from the [UserSettingConfig](#3-register-the-user-settings-accessor) (if it exists).
         - If no `defaultValue` is found, use an empty string ("").
 
 #### Update Endpoint
@@ -421,7 +421,7 @@ public override void PreInitialize()
     - `dataType` (optional, string) - Specifies the data type for validation before saving.
     
 - Behavior:
-    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](/docs/fundamentals/app-settings#2-define-a-user-specific-settings-accessor)
+    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](#2-define-a-user-specific-settings-accessor)
     - If it does not exist:
         - Create the setting with the provided `defaultValue`.
         - Validate the `defaultValue` by attempting to deserialize it into the `dataType` (if provided). If validation fails, return an error.
