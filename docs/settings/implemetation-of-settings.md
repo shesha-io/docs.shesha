@@ -1,9 +1,12 @@
 ---
-sidebar_label: App Settings
+sidebar_label: Implementation of Settings
 ---
-# App Settings
 
-Shesha uses custom implementation of the application settings. Key features:
+# Implementation of Settings
+
+Shesha uses custom implementation of the application settings.
+
+**Key features**:
 1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings.
 2. Auto-registration of setting accessors.
 3. Setting definitions are stored in the DB.
@@ -11,7 +14,7 @@ Shesha uses custom implementation of the application settings. Key features:
 4. Support of client specific settings.
 5. Unlimited length of the setting value.
 
-# How to define a setting
+## How to define a setting
 A setting must be defined before its use, it should be done in two steps:
 1. Define a settings accessor.
 2. Register accessors and provide default values.
@@ -402,10 +405,10 @@ public override void PreInitialize()
     - `dataType` (optional, string) - Specifies the data type for validation before saving.
 
 - Behavior:
-    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](/docs/fundamentals/app-settings#2-define-a-user-specific-settings-accessor)
+    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](#2-define-a-user-specific-settings-accessor)
     - If it does not exist:
         - Create the setting with the provided `defaultValue`,  if specified.
-        - If `defaultValue` is not provided, use the `defaultValue` from the [UserSettingConfig](/docs/fundamentals/app-settings#3-register-the-user-settings-accessor) (if it exists).
+        - If `defaultValue` is not provided, use the `defaultValue` from the [UserSettingConfig](#3-register-the-user-settings-accessor) (if it exists).
         - If no `defaultValue` is found, use an empty string ("").
 
 #### Update Endpoint
@@ -418,7 +421,7 @@ public override void PreInitialize()
     - `dataType` (optional, string) - Specifies the data type for validation before saving.
     
 - Behavior:
-    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](/docs/fundamentals/app-settings#2-define-a-user-specific-settings-accessor)
+    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](#2-define-a-user-specific-settings-accessor)
     - If it does not exist:
         - Create the setting with the provided `defaultValue`.
         - Validate the `defaultValue` by attempting to deserialize it into the `dataType` (if provided). If validation fails, return an error.
