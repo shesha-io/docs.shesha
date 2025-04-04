@@ -14,7 +14,7 @@ The following properties are available to configure the behavior of the componen
 - Both the line and card tabs disable tabs that are currently not active, and the tab that is currently visible is seen by having a different color than the rest of the tabs.
 
 ### Size
- This will set the size for all buttons.
+ This will set the size for all tabs.
 
 ### Position
  The user is able to configure the position of the tab. The user has an option to configure the tab on top, left, bottom, or on the right.
