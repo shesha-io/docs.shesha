@@ -96,55 +96,27 @@ namespace Shesha.Enterprise
     {
         public override void Up()
         {
-            Create.Table("entpr_Orders")
+            Create.Table("MyApp_Orders")
              .WithIdAsGuid()
-             .WithFullAuditColumns()
-             .WithColumn("RequisitionNo").AsString().Nullable()
-             .WithColumn("RefNo").AsString().Nullable()
-             .WithColumn("RequestedCollectionDate").AsDateTime().Nullable()
-             .WithColumn("ConfirmedCollectionDate").AsDateTime().Nullable()
+             .WithFullAuditColumns()   // Adds the standard columns required when the new entity inherits from FullAuditedEntity
+             .WithColumn("OrderNo").AsString().Nullable()
+             .WithColumn("DelieveryDate").AsDateTime().Nullable()
              .WithColumn("Comment").AsString().Nullable()
              .WithColumn("StatusLkp").AsInt64().Nullable();
 
-            Create.Table("entpr_Sequences")
+             Alter.Table("MyApp_Orders").AddForeignKeyColumn("CustomerId", "core_Accounts").Nullable();    // Adds a foreign key
+
+            Create.Table("MyApp_OrderLines")
              .WithIdAsGuid()
-             .WithFullAuditColumns()
-             .WithColumn("SequenceName").AsString().Nullable()
-             .WithColumn("SeriesName").AsString().Nullable()
-             .WithColumn("LastIssuedNumber").AsInt32()
-             .WithColumn("LastIssuedDate").AsDateTime().Nullable();
+             .WithFullAuditColumns()   // Adds the standard columns required when the new entity inherits from FullAuditedEntity
+             .WithColumn("Description").AsString(400).Nullable()
+             .WithColumn("Product").AsString().Nullable()
+             .WithColumn("Price").AsDecimal().Nullable()
+             .WithColumn("Quantity").AsInt32().Nullable()
+             .WithColumn("SubTotal").AsDecimal().Nullable();
 
-            if (!Schema.Table("entpr_Services").Exists())
-            Create.Table("entpr_Services")
-             .WithIdAsGuid()
-             .WithFullAuditColumns()
-             .WithColumn("ServiceName").AsString().Nullable()
-             .WithColumn("Description").AsString().Nullable()
-             .WithColumn("Comments").AsString().Nullable()
-             .WithColumn("TenantId").AsInt32().Nullable()
-             .WithColumn("ServiceCategoryLkp").AsInt64().Nullable();
-
-            if (!Schema.Table("entpr_SupplierPrices").Exists())
-            Create.Table("entpr_SupplierPrices")
-             .WithIdAsGuid()
-             .WithColumn("Price").AsString().Nullable()
-             .WithColumn("Name").AsString();
-
-            if (!Schema.Table("Core_Organisations").Column("entpr_SupplierStatusLkp").Exists())
-            {
-                Alter.Table("Core_Organisations").AddColumn("entpr_SupplierStatusLkp").AsInt64().Nullable();
-            }
-
-
-			if (!Schema.Table("entpr_PaymentOuts").Column("BankTransactionId").Exists())
-				Alter.Table("entpr_PaymentOuts").AddForeignKeyColumn("BankTransactionId", "entpr_BankTransactions");
-
-                this.Shesha().ReferenceListCreate("Shesha.Enterprise", "TransactionStatuses")
-                .AddItem(1, "Pending", 1)
-                .AddItem(2, "Finalised", 2)
-                .AddItem(3, "Reversed", 3);
-
-            Alter.Table("entpr_PriceListProductPrices").AddForeignKeyColumn("PriceListId", "entpr_PriceLists");
+             Alter.Table("MyApp_OrderLines").AddForeignKeyColumn("PartOfId", "MyApp_Orders").NotNullable();    // Adds a foreign key
+             Alter.Table("MyApp_OrderLines").AddForeignKeyColumn("ProductId", "MyApp_Products").NotNullable();    // Adds a foreign key
 
         }
 
