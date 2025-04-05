@@ -255,13 +255,22 @@ Shesha will attempt to map the domain model to the database objects by conventio
 
 Shesha automatically maps entities to database tables and properties by convention. The naming conventions used are as follows:
 
-| Type of Mapping                        | Naming Convention                                            | Example                                                                                                                           |
-| -------------------------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| Entity Class -> Table name             | `{EntityName}` -> `{Module Prefix}_{Pulrelizsed EntityName}` | `Person` entity class will map to `Core_Persons` table in the database where that the Framework module has table prefix of `Core` |
-| Entity Property -> Column name         | `{PropertyName}` -> `{PropertyName}`                         | `Firstname` property will map to `Firstname` column in the database                                                               |
-| Foreign Key Property -> Column name    | `{PropertyName}` -> `{PropertyName}Id`                       | `AddressId` property will map to `AddressId` column in the database                                                               |
-| Reference List Property -> Column name | `{PropertyName}` -> `{PropertyName}Lkp`                      | `GenderLkp` property will map to `GenderLkp` column in the database                                                               |
-| Inheritence Property -> Column name    | `{PropertyName}` -> `{module db prefix}_{PropertyName}`      | `ProvinceId` property will map to `ProvinceId` column in the database                                                             |
+
+### Entity to Database Table Mapping
+For a new entity, Shesha will automatically creates a database table for the entity where the table name will be derived from the pluralized entity name prefixed it with the module database prefix. For example, if you create an entity called `Order`, Shesha will create a table called `MyApp_Orders` in the database, assuming the Database prefix specified is `MyApp`.
+
+For an entity that inherits from an existing entity, no new table will be created. Instead, the entity will be mapped to the existing table of the base entity. For example, if you create an entity called `Employee` that inherits from `Person`, Shesha will map the `Employee` entity to the `Core_Persons` table in the database.
+
+### Property to Database Column Mapping
+
+Shesha will automatically create a database column for each property of the entity. The column name will be derived from the property name. For example, if you create a property called `OrderNo` on the `Order` entity, Shesha will create a column called `OrderNo` in the database.
+
+If the property is a foreign key, Shesha will create a column with the same name as the property but suffixed with `Id`. For example, if you create a property called `Customer`, Shesha will create a column called `CustomerId` in the database.
+
+If the property is a reference list, Shesha will create a column with the same name as the property but suffixed with `Lkp`. For example, if you create a property called `Status`, Shesha will create a column called `StatusLkp` in the database.
+
+Note that in addition to the naming rules above, if the property is being added to an existing entity, Shesha will prefix the name of the column with the module database prefix. For example, if you create a property called `EmployeeNo` as part of an `Employee` entity which inherits from the existing `Person` entity, Shesha will create a column on the `Core_Persons` table called `MyApp_EmployeeNo` in the database. This helps identify any additions to the base entity and also helps avoid any naming conflicts with other modules that may also be extending the same base entity.
+                                                             |
 
 ## Module Database Prefix
 
@@ -281,28 +290,6 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 [assembly: BelongsToConfigurableModule("Shesha.Enterprise")]
 ...
 ```
-
-# Mapping to the Table Structure
-
-- Explaining table and column naming conventions
-- Table naming - `{database prefix}_{entity name pluralised}` e.g Core_Persons
-- Column naming
-  - Ordinary column - `{property name as-is from entity}` e.g Firstname
-  - Foreign key column - `{property name as-is from entity}{Id}` e.g AddressId
-  - Reference list based column - `{property name as-is from entity}{Lkp}` e.g GenderLkp
-  - Inheritence column - `{module db prefix}_{column name with the above conventions}` e.g Mem_ProvinceId, Mem_MembershipNo, Mem_MemberTypeLkp
-
-* Table naming conventions
-  - DB table prefix
-  - Entity name pluralised
-  - e.g Core_Persons
-
-### Add a new property to an existing entity
-
-- How to extend an existing entity
-  - Add DB Migration
-  - Add attributes (reference separate attributes page)
-  - Explaining discriminators
 
 ### Supported Property Types
 
