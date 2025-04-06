@@ -5,7 +5,7 @@ sidebar_position: 20
 
 # Dynamic CRUD APIs
 
-Shesha provides a feature to auto-generate a set of CRUD (Create, Read, Update, Delete) APIs for any selected entity. These APIs can be utilized to carry out CRUD operations on that entity. Furthermore, you can link these APIs from the form configurator, enabling you to swiftly construct a user interface for managing these entities.
+Shesha provides a feature to auto-generate a set of CRUD (Create, Read, Update, Delete) APIs for any entity. These APIs can be utilized to carry out CRUD operations on that entity. Furthermore, you can link these APIs from the form configurator, enabling you to swiftly construct a user interface for managing these entities.
 
 ## Generated APIs
 
