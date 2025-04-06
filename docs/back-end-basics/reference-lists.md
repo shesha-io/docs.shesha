@@ -72,16 +72,11 @@ public class Person
 ```
 Because the list is data-driven to remain flexible, the list will be defined in the database (in the `Frwk_ReferenceLists` and `Frwk_RefrenceListItems` tables) instead of being hard-coded as an enum.
 
-The add a reference list to the database create a Database migration class as follows:
+To add and maintain reference lists through database migration classes a number of additional extension methods are available to migration classes as illustrated below:
 ``` csharp
     [Migration(20220317111700)]
     public class M20220317111700 : Migration
     {
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Up()
         {
             /* add reflist */
@@ -106,8 +101,16 @@ The add a reference list to the database create a Database migration class as fo
             /* delete reflist */
             this.Shesha().ReferenceListDelete("Shesha", "TestStatuses");
         }
+
+        public override void Down()
+        {
+            throw new NotImplementedException();
+        }
     }
 ```
+
+Users are also able to maintain the reference list through the Reference List administration view in the application.
+
 
 # Multi-Value Reference Lists
 A basic limitation of a regular Reference List property is that it can only store a single selection from the list at once. Sometimes, it is desirable to store more than one selected item at the same time. If the list of possible options has 64 items or less, it is possible to use **Multi-value Reference Lists** to support this requirement.

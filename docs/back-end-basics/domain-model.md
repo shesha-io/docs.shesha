@@ -82,7 +82,7 @@ To ensure that your new entity can be persisted to the database you will need to
 Shesha currently uses NHibernate as its ORM rather than the more common EFCore. NHibernate is a mature ORM that has been around for many years and is used in many enterprise applications, however unlike EFCore, NHibernate does not have the ability to generate database migration classes automatically hence the need to create database migrations manually. Migrating Shesha to use **EFCore as its ORM is a priority feature on the roadmap and is planned Feb 2024**.
 :::
 
-To create a database migration class, simply create a new class that inherits from the `Migration` class. The example below illustrates the creation of a database migration class for the `Ticket` entity.
+To create a database migration class, simply create a new class that inherits from the `Migration` class. The example below illustrates the creation of a database migration class for the `Order` entity as part of `MyApp`.
 
 ```csharp
 using System;
@@ -91,8 +91,8 @@ using Shesha.FluentMigrator;
 
 namespace Shesha.Enterprise
 {
-    [Migration(20240114101300)]     // The migration number must be unique across all migrations in the application usually follows the following convention YYYYMMDDHHMMSS
-    public class M20220921101300 : Migration
+    [Migration(20250114101300)]     // The migration number must be unique across all migrations in the application usually follows the following convention YYYYMMDDHHMMSS
+    public class M20250114101300 : Migration
     {
         public override void Up()
         {
@@ -120,10 +120,6 @@ namespace Shesha.Enterprise
 
         }
 
-
-        /// <summary>
-        ///
-        /// </summary>
         public override void Down()
         {
             throw new NotImplementedException();
@@ -133,6 +129,8 @@ namespace Shesha.Enterprise
 ```
 
 ### Update an existing entity
+
+To update an existing entity, you will need to create a new database migration class. The example below illustrates the addition of a new property to the `Organisation` entity.
 
 ```csharp
 using System;
@@ -144,12 +142,9 @@ using Shesha.FluentMigrator;
 
 namespace Shesha.Enterprise
 {
-    [Migration(20220921101300)]
-    public class M20220921101300 : Migration
+    [Migration(20250114101302)]
+    public class M20250114101302 : Migration
     {
-        /// <summary>
-        ///
-        /// </summary>
         public override void Up()
         {
             if (!Schema.Table("Core_Organisations").Column("entpr_SupplierStatusLkp").Exists())
@@ -158,12 +153,8 @@ namespace Shesha.Enterprise
             }
 
 			Alter.Table("entpr_PaymentOuts").AddForeignKeyColumn("BankTransactionId", "entpr_BankTransactions");
-
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public override void Down()
         {
             throw new NotImplementedException();
@@ -174,6 +165,8 @@ namespace Shesha.Enterprise
 ```
 
 ## Custom Queries
+
+You can also use the `Execute.Sql` method to execute custom SQL queries. This is useful for executing complex queries or for executing queries that are not supported by Fluent Migrator.
 
 ```csharp
 using System;
@@ -186,31 +179,18 @@ using Shesha.FluentMigrator;
 
 namespace Shesha.Enterprise
 {
-	[Migration(20220921101200), MsSqlOnly]
-	public class M20220921101200 : Migration
+	[Migration(20250114101305), MsSqlOnly]
+	public class M20250114101305 : Migration
 	{
-		/// <summary>
-		///
-		/// </summary>
 		public override void Up()
 		{
 
 			if (Schema.Table("entpr_Currencies").Exists())
-				Execute.Sql(@"INSERT INTO [dbo].[VersionInfo]
-           ([Version]
-           ,[AppliedOn]
-           ,[Description])
-     VALUES
-           (20220921101300
-           ,DATEADD(HOUR, 2, GETUTCDATE())
-           ,'M20220921101300')
-GO");
-
+				Execute.Sql(@"
+                    -- YOUR SQL --
+                ");
 		}
 
-		/// <summary>
-		///
-		/// </summary>
 		public override void Down()
 		{
 			throw new NotImplementedException();
@@ -263,18 +243,11 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 ...
 ```
 
-### Supported Property Types
-
-- Primitives
-- Entities
-- Reference Lists
-
-[//]: # "TODO:GenericEntityReferences - Ignore for now as advanced feature"
-[//]: # "TODO:Json Entities - Ignore for now as advanced feature"
-
 ## Domain Repositories
 
 ### See Also:
+[//]: # "TODO:GenericEntityReferences - Ignore for now as advanced feature"
+[//]: # "TODO:Json Entities - Ignore for now as advanced feature"
 
 - [Reference Lists](/docs/back-end-basics/reference-lists)
 - [Domain Class Attributes](/docs/back-end-basics/domain-classes-attributes)
