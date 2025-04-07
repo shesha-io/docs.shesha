@@ -8,22 +8,41 @@ This component is used when you need to show alert messages to users. It is also
 
 These properties are customizable options present in the property pane of the component, allowing users to modify the component according to their preferences. All the properties contain a Javascript editor which allows users to execute Javascript expressions to control the component.
 
+### Component Name
+Sets the internal name for the component, useful when referencing it in scripts or styling.
+
 ### Type
+Choose the type of alert you want to show:
 
- Type of Alert styles, options: success, info, warning, error.
+- **Success**: All systems go!
+- **Info**: Just keeping you in the loop.
+- **Warning**: Something looks off.
+- **Error**: Yikes! Something went wrong.
 
-### Text
-
- The simplest usage for short messages.
+### Message
+The main message of the alert. You can use dynamic values with variables and expressions for full power-flex.
 
 ### Description
+Optional additional information to help clarify the message. This is hidden when banner mode is active or the alert is read-only.
 
- Additional description for alert message. You can include dynamic values in your description by tapping into your data object using 'mustache templating'. E.g. `{{name}}`
+### Show Icon
+Toggles whether an icon appears beside the alert text. Great for visual cues.
 
-### Show Icon / Icon
+### Icon
+Allows you to pick a custom icon (only visible if "Show Icon" is enabled).
 
- A relevant icon will make information clearer and more friendly.
+### Hide
+Hides the alert from view—poof, it’s gone!
 
 ### Closable
+Gives users the option to dismiss the alert.
 
- To show a close button.
+### Marquee
+If enabled, the content scrolls horizontally like a stock ticker. Flashy and fun for long messages.
+
+### Banner
+Switches the alert to a banner layout. This changes the display style and hides the description.
+
+## Appearance
+### Custom Style
+JavaScript code that returns a CSS style object to dynamically style the component. Perfect for when you want full visual control over your alert.
