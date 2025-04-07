@@ -32,3 +32,19 @@ The following properties are available to configure the behavior of the componen
 
 ### Destroy Inactive Tab Pane
  Allows the user to choose whether the inactive tab panes should be destroyed or removed from memory when a user switches from one tab to another.
+
+### Appearance Settings
+
+``tabStyle``
+
+- **Description**: Defines the style of the tabs, allowing customization of their look and feel.
+- **Type**: string
+- **Default Value**: "default"
+- **Possible Values**: "default", "rounded", "underline"
+
+``tabPosition``
+
+- **Description**: Specifies where the tabs should be positioned within the component.
+- **Type**: string
+- **Default Value**: "top"
+- **Possible Values**: "top", "bottom", "left", "right"
