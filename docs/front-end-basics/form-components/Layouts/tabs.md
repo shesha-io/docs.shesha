@@ -4,6 +4,9 @@ Tabs are used to organize content into separate sections or panes, where users c
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=41d541dc-75c9-4436-ad41-3b39ea828efb" title="Tabs Component" ></iframe>'
 
+![Image](../images/tabs1.png)
+
+
 ## Properties
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
@@ -30,9 +33,6 @@ The following properties are available to configure the behavior of the componen
 ### Animated
  The user can choose if they want the tabs to transition between the tabs to be animated.
 
-### Destroy Inactive Tab Pane
- Allows the user to choose whether the inactive tab panes should be destroyed or removed from memory when a user switches from one tab to another.
-
 ### Appearance Settings
 
 ``tabStyle``
@@ -48,3 +48,6 @@ The following properties are available to configure the behavior of the componen
 - **Type**: string
 - **Default Value**: "top"
 - **Possible Values**: "top", "bottom", "left", "right"
+
+### Destroy Inactive Tab Pane
+ Allows the user to choose whether the inactive tab panes should be destroyed or removed from memory when a user switches from one tab to another.
