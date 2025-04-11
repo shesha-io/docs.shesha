@@ -13,65 +13,76 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-![Image](../images/tabs3.png)
-
-#### **Component Name**
+#### **Component Name** ``string``
 
 Gives your Tabs component an identity. This name helps distinguish it from its peers on the form.
+___
 
-#### **Default Active Tab**
+#### **Default Active Tab** ``enum``
 
 Choose which tab should greet your users first. This dropdown lets you set the initial active tab based on tab configurations.
+___
 
-#### **Tab Type**
+#### **Tab Type** ``card | line``
 
 Defines the visual style of your tabs.
 
-- **Card**: Each tab looks like a clickable card.
+- **Card** *(default)*: Each tab looks like a clickable card.
 
 - **Line**: Sleek underline style for the minimalists.
+
+___
 
 #### **Tabs**
 
 #### Configure Tab Panes
- The user can use the configure tabs option to add the tabs that they want to have.
- ![Image](../images/tabs2.png)
 
-#### **Hide**
+![Image](../images/tabs2.png)
+
+ The user can use the configure tabs option to add the tabs that they want to have.
+
+ ___
+
+#### **Hide** ``boolean``
 
 Control the visibility of the Tabs component entirely.
+___
 
 ### Appearance
 
- ![Image](../images/tabs4.png)
-
-#### **Position**
+#### **Position** ``string``
 
 Set where your tabs appear:
 
-- Top
+- Top *(default)*
 - Bottom
 - Left
 - Right
 
-#### **Font**
+___
+
+#### **Font** ``object`` 
 
 Customize how your tab labels look. Choose the font family, size, weight, and color.
+___
 
-#### **Dimensions**
+#### **Dimensions** ``object`` 
 
 Specify the size of your component:
 - Width, Height
 - Min/Max Width and Height
 - Overflow behavior
+___
 
-#### **Border**
+#### **Border** ``object`` 
 
 Personalize the borders:
 - Set border width, color, and style
 - Round the corners for a softer touch
 
-#### **Background**
+___
+
+#### **Background** ``object``
 
 Pick your flavor of background:
 
@@ -82,22 +93,28 @@ Pick your flavor of background:
 - Stored File
 
 Also tweak background size, position, and repeat behavior.
+___
 
-#### **Shadow**
+#### **Shadow** ``object`` 
 
 Give depth with adjustable shadows:
 
 - Offset, Blur, Spread, Color
 
-#### **Margin & Padding**
+___
+
+#### **Margin & Padding** ``object``
 
 Fine-tune spacing inside and around the component.
+___
 
-####  **Custom Styles**
+####  **Custom Styles** ``function``
 
 Inject your own CSS styles via JavaScript (must return a style object).
 
-#### **Card Styles**
+___
+
+#### **Card Styles** ``object`` 
 
 For when using Card tab type:
 
@@ -105,13 +122,3 @@ For when using Card tab type:
 - Dimensions (width, height, min/max)
 - Background types and image settings
 - Custom styles just for the card view
-
-
-### Security
-
- ![Image](../images/tabs5.png)
-
-#### **Permissions**
-
-Define who can see or interact with this component. 
-
