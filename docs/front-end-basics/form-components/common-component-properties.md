@@ -63,8 +63,6 @@ Options:
 ### Required
  If checked, prohibits form submission if the component does not have a value (mandatory). Indicated by a red asterisk mark next to the component.
 
-## Style
-
 ### Style
  Allows configurators to specify custom CSS styling through code. May be used when standard styling properties are insufficient to achieve the required look and feel.
 
