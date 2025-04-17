@@ -16,12 +16,10 @@ The following properties are available to configure the behavior of the componen
 #### **Component Name** ``string``
 
 Gives your Tabs component an identity. This name helps distinguish it from its peers on the form.
-___
 
 #### **Default Active Tab** ``enum``
 
 Choose which tab should greet your users first. This dropdown lets you set the initial active tab based on tab configurations.
-___
 
 #### **Tab Type** ``card | line``
 
@@ -41,8 +39,6 @@ ___
 
  The user can use the configure tabs option to add the tabs that they want to have.
 
- ___
-
 #### **Hide** ``boolean``
 
 Control the visibility of the Tabs component entirely.
@@ -59,12 +55,9 @@ Set where your tabs appear:
 - Left
 - Right
 
-___
-
 #### **Font** ``object`` 
 
 Customize how your tab labels look. Choose the font family, size, weight, and color.
-___
 
 #### **Dimensions** ``object`` 
 
@@ -72,15 +65,12 @@ Specify the size of your component:
 - Width, Height
 - Min/Max Width and Height
 - Overflow behavior
-___
 
 #### **Border** ``object`` 
 
 Personalize the borders:
 - Set border width, color, and style
 - Round the corners for a softer touch
-
-___
 
 #### **Background** ``object``
 
@@ -93,7 +83,6 @@ Pick your flavor of background:
 - Stored File
 
 Also tweak background size, position, and repeat behavior.
-___
 
 #### **Shadow** ``object`` 
 
@@ -101,18 +90,13 @@ Give depth with adjustable shadows:
 
 - Offset, Blur, Spread, Color
 
-___
-
 #### **Margin & Padding** ``object``
 
 Fine-tune spacing inside and around the component.
-___
 
 ####  **Custom Styles** ``function``
 
 Inject your own CSS styles via JavaScript (must return a style object).
-
-___
 
 #### **Card Styles** ``object`` 
 
