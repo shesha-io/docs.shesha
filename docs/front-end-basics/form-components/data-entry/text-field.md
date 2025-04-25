@@ -1,6 +1,8 @@
 # Text Field
 
-This page provides information on using the Text Field component to gather and validate user input such as text, numbers, emails, and passwords.
+The Text Field component provides a clean, customizable input for short strings like names, titles, or search queries
+
+![Image](../data-entry/images/textfield1.png)
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=e3191b51-4a87-4187-910e-177bcbed657b" title="Text Field Component" ></iframe>'
 
@@ -8,39 +10,103 @@ This page provides information on using the Text Field component to gather and v
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
 
-### Type
+### Common
 
-- **Options**:
-  - Text
-  - Password
-    ![Image](./images/textF1.png)
+#### **Property Name** ``string``
 
-### Prefix
+Unique identifier used to bind the component's value to your data model.
 
- A "prefix" is a sequence of characters at the beginning of a string. It is added to the front of the original string.
+#### **Label** ``object``
 
-### Suffix
+Customize whether to display a label. Hiding it can simplify the UI in some layouts.
 
- A "suffix" is a sequence of characters at the end of a string. It is added to the end of the original string.
+#### **Placeholder** ``string``/``function``
 
-### Default Value
+Shows hint text inside the input to guide users on what to enter.
 
- This allows you to set the default value for the input field. _[formData](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) is exposed_.
+#### **Tooltip**  ``string``/``function``
 
-### Empty as Default
+Provides extra context via a hover message — perfect for subtle hints.
 
- Whether the component should be initialized to an empty string.
+#### **Default Value**  ``string``/``function``
 
-### Min Length
+Set a pre-filled value for the component.
 
- This sets a minimum length allowed for user input. If validation is not satisfied then a `Validation error message` will be rendered beneath the text field.
-  _E.g. Password must be at least 5 characters_
+#### **Prefix & Prefix Icon** ``string``/``function``
 
-### Max Length
+Add a prefix text or icon (e.g., currency symbols) before the text.
 
- This sets a maximum length allowed for user input. Once the validation has been satisifed then it will restrict user input.
+#### **Suffix & Suffix Icon** ``string``/``function``
 
-### Validator
+Display text or icons after the text (e.g., units like %, kg).
 
- This allows for `javascript` expressions to enter custom validator logic and should return a promise.
-  _Example implementation can be found [here](/docs/get-started/tutorial/the-basics/configuring-first-view#custom-validations)_
+#### **Spell Check** ``boolean``
+
+Allows the browser to detect typos.
+
+___
+
+### Validation
+
+#### **Required** ``boolean``
+
+Ensures the field must be filled out before form submission.
+
+#### **Min Length / Max Length** ``number``
+
+Set how short or long the input must be.
+
+#### **Message** ``string``/``function``
+
+Custom message displayed when validation fails.
+
+#### **Validator** ``function``
+
+Provide a custom validation function using JavaScript. Return a Promise for async checks.
+
+___
+
+### Appearance
+
+#### **Font** ``object`` 
+
+Customize how your tab labels look. Choose the font family, size, weight, and color.
+
+#### **Dimensions** ``object`` 
+
+Specify the size of your component:
+- Width, Height
+- Min/Max Width and Height
+- Overflow behavior
+
+#### **Border** ``object`` 
+
+Personalize the borders:
+- Set border width, color, and style
+- Round the corners for a softer touch
+
+#### **Background** ``object``
+
+Pick your flavor of background:
+
+- Color
+- Gradient
+- Image URL
+- Uploaded Image
+- Stored File
+
+Also tweak background size, position, and repeat behavior.
+
+#### **Shadow** ``object`` 
+
+Give depth with adjustable shadows:
+
+- Offset, Blur, Spread, Color
+
+#### **Margin & Padding** ``object``
+
+Fine-tune spacing inside and around the component.
+
+####  **Custom Styles** ``function``
+
+Inject your own CSS styles via JavaScript (must return a style object).
