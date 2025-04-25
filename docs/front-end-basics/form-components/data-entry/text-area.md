@@ -2,42 +2,129 @@
 
 This allows users to input multiple lines of text. It is commonly used when you need to collect longer-form textual information, such as user comments, messages, or any other type of free-form text. The `Text Area`component provides a larger input area compared to a single-line `Text Field` component.
 
+![Image](../data-entry/images/textarea1.png)
+
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=4d5f3201-2ba4-4a19-b3de-08153124ea65" title="Text Area Component" ></iframe>'
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
+### Common
 
-### Auto size
+#### **Property Name** ``string``
 
- Height auto size feature.
+Unique identifier used to bind the component's value to your data model.
 
-### Allow clear
+#### **Label** ``object``
 
- If allowed to remove input content with clear icon.
+Customize whether to display a label. Hiding it can simplify the UI in some layouts.
 
-### Show chars count
+#### **Placeholder** ``string``/``function``
 
- Whether to show character count.
+Shows hint text inside the input to guide users on what to enter.
 
-### Default Value
+#### **Tooltip**  ``string``/``function``
 
- This allows you to set the default value for the input field. _[formData](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) is exposed_.
+Provides extra context via a hover message — perfect for subtle hints.
 
-### Empty as Default
+#### **Default Value**  ``string``/``function``
 
- Whether the component should be initialized to an empty string.
+Set a pre-filled value for the text area field.
 
-### Min Length
+#### **Empty As Default**  ``boolean``
 
- This sets a minimum length allowed for user input. If validation is not satisfied then a `Validation error message` will be rendered beneath the text field.
-  _E.g. Password must be at least 5 characters_
+Returns an empty string as the default value instead of ``null``.
 
-### Max Length
+#### **Auto Size**  ``boolean``
 
- This sets a maximum length allowed for user input. Once the validation has been satisifed then it will restrict user input.
+Enable this to automatically expand or shrink the ``textarea`` as the user types.
 
-### Validator
+#### **Allow Clear**  ``boolean``
 
- This allows for `javascript` expressions to enter custom validator logic and should return a promise.
-  _Example implementation can be found [here](/docs/get-started/tutorial/the-basics/configuring-first-view#custom-validations)_
+Adds a handy little clear button to reset the field.
+
+#### **Edit Mode**  ``object``
+
+Select between Editable, Read Only, or Inherited from the form.
+
+#### **Hide** ``boolean``
+
+Allows the component to be conditionally hidden from the form.
+
+#### **Show Chars Count** ``boolean``
+
+Display a live character count. Helpful for length-restricted inputs.
+
+#### **Spell Check** ``boolean``
+
+Allows the browser to detect typos.
+
+___
+
+### Validation
+
+#### **Required** ``boolean``
+
+Ensures the field must be filled out before form submission.
+
+#### **Min Length / Max Length** ``number``
+
+Set how short or long the input must be.
+
+#### **Message** ``string``/``function``
+
+Custom message displayed when validation fails.
+
+#### **Validator** ``function``
+
+Provide a custom validation function using JavaScript. Return a Promise for async checks.
+
+___
+
+### Appearance
+
+#### **Font** ``object`` 
+
+Customize how your tab labels look. Choose the font family, size, weight, and color.
+
+#### **Dimensions** ``object`` 
+
+Specify the size of your component:
+- Width, Height
+- Min/Max Width and Height
+- Overflow behavior
+
+#### **Size** ``object`` 
+
+Specify the size of the component between Small, Medium and Large.
+
+#### **Border** ``object`` 
+
+Personalize the borders:
+- Set border width, color, and style
+- Round the corners for a softer touch
+
+#### **Background** ``object``
+
+Pick your flavor of background:
+
+- Color
+- Gradient
+- Image URL
+- Uploaded Image
+- Stored File
+
+Also tweak background size, position, and repeat behavior.
+
+#### **Shadow** ``object`` 
+
+Give depth with adjustable shadows:
+
+- Offset, Blur, Spread, Color
+
+#### **Margin & Padding** ``object``
+
+Fine-tune spacing inside and around the component.
+
+####  **Custom Styles** ``function``
+
+Inject your own CSS styles via JavaScript (must return a style object).
