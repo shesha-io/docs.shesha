@@ -28,7 +28,13 @@ Provides extra context via a hover message — perfect for subtle hints.
 
 #### **Edit Mode**  ``object``
 
-Select between Editable, Read Only, or Inherited from the form.
+Set the component’s interaction behavior:
+
+- **Inherited *(default)***: Behavior is inherited from the parent form.
+
+- **Editable**: Users can set and change the field.
+
+- **Read Only**: Users can view the number field but cannot change it.
 
 #### **Hide** ``boolean``
 

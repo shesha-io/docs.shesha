@@ -30,7 +30,13 @@ A helper text shown when hovering over the component .
 
 #### **Edit Mode** ``object``
 
-Toggles between Editable, Read Only, or Inherited from the form. Flexible for all kinds of scenarios.
+Set the component’s interaction behavior:
+
+- **Inherited *(default)***: Behavior is inherited from the parent form.
+
+- **Editable**: Users can set and change their dropdown.
+
+- **Read Only**: Users can view the dropdown but cannot change it.
 
 #### **Hide** ``boolean``
 
@@ -46,11 +52,11 @@ Set a pre-selected default item. Especially useful when you want to provide an i
 
 #### **Mode** ``Object``
 
-Switch between single, multiple, or tag selection.
+Switch between single *(default)*, multiple, or tag selection.
 
 #### **DataSource Type** ``Object``
 
-Choose how the dropdown gets its values: from static values, reference lists, or a remote URL.
+Choose how the dropdown gets its values: from static values *(default)*, reference lists, or a remote URL.
 
 #### **Value** 
 

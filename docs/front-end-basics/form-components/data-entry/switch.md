@@ -26,11 +26,12 @@ Provides extra context via a hover message — perfect for subtle hints.
 
 Configure the switch's interactivity:
 
-- Editable: Users can toggle the switch freely.
+- **Inherited *(default)***: The switch inherits the editable or read-only state from the parent form.
 
-- Read Only: The switch is visible but cannot be changed.
+- **Editable**: Users can toggle the switch freely.
 
-- Inherited *(default)*: The switch inherits the editable or read-only state from the parent form.
+- **Read Only**: The switch is visible but cannot be changed.
+
 
 #### **Hide** ``boolean``
 
@@ -44,9 +45,9 @@ ___
 
 Select the size of the switch:
 
-- Default (default): The standard size for the switch.
+- **Default *(default)***: The standard size for the switch.
 
-- Small: A compact version of the switch.
+- **Small**: A compact version of the switch.
 
 ####  **Custom Styles** ``function``
 

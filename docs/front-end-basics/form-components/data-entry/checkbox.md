@@ -25,7 +25,13 @@ Provides extra context via a hover message — perfect for subtle hints.
 
 #### **Edit mode** ``object``
 
-Select between Editable, Read Only, or Inherited from the form.
+Set the component's behavior:
+
+- **Inherited *(default)***: The checkbox inherits its settings from the parent form.
+
+- **Editable**: Users can toggle the checkbox on or off.
+
+- **Read Only**: Users can view the state but cannot change it.
 
 #### **Hide** ``boolean``
 

@@ -1,6 +1,6 @@
 # Text Field
 
-The Text Field component provides a clean, customizable input for short strings like names, titles, or search queries
+The Text Field component provides a clean, customizable input for short strings like names, titles, or search queries.
 
 ![Image](../data-entry/images/textfield1.png)
 
@@ -27,6 +27,23 @@ Shows hint text inside the input to guide users on what to enter.
 #### **Tooltip**  ``string``/``function``
 
 Provides extra context via a hover message — perfect for subtle hints.
+
+#### **Edit mode** ``object``
+
+Set the component’s interaction behavior:
+
+- **Inherited *(default)***: Behavior is inherited from the parent form.
+
+- **Editable**: Users can set and change the text field.
+
+- **Read Only**: Users can view the text field but cannot change it.
+
+#### **Type** ``object``
+Specify the input type:
+
+- **Text *(default)***: Regular text input.
+
+- **Password**: Masks the entered text for sensitive information.
 
 #### **Default Value**  ``string``/``function``
 

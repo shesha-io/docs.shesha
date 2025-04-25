@@ -33,11 +33,11 @@ Provides extra context via a hover message — perfect for subtle hints.
 
 Control the field's input mode:
 
-- Inherited (default): Follows the parent form’s edit mode.
+- **Inherited *(default)***: Follows the parent form’s edit mode.
 
-- Editable: Users can select a time freely.
+- **Editable**: Users can select a time freely.
 
-- Read Only: Users can view the value but cannot change it.
+- **Read Only**: Users can view the value but cannot change it.
 
 #### **Hide** ``boolean``
 
@@ -103,11 +103,11 @@ Decide whether to show or hide the border around the input.
 
 Adjust the size of the component:
 
-- Small: Compact version of the picker.
+- **Small**: Compact version of the picker.
 
-- Middle (default): Standard medium-sized picker.
+- **Middle *(default)***: Standard medium-sized picker.
 
-- Large: Bigger, easier-to-click version for accessibility.
+- **Large**: Bigger, easier-to-click version for accessibility.
 
 ####  **Custom Styles** ``function``
 

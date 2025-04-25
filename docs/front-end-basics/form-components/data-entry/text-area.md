@@ -44,7 +44,13 @@ Adds a handy little clear button to reset the field.
 
 #### **Edit Mode**  ``object``
 
-Select between Editable, Read Only, or Inherited from the form.
+Set the component’s interaction behavior:
+
+- **Inherited *(default)***: Behavior is inherited from the parent form.
+
+- **Editable**: Users can set and change their text area.
+
+- **Read Only**: Users can view the text area but cannot change it.
 
 #### **Hide** ``boolean``
 

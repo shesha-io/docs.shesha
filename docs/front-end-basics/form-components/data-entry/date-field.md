@@ -24,15 +24,15 @@ Customize whether to display a label. Hiding it can simplify the UI in some layo
 
 Choose the mode of the picker:
 
-- date *(default)*: Pick a single calendar date.
+- **date *(default)***: Pick a single calendar date.
 
-- week: Select a week of the year.
+- **week**: Select a week of the year.
 
-- month: Pick a specific month.
+- **month**: Pick a specific month.
 
-- quarter: Select a business quarter.
+- **quarter**: Select a business quarter.
 
-- year: Pick an entire year.
+- **year**: Pick an entire year.
 
 #### **Range** ``boolean``
 
@@ -54,11 +54,11 @@ Provides extra context via a hover message — perfect for subtle hints.
 
 Control the input mode:
 
-- Inherited *(default)*: The field inherits editability from the parent form.
+- **Inherited *(default)***: Follows the parent form’s edit mode.
 
-- Editable: Users can freely select a date.
+- **Editable**: Users can freely select a date.
 
-- Read Only: The field is visible but not changeable.
+- **Read Only**: The field is visible but not changeable.
 
 #### **Hide** ``boolean``
 
@@ -109,11 +109,11 @@ Display a shortcut for today’s date or the current time.
 
 Choose a method for disabling dates:
 
-- None *(default)*: All dates selectable.
+- **None *(default)***: All dates selectable.
 
-- Function Template: Use predefined templates to disable dates.
+- **Function Template**: Use predefined templates to disable dates.
 
-- Custom Function: Write custom JavaScript to decide which dates to disable.
+- **Custom Function**: Write custom JavaScript to decide which dates to disable.
 
 ___
 

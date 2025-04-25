@@ -20,7 +20,13 @@ Provides extra context via a hover message — perfect for subtle hints.
 
 #### **Edit mode** ``object``
 
-Select between Editable, Read Only, or Inherited from the form.
+Set the component’s interaction behavior:
+
+- **Inherited *(default)***: Behavior is inherited from the parent form.
+
+- **Editable**: Users can set and change their radio button.
+
+- **Read Only**: Users can view the radio button but cannot change it.
 
 #### **Hide** ``boolean``
 
