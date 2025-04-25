@@ -2,7 +2,6 @@
 
 The Date Field component offers users a clean, flexible way to select dates, times, or ranges. It includes support for various picker modes, time formats, and detailed validation options.
 
-
 ![Image](../data-entry/images/datefield1.png)
 
 ## **Properties**
