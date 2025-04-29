@@ -87,7 +87,7 @@ ___
 
 #### **Font** ``object`` 
 
-Customize how your tab labels look. Choose the font family, size, weight, and color.
+Customize how your text-field labels look. Choose the font family, size, weight, and color.
 
 #### **Dimensions** ``object`` 
 

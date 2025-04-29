@@ -52,7 +52,7 @@ ___
 
 #### **Font** ``object`` 
 
-Customize how your tab labels look. Choose the font family, size, weight, and color.
+Customize how your link labels look. Choose the font family, size, weight, and color.
 
 ####  **Custom Styles** ``function``
 
