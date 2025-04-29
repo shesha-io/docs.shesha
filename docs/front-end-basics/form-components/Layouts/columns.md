@@ -1,22 +1,82 @@
 # Columns
 
-Columns are used to organize content horizontally, allowing for a flexible and responsive design. This uses the Ant Design's 24 columns' grid.
+The Columns component allows for managing a list of columns, typically used for grid or table configurations within forms. It's handy for configuring the structure of data views, allowing you to define what data appears and how.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=747834b4-9ef8-4088-a951-e976776b19ec" title="Columns Component" ></iframe>'
 
-## Properties
+![Image](../images/columns1.png)
+
+## **Properties**
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Gutter X
- Gutter X helps you to create gaps between column content for horizontal padding.
+### Common
 
-### Gutter Y
- Gutter Y helps you to create gaps between column content for vertical padding.
+#### **Component Name** ``string``
 
-### Configure Columns
+This sets the internal name for the component, typically used for data binding and referencing within the application.
+
+#### **Hide** ``boolean``
+
+Control the visibility of the Tabs component entirely.
+___
+
+### Data
+
+#### Configure Columns
+
+![Image](../images/columns2.png)
+
+Configure your grid's columns with ease. This setting opens a friendly UI to manage each column’s name, type, and any additional configurations.
 
 - **Width** – you can change the width size of the column until maximum of `24`.
 - **Offset** – you can change the original position of the column by putting the number that will create the space between the origan position of the column and starting position.
 - **Push** – to push the column to the right side.
 - **Pull** – to pull the column from the right.
+
+___
+
+### Appearance
+
+#### **Gutter X** ``number``
+ Gutter X helps you to create gaps between column content for horizontal padding.
+
+#### **Gutter Y** ``number``
+ Gutter Y helps you to create gaps between column content for vertical padding.
+
+#### **Dimensions** ``object``
+
+Set the width, height, min/max sizes of the component.
+
+#### **Border** ``object``
+
+Personalize the borders:
+- Set border width, color, and style
+- Round the corners for a softer touch
+
+#### **Background** ``object``
+
+Pick your flavor of background:
+
+- Color
+- Gradient
+- Image URL
+- Uploaded Image
+- Stored File
+
+#### **Shadow** ``object``
+
+Give depth with adjustable shadows:
+
+- Offset, Blur, Spread, Color
+
+#### **Margin & Padding** ``object``
+
+Fine-tune spacing inside and around the component.
+
+####  **Custom Styles** ``function``
+
+Inject your own CSS styles via JavaScript (must return a style object).
+
+
+
