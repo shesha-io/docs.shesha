@@ -63,4 +63,4 @@ Thickness of the progress stroke (default is 6).
 Fine-tune spacing around and inside the component.
 
 #### Custom Style `function`
-Write a script returning a `CSSProperties` object to dynamically style the image.
+Inject your own CSS styles via JavaScript (must return a style object).

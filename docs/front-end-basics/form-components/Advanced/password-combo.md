@@ -86,6 +86,4 @@ Apply a shadow with offset, blur, spread, and color settings.
 Fine-tune spacing around and inside the component.
 
 #### Custom Style `function`
-Write a script returning a `CSSProperties` object to dynamically style the image.
-
-
+Inject your own CSS styles via JavaScript (must return a style object).
