@@ -1,47 +1,75 @@
 # Address
 
-The address component is a generic component that is useful in any instance where an address field is required and must be stored.
+The address component is a generic component that is useful in any instance where an address field is required and must be stored. It’s designed for smart and dynamic address input, with support for advanced configurations like bounds and prioritization.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=d1a61bc8-6960-4426-9e00-b0637f39d8b1" title="Address Component" ></iframe>'
 
-In the above example, the address component was configured with a name of `address`. Two text fields were dragged into the form. The text fields were named `lat` and `lng` respectively and displayed the data as a user selected the relevant address.
-
-It is important to note that in order for this to happen, a script/instruction was inserted in the On Select event which instructed the `lat` and `lng` fields to be populated once the data is retrieved from the external map service.
-
-`
-setFormData({
-  values: {
-    address: event.address,
-    lat: event.lat,
-    lng: event.lng
-  },
-  mergeValues: true
-})`
+![Image](../data-entry/images/address1.png)
 
 ## Properties
 
-The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties).
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Min Characters Before Search
+### Common
 
- The minimum number of characters needed before the search can begin.
+#### Property Name `string`
+A unique key used to bind the address value to your form model.
 
-### Debounce (MS)
+#### Label `object`
+Toggle whether the field label is visible.
 
- Debouncing prevents extra activations/inputs from triggering too often. This is the time in milliseconds the call will be delayed by.
+#### Placeholder `string`
+Hint text shown inside the input field before a selection is made.
 
-### Google Maps Key
+#### Tooltip `string`
+Additional contextual help shown on hover.
 
- An API key for authorization. The Google Maps key which is required to make successful calls to Google services.
+#### Edit Mode `string`
+Controls interactivity:
+- **Editable**: Allows user input.
+- **Read Only**: Display only.
+- **Inherited** *(default)*: Follows form’s state.
 
-### Open Cage Key
+#### Hide `boolean`
+Toggle visibility of the component.
 
- An API key for authorization. The OpenCage key which is required to make successful calls to OpenCage services.
+___
 
-### Country Restriction (Area restriction)
 
- A filter which will only allow searches that fall within the country/countries selected. Multiple countries can be selected.
+### Main Settings
 
-### Prefix (Area restriction)
+#### Min Characters Before Search `number`
+Minimum characters a user must type before the address API is called.
 
- A simple prefix which is appended in the search but not the input search field, often used to create a biased search in address.
+#### Debounce (MS) `number`
+Delays the API call to reduce the number of requests while the user is typing.
+
+#### Google Maps Key `string`
+API key used to authenticate with Google Maps.
+
+#### OpenCage Key `string`
+API key for accessing OpenCage Data services.
+
+#### Country Restriction `object`
+Restrict searches to one or more specific countries.
+
+#### Prefix (Area Restriction) `string`
+A text prefix appended to the search query to bias the results.
+
+#### Priority Bounds (Advanced) `boolean`
+Enables advanced search priority based on coordinates.
+
+___
+
+### Appearance
+
+####  **Custom Styles** ``function``
+
+Inject your own CSS styles via JavaScript (must return a style object).
+
+___
+
+### Validation
+
+#### Required `boolean`
+Set to true to ensure an address is required before form submission.
