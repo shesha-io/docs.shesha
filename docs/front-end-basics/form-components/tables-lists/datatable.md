@@ -2,35 +2,75 @@
 
 A Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
 
+![Image](./images/selectedRow.png)
+
 [//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=552accec-84dc-4841-962f-ff263b5ade73" title="Columns Component" ></iframe>)
 
-This can be used within a child table, which comes with default table pager, filtering, and sorting capabilities, or can be used in isolation to create your desired view. It is fully customizable using stand-alone components that can be integrated into a datatable context.
+## Properties
 
-There is also a 'Datatable (Full)' component that comes pre-populated with most of the components for a more comprehensive user experience, which are also available separately, should you want to construct your own layout. It is important to note that these components need to be used within a datatable context, so as to source data from the same context.
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-## Customize Button Group
+### Common
+#### **Component Name** `string`  
+A unique identifier to bind the component to your form.
 
-A customizable button group on a child table refers to a set of interactive buttons within a nested or child table component that can be tailored or configured to perform specific actions related to the data displayed within the child table. This exposes the standard set of button styling and actions as previously discussed.
+___
 
-## Column Type
+### Data
+#### **Customize Columns** 
 
-All columns come with a standard set of properties used to configure look and feel, visibility, captions, and even additional information about the information in the column.
+![Image](../tables-lists//images/datatable2.png)
 
-- **Data:**
+Configure columns using a visual builder. Optionally supports expression logic for visibility or customization.
 
-  - This is for when you only want your column to act as a data display in the table.
+#### **Use Multi-select** `boolean`  
+Enables checkbox selection of multiple rows.
 
-- **Action:**
+#### **Freeze Headers** `boolean`  
+Pins table headers when scrolling.
 
-  - This is for when you want your column to execute some type of actions. This exposes the ‘Action Configurations’ exposed on each button, as discussed previously.
+#### **Can Edit Inline** `object`  
+Controls inline edit behavior:
+- **Yes**
+- **No**
+- **Inherit** *(default)*
+- **Expression**
 
-- **CRUD Operations:**
-  - This is for when Inline actions are enabled. This column will be used to trigger the different CRUD operations that the user has enabled on the table. Namely: ADD, EDIT, and DELETE. This topic will be discussed more in-depth later on in the section.
+#### **Can Add Inline** `object`  
+Controls row creation:
+- **Yes**
+- **No**
+- **Inherit** *(default)*
+- **Expression**
 
-## Table container style
+#### **Can Delete Inline** `string`  
+Controls delete access:
+- **Yes**
+- **No**
+- **Inherit** *(default)*
+- **Expression**
 
-The style that will be applied to the table container/wrapper.
+___
 
-## Table style
+### Appearance
 
-The style that will be applied to the table.
+#### **Min Height** `number`  
+Minimum height of the table container.
+
+#### **Max Height** `number`  
+Maximum height before vertical scroll appears.
+
+#### **Table Container Style** `function`  
+JS function returning CSS to apply on container.
+
+#### **Table Style** `function`  
+JS function returning CSS to apply on table.
+
+#### **Empty State Icon** `object`  
+Icon to show when there’s no data.
+
+#### **Primary Text** `string`  
+Main message shown when table is empty.
+
+#### **Secondary Text** `string`  
+Subtext shown in empty state.
