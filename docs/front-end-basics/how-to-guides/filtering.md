@@ -4,7 +4,7 @@ Filtering in an application refers to the process of narrowing down a set of dat
 
 There are several types of filtering that are supported through Shesha which can be accessed though a variety of components, namely:
 
-1. [Table View Selector](/docs/front-end-basics/form-components/data-display/data-table/table-view-selector) (should be used within a [Datatable Context](/docs/front-end-basics/form-components/data-display/data-table/datatable-context))
+1. [Table View Selector](/docs/front-end-basics/form-components/tables-lists/table-view-selector) (should be used within a [Datatable Context](/docs/front-end-basics/form-components/tables-lists/datatable-context))
 2. [Entity Filter / Query Builder](/docs/front-end-basics/form-components/common-component-properties)
 
 ## Filtering Using Static Values

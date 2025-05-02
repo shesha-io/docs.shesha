@@ -1,6 +1,6 @@
 # Table View Selector
 
-> _**NOTE** This component should be used within a [Datatable Context Component](/docs/front-end-basics/form-components/data-display/data-table/datatable-context)_.
+> _**NOTE** This component should be used within a [Datatable Context Component](/docs/front-end-basics/form-components/tables-lists/datatable-context)_.
 
 ![Image](./images/tableSelector1.png)
 

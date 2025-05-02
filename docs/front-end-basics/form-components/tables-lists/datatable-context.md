@@ -96,7 +96,7 @@ return [
 
 ### How to Access
 
-Information about the `Datatable Context` can be accessed within the `Contexts` that are available in the application and can be accessed like this (_assuming that the [datatable context](/docs/front-end-basics/form-components/data-display/data-table/datatable-context) component has a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name) of `indexTable`_ ):
+Information about the `Datatable Context` can be accessed within the `Contexts` that are available in the application and can be accessed like this (_assuming that the [datatable context](/docs/front-end-basics/form-components/tables-lists/datatable-context) component has a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name) of `indexTable`_ ):
 
 ```javascript
 contexts.indexTable;
@@ -209,7 +209,7 @@ contexts.indexTable.api;
 
 ### SelectedIDs
 
-This includes a list of the selected IDs from the table data. This is utilized in the cases where the [selection mode](/docs/front-end-basics/form-components/data-display/data-table/datalist#selection-mode) of a [datalist](/docs/front-end-basics/form-components/data-display/data-table/datalist) or [datatable](/docs/front-end-basics/form-components/data-display/data-table/datatable) is set to `Multiple`.
+This includes a list of the selected IDs from the table data. This is utilized in the cases where the [selection mode](/docs/front-end-basics/form-components/tables-lists/datalist#selection-mode) of a [datalist](/docs/front-end-basics/form-components/tables-lists/datalist) or [datatable](/docs/front-end-basics/form-components/tables-lists/datatable) is set to `Multiple`.
 
 #### How to Access
 
