@@ -1,87 +1,61 @@
-# Chevron Component
-
-## Overview
+# Chevron
 
 A chevron is a simple arrow-like symbol (›) that helps users navigate through your application. Think of it as a visual signpost that shows users where they can click or what will happen next.
 
-## Features
+![Image](../Advanced/images/chevron1.png)
 
-- **Customizable Items**: Adjust chevron items to suit your specific workflow and project needs.
-- **Customizable Styles**: Modify the appearance of the Chevron board to fit your preferences, from colors, visibility, fonts, and icons.
-- **Configured Actions**: Control behaviour or acceptance criteria at each step.
+## Properties
 
-## How to Configure the Component
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Location of the Component
+### Common
+#### **Property Name** `string`
+A unique key binding the Chevron component to your data model.
 
-The Chevron Component can be found under the **Advanced** group in the form designer.
+#### **Label** `object`
+Toggle whether the label should be displayed.
 
-![Chevron Component Location](./images/chev-builder.png)
+#### **Tooltip** `string`
+Contextual help that appears when the user hovers over the component.
 
-### Configuration Steps
+#### **Hide** `boolean`
+Determines whether the Chevron is visible on the form.
 
-Follow the steps below to configure the Chevron Component:
+___
 
-#### 1. **Add the Component**
-- Navigate to the **Advanced** group in your form designer.
-- Drag and drop the **Chevron Component** onto your form.
+### Data
 
-#### Display Section
+#### **Reference List** `object`
+Defines which reference list is used to drive the Chevron items. Ensure the list is properly selected to reflect updates.
 
-These are common properties, which are clearly explained in the [Common Properties and Events Section](/docs/front-end-basics/form-components/common-component-properties).
+#### **Items** `object`
+A selector for managing specific items from the chosen reference list.
 
-The `Property Name` configuration gives the component context on which step is currently action. In this example, I have binded my component to `status`, which currently has a value of 1. This will highlight the relevent reflist item within the list.
+___
 
-![Property Name](./images/chev-propertyName.png)
+### Appearance
 
-#### Items Section
+#### **Font** ``object`` 
+Customize the font with options for:
+- Family
+- Size
+- Weight
+- Color
+- Text alignment
 
-- **Reference List**: Select the reference list that will  be the source of your items. For instance, you might choose a reference list like `orderStatus` to track status of the current order and enforce actions upon each stage (e.g., `Ready for collection`, `Order Cancelled`, `Completed`,`Draft`,`Order Submitted`,`Order Recieved`).
+#### **Dimensions** ``object``  
+Set width and height using any valid CSS units.
 
-   - Once the reference list is selected, all items within that list will be displayed as individual chevron components.
+#### **Margin & Padding** ``object``
+Adjust internal and external spacing for layout control.
 
-      ![Configured List](./images/chev-reflist.png)
+#### **Color Source** ``object``
+Defines where the color comes from:
+- **Primary** *(default)*: Uses primary color theme.
+- **Custom**: Lets you define your own color.
+- **From reflist item**: Dynamically sourced from reference list data.
 
-   - You can reorder the columns based on your preferences to better match your workflow by easily grabbing onto the drag handle and reorder to your project specifications.
+#### **Show Icons** `boolean`
+Toggle visibility of icons next to items.
 
-      ![Reordered List](./images/chev-reorder.png)
 
-   - Each column will display a gear icon when hovered over, allowing you to configure actions specific to that column. For instance, you can define what should happen when a user clicks to move forward, or move back to a certain step within the chevron, or choose to hide certain items.
-
-      ![Gear Icon](./images/chev-gear.png)
-
-   - When you click the gear icon, a configuration window will appear, enabling you to define specific actions for each item.
-
-     ![Action Configuration](./images/chev-actions.png)
-
-     - These item specific configurations include:
-
-        - **Hidden** - When toggled to `true`, this hides the item from the rendered list.
-        - **Action Configuration** - This handles the behaviour of the item when clicked. More specific explanations of this can be found in the [Action Configurations Section](/docs/front-end-basics/configured-views/action-configurations)
-
-        ![Chevron](./images/chev-action.png)
-
-        ![Confirm](./images/chev-confirm.png)
-
-#### Style Section
-  **Color Source**
-   - This property lets user decide where to source color for the rendered items. The active step will be of full opacity, while the inactive colors will be a dimmed down version of the selected color option. 
-   - Options: 
-      - Primary Color
-      - Custom Color
-      - From RefList Item
-
-   **Font Color**
-   - This property lets you set the font color for the chevron items
-
-   **Show Icons?**
-   - If the reference list has icons associated with its items, you can display these icons on the left side of the header when this option is enabled.
-
-   **Width**
-   - Define the component width
-
-   **Height**
-   - Define the component height
-
-   **Font Size**
-   - This property allows you to adjust the font size of the text in the component

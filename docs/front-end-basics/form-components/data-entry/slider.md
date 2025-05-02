@@ -11,33 +11,33 @@ The following properties are available to configure the behavior of the componen
 
 
 ### Common
-#### Property Name `string`
+#### **Property Name** `string`
 A unique key that links the slider value to your form data.
 
 #### **Label** ``object``
 
 Customize whether to display a label. Hiding it can simplify the UI in some layouts.
 
-#### Edit Mode `object`
+#### **Edit Mode** `object`
 Controls how the slider behaves:
 - **Editable**: Users can adjust the slider.
 - **Read Only**: Slider is locked.
 - **Inherited** *(default)*: Behavior is inherited from the parent form.
 
-#### Hide `boolean`
+#### **Hide** `boolean`
 Control whether the slider is shown.
 
 ___
 
 ### Data
 
-#### Default Value `number`
+#### **Default Value** `number`
 Sets the initial position of the slider when the form loads.
 
-#### Minimum `number`
+#### **Minimum** `number`
 The minimum allowable value on the slider.
 
-#### Maximum `number`
+#### **Maximum** `number`
 The maximum allowable value on the slider.
 
 
@@ -45,7 +45,7 @@ ___
 
 ### Appearance
 
-#### Custom Style `function`
+#### **Custom Style** `function`
 Write a JavaScript function that returns a `CSSProperties` object to style the slider dynamically.
 
 
