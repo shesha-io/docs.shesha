@@ -2,9 +2,6 @@
 
 A datatable context component is a powerful tool that allows users to manage and manipulate tabular data within an application. It's often used in scenarios where you need to display, organize, and interact with data in a structured, table-like format. 
 
-![Image](./images/selectedRow.png)
-
-
 ## Properties
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
