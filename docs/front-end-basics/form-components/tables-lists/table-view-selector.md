@@ -1,13 +1,21 @@
 # Table View Selector
 
-> _**NOTE** This component should be used within a [Datatable Context Component](/docs/front-end-basics/form-components/tables-lists/datatable-context)_.
+The Table View Selector is a user interface component commonly found in applications, particularly those dealing with tabular or list-based data. It allows users to switch between different predefined views or filters of the data presented in a table format. This component provides a list of configurable query builders that can be used to configure the different predefined filters and views. This component should be used within a [Datatable Context Component](/docs/front-end-basics/form-components/tables-lists/datatable-context).
 
-![Image](./images/tableSelector1.png)
+![Image](../tables-lists/images/tableSelector2.png)
 
-A **Table View Selector** is a user interface component commonly found in applications, particularly those dealing with tabular or list-based data. It allows users to switch between different predefined views or filters of the data presented in a table format. This component provides a list of configurable query builders that can be used to configure the different predefined filters and views.
-
-It is also important to note that this component takes in dynamic values from your form data or your context, which is helpful in instances where you want to create a view based on the current state of the form.
-
-There is also a ‘Hidden’ toggle in the cases where you do not want the filter to be visible in the UI. The table view selector can also act as a title, in cases where you do not need to filter your table view.
 
 _Implementation can be found [here](/docs/front-end-basics/how-to-guides/filtering)._
+
+## Properties
+
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
+
+### Common
+
+#### **Filters** `filtersList`  
+Determines whether the search input is displayed as a block-level element.
+
+#### **Hide** ``boolean``
+
+Allows the component to be conditionally hidden from the form.
