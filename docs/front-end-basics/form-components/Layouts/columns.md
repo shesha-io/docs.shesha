@@ -4,7 +4,9 @@ The Columns component allows for managing a list of columns, typically used for 
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=747834b4-9ef8-4088-a951-e976776b19ec" title="Columns Component" ></iframe>'
 
-![Image](../images/columns1.png)
+![Image](../Layouts/images/columns1.png)
+
+![Image](../Layouts/images/columns3.png)
 
 ## **Properties**
 
@@ -25,7 +27,7 @@ ___
 
 #### Configure Columns
 
-![Image](../images/columns2.png)
+![Image](../Layouts/images/columns2.png)
 
 Configure your grid's columns with ease. This setting opens a friendly UI to manage each column’s name, type, and any additional configurations.
 
