@@ -109,7 +109,7 @@ _Read more about dynamic APIs [here](/docs/back-end-basics/crud-apis)_
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
 2. Search and drag in a `Datatable Context` component from the `Builder Widgets` below the existing `details` panel
 
-_You can find more information about implementation of the Datatable Context component [here](/docs/front-end-basics/form-components/data-display/data-table/datatable-context)_
+_You can find more information about implementation of the Datatable Context component [here](/docs/front-end-basics/form-components/tables-lists/datatable-context)_
 
 3. Set the `Entity Type` property of the `Datatable Context` to the newly created `Membership Payment` entity
 
@@ -137,7 +137,7 @@ _You can find more information about implementation of the Panel component here_
 
 8.  Click `save` on the `configure columns` modal.
 
-_You can find more information about implementation of the Datatable component [here](/docs/front-end-basics/form-components/data-display/data-table/datatable)_
+_You can find more information about implementation of the Datatable component [here](/docs/front-end-basics/form-components/tables-lists/datatable)_
 
 Taking full advantage of Shesha's datatable functionalities, we are going to be utilizing the **inline-editing** to input the `Member Payments`.
 
@@ -156,9 +156,9 @@ _Check out the inline-editing [how-to-guide](/docs/front-end-basics/how-to-guide
 _Let's accessorize our `datatable` and make it more flexible._
 
 10. Search and drag in the following components from the `Builder Widgets` onto the the header of the `Member Payments` panel:
-    - [Quick Search](/docs/front-end-basics/form-components/data-display/data-table/quick-search)
-    - [Table Pager](/docs/front-end-basics/form-components/data-display/data-table/table-pager)
-    - [Table View Selector](/docs/front-end-basics/form-components/data-display/data-table/table-view-selector)
+    - [Quick Search](/docs/front-end-basics/form-components/tables-lists/quick-search)
+    - [Table Pager](/docs/front-end-basics/form-components/tables-lists/table-pager)
+    - [Table View Selector](/docs/front-end-basics/form-components/tables-lists/table-view-selector)
 
 ![Image](./images/child5.png)
 

@@ -1,0 +1,76 @@
+# DataTable
+
+A Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
+
+![Image](./images/selectedRow.png)
+
+[//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=552accec-84dc-4841-962f-ff263b5ade73" title="Columns Component" ></iframe>)
+
+## Properties
+
+The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
+
+### Common
+#### **Component Name** `string`  
+A unique identifier to bind the component to your form.
+
+___
+
+### Data
+#### **Customize Columns** 
+
+![Image](../tables-lists//images/datatable2.png)
+
+Configure columns using a visual builder. Optionally supports expression logic for visibility or customization.
+
+#### **Use Multi-select** `boolean`  
+Enables checkbox selection of multiple rows.
+
+#### **Freeze Headers** `boolean`  
+Pins table headers when scrolling.
+
+#### **Can Edit Inline** `object`  
+Controls inline edit behavior:
+- **Yes**
+- **No**
+- **Inherit** *(default)*
+- **Expression**
+
+#### **Can Add Inline** `object`  
+Controls row creation:
+- **Yes**
+- **No**
+- **Inherit** *(default)*
+- **Expression**
+
+#### **Can Delete Inline** `string`  
+Controls delete access:
+- **Yes**
+- **No**
+- **Inherit** *(default)*
+- **Expression**
+
+___
+
+### Appearance
+
+#### **Min Height** `number`  
+Minimum height of the table container.
+
+#### **Max Height** `number`  
+Maximum height before vertical scroll appears.
+
+#### **Table Container Style** `function`  
+JS function returning CSS to apply on container.
+
+#### **Table Style** `function`  
+JS function returning CSS to apply on table.
+
+#### **Empty State Icon** `object`  
+Icon to show when there’s no data.
+
+#### **Primary Text** `string`  
+Main message shown when table is empty.
+
+#### **Secondary Text** `string`  
+Subtext shown in empty state.
