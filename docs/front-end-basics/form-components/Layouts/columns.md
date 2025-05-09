@@ -1,6 +1,6 @@
 # Columns
 
-The Columns component allows for managing a list of columns, typically used for grid or table configurations within forms. It's handy for configuring the structure of data views, allowing you to define what data appears and how.
+The Columns component is a flexible layout tool that allows you to organize content side-by-side using a column-based grid structure. It's perfect for designing responsive and structured forms by splitting sections into multiple columns with individually configurable widths, minimums, and maximums.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=747834b4-9ef8-4088-a951-e976776b19ec" title="Columns Component" ></iframe>'
 
