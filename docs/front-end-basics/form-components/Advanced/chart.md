@@ -1,8 +1,4 @@
----
-sidebar_label: Chart Component
----
-
-# Chart component  
+# Chart  
 
 This is a chart component. It can be used to display data in a chart.  
 
