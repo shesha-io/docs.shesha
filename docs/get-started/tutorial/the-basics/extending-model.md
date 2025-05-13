@@ -359,7 +359,7 @@ _You can find more information about implementation of the file component [here]
   - [Autocomplete](/docs/front-end-basics/form-components/data-entry/autocomplete)
   - [Entity Picker](/docs/front-end-basics/form-components/data-entry/entity-picker)
   - [Entity Reference](/docs/front-end-basics/form-components/data-entry/entity-reference)
-  - [Sub Form](/docs/front-end-basics/form-components/data-entry/subform)
+  - [Sub Form](/docs/front-end-basics/form-components/Layouts/subform)
 
 _For the purposes of this tutorial, we are going to be utilizing the `Entity Reference` component_
 
