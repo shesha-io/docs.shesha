@@ -43,7 +43,7 @@ The component has the following properties:
 > - Month-Year
 
 - Value property: The property of the `Entity` that will be used as the Y-axis.
-- Legend property: The property of the `Entity` that will be used as the legend. (If chart data complexity is chosend as Pivot.. covered in the next section)
+- Legend property: The property of the `Entity` that will be used as the legend. (If chart data complexity is chosen as Pivot.. covered in the next section)
 - Allow filter: If checked, the user can filter the data displayed in the chart dynamically.
 - Filter property list: The properties of the `Entity` that can be used to filter the data displayed in the chart. (If `Allow filter` is checked)
 - Aggregation Method: How the data must be aggregated when there are multiple data points for the same X-axis value.  
