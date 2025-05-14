@@ -77,7 +77,6 @@ Apply visual filters:
 #### Filter Intensity `number`
 Level of filter application.
 
-
 #### Opacity `number`
 Controls transparency of the image.
 
