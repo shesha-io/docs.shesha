@@ -60,9 +60,6 @@ Example: In cases where an Expiry Notice is to be sent through the `Email` Chann
 
 ![alt text](images/notification-images/NotificationTemplates.png)
 
-## Process Flow
-
-![alt text](images/notification-images/ProcessFlow.png)
 
 ## Implementation Guide
 
