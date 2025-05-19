@@ -356,7 +356,7 @@ _You can find more information about implementation of the file component [here]
    - Owner Type: `Shesha.Membership.Domain.Domain.Member`
 
 - Viewing the details of a foreign key on a details view can be achieved in a number of ways:
-  - [Autocomplete](/docs/front-end-basics/form-components/data-entry/autocomplete)
+  - [Autocomplete](/docs/front-end-basics/form-components/Advanced/autocomplete)
   - [Entity Picker](/docs/front-end-basics/form-components/data-entry/entity-picker)
   - [Entity Reference](/docs/front-end-basics/form-components/data-entry/entity-reference)
   - [Sub Form](/docs/front-end-basics/form-components/Layouts/subform)

@@ -4,7 +4,7 @@ The address component is a generic component that is useful in any instance wher
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=d1a61bc8-6960-4426-9e00-b0637f39d8b1" title="Address Component" ></iframe>'
 
-![Image](../data-entry/images/address1.png)
+![Image](../Advanced/images/address2.png)
 
 ## Properties
 
