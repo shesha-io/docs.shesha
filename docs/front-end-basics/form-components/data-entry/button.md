@@ -49,7 +49,7 @@ Predefined button style:
 
 #### **Font** ``object`` 
 
-Customize how your text-area labels look. Choose the font family, size, weight, and color.
+Customize how your buttons look. Choose the font family, size, weight, and color.
 
 #### **Dimensions** ``object`` 
 
