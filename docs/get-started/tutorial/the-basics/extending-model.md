@@ -229,7 +229,7 @@ function onError(_e) {
 
 7. While on the `Biographical Information` step of the wizard, search and drag in the `File` component from the `Builder Widgets`.
 
-_You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/data-entry/files)_
+_You can find more information about implementation of the file component [here](/front-end-basics/form-components/Entity-References/files.md)_
 
 8. Configure the `File` component with the following:
 
@@ -239,7 +239,7 @@ _You can find more information about implementation of the file component [here]
 
 9. While on the `Biographical Information` step of the wizard, search and drag in the `Entity Picker` component from the `Builder Widgets`.
 
-_You can find more information about implementation of the entity picker component [here](/docs/front-end-basics/form-components/data-entry/entity-picker)_
+_You can find more information about implementation of the entity picker component [here](/front-end-basics/form-components/Entity-References/entity-picker.md)_
 
 10. Configure the `Entity Picker` component with the following:
 
@@ -346,7 +346,7 @@ _You can find more information about implementation of the tab component [here](
 
 6. While on the `Biographical Information` tab, search and drag in the `File` component from the `Builder Widgets`.
 
-_You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/data-entry/files)_
+_You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/Entity-References/files)_
 
 7. Configure the `File` component with the following:
 
@@ -357,15 +357,15 @@ _You can find more information about implementation of the file component [here]
 
 - Viewing the details of a foreign key on a details view can be achieved in a number of ways:
   - [Autocomplete](/docs/front-end-basics/form-components/Advanced/autocomplete)
-  - [Entity Picker](/docs/front-end-basics/form-components/data-entry/entity-picker)
-  - [Entity Reference](/docs/front-end-basics/form-components/data-entry/entity-reference)
+  - [Entity Picker](/front-end-basics/form-components/Entity-References/entity-picker.md)
+  - [Entity Reference](/front-end-basics/form-components/Entity-References/entity-references.md)
   - [Sub Form](/docs/front-end-basics/form-components/Layouts/subform)
 
 _For the purposes of this tutorial, we are going to be utilizing the `Entity Reference` component_
 
 8. While on the `Biographical Information` tab, search and drag in the `Entity Reference` component from the `Builder Widgets`.
 
-_You can find more information about implementation of the entity reference component [here](/docs/front-end-basics/form-components/data-entry/entity-reference)_
+_You can find more information about implementation of the entity reference component [here](/front-end-basics/form-components/Entity-References/entity-references.md)_
 
 9. Configure the `Entity Reference` component with the following:
 
