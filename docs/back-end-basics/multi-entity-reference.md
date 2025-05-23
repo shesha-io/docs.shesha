@@ -25,7 +25,7 @@ public ManyToManyAttribute(bool autoGeneration)
 ```
 
 - **table** -  This defines the name of the link that will be used for references.
-- **childColumn** - This defines the name of the column that wil reference the child entity table.
+- **childColumn** - This defines the name of the column that will reference the child entity table.
 - **keyColumn** - This defines the name of the column that will reference the parent entity table.
 - **autoGeneration** - This indicates the table will be generated automatically based on the names defined in the attribute, or automatically generated names will be used if defined.
 
@@ -120,7 +120,7 @@ Example for organization ***Main office***
 - **AuditedAsManyToMany** - saves changes for the parent entity and for  child entities.
 
 Example:
-In addition to the organization's events for each  employee will also added:
+In addition to the organization's events, for each employee the following will also be added:
 
 
 | EventName                  | Description                                              |
