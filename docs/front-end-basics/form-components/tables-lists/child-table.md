@@ -1,5 +1,5 @@
 ---
-sidebar_label: DEPRACATED - Child Table
+sidebar_label: DEPRECATED - Child Table
 ---
 
 # Child Table

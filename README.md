@@ -26,7 +26,7 @@ $ npm start
 
 This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
 
-**Note:** The Serach bar does not run in development mode and will be greyed out. To test the serach. Use the Build and Test commands below.
+**Note:** The Search bar does not run in development mode and will be greyed out. To test the search, use the Build and Test commands below.
 
 ### Build
 

@@ -13,7 +13,7 @@ As an example, the image below shows the list of generated APIs for the `Person`
 
 ![Image](./images/crud-apis-swagger.jpg)
 
-:::warning Depracated end-points
+:::warning Deprecated end-points
 Please note as per [GitHub Issue 838](https://github.com/shesha-io/shesha-framework/issues/838) the following duplicative and deprecated end-points will be removed in the future: UpdateGql, CreateGql, Query, GetAll
 :::
 
@@ -63,14 +63,14 @@ public class MyEntity : FullAuditedEntity<Guid>
 
 ## Preventing the generation of CRUD APIs through configuration
 
-Alternatively, you may also prevent the generation of CRUD APIs through configuration. This may be preferrable if you do not have access to the source code of the entity class or if you wish to give yourself flexibility through configuration.
+Alternatively, you may also prevent the generation of CRUD APIs through configuration. This may be preferable if you do not have access to the source code of the entity class or if you wish to give yourself flexibility through configuration.
 
 From your running Shesha application, go to 'Administration > Entity Configuration' on the main menu. Select the entity for which you wish to prevent the generation of CRUD APIs. Click the 'CRUD APIs' tab, then uncheck the 'Generate CRUD APIs' property as illustrated below:
 ![Image](./images/crud-apis-entityconfigurator-generate.jpg)
 
 ## Securing CRUD APIs through code
 
-To secure the generated CRUD APIs, you can use `CrudAccess` addtibute to specify the required permissions for each of the CRUD APIs. You can use multiple `CrudAccess` attibute for one entity:
+To secure the generated CRUD APIs, you can use the `CrudAccess` attribute to specify the required permissions for each of the CRUD APIs. You can use multiple `CrudAccess` attributes for one entity:
 
 ```csharp
 // highlight-start
@@ -106,7 +106,7 @@ To enforce validation and other business logic on Create and Update operations u
 To 'inject' custom querying logic into the generated QueryAll end-point you implement [Specifications](/docs/fundamentals/specifications).
 
 [//]: # "### Customizing Quick Search behavior"
-[//]: # "To customize the Quick Search behvior you can implement ??? need to describe way to utilise a custom IQuickSearcher."
+[//]: # "To customize the Quick Search behavior you can implement ??? need to describe way to utilise a custom IQuickSearcher."
 
 # See Also
 

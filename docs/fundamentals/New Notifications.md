@@ -216,9 +216,9 @@ public async Task BulkPublishAsync (BulkNotificationDto notification)
 
 
     // Send notification to each recipient
-    foreach (var reciever in notification.recipients)
+    foreach (var receiver in notification.recipients)
     {
-        var recipient = await _personRepository.FirstOrDefaultAsync(reciever.Id);
+        var recipient = await _personRepository.FirstOrDefaultAsync(receiver.Id);
         if (recipient == null)
             throw new Exception($"{nameof(recipient)} must not be null");
 

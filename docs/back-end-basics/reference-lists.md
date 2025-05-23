@@ -70,7 +70,7 @@ public class Person
    ...
 }
 ```
-Because the list is data-driven to remain flexible, the list will be defined in the database (in the `Frwk_ReferenceLists` and `Frwk_RefrenceListItems` tables) instead of being hard-coded as an enum.
+Because the list is data-driven to remain flexible, the list will be defined in the database (in the `Frwk_ReferenceLists` and `Frwk_ReferenceListItems` tables) instead of being hard-coded as an enum.
 
 To add and maintain reference lists through database migration classes a number of additional extension methods are available to migration classes as illustrated below:
 ``` csharp
@@ -81,7 +81,7 @@ To add and maintain reference lists through database migration classes a number 
         {
             /* add reflist */
             this.Shesha().ReferenceListCreate("Shesha", "TestStatuses")
-                .SetDescription("Lorem ipsum") // set desctiption
+                .SetDescription("Lorem ipsum") // set description
                 .SetNoSelectionValue(1) // set noselection value
                 .AddItem(1, "Status 1") // add item
                 .AddItem(2, "Status 2", 2, "Status 2 description")
@@ -131,7 +131,7 @@ property RefListDaysOfTheWeek DaysOpen { get; set; }
 ```
 #### Example for enum based reference list
 ``` csharp
-[RefrenceList("MyApp","DaysOfTheWeek")]
+[ReferenceList("MyApp","DaysOfTheWeek")]
 [Flags]  \\ For multi-value ref list enums ensure the [Flags] attribute is added 
 public enum RefListDaysOfTheWeek
 {
