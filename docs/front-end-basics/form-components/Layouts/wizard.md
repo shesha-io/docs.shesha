@@ -1,10 +1,17 @@
 # Wizard
 
+import LayoutBanners from './LayoutBanners';
+
 The Wizard component enables multi-step forms by segmenting fields across several pages with navigation controls. It's ideal for complex data entry processes where progressive disclosure improves the user experience.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=747834b4-9ef8-4088-a951-e976776b19ec" title="Wizard Component" ></iframe>'
 
 ![Image](../Layouts/images/wizard1.png)
+
+## **Get Started**
+
+<LayoutBanners url="https://app.guideflow.com/embed/3r3w71vf9k" type={1}/>
+___
 
 ## **Properties**
 
