@@ -37,7 +37,7 @@ With the exception of the last approach in the table above (which depends on the
 If the entity violates any validation rules, the Create(Post) or Update(Put) APIs will throw an `AbpValidationException` and return the appropriate validation information.
 
 ## Implementing Validations through FluentValidation
-In order for the implemented EntityValidator to trigger as mentioned in [https://docs.fluentvalidation.net/en/latest/](https://docs.fluentvalidation.net/en/latest/). Make sure to inlcude the `AbpFluentValidationModule` in the `WebCoreModule` class of the solution as a dependency.
+In order for the implemented EntityValidator to trigger as mentioned in [https://docs.fluentvalidation.net/en/latest/](https://docs.fluentvalidation.net/en/latest/). Make sure to include the `AbpFluentValidationModule` in the `WebCoreModule` class of the solution as a dependency.
 
 ##### Example
 ``` csharp

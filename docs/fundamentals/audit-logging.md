@@ -121,7 +121,7 @@ or
 
 # Audit trail of related or child entities
 
-By default the audit trail will only display changes to properties at the top level. It is however quite common to want to see changes occuring on child objects. Attributes that allow to include audit events of related or children entities to the Audit trail of entity
+By default the audit trail will only display changes to properties at the top level. It is however quite common to want to see changes occurring on child objects. Attributes that allow to include audit events of related or children entities to the Audit trail of entity
 
 ### Display events from related entity
 
