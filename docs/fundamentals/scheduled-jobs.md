@@ -39,7 +39,7 @@ One of the most types of background jobs are those to send bulk notifications of
     description: "Sends reminders of appointments the day before the appointments.")]
 public class SendAppointmentReminderNotificationJob : ScheduledJobBase, ITransientDependency
 {
-    // Sql to retreive the list of valid Appointments scheduled for tomorrow for which a Reminder notification has not yet been sent according to the audit log in AbpTenantNotifications
+    // Sql to retrieve the list of valid Appointments scheduled for tomorrow for which a Reminder notification has not yet been sent according to the audit log in AbpTenantNotifications
     private const string SQL_SELECT_REMINDERS_TO_SEND = @"SELECT Id FROM Health_Appointments WHERE 
                                             IsDeleted = 0
                                         AND StatusLkp = 3 /*Booked*/

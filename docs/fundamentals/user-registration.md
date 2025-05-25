@@ -62,7 +62,7 @@ The `UserEmailAsUsername` setting determines whether the system uses the user's 
 
 - Defines the URL to which the user will be redirected after successful registration. This ensures a seamless transition to the next step in the user journey.
 
-### Additional Registration Infomation
+### Additional Registration Information
 
 Defines a form for capturing extra details beyond basic user information. If enabled, the user must complete this form before completing the registration process.
 > _**NOTE**: If this option is selected then the registration process will be placed on draft until the form information has been completed and an additional endpoint (**`/api/services/app/UserManagement/CompleteRegistration`**) to finalize the registration has been actioned.
