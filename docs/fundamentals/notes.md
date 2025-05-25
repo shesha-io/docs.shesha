@@ -4,7 +4,7 @@ sidebar_label: Notes
 
 # Notes
 
-The ability to capture notes arbritrarily against almost any entity is such a common requirement that the Shesha framework provides a generic Notes component and `Note` entity and API to store and manage captured notes.
+The ability to capture notes arbitrarily against almost any entity is such a common requirement that the Shesha framework provides a generic Notes component and `Note` entity and API to store and manage captured notes.
 
 Allowing notes to be captured on a form is as simple as	adding the `Notes` component to the form. The `Notes` component will automatically display any notes that have been captured against the entity that the form is bound to. 
 
@@ -26,7 +26,7 @@ Any notes captured are stored in the `Note` entity. The `Note` entity has the fo
 | Parent            | Note  | The parent note of the current note. This is useful when there is a need for 'threaded' notes or discussions. |
 | NoteText          | string  | The text content of the note. |
 | Author            | Person  | The author of the note. |
-| HasAttachment     | bool  | Indicates whether the note has one ore more attachments associated with it. |
+| HasAttachment     | bool  | Indicates whether the note has one or more attachments associated with it. |
 | VisibilityType    | RefList(VisibilityType) | Specifies the visibility of the note e.g. Private, Public. |
 | CreationTime         | DateTime  | The date and time the note was created. |
 | CreatorUserId         | long?  | Id of the user who created the note. |
