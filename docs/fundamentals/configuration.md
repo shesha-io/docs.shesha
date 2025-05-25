@@ -12,7 +12,7 @@ The most commonly defined and used configurations include form configurations an
 In addition to forms and reference lists, other items such as menu structures, app settings, roles, permissions, and entity configurations can also be configured. However, currently, these items lack the ability for easy distribution explained below. This will be addressed in future versions of Shesha.
 :::
 
-The most import distiguisihing feature of a configuration item is that they are stored as data in the application database, but can be exported and imported between different instances in a Json format.
+The most important distinguishing feature of a configuration item is that they are stored as data in the application database, but can be exported and imported between different instances in a JSON format.
 
 ## Deploy configurations manually
 Configuration can be manually exported and imported between different instances of Shesha.
