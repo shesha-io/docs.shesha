@@ -101,3 +101,8 @@ Inject your own CSS styles via JavaScript (must return a style object).
 
 - Secondary Text Color `object`: Text color for secondary elements.
 
+___
+
+## **Advanced Wizard**
+
+<LayoutBanners url="https://app.guideflow.com/embed/dkdwl20a9r" type={1}/>

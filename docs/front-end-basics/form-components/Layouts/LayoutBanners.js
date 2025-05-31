@@ -10,7 +10,7 @@ const banners = {
 };
 
 export default function Banner({ url, type }) {
-    const [showImage, setShowImage] = useState(true);
+    const [showImage, setShowImage] = useState(false);
 
     const handleClick = () => {
         setShowImage(false);
@@ -33,9 +33,8 @@ export default function Banner({ url, type }) {
                     src={url}
                     width="100%"
                     height="500"
-                    frameBorder="0"
                     allowFullScreen
-                    autoPlay  // Add autoPlay attribute to start playing instantly
+                    autoPlay 
                 ></iframe>
             )}
         </div>
