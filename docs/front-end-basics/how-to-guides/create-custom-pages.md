@@ -22,6 +22,8 @@ To create a custom page:
 
 2. Once this folder has been created, it is suggested to create an `page.tsx` file inside the custom directory created. An illustration can be seen below (Figure 1: Folder Structure). A `.tsx` extension is used when embedding JSX elements inside the files, while `.ts` is used for plain TypeScript files that do not support adding JSX elements.
 
+Figure 1 shows an illustration of the folder structure.
+
 ![Image](./images/customPage4.png)
 
 Figure 2 shows a snippet of code that will be added in the `page.tsx` page.
