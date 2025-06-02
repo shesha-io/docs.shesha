@@ -93,7 +93,6 @@ public class AppService : SheshaAppServiceBase
 }
 ```
 
-
 ## Common Custom Validation Sample Code
 
 The sample code below illustrates the implementation of common custom validation use cases based on the `IValidatableObject` approach. It illustrates the following use cases:
