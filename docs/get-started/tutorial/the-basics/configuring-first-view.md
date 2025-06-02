@@ -11,10 +11,11 @@ In this section, we are configuring the most common types of views taking advant
 - View the details of the registered person
 - Access the list view of the persons from the main menu
 
-
 ## Form Versioning
 
 Form versioning refers to the practice of managing different versions of a form. Each version represents a distinct state of the form, and organizations often use multiple versions to handle changes, updates, or different stages of the form's life cycle. The three versions available —Live, Ready, and Draft— suggest a common workflow for form versioning. Let's break down their meanings:
+
+![Image](./images/FormVersioning.png)
 
 ### Draft
 
@@ -58,7 +59,6 @@ To manage the information of the people registered onto the system, we need to c
    - Name: `members-table`
    - Label: `Members Table`
    - Description: `This table view is used to display a list of all members`
-   
 
 ![Image](./images/memberTable.png)
 
@@ -69,7 +69,7 @@ To manage the information of the people registered onto the system, we need to c
 - ### Configuring Table Columns
 
   - First, click the `Tables and Lists` dropdown and then hover over the `datatable` component handle on your form's components and click it to see the properties of the `datatable` component in the `Properties` sidebar.
-  
+
     ![Image](./images/table0.png)
 
   - Click on `Configure Columns` > `Add Column`
@@ -79,6 +79,7 @@ To manage the information of the people registered onto the system, we need to c
   - On the Property Name setting on the Properties sidebar, this provides an autocomplete of all the properties available on the chosen `Model Type`. If the property name selected is what you would like your caption to be, you can use the suffixed lightning bolt icon button to autocomplete the column caption to match the property name. You also have the option to modify the caption if need be.
 
   - Add the following columns by searching and selecting on the `Property Name`:
+
     - title
     - firstName
     - lastName
@@ -87,6 +88,7 @@ To manage the information of the people registered onto the system, we need to c
     - gender
 
     ![Image](./images/table2.png)
+
   - Click `save` on the `configure columns` modal.
 
 - The `member-table` should now be populated with pre-populated data from the `Person` entity, which is part of the base Shesha Model as included in the Starter Project database.
@@ -116,7 +118,10 @@ To manage the information of the people registered onto the system, we need to c
 
 - Toggle Edit Mode
 
-  ![Image](./images/table6.png)
+      - This mode allows you to make changes to your form configuration, data bindings, and layout.
+      - During this mode, form designers can make changes, add new fields, or update existing ones.
+
+- ![Image](./images/FomEditMode.png)
 
 - Click the now `highlighted` main menu to toggle the `Main Menu Configuration` dialog box
 - Click on `Add New Item`
@@ -138,7 +143,7 @@ To manage the information of the people registered onto the system, we need to c
 
   ![Image](./images/table7.png)
 
-  - Toggle the switch to go back to live mode  
+  - Toggle the switch to go back to live mode
   - Since our `table-view` has not been published and is still on `Draft` mode, it is **important** to toggle the `form versioning` from `Live` to `Latest` to be able to view the form since it has not been published. Read more on form versioning [here](#form-versioning).
 
   ![Image](./images/table8.png)
@@ -188,7 +193,7 @@ For Custom Validations, please see the How-To guide [Adding custom validations](
 ### Disabling Dates before year 2000
 
 1. In the spirit of discriminating against people born before 1990 :), we will be disabling dates before then. On the `Datetime` component, navigate to the `Disabled Date Mode` > `Custom function`.
-2. On the `Disabled Date func` code editor, copy the code and paste inside the given isDateDisabled function to execute the following JavaScript expression. 
+2. On the `Disabled Date func` code editor, copy the code and paste inside the given isDateDisabled function to execute the following JavaScript expression.
 
    ```javascript
    // disabling before year 1900
