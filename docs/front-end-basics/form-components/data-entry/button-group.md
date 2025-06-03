@@ -1,11 +1,14 @@
-# Button
+# Button Group
 
-The Button component provides an interactive element to trigger actions in your forms. This could be submitting data, opening modals, or executing scripts. It supports a range of styling options, icons, and visibility rules to align with your design and user workflows.
+The Button Group component offers a flexible way to present a set of action buttons in a single row or column layout. With options for layout orientation, spacing, and complete styling control, it’s ideal for organizing grouped actions in a visually consistent manner.
 
-![Image](../data-entry/images/button1.png)
+![Image](../data-entry/images/buttongroup1.png)
+
+![Image](../data-entry/images/buttongroup2.png)
 
 
-[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=4d5f3201-2ba4-4a19-b3de-08153124ea65" title="button Component" ></iframe>'
+[//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=4d5f3201-2ba4-4a19-b3de-08153124ea65" title="button group Component" ></iframe>'
+
 
 ## Properties
 
@@ -13,16 +16,7 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 #### **Component Name** `string`  
-Unique name for this button instance. *(Required)*
-
-#### **Caption** `string`  
-Text displayed on the button.
-
-#### **Tooltip** `string`  
-Text shown on hover to provide additional context.
-
-#### **Icon** `object`  
-An optional icon to be displayed on the button.
+A unique identifier for the button group. *(Required)*
 
 #### **Edit Mode**  ``object``
 
@@ -32,24 +26,30 @@ Set the component’s interaction behavior:
 
 - **Editable**: Users can set and change their button.
 
-- **Read Only**: Users can view the button but cannot change it.
+- **Read Only**: Users can view the button group but cannot change it.
+
+#### **Hide** `boolean`  
+Controls whether the button group is shown or hidden.
+
+
+#### **Configure Button Group** `object`  
+
+![Image](../data-entry/images/buttongroup3.png)
+
+Configure button groups and items using a visual builder. Optionally supports expression logic for visibility or customization.
+
+#### **Is Button Inline** `boolean`  
+Displays buttons as inline-flex elements to keep them aligned in a single line.
 
 ___
 
 ### Appearance
 
-#### **Type** `object`  
-Predefined button style:
-- **Default** *(default)*
-- **Primary**
-- **Dashed**
-- **Link**
-- **Text**
-- **Ghost**
-
-#### **Font** ``object`` 
-
-Customize how your buttons look. Choose the font family, size, weight, and color.
+#### **Gap** `object`  
+Spacing between buttons:
+- Small
+- Medium
+- Large
 
 #### **Dimensions** ``object`` 
 
@@ -89,5 +89,3 @@ Fine-tune spacing inside and around the component.
 ####  **Custom Styles** ``function``
 
 Inject your own CSS styles via JavaScript (must return a style object).
-
-
