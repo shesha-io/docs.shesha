@@ -1,6 +1,5 @@
 ---
 sidebar_label: User Management
-draft: true
 ---
 
 # User Administration
