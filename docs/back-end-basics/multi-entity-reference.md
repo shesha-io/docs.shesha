@@ -1,6 +1,6 @@
 # Multi Entity Reference (Many-to-Many Reference)
 
-Multi Entity Reference allows an entity to maintain references to multiple related entities simultaneously, as opposed to a single entity reference. Currently, this implementation is supported on both [AutoComplete](../front-end-basics/form-components/Advanced/autocomplete.md) and [Entity Picker](../front-end-basics/form-components/data-entry/entity-picker.md).
+Multi Entity Reference allows an entity to maintain references to multiple related entities simultaneously, as opposed to a single entity reference. Currently, this implementation is supported on both [AutoComplete](../front-end-basics/form-components/Advanced/autocomplete.md) and [Entity Picker](../front-end-basics/form-components/Entity-References/entity-picker.md).
 
 ### When to use this Feature?
 

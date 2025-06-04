@@ -27,7 +27,7 @@ ___
 
 #### **Font** ``object`` 
 
-Customize how your text-field labels look. Choose the font family, size, weight, and color.
+Customize how your table pager looks. Choose the font family, size, weight, and color.
 
 
 #### **Margin & Padding** ``object``
