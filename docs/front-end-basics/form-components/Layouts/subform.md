@@ -1,5 +1,8 @@
 # Subform
 
+
+import LayoutBanners from './LayoutBanners';
+
 The subform is a component used for displaying nested forms. It is a reusable section or module that contains a specific set of functionalities, fields, or elements. It allows you to encapsulate a group of related elements or controls within a form or a larger application, making it easier to manage and reuse across different parts of your project.
 
 It operates much like a template or a mini-form within the larger application. Instead of recreating the same layout or set of functionalities multiple times, you can create a subform once and then use it multiple times within the main form or across various forms in your application.
@@ -7,6 +10,10 @@ It operates much like a template or a mini-form within the larger application. I
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=7c2aa336-4e33-43ab-b6d1-4cb829821ea5" title="Sub Form Component" ></iframe>'
 
 ![Image](../Layouts/images/subform1.png)
+
+## **Get Started**
+
+<LayoutBanners url="https://app.guideflow.com/embed/8ko1g14i5r" type={1}/>
 
 ## Properties
 
