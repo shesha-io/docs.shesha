@@ -35,13 +35,13 @@ Guid[] ICurrentUser.GetRoleScope(string roleName); // Returns a list of IDs for 
 
 ### Standard Permissions
 - User
- - `User-View` - Allows viewing user profiles.
- - `User-Create` - Allows creating new users.
- - `User-Update` - Allows updating user profiles.
- - `User-Delete` - Allows deleting users.
- - `User-ResetPassword` - Allows resetting user passwords.
- - `User-Suspend` - Allows suspending user accounts.
- - `User-AssignRoles` - Allows assigning roles to users.
+  - `User-View` - Allows viewing user profiles.
+  - `User-Create` - Allows creating new users.
+  - `User-Update` - Allows updating user profiles.
+  - `User-Delete` - Allows deleting users.
+  - `User-ResetPassword` - Allows resetting user passwords.
+  - `User-Suspend` - Allows suspending user accounts.
+  - `User-AssignRoles` - Allows assigning roles to users.
 - Account
  - `Account-View` - Allows viewing account details.
  - `Account-Create` - Allows creating new accounts.
@@ -113,7 +113,9 @@ The [user management interface](/docs/for-administrators/user-management) allows
 ### Creating Roles
 New roles can be created to meet specific organizational needs entirely through the Configuration Studio where new roles can be created, existing ones can be modified, or deleted as necessary.
 
+::: tip Missing GuideFlow
 <!-- TODO: Include GuideFlow that shows how to create and manage roles in the Configuration Studio -->
+:::
 
 ### Entity Scoped Roles
 Entity Scoped Roles extend traditional roles by introducing a scope tied to a specific entity, enabling more granular control over user permissions. When assigning a scoped role to a user, the scope is defined by a particular entity, limiting the permissions granted to the user within that context. For example:
