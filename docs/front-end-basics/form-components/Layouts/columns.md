@@ -1,5 +1,7 @@
 # Columns
 
+import LayoutBanners from './LayoutBanners';
+
 The Columns component is a flexible layout tool that allows you to organize content side-by-side using a column-based grid structure. It's perfect for designing responsive and structured forms by splitting sections into multiple columns with individually configurable widths, minimums, and maximums.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=747834b4-9ef8-4088-a951-e976776b19ec" title="Columns Component" ></iframe>'
@@ -7,6 +9,10 @@ The Columns component is a flexible layout tool that allows you to organize cont
 ![Image](../Layouts/images/columns1.png)
 
 ![Image](../Layouts/images/columns3.png)
+
+## **Get Started**
+
+<LayoutBanners url="https://app.guideflow.com/embed/gky90d2hdp" type={1}/>
 
 ## **Properties**
 
