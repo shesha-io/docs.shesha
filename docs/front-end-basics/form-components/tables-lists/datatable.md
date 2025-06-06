@@ -23,6 +23,31 @@ ___
 
 Configure columns using a visual builder. Optionally supports expression logic for visibility or customization.
 
+- **Type** ``string`` – Defines the column type: 
+    - Data *(default)*
+    - Action 
+    - CRUD operations 
+    - Form
+- **Property Name** ``string`` – The underlying field name from the data source.
+
+- **Tooltip** ``string`` – Hover text shown in the column header.
+
+- **Caption** ``string`` – Additional label or subtitle shown under the main title.
+
+- **Anchored** string – Determines if the column is pinned during horizontal scroll:
+    - Left
+
+    - Right
+
+- **Is Visible** ``boolean`` – Determines if the column should be displayed.
+
+- **Display Component** ``string`` – Component used to render the value in view mode.
+
+- **Edit Component** ``string`` – Component used when editing data inline.
+
+- **Create Component** ``string`` – Component used for data entry in create forms.
+
+
 #### **Use Multi-select** `boolean`  
 Enables checkbox selection of multiple rows.
 
