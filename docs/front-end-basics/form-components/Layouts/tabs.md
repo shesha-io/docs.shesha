@@ -38,6 +38,24 @@ ___
 ![Image](../images/tabs2.png)
 
  The user can use the configure tabs option to add the tabs that they want to have.
+ An array of tab configuration objects. Each tab supports:
+ - **Name** ``string`` – Internal identifier used to reference the tab.
+ - **Title** ``string`` – Text displayed on the tab label.
+ - **Key** ``string`` – Unique key for the tab.
+ - **Class Name** ``string`` – Optional CSS class applied to the tab.
+ - **Animated** ``boolean`` – Enables animation transitions when switching tabs.
+ - **Icon** ``object`` – Optional icon shown beside the title.
+ - **Force Render** ``boolean`` – Forces rendering of tab content even when inactive.
+ - **Hide** ``boolean`` – Conditionally hides this specific tab.
+ - **Edit Mode** ``object`` – Defines whether tab content is editable:
+    - Editable
+    - Read Only
+    - Inherited *(default)*
+ - **Select Mode** ``object`` – Tab selection behavior:
+    - Selectable *(default)*
+    - Disabled
+    - Inherited from Edit Mode
+ - **Destroy Inactive Tab Pane** ``boolean`` – Whether to remove DOM of inactive tabs.
 
 #### **Hide** ``boolean``
 
