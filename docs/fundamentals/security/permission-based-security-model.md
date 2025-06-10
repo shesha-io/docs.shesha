@@ -1,11 +1,12 @@
 ---
+position: 10
 sidebar_label: Permission Based Security Model
 title: Permission Based Security Model
 ---
 
 Shesha adopts a permission-based model, which means users can only perform restricted actions if they've been granted that specific permission. Think of it like having different keys for different doors in a building - you can only enter the rooms you're authorized to access.
 
-This article assumes you have configured your Shesha project so that it’s up and running. If you haven’t, no worries, you can easily set up your project [here](../get-started/tutorial/the-basics/setting-up/).
+This article assumes you have configured your Shesha project so that it’s up and running. If you haven’t, no worries, you can easily set up your project [here](/docs/get-started/tutorial/the-basics/setting-up/).
 
 First, from the homepage, navigate to the **Permissions Configurator** by clicking on the **Permissions** Button. 
 
@@ -77,10 +78,10 @@ And that’s it 🥳 We've boosted your application's security by adding an exci
 
 *PS: Assigning permissions also applies to various form components that exist within a form*.
 
-This how-to equipped you to harness Shesha's powerful Authentication and authorization capabilities to make your application more secure. But Shesha offers so much more! Head over to the [docs](../get-started/Introduction/) to see all the cool things you can do firsthand — and the best part? You'll achieve more while writing less code!
+This how-to equipped you to harness Shesha's powerful Authentication and authorization capabilities to make your application more secure. But Shesha offers so much more! Head over to the [docs](/docs/get-started/Introduction) to see all the cool things you can do firsthand — and the best part? You'll achieve more while writing less code!
 
 Happing (low) Coding.
 
 ### See Also:
 
--[Copy Form](copy-form)
+-[Copy Form](/docs/how-to-guides/copy-form)

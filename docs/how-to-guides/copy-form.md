@@ -49,8 +49,5 @@ If you’d like to see your new copied form in the List of Forms, simply navigat
 
 ![Image](./images/copy-form-pictures/copyform9.png)
 
-This guide has shown you how to leverage Shesha's awesome Copy Form feature to enhance your productivity while working with forms. But there's so much more to discover! Check out the [documentation](../get-started/Introduction/).
+This guide has shown you how to leverage Shesha's awesome Copy Form feature to enhance your productivity while working with forms. But there's so much more to discover! Check out the [documentation](/docs/get-started/Introduction).
 
-### See Also:
-
--[Permission based security model](permission-based-security-model)

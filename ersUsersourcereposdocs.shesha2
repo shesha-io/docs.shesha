@@ -1,0 +1,162 @@
+[33mcommit 4f8d61acc3c6a0c8caa3c62bdbb1ae7d1bb8f335[m
+Author: Jacob-Polane <159529443+Jacob-Polane@users.noreply.github.com>
+Date:   Sun Sep 15 21:17:06 2024 +0200
+
+    Update audit-logging.md
+
+[1mdiff --git a/docs/manage-apps-and-users/audit-logging.md b/docs/manage-apps-and-users/audit-logging.md[m
+[1mindex 299a4a0..9051d16 100644[m
+[1m--- a/docs/manage-apps-and-users/audit-logging.md[m
+[1m+++ b/docs/manage-apps-and-users/audit-logging.md[m
+[36m@@ -17,7 +17,7 @@[m [mAllow to show Audit trail for specific object in the DataTable control.[m
+     - **User** – full name of user who made changes or triggered an event[m
+     - **Date** – date of event[m
+ [m
+[31m-## EventHistory Configuration for anynomous users (e.g. background Job)[m
+[32m+[m[32m## EventHistory Configuration for anonymous users (e.g. background Job)[m
+ [m
+ Add the following code snippet in the sheshaWebHostModule.cs file in the `Shesha.Web.Host` module in the Startup folder.[m
+ [m
+
+[33mcommit 3ca6fdd05d781126fe83c26ec4c9bd9533c16d9a[m
+Author: Jacob-Polane <159529443+Jacob-Polane@users.noreply.github.com>
+Date:   Sun Sep 15 21:14:49 2024 +0200
+
+    chore : update audit-logging eventhistory configuration
+    
+    added event history configuration for anonymous users
+
+[1mdiff --git a/docs/manage-apps-and-users/audit-logging.md b/docs/manage-apps-and-users/audit-logging.md[m
+[1mindex 77139f6..299a4a0 100644[m
+[1m--- a/docs/manage-apps-and-users/audit-logging.md[m
+[1m+++ b/docs/manage-apps-and-users/audit-logging.md[m
+[36m@@ -17,6 +17,17 @@[m [mAllow to show Audit trail for specific object in the DataTable control.[m
+     - **User** – full name of user who made changes or triggered an event[m
+     - **Date** – date of event[m
+ [m
+[32m+[m[32m## EventHistory Configuration for anynomous users (e.g. background Job)[m
+[32m+[m
+[32m+[m[32mAdd the following code snippet in the sheshaWebHostModule.cs file in the `Shesha.Web.Host` module in the Startup folder.[m
+[32m+[m
+[32m+[m[32m```cs[m
+[32m+[m[32mpublic override void PostInitialize()[m
+[32m+[m[32m{[m
+[32m+[m	[32mConfiguration.EntityHistory.IsEnabledForAnonymousUsers = true;[m
+[32m+[m[32m}[m
+[32m+[m[32m```[m
+[32m+[m
+ ## Audit custom events[m
+ [m
+ Allow to add any custom event to audit trail of entity[m
+
+[33mcommit 4e83b0e4926a6cd82ca74a4cc10d9f02be3504f6[m
+Author: Bamiji Oyetubo <60369677+bigboybamo@users.noreply.github.com>
+Date:   Sat Aug 17 18:12:54 2024 +0100
+
+    Edited Audit-logging and Permissions
+
+[1mdiff --git a/docs/manage-apps-and-users/audit-logging.md b/docs/manage-apps-and-users/audit-logging.md[m
+[1mindex 3524a05..77139f6 100644[m
+[1m--- a/docs/manage-apps-and-users/audit-logging.md[m
+[1m+++ b/docs/manage-apps-and-users/audit-logging.md[m
+[36m@@ -164,9 +164,9 @@[m [mpublic class DisplayChildAuditTrailAttribute : Attribute[m
+ }[m
+ ```[m
+ [m
+[31m-**'AuditedFields'** - an array of the child entity field names to be displayed. If this array is provided then the action types that should be shown in the audit have to be added - `Created`, `Updated` or `Deleted`.[m
+[32m+[m[32m**AuditedFields** - an array of the child entity field names to be displayed. If this array is provided then the action types that should be shown in the audit have to be added - `Created`, `Updated` or `Deleted`.[m
+ [m
+[31m-Example[m
+[32m+[m[32mExample:[m
+ [m
+ ```cs[m
+ [DisplayChildAuditTrail][m
+
+[33mcommit 3bd3fe46d75df8498708bda836998994d4495c46[m
+Author: Robert Marshall <Robert.Marshall@Boxfusion.io>
+Date:   Mon Aug 5 15:43:18 2024 +0200
+
+    [fix] change 'Shesha 3' references to just be 'Shesha'
+
+[1mdiff --git a/docs/manage-apps-and-users/audit-logging.md b/docs/manage-apps-and-users/audit-logging.md[m
+[1mindex c4aa54a..3524a05 100644[m
+[1m--- a/docs/manage-apps-and-users/audit-logging.md[m
+[1m+++ b/docs/manage-apps-and-users/audit-logging.md[m
+[36m@@ -1,6 +1,6 @@[m
+ # Audit Logging[m
+ [m
+[31m-Shesha 3 Entity History framework is based on Abp.EntityHistory (https://aspnetboilerplate.com/Pages/Documents/Entity-History)[m
+[32m+[m[32mShesha Entity History framework is based on Abp.EntityHistory (https://aspnetboilerplate.com/Pages/Documents/Entity-History)[m
+ [m
+ In addition, were added some Shesha specific features.[m
+ [m
+
+[33mcommit 9aad93216e642641146bf59084a288479d9ba044[m
+Author: Bamiji Oyetubo <60369677+bigboybamo@users.noreply.github.com>
+Date:   Sat Jul 20 11:40:43 2024 +0100
+
+    No45 -67
+
+[1mdiff --git a/docs/manage-apps-and-users/audit-logging.md b/docs/manage-apps-and-users/audit-logging.md[m
+[1mindex 7d99807..c4aa54a 100644[m
+[1m--- a/docs/manage-apps-and-users/audit-logging.md[m
+[1m+++ b/docs/manage-apps-and-users/audit-logging.md[m
+[36m@@ -144,11 +144,11 @@[m [mpublic virtual RefListSchoolInformationStatus? SchoolInformationStatus { get; se[m
+ ```[m
+ [m
+ This change will be shown in the audit trail as:[m
+[31m-`School information status changed: Not submitted` instead of `"SchoolInformationStatus" was changed from "" to "Draft"`[m
+[32m+[m[32m**`School information status changed: Not submitted`** instead of **`"SchoolInformationStatus" was changed from "" to "Draft"`**[m
+ or[m
+[31m-`School information status changed: Submitted for verification` instead of `"SchoolInformationStatus" was changed from "Draft" to "Submitted"`[m
+[32m+[m[32m**`School information status changed: Submitted for verification`** instead of **`"SchoolInformationStatus" was changed from "Draft" to "Submitted"`**[m
+ or[m
+[31m-`School information status changed: Submitted as final` instead of `"SchoolInformationStatus" was changed from "Submitted" to "Approved"`[m
+[32m+[m[32m**`School information status changed: Submitted as final`** instead of **`"SchoolInformationStatus" was changed from "Submitted" to "Approved"`**[m
+ [m
+ ## Audit trail of related or child entities[m
+ [m
+[36m@@ -313,24 +313,24 @@[m [mShow events from related `Role` entities as `Role Appointment` changes. `ShaRole[m
+ [m
+ ```cs[m
+ [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)][m
+[31m-public class DisplayManyToOneAuditTrailAttribute : Attribute[m
+[31m-{[m
+[31m-	public Type ManyToOneEntityType { get; set; }[m
+[32m+[m[32m public class DisplayManyToOneAuditTrailAttribute : Attribute[m
+[32m+[m[32m {[m
+[32m+[m[32m     public Type ManyToOneEntityType { get; set; }[m
+ [m
+[31m-	public string DisplayName { get; set; }[m
+[32m+[m[32m     public string DisplayName { get; set; }[m
+ [m
+[31m-	public string RelatedEntityField { get; set; }[m
+[32m+[m[32m     public string RelatedEntityField { get; set; }[m
+ [m
+[31m-	public string NameField { get; set; }[m
+[32m+[m[32m     public string NameField { get; set; }[m
+ [m
+[31m-    public string[] AuditedFields { get; set; }[m
+[32m+[m[32m     public string[] AuditedFields { get; set; }[m
+ [m
+[31m-	public DisplayManyToOneAuditTrailAttribute(Type manyToOneEntityType)[m
+[31m-    {[m
+[31m-    	ManyToOneEntityType = manyToOneEntityType;[m
+[31m-        DisplayName = manyToOneEntityType.Name.ToFriendlyName();[m
+[31m-    }[m
+[31m-}[m
+[32m+[m[32m     public DisplayManyToOneAuditTrailAttribute(Type manyToOneEntityType)[m
+[32m+[m[32m     {[m
+[32m+[m[32m         ManyToOneEntityType = manyToOneEntityType;[m
+[32m+[m[32m         DisplayName = manyToOneEntityType.Name.ToFriendlyName();[m
+[32m+[m[32m     }[m
+[32m+[m[32m }[m
+ ```[m
+ [m
+ **`ManyToOneEntityType`** - type of related entities[m
+[36m@@ -439,7 +439,7 @@[m [mExample:[m
+ [m
+ Unlock all locked users - set IsLocked to false for all users with IsLocked with true.[m
+ [m
+[31m-With property changes data. It will be displayed as a property change in the Audtit trail (Like `User updated` event type with description `'IsLocked' was changed from 'true' to 'false'` or `User updated` event type with description `User unlocked`)[m
+[32m+[m[32mWith property changes data. It will be displayed as a property change in the Audit trail (Like `User updated` event type with description `'IsLocked' was changed from 'true' to 'false'` or `User updated` event typ

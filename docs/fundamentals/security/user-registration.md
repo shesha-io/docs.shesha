@@ -1,12 +1,27 @@
 ---
 sidebar_label: User Registration
+draft: false
+title: User Registration
 ---
-
 # User Registration
 
 This system provides a flexible way for users to create accounts on your platform. Think of it as a `customizable welcome desk` where you can choose exactly how you want your users to sign up. You can let them register using their email, phone number, and in the future, even their existing accounts from services like Google or Facebook.
 
 The system is designed to be user-friendly while maintaining security. You can choose what information to collect from users and customize the registration process to match your needs. For example, you might want to collect just basic information like name and email, or you might need additional details specific to your organization.
+
+:::caution Rework Required
+TODO: Need to be updated to more clearly indicate how to configurate the user registration process. Possible updates include:
+- Explain that there are two main methods for user registration:
+  - **Self-registration**: Users can create their own accounts. Optional.
+  - **Admin registration**: Administrators create accounts for users. Reference /docs/for-administrators/user-management.md
+- Intro needs to be reworked to provide a clearer overview of the user registration process and customisation options available:
+  - Remove self-registration option
+  - Customising the registration form
+- Mermaid diagram is overly complex and can be removed
+- Screenshot of the registration settings
+- How to update the registration form
+- Registration of custom Person entity
+:::
 
 ## Key Features
 

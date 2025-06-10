@@ -1,6 +1,7 @@
 ---
 sidebar_label: Audit Logging
-draft: true
+position: 1
+title: Audit Logging
 ---
 
 # Audit Logging

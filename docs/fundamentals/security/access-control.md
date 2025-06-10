@@ -1,91 +1,12 @@
 ---
-sidebar_label: Scoped Role-Based Access Control
+sidebar_label: Access Control
+position: 2
+title: Authorization and Access Control
 ---
 
-# NEW REQUIREMENTS
+# Authorization and Access Control
 
-- Need to decide whether User vs Person
-- We should remove the dependency on ABP for management of security including users and permissions.
-- We should of course take the elements that make sense including:
-  - `IAbpSession` to get the current user ID
-  - `IPermissionChecker` to check for permissions
-
-Based on the examples above we need the following:
-### ICurrentUser
-# NOTE:!!!!! Previous code indicates how you would implement this currently. However, it would be preferrable to simplify this in future by exposing the `ICurrentUser` interface similar to ABP.io. However, in our implementation we have extended it to support: Person, Permission checking (in ABP.io this is done via the PermissionChecker), Scoped roles and permissions:
-
-## TODO: Need to decide if make moduleName mandatory when checking permissions:
-- Option 1: Make optional - Would simplify logic especially for beginners who would most likely have single module solutions; In cases where same permission name is defined in multiple modules, return true if user has permission from any of the modules
-- Option 2: Make mandatory
-- Option 3: Allow specifying moduleName as part of the permission name, e.g. `PermissionName@ModuleName`
-
-```
-bool ICurrentUser.IsInRole(string moduleName, string roleName); // Returns true if the current user is in the specified role for the given module.
-bool ICurrentUser.IsInRole("RoleName"), Guid id); // Returns true if the current user is in the specified role for the entity with the given ID.
-bool ICurrentUser.HasPermission("PermissionName")
-bool ICurrentUser.HasPermission("PermissionName", Guid id); // Returns true if the current user has the specified permission for the entity with the given ID.
-Guid[] ICurrentUser.GetPermissionScope(string permissionName); // Returns a list of IDs for entities that the current user has access to based on the specified scoped permission.
-Guid[] ICurrentUser.GetRoleScope(string roleName); // Returns a list of IDs for entities that the current user has access to based on the specified scoped role.
-```
-
-### Standard Roles
-- `User` - Basic role for most users, providing access to standard application features such as viewing and updating business data as well as viewing and updating their own profile information.
-- `Administrator` - Provides access to administrative functions, including user management, role assignment, viewing of audit trails, and managing basic system settings.
-- `Configurator` - Provides access to the Configuration Studio allowing the user to configure the system, including creating and managing forms, lists, and other configuration settings.
-
-### Standard Permissions
-- User
-  - `User-View` - Allows viewing user profiles.
-  - `User-Create` - Allows creating new users.
-  - `User-Update` - Allows updating user profiles.
-  - `User-Delete` - Allows deleting users.
-  - `User-ResetPassword` - Allows resetting user passwords.
-  - `User-Suspend` - Allows suspending user accounts.
-  - `User-AssignRoles` - Allows assigning roles to users.
-- Account
- - `Account-View` - Allows viewing account details.
- - `Account-Create` - Allows creating new accounts.
- - `Account-Update` - Allows updating account information.
- - `Account-Delete` - Allows deleting accounts.
-- Person
- - `Person-View` - Allows viewing person details.
- - `Person-Create` - Allows creating new persons.
- - `Person-Update` - Allows updating person information.
- - `Person-Delete` - Allows deleting persons.
-
-### Required RoleTypeConfig coonfigurations
-The following RoleTypeConfig configurations should be defined in the system along with associated form configurations:
-- `Organization-scoped`
-- `Account-scoped`
-
-### API Authorization
-- Support for `[ShaAuthorize(string[] permissions)]` attribute to enforce role-based access control on methods and classes. (As a substitute to existing `[AbpAuthorize(string[] permissions)]` attribute)
-  - Needs to be able to support specifying module name as well
-
-### Restricting Who Can Assign Roles
-- By default, only users with the `User-AssignRoles` role can assign any role to other users.
-- It should be able to restrict this further by specifying this on the RoleTypeConfig:
-  - RequiredPermissionForAssignment - If specified, only users with this permission can assign the role to other users
-
----
----
-Clean-up:
-- docs\manage-apps-and-users\permisson-based-model.md
-- docs\manage-apps-and-users\user-management.md
-- docs\how-to-guides\permission-based-security-model.md
-- docs\fundamentals\user-registration.md
-- docs\fundamentals\roles-and-permissions.md
----
----
-# Overview of Security In Shesha
-Security in Shesha is a cornerstone of its architecture, ensuring that systems built on the platform are robust, reliable, and protected against unauthorized access. This documentation provides a comprehensive overview of Shesha's security framework, covering essential topics such as authentication, access control, role-based permissions, scoped RBAC, and data-level security. By understanding these concepts, developers and administrators can effectively implement security policies that safeguard sensitive information and enforce organizational rules.
-- Authentication - Explains how Shesha handles user authentication, including login mechanisms and session management.
-- Authorization and Access Control - Details the role-based access control (RBAC) model, including how roles and permissions are defined, assigned, and enforced.
-- Security-Related Classes and Interfaces - Describes the key classes and interfaces that form the foundation of Shesha's security framework, including `ICurrentUser`, `IPermissionChecker`, and `IAbpSession`.
-
-# Access Control
 Access control is a fundamental aspect of system security, ensuring that users can only access resources and perform actions they are authorized for. In the context of Shesha, access control is implemented through a combination of Role-Based Access Control (RBAC) and Scoped RBAC. These mechanisms allow administrators to define roles, assign permissions, and enforce security policies based on user roles and their associated scopes.
-
 
 ## Core Concepts
 Shesha's access control framework is built around a few key concepts that form the foundation of how users, roles, and permissions interact. Understanding these concepts is essential for effective access control management:
@@ -113,8 +34,8 @@ The [user management interface](/docs/for-administrators/user-management) allows
 ### Creating Roles
 New roles can be created to meet specific organizational needs entirely through the Configuration Studio where new roles can be created, existing ones can be modified, or deleted as necessary.
 
-::: tip Missing GuideFlow
-<!-- TODO: Include GuideFlow that shows how to create and manage roles in the Configuration Studio -->
+:::info Missing GuideFlow
+TODO: Include GuideFlow that shows how to create and manage roles in the Configuration Studio
 :::
 
 ### Entity Scoped Roles
@@ -128,7 +49,9 @@ By default, Shesha comes with 'Organization Specific' and 'Account Specific' rol
 
 New Role Types can also be configured to scope roles by any other type of entity. Additionally, they allow you to specify and configure the form and validations to apply on assignment of any role of that type. You can create new Role Types through the Configuration Studio, as demonstrated below.
 
-<!-- TODO: Insert Guideflow showing process of creating a new Role Type configuration -->
+:::info Missing GuideFlow
+TODO: Insert Guideflow showing process of creating a new Role Type configuration
+:::
 
 
 ## Permissions
@@ -139,7 +62,9 @@ A Permission can be assigned to one or more Roles, which are in turn assigned to
 ### Creating Permissions
 To create a new permission, follow these steps:
 
-<!-- TODO: Include GuideFlow that shows how to create and manage permissions in the Configuration Studio -->
+:::info Missing GuideFlow
+TODO: Include GuideFlow that shows how to create and manage permissions in the Configuration Studio
+:::
 
 Once a permission is created, it must be integrated into the application's behavior. This involves configuring the application to validate the permission before granting access to specific data or actions. By doing so, the application ensures that only users with the appropriate permissions can perform certain operations, thereby maintaining security and compliance.
 
@@ -197,21 +122,29 @@ Hiding UI elements does not prevent users from accessing the underlying function
 
 ### Restricting Access to Forms
 To restrict access to specific forms based on user permissions, you can configure the security settings of the form in the Configuration Studio. This allows you to specify which permissions are required for a user to access a particular form.
-<!-- TODO: Include GuideFlow that shows how to configure permissions required to access the forms -->
+:::info Missing GuideFlow
+TODO: Include GuideFlow that shows how to configure permissions required to access the forms
+:::
 
 ### Show/Hide Menu Items Based on Permissions
 To restrict access to certain views from the main menu based on the user's permissions, you can configure the visibility of menu items in the Configuration Studio. This allows you to specify which permissions are required for a user to access a particular view.
-<!-- TODO: Include GuideFlow that shows how to configure menu item visibility based on permissions -->
+:::info Missing GuideFlow
+TODO: Include GuideFlow that shows how to configure menu item visibility based on permissions
+:::
 
 ### Hide/Disable Form Components Based on Permissions
 To restrict the visibility of or access to form components based on a user's permissions you can configure the security settings of the component directly in the Configuration Studio.
-<!-- TODO: Include GuideFlow that shows how to configure IsVisible and IsEditable security settings (not currently implemented) -->
+:::info Missing GuideFlow
+TODO: Include GuideFlow that shows how to configure IsVisible and IsEditable security settings (not currently implemented)
+:::
 
 ### Complex Scenarios with Business Logic
 In some cases, you may need to implement custom visibility logic for UI components based on more complex conditions. For example, you might want to show a button only if the user has a specific permission and is assigned to a work order.
 To achieve this, you can use a `Js` configuration on the Hidden property of the component and implement the logic in JavaScript as illustrated below. 
 
-<!-- TODO: The snippet below is based on the existing 'getHidden' method. Moving forward we want to replace this with IsVisible. Snippet should be updated accordingly when the change has been made -->
+:::note Future Update
+TODO: The snippet below is based on the existing 'getHidden' method. Moving forward we want to replace this with IsVisible. Snippet should be updated accordingly when the change has been made
+:::
 ```javascript
 const getHidden = () => {
     return (() => {
@@ -235,7 +168,9 @@ If a user attempts to access an API endpoint without the required permissions, t
 ### Securing APIs through Configuration
 Shesha allows you to limit access to APIs based on user permissions through the Configuration Studio. This is done by specifying which permissions are required to access a particular API endpoint.
 
-<!-- TODO: Include GuideFlow that show how to configure API security in the configuration environment -->
+:::info Missing GuideFlow
+TODO: Include GuideFlow that show how to configure API security in the configuration environment
+:::
 
 ### Securing APIs with Attributes
 To secure APIs programmatically, you can use the `[ShaAuthorize]` attribute in your AppService methods. This attribute allows you to specify which permissions are required for a user to access the method.
@@ -286,7 +221,7 @@ public class WorkOrderAppService : SheshaAppServiceBase<WorkOrder>
 ```
 
 ## Data-Level Access Control
-To enforce security at the data level, you can use **[global specifications](specifications.md)** to restrict visibility of data based on user permissions. This ensures that users can only access data that they are authorized to view, based on their roles and permissions.
+To enforce security at the data level, you can use **[global specifications](/docs/fundamentals/specifications)** to restrict visibility of data based on user permissions. This ensures that users can only access data that they are authorized to view, based on their roles and permissions.
 
 :::warning Global Specifications may be bypassed
 Global specifications are automatically applied when retrieving data using the `GetAll()` method on repositories, making them a convenient way to enforce security from a **centralized point**. However, specifications **do not apply** to data accessed through alternative methods, such as direct SQL queries or custom repository methods. Therefore, it is important to ensure that all data access points are properly secured.
@@ -356,7 +291,9 @@ public class TicketPermissionsSpecification : ShaSpecification<SupportTicket>
 }
 ```
 
-<!-- TODO: Remove previous code snippet once security framework has been updated and ICurrentUser is available -->
+:::caution To Be Removed
+TODO: Remove previous code snippet once security framework has been updated and ICurrentUser is available
+:::
 >**NOTE:** Previous code snippet shows how you would have to implement. Moving forward we need to simplify this by exposing a `ICurrentUser` interface similar to ABP.io. However, in our implementation we can extend it further to provide access to: Person, Permission checking (in ABP.io this is done via the PermissionChecker) and Scoped roles.
 ```csharp
 [Description("Specification to limit visibility of Tickets based on the current user's permissions.")]
@@ -399,7 +336,9 @@ In many systems, roles are not just global but can be scoped to specific entitie
 Shesha provides built-in support for handling such scenarios efficiently.
 
 The screenshot below, for example, illustrates the assignment of a role to a user scoped by a particular region.
-<!-- TODO: Insert screenshots assigning a role scoped to a Region/Site -->
+:::info Missing Screenshot
+TODO: Insert screenshots assigning a role scoped to a Region/Site
+:::
 
 
 Here’s an example of roles in a CRM system:
@@ -440,79 +379,3 @@ public class AccountPermissionsSpecification : ShaSpecification<SupportTicket>
     }
 }
 ```
-
-# Security Related Classes and Interfaces
-
-Shesha's security framework includes several key classes and interfaces that work together to provide a robust security model. These components are designed to manage user roles, permissions, and access control effectively.
-
-## RoleManager
-The `RoleManager` is a key component in Shesha's security framework, responsible for managing roles and permissions. It provides methods to create, update, delete, and assign roles to users, as well as to check if a user has a specific role or permission.
-The `RoleManager` is typically used in conjunction with the `ICurrentUser` interface to enforce security policies and ensure that users can only perform actions they are authorized for.
-
-### Assigning Roles Programmatically
-To assign roles programmatically, you can use the following example code. This code demonstrates how to assign a scoped role to a user and link it with specific permissions.
-
-```csharp
-public async Task AssignScopedRoleAsync(Guid userId, string roleName, string scope)
-{
-    var user = await _userRepository.GetAsync(userId);
-    if (user == null)
-        throw new Exception("User not found");
-
-    var scopedRole = new ScopedRole
-    {
-        RoleName = roleName,
-        Scope = scope
-    };
-
-    await _scopedRoleRepository.InsertAsync(scopedRole);
-}
-```
-
-<!-- TODO: Expand with additional examples of RoleManager methods and usage -->
-
-## UserManager
-The `UserManager` is responsible for managing user accounts, including creating, updating, and deleting users. It also handles user authentication and authorization, ensuring that users can only access resources they are permitted to.
-The `UserManager` works closely with the `RoleManager` to assign roles to users and check their permissions. It provides methods to retrieve user information, such as roles and permissions, and to validate user credentials during login.
-
-<!-- TODO: Expand with examples of UserManager methods and usage -->
-
-## ICurrentUser
-The `ICurrentUser` interface is designed to provide access to the current user's information, including their roles and permissions. It allows you to check if the user is in a specific role or has a specific permission, and it can also provide scoped roles and permissions based on the context of the user's actions.
-
-### Checking User Roles
-
-```csharp
-public async Task<bool> IsInRoleAsync(Guid userId, string roleName, string scope)
-{
-    var userRoles = await _scopedRoleRepository.GetUserRolesAsync(userId);
-    return userRoles.Any(r => r.RoleName == roleName && r.Scope == scope);
-}
-```
-
-### Checking User Permissions
-```csharp
-public async Task<bool> HasPermissionAsync(Guid userId, string permissionName)
-{
-    var userPermissions = await _scopedRoleRepository.GetUserPermissionsAsync(userId);
-    return userPermissions.Any(p => p.Name == permissionName);
-}
-```
-
-
----
-# Authentication
-Shesha's authentication framework is designed to provide a secure and flexible way to manage user authentication. It supports various authentication methods, including username/password, social logins, and external identity providers.
-
-### Authentication Settings
-The authentication settings can be configured in the application configuration files, allowing you to specify the authentication method, security policies, and other related settings. This includes options for password complexity, session timeouts, and multi-factor authentication.
-
-<!-- TODO: Include GuideFlow navigating the user to the authentication settings page -->
-
-
-### Custom Authentication Providers
-The framework allows you to implement custom authentication mechanisms tailored to your application's needs. This section provides an overview of how to implement custom authentication in Shesha.
-
-<!-- TODO: Expand with high-level explanation of how to implement custom authentication -->
-
-
