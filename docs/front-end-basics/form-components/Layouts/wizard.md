@@ -85,7 +85,7 @@ _After any of the button events, you can handle both success and failure._
 _In this example, the fields `firstName`, `lastName` and `emailAddress1` are manadatory and movement to the next step should be restricted if they have not been captured_
 
 ```javascript
-if (formMode != "designer") {
+if (form.formMode != "designer") {
   //this is to prevent movement to the next step while on the form designer
   return (
     isValidProperty(data.firstName) &&
