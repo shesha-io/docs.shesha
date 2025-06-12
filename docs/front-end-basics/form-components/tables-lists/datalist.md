@@ -1,10 +1,18 @@
 # DataList
 
+import LayoutBanners from './LayoutBanners';
+
 This component is intended to get a list of data (similar to using it with the Datatable component). It shows data from the DatatableContext as a list of sub-forms. The `DataList` component should be placed inside the `DatatableContext` component. Note that other DatatableContext-specific components (Pager, Quick Search, Table view selector) can also affect the `DataList`, similar to the [`Datatable`](/docs/front-end-basics/form-components/tables-lists/datatable.md).
 
 ![Image](../tables-lists/images/datalist1.png)
 
 [//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=cf652775-9c95-44e4-8152-8c52f174d830" title="Columns Component" ></iframe>)
+
+## **Get Started**
+
+*NB: This guide assumes the DataTable Context is already set up. [Learn how to configure it here.](../tables-lists/datatable-context.md#get-started)*
+
+<LayoutBanners url="https://app.guideflow.com/embed/qp7wmnvtjk" type={1}/>
 
 ## Properties
 
