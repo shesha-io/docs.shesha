@@ -1,10 +1,18 @@
 # DataTable
 
+import LayoutBanners from './LayoutBanners';
+
 A Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
 
 ![Image](./images/selectedRow.png)
 
 [//]: # (<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=552accec-84dc-4841-962f-ff263b5ade73" title="Columns Component" ></iframe>)
+
+## **Get Started**
+*NB: This guide assumes the DataTable Context is already set up. [Learn how to configure it here.](../tables-lists/datatable-context.md#get-started)*
+
+<LayoutBanners url="https://app.guideflow.com/embed/qkqw5zjf1k" type={1}/>
+___
 
 ## Properties
 
@@ -99,3 +107,6 @@ Main message shown when table is empty.
 
 #### **Secondary Text** `string`  
 Subtext shown in empty state.
+
+## **Advanced Data Table**
+
