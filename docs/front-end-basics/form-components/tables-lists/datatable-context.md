@@ -1,6 +1,13 @@
 # DataTable Context
 
+import LayoutBanners from './LayoutBanners';
+
 A datatable context component is a powerful tool that allows users to manage and manipulate tabular data within an application. It's often used in scenarios where you need to display, organize, and interact with data in a structured, table-like format. 
+
+## **Get Started**
+
+<LayoutBanners url="https://app.guideflow.com/embed/lpx4823s4k" type={1}/>
+___
 
 ## Properties
 
