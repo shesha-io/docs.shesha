@@ -10,7 +10,7 @@ A Datatable component is a versatile tool used to manage and configure the colum
 
 ## **Get Started**
 *NB: This guide assumes the DataTable Context is already set up. [Learn how to configure it here.](../tables-lists/datatable-context.md#get-started)*
-
+ 
 <LayoutBanners url="https://app.guideflow.com/embed/qkqw5zjf1k" type={1}/>
 ___
 
@@ -42,7 +42,7 @@ Configure columns using a visual builder. Optionally supports expression logic f
 
 - **Caption** ``string`` – Additional label or subtitle shown under the main title.
 
-- **Anchored** string – Determines if the column is pinned during horizontal scroll:
+- **Anchored** ``object`` – Determines if the column is pinned during horizontal scroll:
     - Left
 
     - Right
@@ -107,6 +107,3 @@ Main message shown when table is empty.
 
 #### **Secondary Text** `string`  
 Subtext shown in empty state.
-
-## **Advanced Data Table**
-
