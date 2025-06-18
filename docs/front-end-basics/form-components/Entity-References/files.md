@@ -1,10 +1,17 @@
 # File / File List
 
+import LayoutBanners from './LayoutBanners';
+
 This enables the uploading of one or more files. It also showcases the process of uploading by selecting or dragging a file.
 
 ![Image](../Entity-References/images/filelist1.png)
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=3745cb52-d48c-478c-8d34-b5743f7c9388" title="File / Filelist component" ></iframe>'
+
+## **Get Started**
+
+<LayoutBanners url="https://app.guideflow.com/embed/6kw1welczp" type={1}/>
+___
 
 ## Properties
 
