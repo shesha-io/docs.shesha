@@ -1,8 +1,17 @@
 # Entity Reference
 
+import LayoutBanners from './LayoutBanners';
+
 The Entity Reference component allows users to interact with a related record by linking to it through navigation, dialogs, or quickview modals. It’s ideal for referencing details or records without embedding the full form.
 
-![Image](../Entity-References/images/entityreference1.png)
+![Image](../Entity-References/images/entityreference2.png)
+
+## **Get Started**
+
+*NB: This guide assumes a Data Table is already set up. [Learn how to configure it here.](../tables-lists/datatable.md#get-started)*
+
+<LayoutBanners url="https://app.guideflow.com/embed/zpe5o1gc3p" type={1}/>
+___
 
 ## Properties
 
