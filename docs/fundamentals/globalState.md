@@ -51,4 +51,4 @@ GlobalState can be used to access data from tables, such as `indexTable -> table
 2. **Index Access** – Accessing values at specific indexes from table data.
 3. **Selected Row** – Accessing the selected row’s ID or data through global state.
 
-`Please note whe the page is refershed the global state is empty`
+`Please note when the page is refreshed the global state is empty`
