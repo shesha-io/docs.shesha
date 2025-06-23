@@ -14,22 +14,23 @@ To avoid confusion, there is a difference between custom pages and custom compon
 
 To create a custom page:
 
-1. Create a folder in the `pages` directory.
+1. Create a `custom` folder in directory.
 
-   - Navigate to the `src` folder and then to the `pages` folder (root -> src -> pages).
-   - Create a folder with the name of the path you choose to use (e.g., a custom folder means `/custom` on the URL path).
+- Navigate to the `src` folder (root -> src->app->(main)).
 
-2. Once this folder has been created, it is suggested to create an `index.tsx` file inside the custom directory created. An illustration can be seen below (Figure 1: Folder Structure). A `.tsx` extension is used when embedding JSX elements inside the files, while `.ts` is used for plain TypeScript files that do not support adding JSX elements.
+  - Create a folder with the name of the path you choose to use (e.g., a custom folder means `/custom` on the URL path).
 
-![Image](./images/customPage2.png)
+2. Once this folder has been created, it is suggested to create an `page.tsx` file inside the custom directory created. An illustration can be seen below (Figure 1: Folder Structure). A `.tsx` extension is used when embedding JSX elements inside the files, while `.ts` is used for plain TypeScript files that do not support adding JSX elements.
 
+Figure 1 shows an illustration of the folder structure.
 
-Figure 2 shows a snippet of code that will be added in the `index.tsx` page. If a consistent layout is required, it can be set using `Page.getLayout` as seen in the illustration below.
+![Image](./images/customPage4.png)
 
-![Image](./images/customPage1.png)
+Figure 2 shows a snippet of code that will be added in the `page.tsx` page.
+![Image](./images/customPage5.png)
 
 ## How to Access
 
 Adding a page to the Shesha boilerplate is the same as adding it to a Next.js application. If the developer is familiar with Next.js, it is the same with the Shesha boilerplate because the Shesha boilerplate uses Next.js to serve pages. This means that your Url will be suffixed by your folder name. E.g. `https://shesha.io/custom` or `https://localhost:6006/custom`
 
-![Image](./images/customPage3.png)
+![Image](./images/customPage6.png)
