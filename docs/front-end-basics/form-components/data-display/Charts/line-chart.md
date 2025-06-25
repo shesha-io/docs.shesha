@@ -46,7 +46,7 @@ Determines how values are aggregated:
 - Max
 
 **Title** `string`  
-Main title displayed above the chart.
+The heading shown above the chart. If no title is specified, it is generated from the Entity Type.
 
 **Show Title** `boolean`  
 Toggles visibility of the chart title.
