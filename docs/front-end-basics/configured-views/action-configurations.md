@@ -4,8 +4,6 @@ import LayoutBanners from './LayoutBanners';
 
 This section covers configuring actions to be triggered upon button click.
 
-<LayoutBanners url="https://app.guideflow.com/embed/lpnvw5xhjr" type={1}/>
-
 ## Common
 
 ### Navigate
@@ -43,6 +41,8 @@ This provides an interface for configuring a user interface component that is co
 ### Show Dialog
 
 This provides an interface for configuring which modal dialog to render and the actions thereof.
+
+<LayoutBanners url="https://app.guideflow.com/embed/lpnvw5xhjr" type={1}/>
 
 ![Image](./images/action8.png)
 
