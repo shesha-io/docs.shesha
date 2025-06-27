@@ -6,11 +6,6 @@ The Button component provides an interactive element to trigger actions in your 
 
 ![Image](../data-entry/images/button1.png)
 
-## **Get Started**
-
-<LayoutBanners url="https://app.guideflow.com/embed/lpnvw5xhjr" type={1}/>
-___
-
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=4d5f3201-2ba4-4a19-b3de-08153124ea65" title="button Component" ></iframe>'
 
