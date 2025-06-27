@@ -1,6 +1,10 @@
 # Action Configurations
 
+import LayoutBanners from './LayoutBanners';
+
 This section covers configuring actions to be triggered upon button click.
+
+<LayoutBanners url="https://app.guideflow.com/embed/lpnvw5xhjr" type={1}/>
 
 ## Common
 
