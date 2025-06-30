@@ -1,0 +1,8 @@
+{
+  "label": "contexts",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Contexts are objects that provide access to the current state of the application. They are used to access the current state of the application and to perform actions on it."
+  }
+}

@@ -3,6 +3,21 @@
 Shesha allows to interact with application using JavaScript API. This API can be used in any user-defined code on the form or form component level.
 Central point of the JS API is the **'application'** exposed variable. It contains all standard Shesha objects (e.g. user, settings, entities etc)
 
+## Top Level Availbale Objects and Functions  
+
+- application 
+- contexts
+- data
+- fileSaver
+- form
+- globalState
+- http
+- message
+- moment
+- pageContext
+- selectedRow
+- setGlobalState
+
 ## Current user API – application.user
 
 Requirements for this API available on [GitHub (issue 819)](https://github.com/shesha-io/shesha-framework/issues/819). It’s an object that contains following properties:
