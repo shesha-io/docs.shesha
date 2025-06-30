@@ -95,7 +95,7 @@ const config = {
             position: "right",
           },
           {
-            to: 'https://www.shesha.io/get-started-with-shesha',
+            to: 'https://www.shesha.io/download-shesha',
             label: 'Try Shesha',
             position: 'right',
             style: { backgroundColor: '#1666ba', color: 'white', padding: '8px 15px', borderRadius: '5px' },
