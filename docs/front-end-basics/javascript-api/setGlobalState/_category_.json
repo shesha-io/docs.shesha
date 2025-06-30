@@ -1,8 +1,0 @@
-{
-  "label": "setGlobalState",
-  "position": 12,
-  "link": {
-    "type": "generated-index",
-    "description": "setGlobalState is the object that provides access to the setGlobalState API."
-  }
-}

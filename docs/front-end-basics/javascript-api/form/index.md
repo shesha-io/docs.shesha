@@ -198,3 +198,7 @@ This function is used to submit the form.
 ```typescript
 form.submit() => void
 ```
+
+## `form.formArguments`
+
+Form arguments passed by caller. This object is used to read the arguments passed by the caller to the form.
