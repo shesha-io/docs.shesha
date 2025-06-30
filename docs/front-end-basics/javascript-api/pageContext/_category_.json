@@ -1,0 +1,8 @@
+{
+  "label": "pageContext",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "description": "pageContext is the object that provides access to the page context."
+  }
+}
