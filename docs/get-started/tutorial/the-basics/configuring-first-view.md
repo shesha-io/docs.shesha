@@ -321,7 +321,7 @@ To navigate to the newly created details form, we now have to go back to the `me
    - `dynamic` - standard URL segment indicating that the form to navigate to is a configured (dynamic) form.
    - `Shesha.Membership` - is the name of the module the form to navigate to lives in.
    - `member-details` - is the name of the form to navigate to.
-   - `?id={{selectedRow.id}}` - queries the row that was selected. A more detailed explanation is provided [here](#) (TODO: Link selected row object).
+   - `?id={{selectedRow.id}}` - queries the row that was selected. A more detailed explanation is provided [here](/front-end-basics/configured-views/client-side-scripting/shesha-objects/selectedRow.md) 
 
 ![Image](./images/navigate2.png)
 
