@@ -5,7 +5,7 @@ Central point of the JS API is the **'application'** exposed variable. It contai
 
 ## Top Level Availbale Objects and Functions  
 
-- application 
+- application
 - contexts
 - data
 - fileSaver
@@ -32,7 +32,35 @@ Requirements for this API available on [GitHub (issue 819)](https://github.com/s
 8. personId (`string`) - personId of the current user
 
 Example of the usage:
-![image.png](./images/image-c60cdf4b-985a-493e-b59e-1b3a739c0a43.png)
+
+```javascript
+const onAfterDataLoad = async (): Promise<void> => {
+    const { user } = application;
+    if (user.isLoggedIn) {
+        console.log('User is logged in ');
+        console.log("Current user is: ", user);
+        console.log(`user id: ${user.id}`);
+        console.log(`userName: ${user.userName}`);
+        console.log(`firstName: ${user.firstName}`);
+        console.log(`lastName: ${user.lastName}`);
+        console.log(`person id: ${user.personId}`);
+
+        const adminRole = 'System Administrator';
+        console.log(`Check is user granted role '${adminRole}' ... `);
+
+        try {
+            const isGranted = await user.hasRoleAsync(adminRole);
+            console.log(`Check is user granted role "${adminRole}" - ${isGranted ? "✅" : "❌"}`);
+        }
+        catch (error) {
+            console.log("Failed to check role", error);
+        }
+    }
+    else {
+        console.log('User is NOT logged in');
+    }
+};
+```
 
 ## Settings API – application.settings
 
@@ -44,22 +72,93 @@ Where module, group and setting are accessors (human readable code identifier of
 
 1. Module: module alias with fallback to name in camelCase format. On the example below accessor of the module is **functionalTests**, but if you remove the **Alias** property it will be **boxfusionSheshaFunctionalTestsCommon**
 
-   ![image.png](./images/image-12062ad4-0e37-4810-9730-165edea83125.png)
+```csharp
+public class SheshaFunctionalTestsCommonModule : SheshaModule
+{
+    public override SheshaModuleInfo ModuleInfo => new SheshaModuleInfo("Boxfusion.SheshaFunctionalTests.Common")
+    {
+        FriendlyName = "Shesha Functional Tests Common",
+        Publisher = "Boxfusion",
+        Alias = "functionalTests"
+    };
+
+    /// ...
+}
+```
 
 2. Group: alias of ISettingAccessors with fallback to interface name without `I` prefix and `Settings` suffix. On the example below accessor is **common**, but if you remove the AliasAttribute it will be **test**
 
-   ![image.png](./images/image-7032bb0c-cb6e-4677-98f1-e9b3c61e2cad.png)
+```csharp
+[Category("Tests")]
+[Alias("common")]
+public interface ITestSetting : ISettingAccessors
+{
+    [Display(Name = "UserLockout")]
+    [Setting(TestSettingNames.UserLockout)]
+    ISettingAccessor<int> UserLockoutItem { get; }
+
+    [Display(Name = "Test Complex", Description = "Testing the complex setting item")]
+    [Setting(TestSettingNames.TestComplex, EditorFormName = "complex-setting-test")]
+    ISettingAccessor<TestComplexSetting> TestComplexSetting { get; }
+
+    [Display(Name = "Stars Count")]
+    [Setting(TestSettingNames.StarsCount)]
+    ISettingAccessor<int> StarsCount { get; }
+}
+```
 
 3. Setting: alias of the setting property with fallback to the property name in camelCase format.
 
-   ![image.png](./images/image-75f21225-e7c7-4a18-8d8c-85ee3b1ffd0d.png)
+```csharp
+[Category("Tests")]
+[Alias("common")]
+public interface ITestSetting: ISettingAccessors
+{
+    [Display(Name = "UserLockout")]
+    [Setting(TestSettingNames.UserLockOut)]
+    ISettingAccessor<int> UserLockoutItem { get; }
+
+    [Display(Name = "Test Complex", Description = "Testing the complex setting item")]
+    [Setting(TestSettingNames.TestComplex, EditorFormName = "complex-setting-test")]
+    ISettingAccessor<TestComplexSetting> TestComplexSetting { get; }
+
+    [Display(Name = "Stars Count")]
+    [Setting(TestSettingNames.StarsCount)]
+    [Alias("stars")]
+    ISettingAccessor<int> StarsCount { get; }
+}
+```
 
 Example of settings usage:
-![image.png](./images/image-85c6032a-f749-4004-9636-bf8babe69b63.png)
+
+```javascript
+const evaluator = async () => {
+    const settings = application.settings.functionalTests.common;
+    
+    console.log("Get stars count...");
+    const starsCount = await settings.starsCount.getValueAsync();
+    console.log(`We got ${starsCount} stars: ${'★'.padEnd(starsCount, '★')}`);
+};
+```
+
 **Note**: all settings of simple types are strongly typed, you can see it on the example above, the **starsCount** is declared as `ApplicationSettingAccessor<**number**>`
 
 Read and write setting example:
-![image.png](./images/image-d376a9fd-8479-4665-9e8f-6d65f9269e82.png)
+
+```javascript
+const evaluator = async () => {
+    const settings = application.settings.functionalTests.common;
+    
+    console.log("Get stars count...");
+    const starsCount = await settings.starsCount.getValueAsync();
+    console.log(`We got ${starsCount} stars`);
+    
+    const newStars = starsCount + 1;
+    console.log(`Set number of stars to ${newStars}...`);
+    await settings.starsCount.setValueAsync(newStars);
+    console.log(`Set number of stars to ${newStars} - success`);
+};
+```
 
 ## Entities API – application.entities
 
