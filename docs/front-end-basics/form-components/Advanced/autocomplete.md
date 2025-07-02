@@ -31,18 +31,18 @@ Controls interaction:
 #### **Hide** `boolean`  
 Toggle the visibility of the component.
 
+___
+
+### Data
+
+#### **Disable Search** ``boolean``
+Hides the search bar and disables real-time filtering.
+
 #### **Selection Mode** ``string``
 Sets how many options can be selected:
 
 - Single *(default)*
 - Multiple
-
-#### **Disable Search** ``boolean``
-Hides the search bar and disables real-time filtering.
-
-___
-
-### Data
 
 #### **Default Value** `function`  
 JavaScript code to compute the initial value.
@@ -54,6 +54,67 @@ Choose source for suggestions:
 
 #### **Entity Type** `string`  
 Entity to search within.
+
+#### **Data Source URL** `string`  
+External data source URL.
+
+#### **Value Prop Name** `string`  
+Value property in external source.
+
+#### **Query Param** `string`  
+Parameter for search queries.
+
+#### **Entity Filter** `object`  
+Filter options using a query builder.
+
+#### **Custom Source URL** `string`  
+Custom URL for fetching data.
+
+#### **Value Format** `string`  
+How values are formatted:
+- Entity Reference *(default)*
+- Simple ID
+- Custom
+
+#### **Display Value Function** `function`  
+Custom display function for values.
+
+#### **Display Property** `object`  
+Property used to display selected value.
+
+#### **Display Value Function** `function` (when Value Format is Custom)  
+Function to render display text.
+
+#### **Allow Free Text** `boolean` (when Value Format is Simple ID)  
+Allow user to type custom text.
+
+#### **Key Value Function** `function` (when Value Format is Custom)  
+Function for key value mapping.
+
+#### **Value Function** `function` (when Value Format is Custom)  
+Function to get value.
+
+#### **Key Value Function** `function` (when Value Format is Custom)  
+Function for key value mapping.
+
+#### **Display Value Function** `function` (when Value Format is Custom)  
+Function to render display text.
+
+#### **Filter Selected Function** `function` (when Value Format is Custom)  
+Function to filter selected items.
+
+#### **Use Quickview** `boolean`  
+Enable modal quickview for selections.
+
+#### **Fields to Fetch** `object`  
+Additional fields to load.
+
+#### **Sort By** `object`  
+Sorts options by a specified property.
+
+#### **Grouping** `object`  
+Groups options by a property.
+
 ___
 
 ### Validation
