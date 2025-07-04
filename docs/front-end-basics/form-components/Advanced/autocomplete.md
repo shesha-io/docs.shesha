@@ -1,5 +1,7 @@
 # Autocomplete
 
+import LayoutBanners from './LayoutBanners';
+
 The AutoComplete component enhances user input fields with dynamic suggestions based on the user's typing.It is an input box with text hints, and users can type freely. The keyword is aiding input.
 
 ![Image](../Advanced/images/autocomplete1.png)
@@ -186,6 +188,8 @@ or an array.
 
 ## • `Entities List` Data Source Type
 
+<LayoutBanners url="https://app.guideflow.com/embed/6kw11ndfzp" type={1}/>
+
 If the standard entities endpoint is used, the backend returns list of entities with items in the forllowing format
 
 ```js
@@ -250,6 +254,8 @@ If you specify a value for **KeyProperty**, the received data will contain an ad
 ```
 
 ## • `URL` Data Source Type
+
+<LayoutBanners url="https://app.guideflow.com/embed/ok8eev2fxk" type={1}/>
 
 ### • `Simple Id` Value format
 
