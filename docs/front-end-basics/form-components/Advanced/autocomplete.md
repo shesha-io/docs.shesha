@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-The AutoComplete component enhances user input fields with dynamic suggestions based on the user's typing.It is an input box with text hints, and users can type freely. The keyword is aiding input.
+The Autocomplete component enhances user input fields with dynamic suggestions based on the user's typing.It is an input box with text hints, and users can type freely. The keyword is aiding input.
 
 ![Image](../Advanced/images/autocomplete1.png)
 
@@ -346,7 +346,4 @@ const filterSelectedFunc = () => {
 };
 ```
 
-This script use two fields as a key
-
-
-
+This script use two fields as a key.
