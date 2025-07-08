@@ -3,6 +3,8 @@ The Drawer component allows you to open a sliding panel from any side of the scr
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=41d541dc-75c9-4436-ad41-3b39ea828efb" title="Drawer Component" ></iframe>'
 
+![Image](../Layouts/images/drawer1.gif)
+
 
 ## **Properties**
 
