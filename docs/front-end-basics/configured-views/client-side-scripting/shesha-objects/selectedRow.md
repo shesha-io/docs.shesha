@@ -15,7 +15,7 @@ Here are some key points related to the concept of a `SelectedRow` object in the
 
 ## How to Access
 
-Information about the `selectedRow` can be accessed within the `Contexts` that are available in the application and can be accessed like this (_assuming that the [datatable context](/docs/front-end-basics/form-components/tables-lists/datatable-context) component has a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name) of `indexTable`_ ):
+Information about the `selectedRow` can be accessed within the `Contexts` that are available in the application and can be accessed like this (_assuming that the [datatable context](/docs/front-end-basics/form-components/tables-lists/datatable-context) component has a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name-string) of `indexTable`_ ):
 
 `contexts.indexTable.selectedRow`
 
