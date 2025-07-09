@@ -6,27 +6,26 @@ sidebar_position: 1
 
 This section describes the properties which are common to all form components.
 
-## Display
-
-### Component Name
+### Common
+#### Component Name
  Name of the component. This should be unqiue within the form, contain only alphanumeric characters and underscores and should not contain any spaces. This name is used to access the component programmatically through its parent form's context property.
 
-### Property Name
+#### Property Name
  Specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
 
-### Context
+#### Context
  Speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty. Otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
 
-### Label
+#### Label
  The label to display next to the form component. This will be displayed unless the [Hide Label](#hide-label) property is set to true.
 
-### Label Align
+#### Label Align
  Positioning of label relative to the component. **Options**: 'Left', 'Right', 'Top'
 
-### Hide Label
+#### Hide Label
  Controls the visibility of the component label. If turned off, the component label is not visible in View mode.
 
-### Hidden
+#### Hidden
  Controls the visibility of the component.
   - `return true` if you want to hide the component
   - `return false` if you want to show the component
@@ -35,35 +34,37 @@ This section describes the properties which are common to all form components.
 `return data.gender != 2` - This shows the component if the gender is 2
 :::
 
-### Description
+#### Description
  Additional description for the component, more for internal configurator/developer use.
 
-### Edit Mode
-
+#### Edit Mode
 Options:
-
 - **Inherited** - Takes the edit mode of the parent form that the component belongs to.
 - **Editable** - Enables the user to edit the component's value or perform operations on the component.
 - **Read Only** - The component serves as a form of data display, and the user cannot edit the component's value or the component functionality will be disabled (greyed out).
 
-### Hide Border
+#### Hide Border
  Removes the border from the styling of the component.
 
-### Tooltip
+#### Tooltip
  Additional information to display to the user as a tooltip.
 
-### Placeholder
+#### Placeholder
  Placeholder text to display to the user when no value is specified.
+___
 
-### Default Value
+### Data
+#### Default Value
  Specifies the default value of the component.
 
-## Validation
+ ___
 
-### Required
+### Validation
+
+#### Required
  If checked, prohibits form submission if the component does not have a value (mandatory). Indicated by a red asterisk mark next to the component.
 
-### Style
+#### Style
  Allows configurators to specify custom CSS styling through code. May be used when standard styling properties are insufficient to achieve the required look and feel.
 
 Example:
@@ -75,10 +76,10 @@ return {
 };
 ```
 
-### Size
+#### Size
  The size of the component. **Options**: 'Small', 'Middle', 'Large'
 
-### Layout
+#### Layout
  Allows the configurator to specify the width of the label and content (i.e. input) portions of the form component.
   If not provided, the default settings specified at the form level will apply.
 
@@ -89,35 +90,41 @@ return {
 Shesha uses Ant Design's 24 columns' grid system. The values of the **Label Col** and **Wrapper Col** properties should therefore total up to 24.
 :::
 
-### Padding
+#### Padding
  The padding property is used to define the space between the content of an element and its border. It is essentially the inner spacing within an element.
 
-### Margin
+#### Margin
  The margin property, on the other hand, is used to define the space outside an element's border. It controls the spacing between elements, affecting their layout in relation to one another.
 
-## Permissions
+___
+
+### Security
+
+#### Permissions
  Specifies the permissions required to access the component. The component will be hidden from any user that does not have any of the specified permissions.
 
  **Example**: 'user:Roles'
 
-## Events
+ ___
+
+### Events
  Event handlers are functions that get triggered on on specific envents in a component lifecycle.
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 
-### onChange
+#### onChange
 
 Triggered on change of the component's value such as on input changes or change of selection in the case of selected based components such as radio buttons, check boxes or drop down list.
 
-### onFocus
+#### onFocus
 
 Triggered on the component receives the focus.
 
-### onBlur
+#### onBlur
 
 Triggered when a previously selected component loses focus.
 
-### onSelect
+#### onSelect
 
 An event which is triggered every time an address is selected.
 
