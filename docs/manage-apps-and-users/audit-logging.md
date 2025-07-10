@@ -193,7 +193,7 @@ Usually all generic entities implement the `IEntityWithMultipleOwnerTypes` inter
 
 ```cs
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-public class DisplayGenericEntitesAuditTrailAttribute : Attribute
+public class DisplayGenericEntitiesAuditTrailAttribute : Attribute
 {
 	public Type EntityType { get; set; }
 
@@ -205,7 +205,7 @@ public class DisplayGenericEntitesAuditTrailAttribute : Attribute
 
 	public string NameField { get; set; }
 
-	public DisplayGenericEntitesAuditTrailAttribute(Type entityType)
+	public DisplayGenericEntitiesAuditTrailAttribute(Type entityType)
     {
     	EntityType = entityType;
     }
@@ -221,7 +221,7 @@ public class DisplayGenericEntitesAuditTrailAttribute : Attribute
 Example:
 
 ```cs
-[DisplayGenericEntitesAuditTrail(typeof(Comment), NameField = "Text")]
+[DisplayGenericEntitiesAuditTrail(typeof(Comment), NameField = "Text")]
 public class SchoolApplication : FullAuditedEntity<Guid>
 ```
 

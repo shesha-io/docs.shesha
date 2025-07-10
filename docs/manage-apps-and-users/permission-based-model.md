@@ -55,7 +55,7 @@ To manage permissions, including defining new ones, follow these steps:
 To manage roles and associate permissions with each role:
 
 1. Access the Roles Configurator from the Configuration main menu, then select **Roles**.
-2. On the Roles table, navigate into into the details view of the selected role and toggle edit to select the permissions associated to that role.
+2. On the Roles table, navigate into the details view of the selected role and toggle edit to select the permissions associated to that role.
 
 ![Managing Roles](./images/roles.png)
 

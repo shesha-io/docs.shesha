@@ -9,7 +9,7 @@ This section describes the properties which are common to all form components.
 ## Display
 
 ### Component Name
- Name of the component. This should be unqiue within the form, contain only alphanumeric characters and underscores and should not contain any spaces. This name is used to access the component programmatically through its parent form's context property.
+ Name of the component. This should be unique within the form, contain only alphanumeric characters and underscores and should not contain any spaces. This name is used to access the component programmatically through its parent form's context property.
 
 ### Property Name
  Specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
@@ -101,7 +101,7 @@ Shesha uses Ant Design's 24 columns' grid system. The values of the **Label Col*
  **Example**: 'user:Roles'
 
 ## Events
- Event handlers are functions that get triggered on on specific envents in a component lifecycle.
+ Event handlers are functions that get triggered on specific events in a component lifecycle.
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 
