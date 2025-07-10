@@ -8,13 +8,13 @@ This section describes the properties which are common to all form components.
 
 ### Common
 #### Component Name `string`
- Name of the component. This should be unqiue within the form, contain only alphanumeric characters and underscores and should not contain any spaces. This name is used to access the component programmatically through its parent form's context property.
+This name must be unique within the form, contain only alphanumeric characters and underscores (no spaces), and is used to access the component programmatically through its parent form's context property.
 
 #### Property Name `string`
- Specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
+ This specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
 
 #### Context `object`
- Speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty. Otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
+ This speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty, otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
 
 #### Label `boolean\string`
 Toggles the display of the label. When enabled, a text field appears to enter the label name.
@@ -59,6 +59,41 @@ ___
 
 ### Appearance
 
+#### **Font** ``object`` 
+
+Customize how your component labels look. Choose the font family, size, weight, and color.
+
+#### **Dimensions** ``object`` 
+
+Specify the size of your component:
+- Width, Height
+- Min/Max Width and Height
+- Overflow behavior
+
+#### **Border** ``object`` 
+
+Personalize the borders:
+- Set border width, color, and style
+- Round the corners for a softer touch
+
+#### **Background** ``object``
+
+Pick your flavor of background:
+
+- Color
+- Gradient
+- Image URL
+- Uploaded Image
+- Stored File
+
+Also tweak background size, position, and repeat behavior.
+
+#### **Shadow** ``object`` 
+
+Give depth with adjustable shadows:
+
+- Offset, Blur, Spread, Color
+
 #### Style `function`
  Allows configurators to specify custom CSS styling through code. May be used when standard styling properties are insufficient to achieve the required look and feel.
 
@@ -72,7 +107,10 @@ return {
 ```
 
 #### Size `object`
- The size of the component. **Options**: 'Small', 'Middle', 'Large'
+ The size of the component, the options are :
+  - **Small**
+  - **Middle**
+  - **Large**
 
 #### Margin and Padding `object`
 The padding property defines the space between an element’s content and its border, creating inner spacing within the element. In contrast, the margin property controls the space outside an element’s border, determining the distance between the element and surrounding elements. Together, they help adjust spacing and layout for a more precise and visually appealing design.
@@ -85,7 +123,6 @@ ___
  Specifies the permissions required to access the component. The component will be hidden from any user that does not have any of the specified permissions.
 
  **Example**: 'user:Roles'
-
  ___
 
 ### Events
@@ -93,21 +130,55 @@ ___
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 
-#### onChange `function`
+#### on Change `function`
 
 Triggered on change of the component's value such as on input changes or change of selection in the case of selected based components such as radio buttons, check boxes or drop down list.
 
-#### onFocus `function`
+#### on Focus `function`
 
 Triggered on the component receives the focus.
 
-#### onBlur `function`
+#### on Blur `function`
 
 Triggered when a previously selected component loses focus.
 
-#### onSelect `function`
+#### on Select `function`
 
-An event which is triggered every time an address is selected.
+An event which is triggered every time an [address](/front-end-basics/form-components/Advanced/address.md) is selected.
+
+#### on Click `function`
+
+An event triggered when the component is clicked.
+
+#### On File List Changed `function`
+
+Triggered when files are added to or removed from the [file list](/front-end-basics/form-components/Entity-References/files.md).
+
+#### On Create `function`
+
+Triggered when a new component is created.
+
+#### On Update `function`
+
+Triggered when an existing component is updated.
+
+#### On Delete `function`
+
+Triggered when a component is deleted.
+
+#### On Double-Click `function`
+
+Triggered when a row is double-clicked by the user.
+
+#### On Row Save Success `function`
+
+Triggered after a row is successfully saved.
+
+#### On Row Delete Success`function` 
+
+Triggered after a row is successfully deleted.
+
+
 
 These events contain a standard list of variables that give the user access to certain variables and functions facilitating the need to respond to various scenarios. Namely:
 
