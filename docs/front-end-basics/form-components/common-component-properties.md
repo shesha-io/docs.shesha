@@ -71,20 +71,21 @@ Specify the size of your component:
 - Overflow behavior
 
 #### **Border** ``object`` 
+Controls card border styling, with the following options:
 
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
+  - **Border Type**: Defines the type or style of the border.
+
+  - **Radius Type**: Defines the shape or roundness of the corners.
 
 #### **Background** ``object``
 
-Pick your flavor of background:
+Select a type of background. The options are:
 
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
+- **Color**
+- **Gradient**
+- **Image URL**
+- **Uploaded Image**
+- **Stored File**
 
 Also tweak background size, position, and repeat behavior.
 
@@ -122,7 +123,7 @@ ___
 #### Permissions `object`
  Specifies the permissions required to access the component. The component will be hidden from any user that does not have any of the specified permissions.
 
- **Example**: 'user:Roles'
+ **Example**: `user:Roles`
  ___
 
 ### Events
