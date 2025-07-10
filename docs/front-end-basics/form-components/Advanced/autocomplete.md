@@ -190,7 +190,7 @@ or an array.
 
 <LayoutBanners url="https://app.guideflow.com/embed/6kw11ndfzp" type={1}/>
 
-If the standard entities endpoint is used, the backend returns list of entities with items in the forllowing format
+If the standard entities endpoint is used, the backend returns list of entities with items in the following format
 
 ```js
 {
