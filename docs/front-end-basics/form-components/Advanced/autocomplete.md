@@ -175,7 +175,7 @@ ___
 
 # Autocomplete examples
 
-The Autocomplete component can work with two types of list sources - standard Entities endpoints (`Entities List` Data Source Type) and custom endpoints (`URL` Data Source Type). Custom endpoints sohuld support `string term` parameter for filtering data. The responses from the endpoints should be either a standard response with a list of entities
+The Autocomplete component can work with two types of list sources - standard Entities endpoints (`Entities List` Data Source Type) and custom endpoints (`URL` Data Source Type). Custom endpoints should support `string term` parameter for filtering data. The responses from the endpoints should be either a standard response with a list of entities
 
 ```ts
 export interface ITableDataResponse {

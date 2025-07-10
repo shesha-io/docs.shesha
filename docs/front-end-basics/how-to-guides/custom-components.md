@@ -79,7 +79,7 @@ This folder is responsible for integrating the component into the **Shesha Frame
 
 ```ts
 import { useSheshaApplication } from "@shesha-io/reactjs";
-import { Theecomponents } from "../../designer-components";
+import { TheComponents } from "../../designer-components";
 import React, { PropsWithChildren, useEffect } from "react";
 
 export const REPORTING_PLUGIN_NAME = "Custom-Plugin";
@@ -92,7 +92,7 @@ export const CustomPlugin: React.FC<PropsWithChildren<ICustomPluginProps>> = ({
   const { registerFormDesignerComponents } = useSheshaApplication();
 
   useEffect(() => {
-    registerFormDesignerComponents(REPORTING_PLUGIN_NAME, Theecomponents);
+    registerFormDesignerComponents(REPORTING_PLUGIN_NAME, TheComponents);
   }, []);
 
   return <>{children}</>;
@@ -111,9 +111,9 @@ To view the list of exposed components in the Shesha Form Builder, open `Custom 
 
 The `src\designer-components\index.tsx` file uses an array to group components. This structure allows for organizing multiple component modules when needed.
 
-The array is typed using the `IToolboxComponentGroup` interface, ensuring that the correct structure is followed. It is recommended to type `TheeComponents` as demonstrated in the example below:
+The array is typed using the `IToolboxComponentGroup` interface, ensuring that the correct structure is followed. It is recommended to type `TheComponents` as demonstrated in the example below:
 
-#### Example Code: `TheeComponents`
+#### Example Code: `TheComponents`
 
 ```ts
 import { IToolboxComponentGroup } from "@shesha-io/reactjs";
@@ -128,7 +128,7 @@ import { IToolboxComponentGroup } from "@shesha-io/reactjs";
 import CustomCardComponent from "./custom-card";
 import CustomNavigationComponent from "./navigate";
 
-export const Theecomponents: IToolboxComponentGroup[] = [
+export const TheComponents: IToolboxComponentGroup[] = [
     {
         name: "Custom Components",
         components: [CustomCardComponent, CustomNavigationComponent],

@@ -76,7 +76,7 @@ The following RoleTypeConfig configurations should be defined in the system alon
 ---
 ---
 Clean-up:
-- docs\manage-apps-and-users\permisson-based-model.md
+- docs\manage-apps-and-users\permission-based-model.md
 - docs\manage-apps-and-users\user-management.md
 - docs\how-to-guides\permission-based-security-model.md
 - docs\fundamentals\user-registration.md
