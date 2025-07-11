@@ -16,6 +16,14 @@ This name must be unique within the form, contain only alphanumeric characters a
 #### Context `object`
  This speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty, otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
 
+ 
+#### **Title** `string`
+
+The heading displayed at the top of the component.
+
+#### **Show Title** `boolean`  
+Toggles visibility of the component title.
+
 #### Label `boolean\string`
 Toggles the display of the label. When enabled, a text field appears to enter the label name.
 
@@ -47,6 +55,12 @@ ___
 ### Data
 #### Default Value `string`
  Specifies the default value of the component.
+
+ **Data Source Type** `object`  
+Defines the source from which data is pulled:
+- **Entity Type** *(default)*
+- **URL**
+- **Form**
 
  ___
 
