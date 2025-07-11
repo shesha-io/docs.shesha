@@ -155,7 +155,7 @@ _Check out the inline-editing [how-to-guide](/docs/front-end-basics/how-to-guide
 
 _Let's accessorize our `datatable` and make it more flexible._
 
-10. Search and drag in the following components from the `Builder Widgets` onto the the header of the `Member Payments` panel:
+10. Search and drag in the following components from the `Builder Widgets` onto the header of the `Member Payments` panel:
     - [Quick Search](/docs/front-end-basics/form-components/tables-lists/quick-search)
     - [Table Pager](/docs/front-end-basics/form-components/tables-lists/table-pager)
     - [Table View Selector](/docs/front-end-basics/form-components/tables-lists/table-view-selector)
