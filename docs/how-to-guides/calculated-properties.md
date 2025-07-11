@@ -30,7 +30,7 @@ Note the following:
 1.  The property setter should have the `protected` modifier
 
 # Properties Calculated by the Database
-The the calculation requires access to lots of data only available from the database, the calculation should be performed by the database through a calculated column, <a href="https://database.guide/create-a-computed-column-that-uses-data-from-another-table-in-sql-server/" target="_blank">see article on computed columns</a>.
+The calculation requires access to lots of data only available from the database, the calculation should be performed by the database through a calculated column, <a href="https://database.guide/create-a-computed-column-that-uses-data-from-another-table-in-sql-server/" target="_blank">see article on computed columns</a>.
 
 Though more complex to implement, this approach will typically have some significant advantages:
 
