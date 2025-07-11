@@ -78,7 +78,7 @@ Although it is possible to create entities with any type of Id, it is recommende
 
 To ensure that your new entity can be persisted to the database you will need to create the corresponding database objects. In order to do this you will need to create a database migration class. Shesha uses [Fluent Migrator](https://fluentmigrator.github.io/) for the creation of the database migrations with Shesha specific extensions.
 
-:::info Shesha uses NHiberate as its ORM
+:::info Shesha uses NHibernate as its ORM
 Shesha currently uses NHibernate as its ORM rather than the more common EFCore. NHibernate is a mature ORM that has been around for many years and is used in many enterprise applications, however unlike EFCore, NHibernate does not have the ability to generate database migration classes automatically hence the need to create database migrations manually. Migrating Shesha to use **EFCore as its ORM is a priority feature on the roadmap and is planned Feb 2024**.
 :::
 
@@ -100,7 +100,7 @@ namespace Shesha.Enterprise
              .WithIdAsGuid()
              .WithFullAuditColumns()   // Adds the standard columns required when the new entity inherits from FullAuditedEntity
              .WithColumn("OrderNo").AsString().Nullable()
-             .WithColumn("DelieveryDate").AsDateTime().Nullable()
+             .WithColumn("DeliveryDate").AsDateTime().Nullable()
              .WithColumn("Comment").AsString().Nullable()
              .WithColumn("StatusLkp").AsInt64().Nullable();
 
@@ -228,7 +228,7 @@ Note that in addition to the naming rules above, if the property is being added 
 
 The Module Database Prefix helps clearly identify all objects within a database belonging to a specific module. This is especially important when a Shesha application is composed of many modules and it useful to have visibility of source of a database object.
 
-For example, all Tables and Columns belonging to Shesha framework are prefixed with `Frwk_` or `Core_`. Similarly, all Tables and Columns added by your application could be prefixed with `MyApp_`, clearly identifying them at at the database layer.
+For example, all Tables and Columns belonging to Shesha framework are prefixed with `Frwk_` or `Core_`. Similarly, all Tables and Columns added by your application could be prefixed with `MyApp_`, clearly identifying them at the database layer.
 
 The prefix is defaulted to `App_` in the default starter project but can be changed by editing or adding the following lines to the `AssemblyInfo.cs` file on the project within which the entity is defined.
 

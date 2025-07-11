@@ -127,7 +127,7 @@ ___
  ___
 
 ### Events
- Event handlers are functions that get triggered on on specific envents in a component lifecycle.
+ Event handlers are functions that get triggered on on specific events in a component lifecycle.
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 

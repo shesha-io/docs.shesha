@@ -45,7 +45,7 @@ Groups and items share several editable properties, listed below:
 - **Tooltip:** Information displayed when the user hovers over the menu item.
 - **Icon:** An icon from the icons library describing the menu item.
 - **Visibility:** Used to modify the visibility of the menu item using scripting.
-- **Permissions:** Appropriate permissions for viewing and interacting with the menu item. Detailed information is available in the [Permission Based Security Model](/docs/manage-apps-and-users/permisson-based-model) article.
+- **Permissions:** Appropriate permissions for viewing and interacting with the menu item. Detailed information is available in the [Permission Based Security Model](/docs/manage-apps-and-users/permission-based-model) article.
 
 While in the edit menu option, you can add groups and buttons using the "Add Group" or "Add New Item" buttons.
 
