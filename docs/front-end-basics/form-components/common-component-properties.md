@@ -56,7 +56,7 @@ ___
 #### Default Value `string`
  Specifies the default value of the component.
 
- **Data Source Type** `object`  
+#### **Data Source Type** `object`  
 Defines the source from which data is pulled:
 - **Entity Type** *(default)*
 - **URL**
