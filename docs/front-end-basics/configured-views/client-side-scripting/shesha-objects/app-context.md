@@ -7,7 +7,7 @@ Contexts allow to have several storages for the application and use additional l
 :::
 
 **Data Entry:**
-This take in all the properties that have a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name), or [context](http://localhost:3000/docs/front-end-basics/form-components/common-component-properties#context) property set to `appContext`.
+This take in all the properties that have a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name-string), or [context](/docs/front-end-basics/form-components/common-component-properties#context-object) property set to `appContext`.
 
 ![Data Entry](./images/context2.png)
 

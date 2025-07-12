@@ -4,7 +4,7 @@ This object contains the values collected from the current form in question.
 
 ## Data Entry
 
-This takes in all the properties that just have a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name), or an empty [context](https://docs.shesha.io/docs/front-end-basics/form-components/common-component-properties#context) property.
+This takes in all the properties that just have a [property name](/docs/front-end-basics/form-components/common-component-properties#property-name-string), or an empty [context](/docs/front-end-basics/form-components/common-component-properties#context-object) property.
 
 The object from the below example will look like this:
 
