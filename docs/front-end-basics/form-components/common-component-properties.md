@@ -75,14 +75,14 @@ Defines the source from which data is pulled. The options are:
 
 #### **Font** ``object`` 
 
-Customize how your component labels look. Choose the font family, size, weight, and color.
+Customize how your component labels look. Choose the **font family**, **size**, **weight**, and **color**.
 
 #### **Dimensions** ``object`` 
 
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
+Define the size and behavior of the component, including:
+- Width and height
+- Minimum/maximum width and height
+- Overflow handling
 
 #### **Border** ``object`` 
 Controls card border styling, with the following options:
@@ -143,23 +143,23 @@ ___
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 
-#### **on Change** `function`
+#### **On Change** `function`
 
 Triggered on change of the component's value such as on input changes or change of selection in the case of selected based components such as radio buttons, check boxes or drop down list.
 
-#### **on Focus** `function`
+#### **On Focus** `function`
 
 Triggered on the component receives the focus.
 
-#### **on Blur** `function`
+#### **On Blur** `function`
 
 Triggered when a previously selected component loses focus.
 
-#### **on Select** `function`
+#### **On Select** `function`
 
 An event which is triggered every time an [address](/front-end-basics/form-components/Advanced/address.md) is selected.
 
-#### **on Click** `function`
+#### **On Click** `function`
 
 An event triggered when the component is clicked.
 
