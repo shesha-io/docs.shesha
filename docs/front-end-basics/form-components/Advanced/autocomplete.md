@@ -10,31 +10,6 @@ The Autocomplete component enhances user input fields with dynamic suggestions b
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Common
-
-#### **Property Name** `string`  
-Unique identifier for binding this field to your data model. *(Required)*
-
-#### **Label** `boolean`  
-Show or hide the label above the field.
-
-#### **Placeholder** `string`  
-Helper text inside the input box.
-
-#### **Tooltip** `string`  
-Text shown on hover for guidance.
-
-#### **Edit Mode** `object`  
-Controls interaction:
-- Editable
-- Read Only
-- Inherited *(default)*
-
-#### **Hide** `boolean`  
-Toggle the visibility of the component.
-
-___
-
 ### Data
 
 #### **Disable Search** ``boolean``
