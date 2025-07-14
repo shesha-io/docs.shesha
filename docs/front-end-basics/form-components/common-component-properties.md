@@ -14,7 +14,7 @@ This name must be unique within the form, contain only alphanumeric characters a
  This specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
 
 #### **Context** `object`
- This speficies where the form copmonent's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty, otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
+ This specifies where the form component's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty, otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
 
  
 #### **Title** `string`
@@ -139,7 +139,7 @@ ___
  ___
 
 ### Events
- Event handlers are functions that get triggered on on specific events in a component lifecycle.
+ Event handlers are functions that get triggered on specific events in a component lifecycle.
 
 All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
 
