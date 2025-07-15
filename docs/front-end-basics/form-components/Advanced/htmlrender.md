@@ -9,19 +9,7 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Property Name** `string`  
-Binds the rendered output to a unique key in your form. *(Required)*
-
 #### **Render HTML** `function`  
 JSX/HTML script that defines what to render. You can reference:
 - `data`: Form data (object)
 - `globalState`: The global app state (object)
-
-#### **Hide** `boolean`  
-Conditionally hide the component using a script or toggle.
-
-___
-
-### Appearance
-#### **Custom Styles** `function`  
-Returns a `CSSProperties` object to style the rendered HTML block.
