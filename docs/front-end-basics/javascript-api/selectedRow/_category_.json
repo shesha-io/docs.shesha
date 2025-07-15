@@ -1,0 +1,8 @@
+{
+  "label": "selectedRow",
+  "position": 11,
+  "link": {
+    "type": "generated-index",
+    "description": "selectedRow is the object that provides access to the selected row in a data table."
+  }
+}
