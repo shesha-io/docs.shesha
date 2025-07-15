@@ -7,30 +7,7 @@ The Rich Text Editor component allows users to write and format content with a W
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-
-### Common
-
-#### **Property Name** `string`  
-A unique field name binding the editor to your form data. *(Required)*
-
-#### **Label** `boolean`  
-Show or hide the field label.
-
-#### **Placeholder** `string`  
-Text displayed when no content is entered.
-
-#### **Edit Mode** `object`  
-Sets user interaction mode:
-- Editable
-- Read Only
-- Inherited *(default)*
-
-#### **Hide** `boolean`  
-Determines component visibility.
-
-___
-
-### Main
+### Data
 
 #### **Save Height In Storage** `boolean`  
 Persists the editor height in browser storage.
@@ -128,6 +105,3 @@ Choose between:
 
 #### **Auto Height / Width** `boolean`  
 Enable automatic sizing.
-
-#### **Custom Styles** `function`  
-Return a `CSSProperties` object for dynamic styling.
