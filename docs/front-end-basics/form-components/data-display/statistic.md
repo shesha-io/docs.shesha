@@ -12,15 +12,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Property Name** `string`  
-Binds the statistic value to a data field. *(Required)*
-
-#### **Title** `string`  
-The title or label of the statistic. Can be dynamic.
-
-#### **Placeholder** `string`  
-Text shown when no value is available.
-
 #### **Value** `number`  
 Numeric value to display if no property binding is provided.
 
@@ -39,50 +30,8 @@ Text shown after the value.
 **Suffix Icon** `object`  
 Icon displayed after the value.
 
-___
 
-### Appearance
 
-#### Title Font
-Customize how the title appears with the following options:
-- **Family**: Choose from system or web-safe fonts.
-- **Size**: Set the font size using CSS units.
-- **Weight**: Adjust font thickness (light, normal, bold, etc.).
-- **Color**: Pick the font color.
-- **Align**: Set horizontal alignment (left, center, right).
-
-#### Value Font
-Control the look of the displayed value with the following options:
-- **Family**: Choose from system or web-safe fonts.
-- **Size**: Set the font size using CSS units.
-- **Weight**: Adjust font thickness (light, normal, bold, etc.).
-- **Color**: Pick the font color.
-- **Align**: Set horizontal alignment (left, center, right).\
-
-#### Dimensions `string`
-Set width, min/max width constraints using any CSS units.
-
-#### Border `object`
-Configure border style, width, radius, and color.
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-#### Shadow `object`
-Apply a shadow with offset, blur, spread, and color settings.
-
-#### Margin & Padding `object`
-Fine-tune spacing around and inside the component.
-
-#### Custom Style `function`
-Inject your own CSS styles via JavaScript (must return a style object).
 
 
 
