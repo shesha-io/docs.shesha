@@ -10,35 +10,30 @@ The Bar Chart component visualizes data using vertical bars, making it ideal for
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Common
-**Property Name** `string`  
-A unique identifier for the chart.
 
-**Hide** `boolean`  
-Controls whether the chart is visible on the page.
-
-**Data Source Type** `object`  
+#### **Data Source Type** `object`  
 Defines where the chart retrieves data from:
 - Entity Type *(default)*
 - URL
 
-**Simple / Pivot** `object`  
+#### **Simple / Pivot** `object`  
 Chart structure configuration:
 - Simple *(default)*
 - Pivot
 
-**Axis Property** `object`  
+#### **Axis Property** `object`  
 Defines the property used on the X-axis.
 
-**Entity Type** `object`  
+#### **Entity Type** `object`  
 Specifies the data entity from which values are drawn.
 
-**Is Axis Property Time Series?** `boolean`  
+#### **Is Axis Property Time Series?** `boolean`  
 Indicates whether the X-axis property represents a time series.
 
-**Value Property** `object`  
+#### **Value Property** `object`  
 Specifies the property whose values are to be visualized.
 
-**Aggregation Method** `object`  
+#### **Aggregation Method** `object`  
 Determines how values are aggregated:
 - Count *(default)*
 - Sum
@@ -46,68 +41,54 @@ Determines how values are aggregated:
 - Min
 - Max
 
-**Title** `string`  
-The heading shown above the chart. If no title is specified, it is generated from the Entity Type.
-
-**Show Title** `boolean`  
-Toggles visibility of the chart title.
-
-**Show X Axis** `boolean`  
+#### **Show X Axis** `boolean`  
 Enables or disables display of the X-axis.
 
-**Show X Axis Title** `boolean`  
+#### **Show X Axis Title** `boolean`  
 Toggles the title for the X-axis.
 
-**Show Y Axis** `boolean`  
+#### **Show Y Axis** `boolean`  
 Enables or disables display of the Y-axis.
 
-**Show Y Axis Title** `boolean`  
+#### **Show Y Axis Title** `boolean`  
 Toggles the title for the Y-axis.
 
 ___
 
 ### Data
-**Data Source Type** `object`  
+#### **Data Source Type** `object`  
 Defines where the chart retrieves data from:
 - Entity Type *(default)*
 - URL
 
-**Entity Type** `object`  
+#### **Entity Type** `object`  
 Specifies the data model or context.
 
-**Axis Property** `object`  
+#### **Axis Property** `object`  
 Field used for the X-axis.
 
-**Is Axis Property Time Series?** `boolean`  
+#### **Is Axis Property Time Series?** `boolean`  
 Designates if X-axis values are dates or times.
 
-**Value Property** `object`  
+#### **Value Property** `object`  
 Specifies the metric or quantity being charted.
 
-**Order By** `object`  
+#### **Order By** `object`  
 Determines sorting logic for chart data.
 
-**Aggregation Method** `object`  
+#### **Aggregation Method** `object`  
 Defines how values are aggregated (same as above).
 
-**Entity Filter** `object`  
+#### **Entity Filter** `object`  
 Allows you to build complex filter conditions using a query builder interface. This tool helps narrow down the dataset displayed in the chart.
 
 ___
 
 ### Appearance
-**Width** `number`  
-Pixel width of the chart.
 
-**Height** `number`  
-Pixel height of the chart.
-
-**Show Border** `boolean`  
-Toggles a border around the chart.
-
-**Stroke Width** `number`  
+#### **Stroke Width** `number`  
 Sets the width of the bar outlines.
 
-**Stroke Color** `object`  
+#### **Stroke Color** `object`  
 Defines the color of the stroke used for bars.
 
