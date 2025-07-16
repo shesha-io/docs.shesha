@@ -18,15 +18,6 @@ This component is intended to get a list of data (similar to using it with the D
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Common
-#### **Component Name** `string`  
-A unique identifier for this component instance on the form.
-
-#### **Hide** `boolean`  
-Toggles visibility of the DataList.
-
-___
-
 ### Data
 
 #### **Form Selection Mode** `object`  
