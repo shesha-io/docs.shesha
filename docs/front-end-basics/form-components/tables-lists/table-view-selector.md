@@ -15,7 +15,3 @@ The following properties are available to configure the behavior of the componen
 
 #### **Filters** `filtersList`  
 Determines whether the search input is displayed as a block-level element.
-
-#### **Hide** ``boolean``
-
-Allows the component to be conditionally hidden from the form.
