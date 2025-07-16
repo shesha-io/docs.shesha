@@ -13,15 +13,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Component Name** `string`  
-A unique identifier for the separator component in the form.
-
-#### **Label** `boolean`  
-Toggles the display of the section title (not shown when orientation is vertical).
-
-#### **Tooltip** `string`  
-Displays additional context as a tooltip (for horizontal orientation).
-
 #### **Orientation** `object`  
 Defines the line direction:
 - **Horizontal** *(default)*
@@ -29,10 +20,6 @@ Defines the line direction:
 
 #### **Inline** `boolean`  
 Only for horizontal separators. Places the label in line with the divider.
-
-#### **Hide** `boolean`  
-Determines visibility of the separator.
-
 ___
 
 ### Appearance
@@ -49,13 +36,6 @@ Line style options:
 - **Solid** *(default)*
 - **Dashed**
 - **Dotted**
-
-#### Dimensions
-**Width** `string`  
-Horizontal width. Accepts any CSS unit.
-
-**Height** `string`  
-Vertical height. Accepts any CSS unit.
 
 #### Title Style
 **Font Family / Size / Weight / Color** — `font`  
