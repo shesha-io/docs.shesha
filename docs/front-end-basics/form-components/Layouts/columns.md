@@ -52,39 +52,6 @@ ___
 #### **Gutter Y** ``number``
  Gutter Y helps you to create gaps between column content for vertical padding.
 
-#### **Dimensions** ``object``
-
-Set the width, height, min/max sizes of the component.
-
-#### **Border** ``object``
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-#### **Shadow** ``object``
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
 
 
 

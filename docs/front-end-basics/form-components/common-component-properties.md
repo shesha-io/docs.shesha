@@ -50,6 +50,9 @@ Set the component’s interaction behavior:
 
 #### **Placeholder** `string`
  Placeholder text to display to the user when no value is specified.
+
+#### **Collapsible** `boolean`  
+Choose if the component should be collapsible.
 ___
 
 ### Data
