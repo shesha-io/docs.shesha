@@ -1,6 +1,6 @@
 # Alert
 
-This component is used when you need to show alert messages to users. It is also useful when you need a persistent static container that is closable by user actions.
+The Alert component is used when you need to show alert messages to users. It is also useful when you need a persistent static container that is closable by user actions.
 
 
 ![Image](../data-display/images/alert1.png)

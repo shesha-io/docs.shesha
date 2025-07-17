@@ -1,6 +1,6 @@
 # Container
 
-The Container component is used to group components together. It is a wrapper component that can contain other components apply styling to the group as a whole.
+The Container component is used to group components together. It is a wrapper component that can contain other components and apply styling to the group as a whole.
 
 ## Properties
 

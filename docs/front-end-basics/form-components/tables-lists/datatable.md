@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-The Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
+The DataTable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
 
 ![Image](./images/selectedRow.png)
 

@@ -1,6 +1,6 @@
 # Chevron
 
-A chevron is a simple arrow-like symbol (›) that helps users navigate through your application. Think of it as a visual signpost that shows users where they can click or what will happen next.
+The Chevron is a simple arrow-like symbol (›) that helps users navigate through the application. Think of it as a visual signpost that shows users where they can click or what will happen next.
 
 ![Image](../Advanced/images/chevron1.png)
 

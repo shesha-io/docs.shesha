@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-The datatable context component is a powerful tool that allows users to manage and manipulate tabular data within an application. It's often used in scenarios where you need to display, organize, and interact with data in a structured, table-like format. 
+The DataTable context component is a powerful tool that allows users to manage and manipulate tabular data within an application. It's often used in scenarios where you need to display, organize, and interact with data in a structured, table-like format. 
 
 ## **Get Started**
 

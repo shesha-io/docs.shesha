@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-This component is intended to get a list of data (similar to using it with the Datatable component). It shows data from the DatatableContext as a list of sub-forms. The `DataList` component should be placed inside the `DatatableContext` component. Note that other DatatableContext-specific components (Pager, Quick Search, Table view selector) can also affect the `DataList`, similar to the [`Datatable`](/docs/front-end-basics/form-components/tables-lists/datatable.md).
+The DataList component is intended to get a list of data (similar to using it with the DataTable component). It shows data from the DataTableContext as a list of sub-forms. The `DataList` component should be placed inside the `DataTableContext` component. Note that other DataTableContext-specific components (Pager, Quick Search, Table view selector) can also affect the `DataList`, similar to the [`DataTable`](/docs/front-end-basics/form-components/tables-lists/datatable.md).
 
 ![Image](../tables-lists/images/datalist1.png)
 

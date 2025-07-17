@@ -241,7 +241,7 @@ Now, when selecting a list item, the value will have a custom format.
 }
 ```
 
-Configure **Key value function** to get correct Key value (needed to get correct item from the backend). Take first element from splitted value as this is `firstName`
+Configure **Key value function** to get correct Key value (needed to get correct item from the backend). Take first element from split value as this is `firstName`
 
 ```ts
 const keyValueFunc = () => {
