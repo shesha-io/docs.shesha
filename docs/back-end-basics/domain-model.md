@@ -243,7 +243,7 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 ...
 ```
 
-> Another example, in the starter project on Shesha's GitHub repository, the Module Database Prefix is defined in the project's domain module as such
+> Another example can be found in the starter project on Shesha's GitHub repository. In this project, the Module Database Prefix is defined in the domain module as shown below:
 
 ```c# title="shesha-starter/backend/src/Module/ShaCompanyName.ShaProjectName.Domain/Properties/AssemblyInfo.cs" {23} 
 using System.Reflection;
@@ -261,7 +261,7 @@ using Shesha.Attributes;
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
-// to COM components.  If you need to access a type in this assembly from
+// to COM components. If you need to access a type in this assembly from
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
