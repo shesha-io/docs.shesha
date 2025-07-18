@@ -14,28 +14,12 @@ The Button component provides an interactive element to trigger actions in your 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Common
-#### **Component Name** `string`  
-Unique name for this button instance. *(Required)*
 
 #### **Caption** `string`  
 Text displayed on the button.
 
-#### **Tooltip** `string`  
-Text shown on hover to provide additional context.
-
 #### **Icon** `object`  
 An optional icon to be displayed on the button.
-
-#### **Edit Mode**  ``object``
-
-Set the component’s interaction behavior:
-
-- **Inherited *(default)***: Behavior is inherited from the parent form.
-
-- **Editable**: Users can set and change their button.
-
-- **Read Only**: Users can view the button but cannot change it.
-
 ___
 
 ### Appearance
@@ -48,48 +32,3 @@ Predefined button style:
 - **Link**
 - **Text**
 - **Ghost**
-
-#### **Font** ``object`` 
-
-Customize how your buttons look. Choose the font family, size, weight, and color.
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-#### **Border** ``object`` 
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-Also tweak background size, position, and repeat behavior.
-
-#### **Shadow** ``object`` 
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
-
-

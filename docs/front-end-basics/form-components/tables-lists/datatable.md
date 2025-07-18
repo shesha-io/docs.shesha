@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-A Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
+The DataTable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
 
 ![Image](./images/selectedRow.png)
 
@@ -17,12 +17,6 @@ ___
 ## Properties
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
-
-### Common
-#### **Component Name** `string`  
-A unique identifier to bind the component to your form.
-
-___
 
 ### Data
 #### **Customize Columns** 
