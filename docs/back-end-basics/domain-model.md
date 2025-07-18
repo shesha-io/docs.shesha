@@ -272,8 +272,6 @@ using Shesha.Attributes;
 [assembly: IntentTemplate("Boxfusion.Modules.Domain.Properties", Version = "1.0")]
 ```
 
-[shesha-starter/backend/src/Module/ShaCompanyName.ShaProjectName.Domain/Properties/AssemblyInfo.cs](https://github.com/shesha-io/shesha-framework/blob/main/shesha-starter/backend/src/Module/ShaCompanyName.ShaProjectName.Domain/Properties/AssemblyInfo.cs#L23)
-
 ## Domain Repositories
 
 ### See Also:
