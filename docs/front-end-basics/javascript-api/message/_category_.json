@@ -1,0 +1,8 @@
+{
+  "label": "message",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "http is the object that provides access to the HTTP API that can be used to make HTTP requests."
+  }
+}

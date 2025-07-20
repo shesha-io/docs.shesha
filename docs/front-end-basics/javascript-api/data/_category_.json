@@ -1,0 +1,8 @@
+{
+  "label": "data",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Data is the object that provides read access to the form values data."
+  }
+}
