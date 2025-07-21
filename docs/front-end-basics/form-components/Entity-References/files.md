@@ -18,14 +18,6 @@ ___
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Common
-#### **Component Name** `string`  
-The key for binding this upload field to form data. *(Required)*
-
-#### **Label** `object`  
-Shows or hides the label for the upload field.
-
-#### **Tooltip** `string`  
-Hover-over text providing additional context.
 
 #### **List Type** `string`  
 Display style for uploaded files:
@@ -34,15 +26,6 @@ Display style for uploaded files:
 
 #### **Is Dragger** `boolean`  
 Enable drag-and-drop upload (only when List Type ≠ Thumbnail).
-
-#### **Edit Mode** `object`  
-Control interactivity:
-- Editable
-- Read Only
-- Inherited *(default)*
-
-#### **Hide** `boolean`  
-Toggles visibility of the file upload component.
 
 #### **Allow Upload** `boolean`  
 Allows users to upload files. *(default: true)*
@@ -80,34 +63,5 @@ If true, uploads are handled synchronously.
 #### **Allowed File Types** `array`  
 Restricts uploads to specified file types (e.g., 'image/jpeg', 'application/pdf').
 
-___
-
-### Validation
-
-#### **Required** `boolean`  
-If enabled, at least one file must be uploaded.
-
-___
-
-### Appearance
-
-#### **Font** ``object`` 
-
-Customize how your Entity picker looks. Choose the font family, size, weight, and color.
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
 
 
