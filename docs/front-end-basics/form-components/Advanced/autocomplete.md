@@ -2,38 +2,13 @@
 
 import LayoutBanners from './LayoutBanners';
 
-The Autocomplete component enhances user input fields with dynamic suggestions based on the user's typing.It is an input box with text hints, and users can type freely. The keyword is aiding input.
+The Autocomplete component enhances user input fields with dynamic suggestions based on the user's typing. It is an input box with text hints, and users can type freely. The keyword is aiding input.
 
 ![Image](../Advanced/images/autocomplete1.png)
 
 ## Properties
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
-
-### Common
-
-#### **Property Name** `string`  
-Unique identifier for binding this field to your data model. *(Required)*
-
-#### **Label** `boolean`  
-Show or hide the label above the field.
-
-#### **Placeholder** `string`  
-Helper text inside the input box.
-
-#### **Tooltip** `string`  
-Text shown on hover for guidance.
-
-#### **Edit Mode** `object`  
-Controls interaction:
-- Editable
-- Read Only
-- Inherited *(default)*
-
-#### **Hide** `boolean`  
-Toggle the visibility of the component.
-
-___
 
 ### Data
 
@@ -78,9 +53,6 @@ How values are formatted:
 - Simple ID
 - Custom
 
-#### **Display Value Function** `function`  
-Custom display function for values.
-
 #### **Display Property** `object`  
 Property used to display selected value.
 
@@ -99,9 +71,6 @@ Function to get value.
 #### **Key Value Function** `function` (when Value Format is Custom)  
 Function for key value mapping.
 
-#### **Display Value Function** `function` (when Value Format is Custom)  
-Function to render display text.
-
 #### **Filter Selected Function** `function` (when Value Format is Custom)  
 Function to filter selected items.
 
@@ -119,63 +88,9 @@ Groups options by a property.
 
 ___
 
-### Validation
-
-#### **Required** `boolean`  
-Enforces input before submission.
-
-___
-
-### Appearance
-
-#### **Font** ``object`` 
-
-Customize the dropdown's font family, weight, color, and alignment.
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-#### **Border** ``object`` 
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-Also tweak background size, position, and repeat behavior.
-
-#### **Shadow** ``object`` 
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
-
-___
-
 # Autocomplete examples
 
-The Autocomplete component can work with two types of list sources - standard Entities endpoints (`Entities List` Data Source Type) and custom endpoints (`URL` Data Source Type). Custom endpoints should support `string term` parameter for filtering data. The responses from the endpoints should be either a standard response with a list of entities
+The Autocomplete component can work with two types of list sources - standard Entities endpoints (`Entities List` Data Source Type) and custom endpoints (`URL` Data Source Type). Custom endpoints should support `string term` parameter for filtering data. The responses from the endpoints should be either a standard response with a list of entities or an array.
 
 ```ts
 export interface ITableDataResponse {
@@ -184,7 +99,6 @@ export interface ITableDataResponse {
 }
 ```
 
-or an array.
 
 ## • `Entities List` Data Source Type
 
@@ -296,7 +210,7 @@ Without additional settings or with only **Display Property** and **Key Property
 
 **Key value Function** - uses value in custom format to return key value. Used with **Key Property Name** to create filter for request data
 
-**Display value Function** - gets the display name of items. You can use **Display Property** instead or leave they empty to use standard display properties
+**Display value Function** - gets the display name of items. You can use **Display Property** instead or leave them empty to use standard display properties
 
 ### Example
 
@@ -346,4 +260,4 @@ const filterSelectedFunc = () => {
 };
 ```
 
-This script use two fields as a key.
+This script uses two fields as a compound key for filtering.
