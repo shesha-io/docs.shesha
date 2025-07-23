@@ -1,6 +1,6 @@
 # Icon Picker
 
-The Icon Picker component provides an interface for selecting icons from a library.
+The Icon Picker component provides an interface for selecting icons from a library. It enables users to visually browse and choose icons to represent actions, statuses, or decorative elements in forms. This component is ideal for customizing UI elements where iconography improves clarity or aesthetics. The selected icon is stored as a string (usually the icon name) and can be styled with size, color, and alignment options.
 
 ![Image](../Advanced/images/iconpicker1.png)
 
