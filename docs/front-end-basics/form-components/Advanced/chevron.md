@@ -23,4 +23,10 @@ ___
 #### **Show Icons** `boolean`
 Toggle visibility of icons next to items.
 
+#### **Color Source** ``object``
+Defines where the color comes from:
+- **Primary color** *(default)*: Uses primary color theme.
+- **Custom color**: Lets you define your own color.
+- **From reflist item**: Dynamically sourced from reference list data.
+
 
