@@ -139,9 +139,9 @@ If you will use `Entity reference` Value format then the selected value will be 
 }
 ```
 
-### • `Simple Id` Value format
+### • `Simple ID` Value format
 
-If you will use `Simple Id` Value format then the selected value will be stored in the model as
+If you will use `Simple ID` Value format then the selected value will be stored in the model as
 
 ```js
 {
@@ -171,7 +171,7 @@ If you specify a value for **KeyProperty**, the received data will contain an ad
 
 <LayoutBanners url="https://app.guideflow.com/embed/ok8eev2fxk" type={1}/>
 
-### • `Simple Id` Value format
+### • `Simple ID` Value format
 
 Standard format of response from custom endpoints
 
@@ -202,7 +202,7 @@ Regardless of the selected value of **Data Source type** you can use **Display v
 
 Regardless of the selected value of **Data Source type** you can use `Custom` **Value format**.
 
-Without additional settings or with only **Display Property** and **Key Property** settings, this mode is similar to `SimpleId` **Value format**.
+Without additional settings or with only **Display Property** and **Key Property** settings, this mode is similar to `SimpleID` **Value format**.
 
 **To** **set** up a **custom** **mode**, you **can** **use** the following **methods**:
 
