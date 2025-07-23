@@ -12,9 +12,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Component Name** `string`  
-Unique identifier for the drawer. *(Required)*
-
 #### **Show Header** ``boolean``
 Controls visibility of the drawer's header.
 
@@ -32,42 +29,3 @@ Specifies the animation direction for how the drawer appears:
 - Top
 - Bottom
 - Left
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-#### **Border** ``object`` 
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-Also tweak background size, position, and repeat behavior.
-
-#### **Shadow** ``object`` 
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).

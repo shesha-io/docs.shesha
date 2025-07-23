@@ -19,26 +19,6 @@ It operates much like a template or a mini-form within the larger application. I
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Common
-
-#### **Property Name** `string`  
-Unique key to bind the SubForm to the parent form data. *(Required)*
-
-#### **Label** ``object``
-Customize whether to display a label. Hiding it can simplify the UI in some layouts.
-
-#### **Edit Mode** `object`  
-Choose interaction mode:
-- **Editable**
-- **Read Only**
-- **Inherited** *(default)*
-
-
-#### **Hide** `boolean`  
-Determines visibility of the SubForm.
-
-___
-
 ### Data
 
 #### **Form Selection Mode** `object`  
