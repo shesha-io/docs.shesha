@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-This enables the uploading of one or more files. It also showcases the process of uploading by selecting or dragging a file.
+The Filelist enables the uploading of one or more files. It also showcases the process of uploading by selecting or dragging a file.
 
 ![Image](../Entity-References/images/filelist1.png)
 

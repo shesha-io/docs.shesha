@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-A datatable context component is a powerful tool that allows users to manage and manipulate tabular data within an application. It's often used in scenarios where you need to display, organize, and interact with data in a structured, table-like format. 
+The DataTable context component is a powerful tool that allows users to manage and manipulate tabular data within an application. It's often used in scenarios where you need to display, organize, and interact with data in a structured, table-like format. 
 
 ## **Get Started**
 
@@ -14,17 +14,9 @@ ___
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Common
-#### **Property Name** `string`  
-Unique key binding this context to the datatable.
-
-#### **Tooltip** `string`  
-Helper text shown on hover.
 
 #### **Disable Refresh Data** `function`  
 JavaScript function that prevents data refresh until required inputs (like filters) are ready.
-
-#### **Hide** `boolean`  
-Toggles visibility of the context.
 
 ___
 

@@ -9,14 +9,6 @@ The Table Filter component is a customizable filter button designed to help user
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Common
-#### **Component Name** `string`  
-The unique identifier used to reference this filter button. *(Required)*
-
-#### **Label** `string`  
-The visible text displayed on the button.
-
-#### **Tooltip** `string`  
-Helpful text shown on hover to describe the button's function.
 
 #### **Icon** `object`  
 Name of an optional icon displayed on the button.
@@ -26,15 +18,6 @@ Adds a red style to indicate a destructive action.
 
 #### **Block** `boolean`  
 Expands the button to take up full width of its container.
-
-#### **Hide** `boolean`  
-Determines whether the button is visible or hidden.
-
-#### **Edit Mode** `object`  
-Configures user interaction:
-- Editable
-- Read Only
-- Inherited *(default)*
 
 #### **Action Configuration** `object`  
 Defines the behavior triggered when the button is clicked.
@@ -51,26 +34,6 @@ Controls the visual style:
 - Link
 - Text
 - Default *(default)*
-
-#### **Font** ``object`` 
-
-Customize how your table filter looks. Choose the font family, size, weight, and color.
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
 
 
 

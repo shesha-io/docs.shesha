@@ -1,6 +1,6 @@
 # Address
 
-The address component is a generic component that is useful in any instance where an address field is required and must be stored. It’s designed for smart and dynamic address input, with support for advanced configurations like bounds and prioritization.
+The Address component is a generic component that is useful in any instance where an address field is required and must be stored. It’s designed for smart and dynamic address input, with support for advanced configurations like bounds and prioritization.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=d1a61bc8-6960-4426-9e00-b0637f39d8b1" title="Address Component" ></iframe>'
 
