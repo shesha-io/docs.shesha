@@ -10,14 +10,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Property Name** ``string``
-
-Unique identifier used to bind the component's value to your data model.
-
-#### **Label** ``object``
-
-Customize whether to display a label. Hiding it can simplify the UI in some layouts.
-
 #### **Content** ``string``
 
 The text or content that will be displayed inside the link.
@@ -30,10 +22,6 @@ The URL or path the link points to.
 
 If enabled, allows the link to have child elements nested inside it.
 
-#### **Hide** ``boolean``
-
-Set whether the link should be visible or hidden.
-
 #### **Target** ``object``
 
 Specifies where to open the linked document:
@@ -45,16 +33,3 @@ Specifies where to open the linked document:
 - **Self** *(default)*: Opens in the same frame.
 
 - **Top**: Opens in the topmost frame.
-
-___
-
-### Appearance
-
-#### **Font** ``object`` 
-
-Customize how your link labels look. Choose the font family, size, weight, and color.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
-
