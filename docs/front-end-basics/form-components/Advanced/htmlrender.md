@@ -1,5 +1,5 @@
 # Html Render
-The Html Render component allows you to inject custom JSX or HTML-like structures directly into your form. 
+The Html Render component allows you to inject custom JSX or HTML-like structures directly into your form. It is useful for embedding styled text, headings, images, or any other custom layout elements that aren’t tied to form data. This component provides a great way to add visual context or instructional content between interactive form elements.
 
 ![Image](../Advanced/images/htmlrender1.png)
 
