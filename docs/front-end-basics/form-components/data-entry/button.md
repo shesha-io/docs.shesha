@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-The Button component provides an interactive element to trigger actions in your forms. This could be submitting data, opening modals, or executing scripts. It supports a range of styling options, icons, and visibility rules to align with your design and user workflows.
+The Button component provides an interactive element to trigger actions in a form. This could be submitting data, opening modals, or executing scripts. It supports a range of styling options, icons, and visibility rules to align with the design and workflows.
 
 ![Image](../data-entry/images/button1.png)
 

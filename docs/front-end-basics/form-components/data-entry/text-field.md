@@ -1,6 +1,6 @@
 # Text Field
 
-The Text Field component provides a clean, customizable input for short strings like names, titles, or search queries.
+The Text Field component provides a clean, customizable input for short strings like names, titles, or search queries. It supports various formatting options, validation rules, and interactive behaviors such as placeholders, tooltips, and live feedback. Ideal for capturing brief, user-entered information, it can be tailored for read-only displays, inline editing, or integrated seamlessly within larger forms.
 
 ![Image](../data-entry/images/textfield1.png)
 
@@ -25,11 +25,11 @@ Set a pre-filled value for the component.
 
 #### **Prefix & Prefix Icon** ``string``/``function``
 
-Add a prefix text or icon (e.g., currency symbols) before the text.
+Add a prefix text or icon (e.g. currency symbols) before the text.
 
 #### **Suffix & Suffix Icon** ``string``/``function``
 
-Display text or icons after the text (e.g., units like %, kg).
+Display text or icons after the text (e.g. units like %, kg).
 
 #### **Spell Check** ``boolean``
 

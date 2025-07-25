@@ -47,10 +47,10 @@ ___
 ### Appearance
 
 #### **Gutter X** ``number``
- Gutter X helps you to create gaps between column content for horizontal padding.
+ Gutter X helps you create gaps between column content for horizontal padding.
 
 #### **Gutter Y** ``number``
- Gutter Y helps you to create gaps between column content for vertical padding.
+ Gutter Y helps you create gaps between column content for vertical padding.
 
 
 

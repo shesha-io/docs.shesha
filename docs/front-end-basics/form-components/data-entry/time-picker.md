@@ -54,7 +54,7 @@ Hide options that are not available for selection.
 
 #### **Range** ``boolean``
 
-Enable to allow users to select a range of times instead of a single time.
+Enable this to allow users select a range of times instead of a single time.
 
 ___
 

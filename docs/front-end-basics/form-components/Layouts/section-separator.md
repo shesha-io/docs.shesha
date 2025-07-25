@@ -48,8 +48,5 @@ Apply advanced title styling via JavaScript returning a `CSSProperties` object.
 **Margin & Padding** `object`  
 Configure spacing around and inside the separator.
 
-**Custom Style** `function`  
-Use JavaScript to return dynamic container styles as a `CSSProperties` object.
-
 
 

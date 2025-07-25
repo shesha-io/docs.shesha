@@ -1,6 +1,6 @@
 # Text
 
-The Text component is responsible for displaying text content on a webpage. Text components can vary in complexity and functionality, and they are a fundamental part of building user interfaces.
+The Text component is responsible for displaying text content on a form. Text components can vary in complexity and functionality, and they are a fundamental part of building user interfaces.
 
 ![Image](../data-display/images/text1.png)
 
