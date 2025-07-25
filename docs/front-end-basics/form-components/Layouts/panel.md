@@ -18,7 +18,7 @@ Enable a custom header layout instead of the standard title and icon.
 #### **Icon Position** `object`
 Position of the icon in the header:
 
-- End (default)
+- End *(default)*
 - Hide
 - Start
 

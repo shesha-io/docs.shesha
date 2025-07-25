@@ -11,12 +11,4 @@ The following properties are available to configure the behavior of the componen
 ### Common
 #### **Block** `boolean`  
 Determines whether the search input is displayed as a block-level element.
-___
-
-### Appearance
-#### **Dimensions** ``object``
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
 

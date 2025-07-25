@@ -11,10 +11,10 @@ The following properties are available to configure the behavior of the componen
 ### Common
 
 #### **Render Form** `object`  
-The modal form that opens when a card is clicked. Required.
+The modal form that opens when a card is clicked. (*Required*)
 
 #### **Grouping Property** `string`  
-Field in your data model used to categorize items into columns. Required.
+Field in your data model used to categorize items into columns. (*Required*)
 
 #### **Readonly** `boolean`  
 Disables drag-and-drop and editing capabilities.
