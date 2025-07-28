@@ -43,7 +43,7 @@ ___
 
 #### **Align-Items** `object`
 
-- Specifies the default alignment for items inside a flexbox or grid container. It consists of 6 options:
+- Specifies the default alignment for items inside a flexbox or grid container. It consists of 5 options:
 
   - **Normal:** Default. Behaves like 'stretch' for flexbox and grid items, or 'start' for grid items with a defined block size.
   - **Stretch:** Items are stretched to fit the container.

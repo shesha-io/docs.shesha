@@ -1,5 +1,5 @@
 # Drawer
-The Drawer component allows you to open a sliding panel from any side of the screen, ideal for temporary form content, quick settings, or auxiliary views. It supports extensive customization around behavior, size, positioning, and content.
+The Drawer component allows the opening of a sliding panel from any side of the screen, ideal for temporary form content, quick settings, or auxiliary views. It supports extensive customization around behavior, size, positioning, and content.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=41d541dc-75c9-4436-ad41-3b39ea828efb" title="Drawer Component" ></iframe>'
 

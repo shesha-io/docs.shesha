@@ -52,7 +52,7 @@ ___
 Identifier linking uploaded files to an entity.
 
 #### **Owner Type** `string`  
-Defines the entity type that owns the file (autocomplete supported).
+Defines the entity type that owns the file (*autocomplete supported*).
 
 #### **Files Category** `string`
 A label or tag that classifies uploaded files into a specific category.
@@ -61,7 +61,7 @@ A label or tag that classifies uploaded files into a specific category.
 If true, uploads are handled synchronously.
 
 #### **Allowed File Types** `array`  
-Restricts uploads to specified file types (e.g., 'image/jpeg', 'application/pdf').
+Restricts uploads to specified file types (*e.g., 'image/jpeg', 'application/pdf'*).
 
 
 

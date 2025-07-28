@@ -33,7 +33,7 @@ ___
 
 ![Image](../images/tabs2.png)
 
- The user can use the configure tabs option to add the tabs that they want to have.
+ The configure tabs option can be used to add the tabs that at user wants to have.
  An array of tab configuration objects. Each tab supports:
  - **Name** ``string`` – Internal identifier used to reference the tab.
  - **Title** ``string`` – Text displayed on the tab label.

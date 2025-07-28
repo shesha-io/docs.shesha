@@ -28,7 +28,7 @@ Defines how the form is selected:
 
 
 #### **Modal Form** `string`  
-The form opened when a list item is selected (Required).
+This is the form that is opened when a list item is selected (*Required*).
 
 #### **Selection Mode** `object`  
 Item selection type:
