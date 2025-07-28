@@ -30,6 +30,7 @@ Configure columns using a visual builder. Optionally supports expression logic f
     - Action 
     - CRUD operations 
     - Form
+    
 - **Property Name** ``string`` – The underlying field name from the data source.
 
 - **Tooltip** ``string`` – Hover text shown in the column header.

@@ -19,9 +19,6 @@ Specify the input type:
 
 - **Password**: Masks the entered text for sensitive information.
 
-#### **Default Value**  ``string``/``function``
-
-Set a pre-filled value for the component.
 
 #### **Prefix & Prefix Icon** ``string``/``function``
 

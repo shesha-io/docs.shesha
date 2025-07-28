@@ -56,8 +56,6 @@ Choose if the component should be collapsible.
 ___
 
 ### Data
-#### **Default Value** `string`
- Specifies the default value of the component.
 
 #### **Data Source Type** `object`  
 Defines the source from which data is pulled. The options are:
