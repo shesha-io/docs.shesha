@@ -1,6 +1,8 @@
 # Notes
 
-The Notes component is a collaborative and versatile feature for capturing and managing threaded notes. It supports data ownership, conditional visibility, layout adjustments, and event scripting.
+The Notes component is a collaborative and versatile feature for capturing and managing threaded notes. It supports data ownership, conditional visibility, layout adjustments, and event scripting. 
+
+Allowing notes to be captured on a form is as simple as	adding the `Notes` component to the form. The `Notes` component will automatically display any notes that have been captured against the entity that the form is bound to. 
 
 ![Image](../Entity-References/images/notes1.png)
 
