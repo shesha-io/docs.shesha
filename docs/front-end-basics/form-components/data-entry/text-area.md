@@ -12,10 +12,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Default Value**  ``string``/``function``
-
-Set a pre-filled value for the text area field.
-
 #### **Empty As Default**  ``boolean``
 
 Returns an empty string as the default value instead of ``null``.

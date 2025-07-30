@@ -12,10 +12,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Data
 
-#### **Default Value** ``string``
-
-Set a pre-selected default item. Especially useful when you want to provide an initial value.
-
 #### **Mode** ``Object``
 
 Switch between single *(default)*, multiple, or tag selection.

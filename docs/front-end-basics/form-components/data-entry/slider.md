@@ -11,9 +11,6 @@ The following properties are available to configure the behavior of the componen
 
 ### Data
 
-#### **Default Value** `number`
-Sets the initial position of the slider when the form loads.
-
 #### **Minimum** `number`
 The minimum allowable value on the slider.
 

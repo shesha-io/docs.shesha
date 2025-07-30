@@ -21,8 +21,6 @@ Sets how many options can be selected:
 - Single *(default)*
 - Multiple
 
-#### **Default Value** `function`  
-JavaScript code to compute the initial value.
 
 #### **Data Source Type** `object`  
 Choose source for suggestions:
