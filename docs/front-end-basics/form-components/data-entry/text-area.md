@@ -36,10 +36,6 @@ ___
 
 ### Validation
 
-#### **Min Length / Max Length** ``number``
-
-Set how short or long the input must be.
-
 #### **Message** ``string``/``function``
 
 Custom message displayed when validation fails.
