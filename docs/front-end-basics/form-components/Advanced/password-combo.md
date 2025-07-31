@@ -9,8 +9,6 @@ The Password Combo component provides a secure and user-friendly way to capture 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Validation
-#### **Min Length** `number`
-Specifies the minimum allowed password length.
 
 #### **Message** `string`
 Custom validation message to show when input does not meet rules.
