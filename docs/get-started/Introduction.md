@@ -26,9 +26,9 @@ Shesha simplifies the process of creating a user interface that interacts with a
 
 ## Get Started
 
-1. Download the <a href="https://www.shesha.io/get-started-with-shesha">Shesha Starter template</a>, which provides fully customizable artifacts:
+1. Download the <a href="https://www.shesha.io/download-shesha">Shesha Starter template</a>, which provides fully customizable artifacts:
 
-   - **Adminportal (Frontend):** A React.js solution for the front end.
+   - **Adminportal (Frontend):** A React.js solution for the frontend.
    - **Backend:** An ASP.NET Core solution for the backend.
    - **Database:** A seeded SQL database with sample data.
 
