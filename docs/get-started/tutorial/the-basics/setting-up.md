@@ -12,7 +12,7 @@ sidebar_position: 1
   - **Project Name**: `Membership`
 - The Namespace of the solution will start with `Shesha.Membership`.
 
-![Get Shesha](./images/getshesha.png)
+![Get Shesha](./images/getshesha2.png)
 
 - Unzip the folder generated to your preferred destination.
 - The zip file includes:
@@ -25,7 +25,7 @@ sidebar_position: 1
 1.  Open `Microsoft SQL Server Management Studio`
 2.  Connect to a server i.e localhost
 3.  Right-click `Databases`
-4.  Select `Import Data-tier Application`... and then click Next
+4.  Select `Import Data-tier Application...` and then click Next
 5.  Click Browse, locate your `Membership.bacpac` file, and click Next
 6.  In the `New database` name field, type `Membership` and click Next
 7.  Click `Finish` in the Summary step
