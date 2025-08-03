@@ -70,6 +70,9 @@ Defines the source from which data is pulled. The options are:
 #### **Required** `boolean`
  If checked, prohibits form submission if the component does not have a value (mandatory). Indicated by a red asterisk mark (<span style={{ color: 'red' }}>*</span>) next to the component.
 
+ #### **Min Length / Max Length** ``number``
+
+Set how short or long the input must be.
  ___
 
 ### Appearance
