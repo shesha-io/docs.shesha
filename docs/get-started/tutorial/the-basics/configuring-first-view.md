@@ -289,7 +289,7 @@ Let’s create a form to enable viewing and editing of our newly registered memb
 
 ### Adding a Dynamic Title
 
-We can make the title of the view dynamic to give it a more personal touch. To display dynamic text Shesha uses mustache templating as its templating syntax. It works by simply inserting 'tags' where dynamic text should be inserted, E.g. `My template text {{propertyName}}`.
+We can make the title of the view dynamic to give it a more personal touch. To display dynamic text Shesha uses mustache templating as its templating syntax. It works by simply inserting **tags** where dynamic text should be inserted, E.g. `My template text {{propertyName}}`.
 
 1. Select the `text` component > Set the component's `Content` property to `Membership for: {{fullName}}`.
 
