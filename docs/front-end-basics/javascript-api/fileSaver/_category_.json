@@ -1,0 +1,8 @@
+{
+  "label": "fileSaver",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "fileSaver is the object that provides access to the file saver API."
+  }
+}
