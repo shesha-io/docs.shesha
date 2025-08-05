@@ -6,7 +6,7 @@ sidebar_position: 3
 
 Let's customize the model so we can update the information we need to properly track the status and location of members.
 
-In this section, you learn how to:
+In this section, you'll learn how to:
 
 - Extend an Existing Entity
 - Create a Reference List
