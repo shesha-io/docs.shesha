@@ -14,6 +14,11 @@ sidebar_position: 4
 * **Visual Studio Code** / any of the new AI-infused forks of VSCode - Any IDE would probably do but we stick to VSCode for familiarity. This is where you will be writing all your full stack code. (Visual Studio is no longer supporting Mac OS)
 * **Azure Data Studio** - You will use this to connect to your SQL Server and see your databases and tables etc.
 
+> You may need to make your commands as sudo commands: 
+> ```bash
+> $sudo ...
+> ```
+
 ## Setting Up
 
 ### 1. Download & Install Docker
