@@ -1,4 +1,5 @@
 ---
+title: Mac OS Setup
 sidebar_position: 4
 ---
 
