@@ -15,10 +15,10 @@ sidebar_position: 4
 * **Visual Studio Code** / any of the new AI-infused forks of VSCode - Any IDE would probably do but we stick to VSCode for familiarity. This is where you will be writing all your full stack code. (Visual Studio is no longer supporting Mac OS)
 * **Azure Data Studio** - You will use this to connect to your SQL Server and see your databases and tables etc.
 
-> You may need to make your commands as sudo commands: 
-> ```bash
-> $sudo ...
-> ```
+> You may need to make your commands as sudo commands, in which case preface such commands with `sudo ` to make sure the commands have the right access levels: 
+```bash
+sudo ...
+```
 
 ## Setting Up
 
@@ -26,7 +26,7 @@ sidebar_position: 4
 
 Use this link and pick the macOS one: https://www.docker.com
 
-* Once you have installed Docker, you can start making `docker ...` commands on the terminal to create images, pull images, instantiate containers from images, kill containers etc.
+* Once you have installed Docker and your Docker engine is running, you can start making `docker ...` commands on the terminal to create images, pull images, instantiate containers from images, kill containers etc.
 * You can dive deeper about the process here: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver17\&tabs=cli\&pivots=cs1-bash
 * We shall summarize the process here:
 
