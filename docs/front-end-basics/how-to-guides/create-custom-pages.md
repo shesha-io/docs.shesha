@@ -14,13 +14,11 @@ To avoid confusion, there is a difference between custom pages and custom compon
 
 To create a custom page:
 
-1. Create a `custom` folder in directory.
+1. Navigate to the **(main)** folder **(AdminPortal --> src --> app --> (main))**
 
-- Navigate to the `src` folder (root -> src->app->(main)).
+2. Create a `custom` folder in the directory named after your desired URL path. For example, if you want the URL to include `/custom`, name the folder **custom**.
 
-  - Create a folder with the name of the path you choose to use (e.g., a custom folder means `/custom` on the URL path).
-
-2. Once this folder has been created, it is suggested to create an `page.tsx` file inside the custom directory created. An illustration can be seen below (Figure 1: Folder Structure). A `.tsx` extension is used when embedding JSX elements inside the files, while `.ts` is used for plain TypeScript files that do not support adding JSX elements.
+3. Once this folder has been created, it is suggested to create an `page.tsx` file inside the custom directory created. An illustration can be seen below (Figure 1: Folder Structure). A `.tsx` extension is used when embedding JSX elements inside the files, while `.ts` is used for plain TypeScript files that do not support adding JSX elements.
 
 Figure 1 shows an illustration of the folder structure.
 
@@ -29,8 +27,23 @@ Figure 1 shows an illustration of the folder structure.
 Figure 2 shows a snippet of code that will be added in the `page.tsx` page.
 ![Image](./images/customPage5.png)
 
+
+```ts
+import React from 'react'
+
+const CustomPage = () => {
+    return (
+        <div>
+            <h1>Hello World</h1>
+        </div>
+    )
+};
+
+export default CustomPage
+```
+
 ## How to Access
 
-Adding a page to the Shesha boilerplate is the same as adding it to a Next.js application. If the developer is familiar with Next.js, it is the same with the Shesha boilerplate because the Shesha boilerplate uses Next.js to serve pages. This means that your Url will be suffixed by your folder name. E.g. `https://shesha.io/custom` or `https://localhost:6006/custom`
+Adding a page to the Shesha boilerplate is the same as adding it to a Next.js application. If the developer is familiar with Next.js, it is the same with the Shesha boilerplate because the Shesha boilerplate uses Next.js to serve pages. This means that the Url will be suffixed by the created folder name. E.g. `https://shesha.io/custom` or `https://localhost:6006/custom`
 
 ![Image](./images/customPage6.png)
