@@ -141,7 +141,7 @@ export const TheComponents: IToolboxComponentGroup[] = [
 
 ## Component Definition
 
-In this example, we will demonstrate the standard way of creating a component in Next.js, including the use of typed props that extend the IConfigurableFormComponent interface from the Shesha Framework.
+In this example, we will demonstrate the standard way of creating a component in Next.js, including the use of typed props that extend the `IConfigurableFormComponent` interface from the Shesha Framework.
 
 **Note**: This component will be handled by the Factory method within the custom-card designer component.
 
@@ -177,7 +177,7 @@ export default CustomCard;
 
 ## Designer Component Definition
 
-The custom-card component must implement the IToolboxComponent interface to maintain consistency within the Form Builder, and this rule applies to all custom components. One more thing to point out is the Factory method—this is the method that will return our custom card JSX from the components folder.
+The custom-card component must implement the `IToolboxComponent` interface to maintain consistency within the Form Builder, and this rule applies to all custom components. One more thing to point out is the Factory method—this is the method that will return our custom card JSX from the components folder.
 
 #### Example Component: `CustomCard`
 
@@ -414,7 +414,7 @@ export interface ICustomCard extends IConfigurableFormComponent {
 
 To expose custom components, wrap your application's root provider with the `Custom-Plugin`. This step makes the components available in the form builder.
 
-Navigate to the `app-provider.tsx` file located in the `adminportal` directory: `src > app > app-provider.tsx`
+Navigate to the `app-provider.tsx` file located in the `adminportal` directory: `src --> app --> app-provider.tsx`
 
   <!-- figure 11 -->
 
