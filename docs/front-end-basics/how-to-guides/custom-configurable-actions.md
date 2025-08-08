@@ -4,7 +4,7 @@
 
 These are configured actions to be triggered upon button click. The custom configurable actions feature demonstrates how to create reusable and flexible actions within a low-code framework using hooks. By leveraging configurable actions, developers can create actions (static and dynamic) that are flexible enough to be reused across different parts of the application without duplicating code. These actions are particularly useful in low-code environments where both technical and non-technical users may need to configure functionality easily.
 
-This implementation of this example spans across five key files:
+The implementation of this example spans across five key files:
 
 - **model.tsx**: Defines constants for configurable actions.
 - **static-action.tsx**: Implements the logic for showing a static message.
@@ -153,7 +153,7 @@ This JSON file defines the structure of the form that captures the input for the
 ```
 
 - **components**: Defines the form fields used in the action.
-    - The dynamic message input is a `textArea` field labeled as "Dynamic Message" and has the `name` "dynamicMessage", which corresponds to the argument passed in the `executer`.
+    - The dynamic message input is a `textArea` field labeled as **Dynamic Message** and has the `name` **dynamicMessage**, which corresponds to the argument passed in the `executer`.
 - **formSettings**: Specifies the layout and appearance of the form, including how labels and input fields are displayed.
 
 ### custom-configurable-actions-processor.tsx
@@ -228,7 +228,7 @@ export const AppProvider: FC<PropsWithChildren<IAppProviderProps>> = ({
 
 ## Results
 
-1. Drag in a `Button Group` component and `Customize Button Group`
+1. Drag in a `Button Group` component and click `Customize Button Group`
 
 ![Image](./images/CA-ButtonGroup.png)
 
@@ -236,7 +236,7 @@ export const AppProvider: FC<PropsWithChildren<IAppProviderProps>> = ({
 
 ![Image](./images/CA-StaticMessage.png)
 
-3. Add a `New Item` for the `Dynamic Message` and configure the `Custom Actions` to `Show Dynamic Message`. This takes in an argument (`Dynamic Message`), which for the purposes of this example, we have passed a simple text. E.g. `I am a dynamic message`
+3. Add a `New Item` for the `Dynamic Message` and configure the `Custom Actions` to `Show Dynamic Message`. This takes in an argument (`Dynamic Message`), which for the purposes of this example, we have passed a simple text. E.g. **I am a dynamic message**
 
 ![Image](./images/CA-DynamicMessage.png)
 
