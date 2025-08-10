@@ -25,6 +25,7 @@ Figure 1 shows an illustration of the folder structure.
 ![Image](./images/customPage4.png)
 
 Figure 2 shows a snippet of code that will be added in the `page.tsx` page.
+
 ![Image](./images/customPage5.png)
 
 
