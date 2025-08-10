@@ -1,8 +1,0 @@
-{
-  "label": "CRUD operations",
-  "position": 5,
-  "link": {
-    "type": "generated-index",
-    "description": "application.entities provides basic operations on entities. Selection of the entity type is done using dot notation (the same approach as for application settings): application.entities.[module].[entityType]. Each entity type contains 4 basic CRUD methods."
-  }
-}

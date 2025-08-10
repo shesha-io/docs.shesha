@@ -16,7 +16,6 @@ Central point of the JS API is the **'application'** exposed variable. It contai
 - moment
 - pageContext
 - selectedRow
-- setGlobalState
 
 ## Current user API – application.user
 
@@ -166,15 +165,12 @@ const evaluator = async () => {
 
     application.entities.[module].[entityType]
 
-Each entity type contain 4 basic CRUD methods:
+Each entity type contains 4 basic CRUD methods:
 
-**1. [createAsync](/docs/front-end-basics/javascript-api/entities-api/createAsync)** - create a new entity, see code example below:
-
-**2. [getAsync](/docs/front-end-basics/javascript-api/entities-api/getAsync)** - fetch entity data from the back-end
-
-**3. [updateAsync](/docs/front-end-basics/javascript-api/entities-api/updateAsync)** - update entity
-
-**4. [deleteAsync](/docs/front-end-basics/javascript-api/entities-api/deleteAsync)** - delete entity
+1. [`createAsync`](/docs/front-end-basics/javascript-api/application/entities#createasync) – create a new entity.
+2. [`getAsync`](/docs/front-end-basics/javascript-api/application/entities#getasync) – fetch entity data from the back-end.
+3. [`updateAsync`](/docs/front-end-basics/javascript-api/application/entities#updateasync) – update entity.
+4. [`deleteAsync`](/docs/front-end-basics/javascript-api/application/entities#deleteasync) – delete entity.
 
 All listed operations use default CRUD API endpoints and don't require manual usage of urls.
 
