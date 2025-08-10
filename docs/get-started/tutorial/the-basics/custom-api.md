@@ -4,9 +4,9 @@ sidebar_position: 5
 
 # Custom APIs
 
-Until now, although the front-end application is clearly interacting with the back-end to retrieve data, you have not had to explicitly create any `APIs` for this to happen.
+Until now, although the front-end application is clearly interacting with the back-end to retrieve data, you have not had to explicitly create any **APIs** for this to happen.
 
-This is because Shesha, automatically creates `CRUD APIs` for all entities in your projects. However, if you want to enforce some custom logic you will need to create new APIs and call them from the front-end.
+This is because Shesha, automatically creates **CRUD APIs** for all entities in your projects. However, if you want to enforce some custom logic you will need to create new APIs and call them from the front-end.
 
 Imagine that we want `MembershipStatus` property to be updated through a more controlled process instead of allowing the end-user to simply select the status. E.g. Before activating the membership, you would check if an initial payment of **R100** has been received.
 
@@ -22,8 +22,8 @@ In this section, you'll learn how to:
 
 1. Navigate to `Shesha.Membership.Application`
 2. Create a new `Services` folder
-3. Right click on the newly created `Services` folder, `Add` > `Class`
-4. Give your class the name of: `MemberActions.cs`, and click on `Add`
+3. Right click on the newly created `Services` folder, **Add** --> **Class**
+4. Give your class the name of: `MemberActions.cs`, and click on **Add**
 5. Populate your app service with the following:
 
 ```csharp
@@ -87,10 +87,10 @@ _Learn more about Shesha Dynamic Dtos amd Dynamic Dto Mapping [here](/docs/back-
 
 ### Configuring an action button
 
-We need to configure an action button so we can call the `custom API` we just created. We will be doing this in `member-details` to be able to activate membership for that specific member.
+We need to configure an action button so we can call the **custom API** we just created. We will be doing this in `member-details` to be able to activate membership for that specific member.
 
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select the 'Button Group` component` and `Customize Button Group` to include the following button:
+2. Select the **Button Group component** and click the **Customize Button Group** button to include the following button:
 
 ![Image](./images/custom1.png)
 
@@ -115,9 +115,9 @@ We need to configure an action button so we can call the `custom API` we just cr
   }
   ```
 
-  - Handle Success : `Designer Form` > `Refresh`
+  - Handle Success : `Designer Form` --> `Refresh`
 
-- Click `save` on the `customize button group` modal.
+- Click **Save** on the **Customize Button Group** modal.
 
 3. Save your form
 
@@ -128,14 +128,14 @@ We need to configure an action button so we can call the `custom API` we just cr
 
 #### Not enough payments
 
-- For the purposes of this tutorial, this member has only made a payment of R50, which is half of the `activation amount`
+- For the purposes of this tutorial, this member has only made a payment of **R50**, which is half of the **activation amount**
 - When trying to activate the membership, it will throw an error
 
 ![Image](./images/custom2.png)
 
 #### Adequate payments
 
-- Add a `Membership Payment` of `R60`, using the configured `inline-editing` functionality on the `child table`
+- Add a `Membership Payment` of **R60**, using the configured **inline-editing** functionality on the `child table`
 - Activate membership!
 - The `status` should now be set to `Active`
 
@@ -143,16 +143,18 @@ We need to configure an action button so we can call the `custom API` we just cr
 
 ## Disabling `Activate Membership` Button
 
-After you have activated the membership, you will notice that the ‘Activate Membership’ button is still active, which should not be the case if the user already has an active membership. We have to disable this button in cases like these.
+After you have activated the membership, you will notice that the **Activate Membership** button is still active, which should not be the case if the user already has an active membership. We have to disable this button in cases like these.
 
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select the 'Button Group` component` and `Customize Button Group` to update the `Activate Membership` button configurations to the following:
+2. Select the **Button Group component** and **Customize Button Group** to update the **Activate Membership** button configurations to the following:
    - Disabled > `JS`:
      ```javascript
      return data.membershipStatus == 2;
      ```
-3. Click `save` on the `customize button group` modal
+3. Click **Save** on the **Customize Button Group** modal
 4. Save your form
 
 ![Image](./images/custom4.png)
 ![Image](./images/custom5.png)
+
+The **Activate Membership** button has now been disabled for already active members.
