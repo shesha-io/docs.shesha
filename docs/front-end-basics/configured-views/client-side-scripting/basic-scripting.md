@@ -12,7 +12,7 @@ Where to find Action Scripts
 The sections below provides sample code for common use cases where scripting is typically required:
 
 ### Making API calls
-For more information, see [here](/docs/front-end-basics/how-to-guides/http-requests).
+For more information, see [here](/docs/front-end-basics/javascript-api/http).
 
 Since Action Scripts are **asynchronous**, you need to return a **Promise**. For example, say you want to create a book on your API server, your action script would typically look like the following:
 ```JavaScript
