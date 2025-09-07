@@ -1,8 +1,8 @@
 {
-  "label": "user",
+  "label": "User",
   "position": 1,
   "link": {
     "type": "doc",
-    "id": "index"
+    "id": "user"
   }
 }

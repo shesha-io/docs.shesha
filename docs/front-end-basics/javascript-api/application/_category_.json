@@ -1,8 +1,8 @@
 {
-  "label": "application",
+  "label": "Application",
   "position": 1,
   "link": {
     "type": "generated-index",
-    "description": "application is the main object that provides access to all Shesha objects and functions."
+    "description": "Application is the main object that provides access to all Shesha objects and functions."
   }
 }

@@ -14,5 +14,5 @@ This takes in all the properties that have a [property name](/docs/front-end-bas
 This is how you would tap into the `check` value of the Checkbox component that has been added in the `appContext`
 
 ```
-    contexts.appContext.checkl
+	contexts.appContext.checkl
 ```

@@ -1,6 +1,7 @@
-# moment
+# Moment
 
-[Moment](https://momentjs.com/) is a library for parsing, validating, manipulating, and displaying dates and times in JavaScript.
+[Moment](https://momentjs.com/) is the object that provides access to the moment API.
+It is a library for parsing, validating, manipulating, and displaying dates and times in JavaScript.
 
 Shesha uses [Moment.js](https://momentjs.com/) to parse, validate, manipulate, and display dates and times in JavaScript.
 

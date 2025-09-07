@@ -47,7 +47,4 @@ Example
 
 ```Javascript
 const getExpression = () => {
-  contexts.webStorage.local.setItem('author', 'Shesha'); // write
-  const authorName = contexts.webStorage.local.getItem('author'); // read
-}
-```
+	contexts.webStorage.local.setItem('author', 'Shesha'); // write

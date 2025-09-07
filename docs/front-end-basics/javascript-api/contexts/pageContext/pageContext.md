@@ -22,7 +22,7 @@ Reading a value
 
 ```Javascript
 const getPlaceHolder = () => {
-  return contexts.pageContext.myPageAvailable;
+	return contexts.pageContext.myPageAvailable;
 }
 ```
 

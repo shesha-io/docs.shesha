@@ -1,8 +1,8 @@
 {
-  "label": "webStorage",
-  "position": 6,
+  "label": "Web Storage",
+  "position": 5,
   "link": {
     "type": "doc",
-    "id": "index"
+    "id": "webStorage"
   }
 }

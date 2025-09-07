@@ -1,4 +1,4 @@
-# message
+# Message
 
 The message object provides access to the message API that can be used to display messages to the user.
 

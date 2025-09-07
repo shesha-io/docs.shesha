@@ -1,8 +1,0 @@
-{
-  "label": "globalState",
-  "position": 6,
-  "link": {
-    "type": "generated-index",
-    "description": "`globalState` is the object that provides access to the global state of the application."
-  }
-}

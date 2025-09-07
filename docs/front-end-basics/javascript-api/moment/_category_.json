@@ -1,8 +1,0 @@
-{
-  "label": "moment",
-  "position": 9,
-  "link": {
-    "type": "generated-index",
-    "description": "moment is the object that provides access to the moment API."
-  }
-}

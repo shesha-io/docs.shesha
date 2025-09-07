@@ -1,8 +1,8 @@
 {
-  "label": "pageContext",
-  "position": 5,
+  "label": "Page Context",
+  "position": 4,
   "link": {
     "type": "doc",
-    "id": "index"
+    "id": "pageContext"
   }
 }

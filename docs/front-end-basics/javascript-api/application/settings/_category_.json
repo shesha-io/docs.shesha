@@ -1,8 +1,8 @@
 {
-  "label": "settings",
+  "label": "Settings",
   "position": 1,
   "link": {
     "type": "doc",
-    "id": "index"
+    "id": "settings"
   }
 }

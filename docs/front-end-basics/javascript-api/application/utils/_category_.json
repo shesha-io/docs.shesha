@@ -1,8 +1,8 @@
 {
-  "label": "utils",
+  "label": "Utils",
   "position": 1,
   "link": {
     "type": "doc",
-    "id": "index"
+    "id": "utils"
   }
 }

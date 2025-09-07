@@ -1,4 +1,6 @@
-# Reading form data
+# Data
+
+Data is the object that provides read access to the form values data.
 
 We use `data` object to read the form values data. The properties of the `data` object depend on the form's contents and the `Property Name` of each of the components we have configured on the form.
 

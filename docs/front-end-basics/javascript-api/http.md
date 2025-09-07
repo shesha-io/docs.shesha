@@ -1,6 +1,6 @@
 # HTTP Requests
 
-HTTP Requests are the lifeblood of a Shesha application. In order for the application to function well, the front-end needs to send data to the backend, for that data to be saved in the database. This is where HTTP requests come in. The Shesha front-end uses axios under the hood, and an axios instance is exposed on almost all the available `Scripts` on the configurator. For more on Shesha Scripts, see [here](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting/).
+HTTP is the object that provides access to the HTTP API that can be used to make HTTP requests. HTTP Requests are the lifeblood of a Shesha application. In order for the application to function well, the front-end needs to send data to the backend, for that data to be saved in the database. This is where HTTP requests come in. The Shesha front-end uses axios under the hood, and an axios instance is exposed on almost all the available `Scripts` on the configurator. For more on Shesha Scripts, see [here](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting/).
 
 ## GET Method
 

@@ -1,8 +1,8 @@
 {
-  "label": "canvasContext",
-  "position": 3,
+  "label": "Canvas Context",
+  "position": 2,
   "link": {
     "type": "doc",
-    "id": "index"
+    "id": "canvasContext"
   }
 }
