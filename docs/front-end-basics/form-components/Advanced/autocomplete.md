@@ -192,7 +192,17 @@ But you can use source with any other format of items. To do this, you need to s
 
 Regardless of the selected value of **Data Source type** you can use **Display value Function**. This is a script to get the displayed name of items. In this script, you can use any field from the received data. For `Entities list` mode, you can request additional fields using the  `Fields to fetch` setting. For `URL` mode you can use only fields provided by the endpoint.
 
-![image](images/autocomplete2.png)
+```js
+//#region Exposed variables
+import {
+  item
+} from './displayValueFunc.variables';
+//#endregion
+
+const displayValueFunc = () => {
+  return `<span style="color: red">${item.firstName}</span> <span style="color: green">${item.lastName}</span>`;
+};
+```
 
 ![image](images/autocomplete3.png)
 
