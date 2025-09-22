@@ -5,16 +5,12 @@ Scripts are separated into
 1. Action Scripts - these are found on the `Action configuration` section of a clickable component (*e.g. buttons*).  Are asynchronous and return promises (*see [here](https://www.w3schools.com/js/js_async.asp)*). Most common usage of Action Scripts is making http calls.
 2. Expression Scripts - are found on sections of components where dynamic validation is required, or dynamic configuration is done. For example, if you want a button to be hidden when a global state variable is set, you use an Expression Script. These start with `get` followed by what the script is supposed to do, e.g. for scripts that hide components, it will be `getHidden` etc.
 
-Where to find Action Scripts
-![[Action-Script-button-section.png]]
-
-
 The sections below provides sample code for common use cases where scripting is typically required:
 
 ### Making API calls
-For more information, see [here](/docs/front-end-basics/javascript-api/http).
 
-Since Action Scripts are **asynchronous**, you need to return a **Promise**. For example, say you want to create a book on your API server, your action script would typically look like the following:
+Since Action Scripts are **asynchronous**, you need to return a **Promise**. 
+For example, say you want to create a book on your API server, your action script would typically look like the following:
 ```JavaScript
 // This is what the Action script looks like
 // Notice the async() and the Promise<any> ?
@@ -22,16 +18,18 @@ const executeScriptAsync = async (): Promise<any> => {
   const bookData = { name: "Artemis Fowl", author: "Some Irish dude", genre: "dunno" };
   const bookCreationApi = `/api/services/app/Books/Create`;
   return http.post(bookCreationApi, bookData)
-			  .then(response => {
-					return Promise.resolve(response);			  
-			  })
-			  .catch(error => {
-					return Promise.reject(error);
-			  });
+    .then(response => {
+      return Promise.resolve(response);
+    })
+    .catch(error => {
+      return Promise.reject(error);
+    });
 };
 ```
 
-The reason for returning a `Promise.resolve` / `Promise.reject`, is as mentioned above the script. 
+:::warning
+If your condition indicates failure but you're still in a success flow, you may need to manually `throw new Error()` in the Action Script to trigger `handleFail`, as it typically responds to rejected Promises rather than successful ones with conditional logic.
+:::
 
 :::tip Response Actions
 Instead of chaining requests or manually showing messages, it's better to make your script send a single request, then use the "Handle Success" action to perform a follow up action. For example, say you want to create a book on your API, and after creating the book, you want to  show the user a success / failure message. You would do the following:
@@ -45,6 +43,8 @@ It is better to use this method, and limit one http call per script. This makes 
 :::tip
 In other scenarios, you might want to use the configuration API Call (*see [here](/docs/front-end-basics/configured-views/action-configurations#api-call)*) instead of manually writing Execution Scripts. If you want to change the payload structure before submission, you can use the form's Prepared Values event. (*see [here](/docs/front-end-basics/configured-views/shesha-events/prepared-values)*)
 :::
+
+For more information, see [here](/docs/front-end-basics/javascript-api/http).
 
 ###  Useful data manipulation tricks
 It is sometimes useful to modify the form data before submitting it to the back-end, for example to submit calculated values. This can be achieved in the following ways.
@@ -110,9 +110,9 @@ const apiPayload = { ...formData, tax: 0.5 * formData.salary };
 ```
 
 
-###  Hiding / Disabling buttons / components
-As mentioned before, Expression Scripts provide a way to programmatically change a component. You could change anything from visibility to size to even the styling. ![[button_expose_script.png]]
-![[button_script_after_toggle.png]]
+###  Hiding / Disabling buttons / Components
+As mentioned before, Expression Scripts provide a way to programmatically change a component. You could change anything from visibility to size to even the styling.
+
 
 For example, say you want to hide a button if a certain global state variable is set, in the code editor, you can use the following script:
 
