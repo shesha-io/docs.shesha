@@ -33,7 +33,7 @@ The new notification framework addresses the limitations of the current system b
 
 The NotificationChannelConfig entity plays a critical role in the notification framework by defining the capabilities, limitations, and configurations of each notification channel. It ensures the system can manage various channels (like SMS, Email, Slack, Teams, etc.) effectively and consistently while providing flexibility for future channel additions.
 
-The Notification framework comes standard with 2 per-configured channels: SMS and Email.
+The Notification framework comes standard with 2 pre-configured channels: SMS and Email.
 
 ![alt text](images/notification-images/NotificationChannels.png)
 
@@ -108,7 +108,7 @@ This allows for extensibility for different notification scenarios
 - **How Inheritance Helps:**
   - These specialized classes can coexist within the system while benefiting from shared logic defined in the base `NotificationData`
 
-3. Your dtos can look like this depending on wether you are sending to an individual or bulk, with the only difference being the type of person, it can either be a list or a single person
+3. Your Dtos can look like this depending on whether you are sending to an individual or bulk, with the only difference being the type of person, it can either be a list or a single person
 
    ```csharp
    public class NotificationDto
@@ -251,9 +251,6 @@ public async Task SendUserRegisteredNotificationAsync(Person recipient)
         channel: channel
      );
 }
-
-...
-
 ```
 
 #### Bulk Send
