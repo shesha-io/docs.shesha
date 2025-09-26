@@ -1,36 +1,44 @@
 # Notification Framework Implementation
 
 ## Overview
+
 The new notification framework addresses the limitations of the current system by providing a more robust, extensible, and configurable solution. It ensures flexibility in notification channels, supports user preferences, and simplifies integration with consuming applications.
 
 ## Key Features
 
 #### Default Channels
+
 - SMS and Email supported by Shesha Core
 
 #### Extensible Architecture
+
 - Ease of configuration for new channels (e.g., Slack, Teams, WhatsApp)
 
 #### Channel Determination
+
 - Based on user preferences, system defaults, or explicit application settings
 
 #### Multiple Notification Mechanisms
+
 - Direct messaging is currently supported
 - Ease of configuration for new notification mechanisms (bulk; broadcast)
 
 #### Asynchronous Message Sending
+
 - Includes optional synchronous mode for time-sensitive messages
 
 ## Key Entities
 
 #### NotificationChannelConfig
+
 The NotificationChannelConfig entity plays a critical role in the notification framework by defining the capabilities, limitations, and configurations of each notification channel. It ensures the system can manage various channels (like SMS, Email, Slack, Teams, etc.) effectively and consistently while providing flexibility for future channel additions.
 
-The Notification framework comes standard with 2 per-configured channels: SMS and Email.
+The Notification framework comes standard with 2 pre-configured channels: SMS and Email.
 
 ![alt text](images/notification-images/NotificationChannels.png)
 
 #### Registering a channel into a project
+
 To integrate a notification channel into your project, you need to register it in the `Startup.cs` file. This ensures that the dependency injection (DI) system recognizes and can use the channel.
 
 For example, to register channels such as email and SMS, you can add the following lines in the `ConfigureServices` method:
@@ -41,17 +49,21 @@ For example, to register channels such as email and SMS, you can add the followi
     ```
 
 ### NotificationTypes
+
 The NotificationTypeConfig entity is a key component in the notification framework. It defines the configuration for specific types of notifications, allowing the system to handle various notification requirements based on type. This ensures flexibility, consistency, and the ability to override defaults for specific use cases.
 
 ![alt text](images/notification-images/TypesTV.png)
 
 ### UserNotificationPreference
+
 Stores user-specific preferences for notification types and default channels.
 
 ### NotificationTopic
+
 Represents a group or topic for broadcast notifications.
 
 ### NotificationTemplate
+
 The NotificationTemplate is a key entity in the notification framework responsible for defining reusable message templates. These templates ensure consistency and efficiency in creating notification content across various channels and formats. By using templates, the system can dynamically generate messages with placeholders replaced by real-time data.
 
 **NOTE:** It is important to configure a template for the type to be used on the notification! This template should be consistent with the type of notification being sent, and the Message Format acceptable by the channel that it will be sent through.
@@ -60,10 +72,10 @@ Example: In cases where an Expiry Notice is to be sent through the `Email` Chann
 
 ![alt text](images/notification-images/NotificationTemplates.png)
 
-
 ## Implementation Guide
 
 ### Prerequisites
+
 1. Inject `INotificationSender` as part of your dependency list:
 
 ```csharp
@@ -76,7 +88,7 @@ public NotificationAppService(INotificationSender notificationSender)
 ```
 
 2. Create an object that inherits from the `NotificationData` class (these are the dynamic `mustache` values that would've been added as part of your created templates `title or body template`)
-E.g. titleTemplate = `Dear {{name}}`
+   E.g. titleTemplate = `Dear {{name}}`
 
 ```csharp
 public class TestData : NotificationData
@@ -88,6 +100,7 @@ public class TestData : NotificationData
 ```
 
 This allows for extensibility for different notification scenarios
+
 - **Purpose:** Different types of notifications may need unique data models while still being treated uniformly by the system.
 - **Example:**
   - `TestData` for testing purposes with `subject`, `name`, and `body`
@@ -95,57 +108,57 @@ This allows for extensibility for different notification scenarios
 - **How Inheritance Helps:**
   - These specialized classes can coexist within the system while benefiting from shared logic defined in the base `NotificationData`
 
-3. Your dtos can look like this depending on wether you are sending to an individual or bulk, with the only difference being the type of person, it can either be a list or a single person
+3. Your Dtos can look like this depending on whether you are sending to an individual or bulk, with the only difference being the type of person, it can either be a list or a single person
 
-    ```csharp
-    public class NotificationDto
-    {
-        public NotificationTypeConfig type { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public NotificationChannelConfig channel { get; set; } = null;
-        /// <summary>
-        /// 
-        /// </summary>
-        public long priority { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public Person recipient { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public GenericEntityReference triggeringEntity { get; set; } = null;
-    }
+   ```csharp
+   public class NotificationDto
+   {
+       public NotificationTypeConfig type { get; set; }
+       /// <summary>
+       ///
+       /// </summary>
+       public NotificationChannelConfig channel { get; set; } = null;
+       /// <summary>
+       ///
+       /// </summary>
+       public long priority { get; set; }
+       /// <summary>
+       ///
+       /// </summary>
+       public Person recipient { get; set; }
+       /// <summary>
+       ///
+       /// </summary>
+       public GenericEntityReference triggeringEntity { get; set; } = null;
+   }
 
-    public class BulkNotificationDto
-    {
-        public NotificationTypeConfig type { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
+   public class BulkNotificationDto
+   {
+       public NotificationTypeConfig type { get; set; }
+       /// <summary>
+       ///
+       /// </summary>
 
-        public NotificationChannelConfig channel { get; set; } = null;
-        /// <summary>
-        /// 
-        /// </summary>
-        public long priority { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public List<Person> recipients { get; set; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public GenericEntityReference triggeringEntity { get; set; } = null;
-    }
-    ```
+       public NotificationChannelConfig channel { get; set; } = null;
+       /// <summary>
+       ///
+       /// </summary>
+       public long priority { get; set; }
+       /// <summary>
+       ///
+       /// </summary>
+       public List<Person> recipients { get; set; }
+       /// <summary>
+       ///
+       /// </summary>
+       public GenericEntityReference triggeringEntity { get; set; } = null;
+   }
+   ```
 
 ### Implementation Example
 
-
 #### Individual Send
+
 ```csharp
  public async Task TestNotificationAsync(NotificationDto notification)
  {
@@ -191,7 +204,57 @@ This allows for extensibility for different notification scenarios
  }
 ```
 
-#### Bulk Send 
+There are cases where you might want to send a notification based on an event happening in your system, for example when a user registers, you might want to send them a welcome email. In such cases, you can define the notification name as a constant and fetch the relevant `NotificationTypeConfig` entity based on that name. The sample below demonstrates how to achieve this:
+
+```csharp
+public static class NotificationNames
+{
+    // Define notification names as constants for easy reference, but you can even link them to the NotificationTypeConfig entity if you prefer a more dynamic approach.
+    public const string UserRegisteredNotification = "UserRegisteredNotification";
+    public const string PasswordResetNotification = "PasswordResetNotification";
+    // Add more notification names as needed
+}
+
+...
+public async Task SendUserRegisteredNotificationAsync(Person recipient)
+{
+    // get assembly first. Instead of NotificationAppService, you can use any service that has access to the notification type repository. This assumes that the notification is in the same module as the service. Otherwise you can directly fetch the module.
+    var assembly = typeof(NotificationAppService).Assembly;
+
+    // ModuleManager is of type IModuleManager, from Shesha.ConfigurationItems.
+    var module = await _moduleManager.GetOrCreateModuleAsync(assembly);
+
+    // Need to fetch the last published notification, with the specified name, in the current module.
+    var notificationType = await _notificationTypeRepository.FirstOrDefaultAsync(x => x.Name == NotificationNames.UserRegisteredNotification && x.IsLast == true && x.Module == module);
+    if (notificationType == null)
+        throw new ArgumentException($"Notification type '{NotificationNames.UserRegisteredNotification}' does not exist.");
+
+    // Fetch the channel details, in this case we are using Email. It could be SMS or any other channel you have configured.
+    var channel = await _notificationChannelConfigRepository.FirstOrDefaultAsync(x => x.Name == "Email");
+
+    var notificationData = new NotificationData
+    {
+        name = recipient.FullName,
+        subject = "RE: Successful Registration",
+    };
+
+    var sender = await GetCurrentPersonAsync();
+
+    await _notificationService.SendNotification(
+        notificationType,
+        sender,
+        recipient,
+        data: notificationData,
+        priority: RefListNotificationPriority.High,
+        triggeringEntity: null,
+        attachments: null,
+        channel: channel
+     );
+}
+```
+
+#### Bulk Send
+
 ```csharp
 public async Task BulkPublishAsync (BulkNotificationDto notification)
 {
@@ -225,7 +288,7 @@ public async Task BulkPublishAsync (BulkNotificationDto notification)
         await _notificationService.SendNotification(
             type,
             sender,
-            recipient, 
+            recipient,
             data,
             (RefListNotificationPriority)notification.priority,
             null,
@@ -239,68 +302,71 @@ public async Task BulkPublishAsync (BulkNotificationDto notification)
 ### Front end Implementation
 
 1. Configure a sending form with properties like recipient, notificationType, channel, and priority.
+
 - If `channel` or `priority` is not explicitly specified, the fallback model will be used
 
 ![alt text](images/notification-images/SendForm.png)
 
-
 2. Trigger the API call on a button click:
 
-    ```Javascript
-    const executeScriptAsync = async (): Promise<any> => {
+   ```Javascript
+   const executeScriptAsync = async (): Promise<any> => {
 
-        const payload ={
-            type: data.notificationType,
-            priority: data.priority,
-            recipients: data.recipients,
-            channel: data.channel,
-        }
-        const PATH = '/api/services/app/Notification/BulkPublish'
-            http.post(PATH, payload).then(onSuccess).catch(onError);
-    
-        function onSuccess(response) {
-            console.log(response);
-            message.success('Sent!')
-        }
+       const payload ={
+           type: data.notificationType,
+           priority: data.priority,
+           recipients: data.recipients,
+           channel: data.channel,
+       }
+       const PATH = '/api/services/app/Notification/BulkPublish'
+           http.post(PATH, payload).then(onSuccess).catch(onError);
 
-        function onError(error) { 
-            message.error('No No No!') 
+       function onSuccess(response) {
+           console.log(response);
+           message.success('Sent!')
+       }
 
-        }
-    };
-    ```
+       function onError(error) {
+           message.error('No No No!')
 
+       }
+   };
+   ```
 
 `NotificationChannel` is an optional parameter on the SendNotification method. More on how the relevant channels are determined below…
 
 ## Channel Selection
+
 Relevant channels to send the specified `NotificationType` and priority is determined from a hierarchy of decisions:
 
 1. If a `NotificationChannel` is passed in as one of the parameters on the SendNotification method, the notification will only be sent through this channel.
 
 If no channel is passed as a parameter:
+
 1. User has specified own `UserNotificationSettings` to determine which channel should be used for the `NotificationType`
 2. If the specified `NotificationType` has preconfigured `Override Channels`
-![alt text](images/notification-images/OverrideChannels.png)
+   ![alt text](images/notification-images/OverrideChannels.png)
 3. System level `Notification Settings` which specify the default channel(s) for the message priority
-![alt text](images/notification-images/NotificationSettings.png)
-
+   ![alt text](images/notification-images/NotificationSettings.png)
 
 ## Asynchronous and Synchronous Message Sending
 
 ### How It Works
 
 #### Asynchronous Mode (Default)
+
 - Messages are queued for background processing
 - This mode is designed for non-urgent notifications where immediate delivery is not a priority (e.g., marketing emails or reminders)
 - Background jobs handle the delivery process, freeing up the main application thread
 
 #### Synchronous Mode (Optional)
+
 - Used for time-sensitive messages (e.g., OTPs, system alerts)
 - Messages are sent immediately without being queued
 - Ensures real-time communication for scenarios where delays could compromise user experience or system integrity
 
 #### Determining Time Sensitivity
+
 - The NotificationType entity includes an `IsTimeSensitive` flag which defines whether a message is time-sensitive
 
 ## Disabling `Notification` and `NotificationMessage` entities Creation and Updates.
