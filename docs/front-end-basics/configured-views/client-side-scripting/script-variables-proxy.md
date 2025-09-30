@@ -1,7 +1,9 @@
-# Proxying input variables
+# Proxying Input Variables
 
 Some component properties can be configured using JS. For example, the Hidden property can be set using a switch, or it can be calculated using JS code.
 The JS executable function has several input variables (such as `contexts`, `data`, `form`, `http`, and others). The list of variables may vary depending on the property and may be supplemented in new versions of the system.
+
+![Image](../images/ProxyVariables.png)
 
 The recalculation of the property value (execution of the JS executable function for this property) is performed taking into account the dependencies on the variables used in the function and their nested properties.
 For example, if the form has two fields (`firstName`, `lastName`, `description`) and the `Hidden` property for the `description` field is configured as
