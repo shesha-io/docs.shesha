@@ -286,8 +286,6 @@ hidden: {
 })
 ```
 
----
-
 ## Styling System
 
 ### Creating Styles (`styles.ts`)
@@ -328,8 +326,6 @@ const MyComponent = (props) => {
 };
 ```
 
----
-
 ## Shesha Hooks
 
 ### `useForm` – Form Context
@@ -349,8 +345,6 @@ form.setFieldValue('fieldName', 'newValue');
 form.submit();
 ```
 
----
-
 ### `useSheshaApplication` – App Services
 
 ```typescript
@@ -361,8 +355,6 @@ const { httpClient, backendUrl } = useSheshaApplication();
 // Make API calls
 const response = await httpClient.get(`${backendUrl}/api/data`);
 ```
-
----
 
 ### `useConfigurableAction` – Execute Actions
 
@@ -380,8 +372,6 @@ execute({
   onError: (error) => console.error(error)
 });
 ```
-
----
 
 ## Ant Design Best Practices
 
@@ -416,8 +406,6 @@ import { ConfigurableFormItem } from '@/components/configurableForm/configurable
 </Spin>
 ```
 
----
-
 ## Component Groups
 
 | Group | Purpose | Examples |
@@ -429,7 +417,6 @@ import { ConfigurableFormItem } from '@/components/configurableForm/configurable
 | Layout | Page structure | Card, Columns, Tabs |
 | Dev | Development tools | CodeEditor, JsonEditor |
 
----
 
 ## Best Practices
 
@@ -455,8 +442,6 @@ import { ConfigurableFormItem } from '@/components/configurableForm/configurable
 5. Commit clearly  
 6. Create pull request  
 
----
-
 ## Component Lifecycle
 
 ```
@@ -475,8 +460,6 @@ Test in Designer
 Deploy & Iterate
 ```
 
----
-
 ## Notes on Migrations
 
 ### Core Principles
@@ -494,7 +477,6 @@ Deploy & Iterate
 - Migrations on main  
 - Deployed or tested migrations  
 
----
 
 ### Proper Migration Strategy
 - Always create a **new version** for behavior changes  
@@ -502,15 +484,12 @@ Deploy & Iterate
 - Test before merging  
 - Use **semantic versioning**
 
----
 
 ### Example Scenario
 
 **Situation:** Add a new default setting  
 **✅ Correct:** Create a new migration version  
 **❌ Wrong:** Modify old migration or just set `defaultValue`
-
----
 
 ## Resources
 
