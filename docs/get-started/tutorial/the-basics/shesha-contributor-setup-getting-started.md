@@ -15,8 +15,8 @@ This guide explains how to set up your environment to run Shesha applications lo
 - **Node.js 22 / 21** – Required to run the Shesha frontend (React.js).
 - **SQL-Package** – Imports the starter database from a `.bacpac` file.
 - **Visual Studio Code** (or an AI-infused fork) – Recommended IDE for editing both frontend and backend code. *(Note: Visual Studio is no longer supported on Mac OS)*.
-- **Microsft Visual Studio** - Recommended IDE for editing backend code on Windows.  
-- **Azure Data Studio** – To connect to SQL Server, browse databases, and run queries. Alternatively use extensions on VS Code
+- **Microsoft Visual Studio** - Recommended IDE for editing backend code on Windows.
+- **Azure Data Studio** – To connect to SQL Server, browse databases, and run queries. Alternatively, use extensions on VS Code.
 
 > **Tip:** Some commands may require administrator privileges. In that case, prefix them with (on windows you have to enable 'sudo' on your Settings first if it is not already available on shell clis):
 > ```bash
@@ -98,7 +98,7 @@ git clone https://github.com/<<your-github-username>>/shesha-framework
 ```
 
 ### 2.4 Importing the Database
-In the unzipped project directory, you will find a `.bacpac` file:
+In the cloned project directory, you will find a `.bacpac` file in the shesha-starter/database directory:
 
 **Example location:**
 ```
@@ -110,7 +110,9 @@ Run:
 sqlpackage /Action:Import /SourceFile:"./shesha-framework/shesha-starter/database/ShaProjectName.bacpac" /TargetConnectionString:"Server=localhost,1433;Initial Catalog=ShaProjectName;Persist Security Info=False;User ID=sa;Password=@123Shesha;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;"
 ```
 
-Once complete, open Azure Data Studio and verify that the `ProjectName` database exists.
+Once complete, open Azure Data Studio or your choice of SQL Server client and verify that the `ShaProjectName` database exists.
+
+Connect using the connection string on point *3.2* below
 
 ---
 
@@ -134,7 +136,9 @@ Replace the `Default` connection string:
 ```
 
 ### 3.3 Build & Run
-**Working directory structure:**
+From the `~/shesha-framework/shesha-core` directory:
+
+**Expected directory structure:**
 ```
 backend
 ├── src
@@ -149,9 +153,9 @@ Build:
 dotnet build
 ```
 
-Run:
+Run (replace `*` with your actual project name):
 ```bash
-dotnet run --project src/*.Web.Host --urls "http://localhost:21021;https://localhost:44362"
+dotnet run --project src/Shesha.Web.Host/Shesha.Web.Host.csproj --urls "http://localhost:21021;https://localhost:44362"
 ```
 
 > **SSL Note:** If you do not have a local development certificate, install and trust it:
@@ -163,14 +167,16 @@ dotnet run --project src/*.Web.Host --urls "http://localhost:21021;https://local
 
 ## 4. Running the Frontend
 
-Go to the `shesha-reactjs` directory from the shesha-framework route:
+Navigate to the `shesha-reactjs` directory from the shesha-framework root:
 ```bash
-cd shesha-reactjs
+cd ~/shesha-framework/shesha-reactjs
 npm install
 npm run dev
 ```
 
 The frontend should now be running locally and connected to your backend.
+
+> **Note:** Ensure your backend is running before starting the frontend to establish proper connectivity.
 
 ## 🎉 You're Ready to Go!
 
