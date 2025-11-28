@@ -1,6 +1,6 @@
 ---
 title: Environment Setup for Shesha Contributors
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Setup
@@ -178,7 +178,7 @@ The frontend should now be running locally and connected to your backend.
 
 > **Note:** Ensure your backend is running before starting the frontend to establish proper connectivity.
 
----
+## 5. Contributing
 
 At this point, you have the running shesha-core and shesha-reactjs solutions.
 You may want to make certain changes to the code, for example:
