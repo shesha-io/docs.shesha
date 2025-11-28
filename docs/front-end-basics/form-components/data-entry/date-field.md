@@ -11,13 +11,18 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Property Name** ``string``
+#### **Range** ``boolean``
 
-Unique identifier used to bind the component's value to your data model.
+Enable to allow selecting a range of dates instead of a single date.
 
-#### **Label** ``object``
+#### **Placeholder** ``string``/``function``
 
-Customize whether to display a label. Hiding it can simplify the UI in some layouts.
+Shows hint text inside the input to guide users on what to enter.
+
+___
+
+
+### Data
 
 #### **Picker** ``object``
 
@@ -33,40 +38,29 @@ Choose the mode of the picker:
 
 - **year**: Pick an entire year.
 
-#### **Range** ``boolean``
-
-Enable to allow selecting a range of dates instead of a single date.
 
 #### **Resolve to UTC** ``boolean``
 
 Automatically convert the selected date and time to UTC.
 
-#### **Placeholder** ``string``/``function``
+#### **Show Time** ``boolean``
 
-Shows hint text inside the input to guide users on what to enter.
+Enable this to allow users to select a time along with the date.
 
-#### **Tooltip**  ``string``/``function``
+#### **Show Today/Now** ``boolean``
 
-Provides extra context via a hover message — perfect for subtle hints.
+Display a shortcut for today’s date or the current time.
 
-#### **Edit Mode**  ``object``
+#### **Disabled Date Mode** ``boolean``
 
-Control the input mode:
+Choose a method for disabling dates:
 
-- **Inherited *(default)***: Follows the parent form’s edit mode.
+- **None *(default)***: All dates selectable.
 
-- **Editable**: Users can freely select a date.
+- **Function Template**: Use predefined templates to disable dates.
 
-- **Read Only**: The field is visible but not changeable.
+- **Custom Function**: Write custom JavaScript to decide which dates to disable.
 
-#### **Hide** ``boolean``
-
-Allows the component to be conditionally hidden from the form.
-
-___
-
-
-### Formats
 
 #### **Date Format** ``string``/ ``function``
 
@@ -92,79 +86,3 @@ Format used when selecting a month (default: ``YYYY-MM``).
 
 Format used when selecting a week (default: ``YYYY-wo``).
 
-___
-
-### Control Visibility
-
-#### **Show Time** ``boolean``
-
-Enable this to allow users to select a time along with the date.
-
-#### **Show Today/Now** ``boolean``
-
-Display a shortcut for today’s date or the current time.
-
-#### **Disabled Date Mode** ``boolean``
-
-Choose a method for disabling dates:
-
-- **None *(default)***: All dates selectable.
-
-- **Function Template**: Use predefined templates to disable dates.
-
-- **Custom Function**: Write custom JavaScript to decide which dates to disable.
-
-___
-
-### Validation
-
-#### **Required** ``boolean``
-
-Ensures the field must be filled out before form submission.
-
-___
-
-### Appearance
-
-#### **Font** ``object`` 
-
-Customize how your date-field labels look. Choose the font family, size, weight, and color.
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-#### **Border** ``object`` 
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-Also tweak background size, position, and repeat behavior.
-
-#### **Shadow** ``object`` 
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).

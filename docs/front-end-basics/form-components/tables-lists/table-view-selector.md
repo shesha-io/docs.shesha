@@ -1,6 +1,6 @@
 # Table View Selector
 
-The Table View Selector is a user interface component commonly found in applications, particularly those dealing with tabular or list-based data. It allows users to switch between different predefined views or filters of the data presented in a table format. This component provides a list of configurable query builders that can be used to configure the different predefined filters and views. This component should be used within a [Datatable Context Component](/docs/front-end-basics/form-components/tables-lists/datatable-context).
+The Table View Selector component is a user interface component used for dealing with tabular or list-based data. It allows users to switch between different predefined views or filters of the data presented in a table format. This component provides a list of configurable query builders that can be used to configure the different predefined filters and views. This component should be used within a [DataTable Context Component](/docs/front-end-basics/form-components/tables-lists/datatable-context).
 
 ![Image](../tables-lists/images/tableSelector2.png)
 
@@ -15,7 +15,3 @@ The following properties are available to configure the behavior of the componen
 
 #### **Filters** `filtersList`  
 Determines whether the search input is displayed as a block-level element.
-
-#### **Hide** ``boolean``
-
-Allows the component to be conditionally hidden from the form.

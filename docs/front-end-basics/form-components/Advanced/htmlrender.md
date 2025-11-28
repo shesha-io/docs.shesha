@@ -1,5 +1,5 @@
 # Html Render
-The Html Render component allows you to inject custom JSX or HTML-like structures directly into your form. 
+The Html Render component allows you to inject custom JSX or HTML-like structures directly into your form. It is useful for embedding styled text, headings, images, or any other custom layout elements that aren’t tied to form data. This component provides a great way to add visual context or instructional content between interactive form elements.
 
 ![Image](../Advanced/images/htmlrender1.png)
 
@@ -9,19 +9,7 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Property Name** `string`  
-Binds the rendered output to a unique key in your form. *(Required)*
-
 #### **Render HTML** `function`  
 JSX/HTML script that defines what to render. You can reference:
 - `data`: Form data (object)
 - `globalState`: The global app state (object)
-
-#### **Hide** `boolean`  
-Conditionally hide the component using a script or toggle.
-
-___
-
-### Appearance
-#### **Custom Styles** `function`  
-Returns a `CSSProperties` object to style the rendered HTML block.

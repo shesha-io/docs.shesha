@@ -16,9 +16,9 @@ In this section, you'll learn how to:
 
 ## Create a New Entity
 
-1. Navigate to `Shesha.Membership.Domain` > `Domain`
-2. Right click on the `Domain` folder, `Add` > `Class`
-3. Give your class the name of: `MembershipPayment.cs`, and click on `Add`
+1. Navigate to `Shesha.Membership.Domain` --> `Domain`
+2. Right click on the `Domain` folder, **Add** --> **Class**
+3. Give your class the name of: `MembershipPayment.cs`, and click on **Add**
 
 This is how your class should be constructed:
 
@@ -54,8 +54,8 @@ namespace Shesha.Membership.Domain.Domain
 
 ## Create a Migration Class
 
-1. Navigate to `Shesha.Membership.Domain` > `Migrations`
-2. Right click on the `Migrations` folder, `Add` > `Class`
+1. Navigate to `Shesha.Membership.Domain` --> `Migrations`
+2. Right click on the `Migrations` folder, **Add** --> **Class**
 3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124090300.cs for 24 November 2023 08:53:00**.
 4. Add the below code:
 
@@ -94,7 +94,7 @@ namespace Shesha.Membership.Domain.Migrations
 
 _You can check out [Fluent Migrator](https://fluentmigrator.github.io/index.html) for more options about database migrations._
 
-5.  You can run your application by going to the menu and selecting `Debug` > `Start Debugging` or by clicking `F5`
+5.  You can run your application by going to the menu and selecting `Debug` --> `Start Debugging` or by clicking `F5`
 6.  The application should open in your browser on the default Swagger API page.
 7.  Search and navigate to the `Member` endpoints that have been dynamically created by Shesha.
 
@@ -107,22 +107,22 @@ _Read more about dynamic APIs [here](/docs/back-end-basics/crud-apis)_
 ### Details View
 
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Search and drag in a `Datatable Context` component from the `Builder Widgets` below the existing `details` panel
+2. Search and drag in a `DataTable Context` component from the `Builder Widgets` below the existing `details` panel
 
-_You can find more information about implementation of the Datatable Context component [here](/docs/front-end-basics/form-components/tables-lists/datatable-context)_
+_You can find more information about implementation of the DataTable Context component [here](/docs/front-end-basics/form-components/tables-lists/datatable-context)_
 
-3. Set the `Entity Type` property of the `Datatable Context` to the newly created `Membership Payment` entity
+3. Set the `Entity Type` property of the `DataTable Context` to the newly created `Membership Payment` entity
 
 ![Image](./images/child.png)
 
-4. Search and drag in a `Panel` component from the `Builder Widgets` onto the `Datatable Context`
+4. Search and drag in a `Panel` component from the `Builder Widgets` onto the `DataTable Context`
 5. Give the panel component a label of `Member Payments`
 
 ![Image](./images/child2.png)
 
-_You can find more information about implementation of the Panel component here_
+_You can find more information about implementation of the Panel component [here](/front-end-basics/form-components/Layouts/panel.md)_
 
-6.  Search and drag in a `Datatable` component from the `Builder Widgets` onto the `Panel`
+6.  Search and drag in a `DataTable` component from the `Builder Widgets` onto the `Panel`
 7.  Configure columns with the following information:
 
     | Type            | Property Name | Caption       | Create Component |
@@ -137,13 +137,13 @@ _You can find more information about implementation of the Panel component here_
 
 8.  Click `save` on the `configure columns` modal.
 
-_You can find more information about implementation of the Datatable component [here](/docs/front-end-basics/form-components/tables-lists/datatable)_
+_You can find more information about implementation of the DataTable component [here](/docs/front-end-basics/form-components/tables-lists/datatable)_
 
-Taking full advantage of Shesha's datatable functionalities, we are going to be utilizing the **inline-editing** to input the `Member Payments`.
+Taking full advantage of Shesha's DataTable functionalities, we are going to be utilizing the **inline-editing** to input the `Member Payments`.
 
 _Check out the inline-editing [how-to-guide](/docs/front-end-basics/how-to-guides/inline-editing)_
 
-9. Update the `datatable` configuration to the following:
+9. Update the `DataTable` configuration to the following:
 
 - Can add inline: `Yes`
 - New row init:
@@ -153,9 +153,9 @@ _Check out the inline-editing [how-to-guide](/docs/front-end-basics/how-to-guide
   };
   ```
 
-_Let's accessorize our `datatable` and make it more flexible._
+_Let's accessorize our `DataTable` and make it more flexible._
 
-10. Search and drag in the following components from the `Builder Widgets` onto the the header of the `Member Payments` panel:
+10. Search and drag in the following components from the `Builder Widgets` onto the header of the `Member Payments` panel:
     - [Quick Search](/docs/front-end-basics/form-components/tables-lists/quick-search)
     - [Table Pager](/docs/front-end-basics/form-components/tables-lists/table-pager)
     - [Table View Selector](/docs/front-end-basics/form-components/tables-lists/table-view-selector)

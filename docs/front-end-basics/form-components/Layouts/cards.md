@@ -31,40 +31,5 @@ Controls whether the heading should be hidden even if provided.
 #### **Hide When Empty** `boolean`  
 Hides the entire card if all child components are hidden or empty, based on logic or visibility conditions.
 
-___
 
-### Appearance
-
-#### **Border** ``object``
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-#### **Shadow** ``object``
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-**Style** `function`  
-JavaScript function that returns a `CSSProperties` object for dynamically styling the card using form data or global state.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
 

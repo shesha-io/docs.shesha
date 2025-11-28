@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-This component is intended to get a list of data (similar to using it with the Datatable component). It shows data from the DatatableContext as a list of sub-forms. The `DataList` component should be placed inside the `DatatableContext` component. Note that other DatatableContext-specific components (Pager, Quick Search, Table view selector) can also affect the `DataList`, similar to the [`Datatable`](/docs/front-end-basics/form-components/tables-lists/datatable.md).
+The DataList component is intended to get a list of data (similar to using it with the DataTable component). It shows data from the DataTableContext as a list of sub-forms. The `DataList` component should be placed inside the `DataTableContext` component. Note that other DataTableContext-specific components (Pager, Quick Search, Table view selector) can also affect the `DataList`, similar to the [`DataTable`](/docs/front-end-basics/form-components/tables-lists/datatable.md).
 
 ![Image](../tables-lists/images/datalist1.png)
 
@@ -18,15 +18,6 @@ This component is intended to get a list of data (similar to using it with the D
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Common
-#### **Component Name** `string`  
-A unique identifier for this component instance on the form.
-
-#### **Hide** `boolean`  
-Toggles visibility of the DataList.
-
-___
-
 ### Data
 
 #### **Form Selection Mode** `object`  
@@ -37,7 +28,7 @@ Defines how the form is selected:
 
 
 #### **Modal Form** `string`  
-The form opened when a list item is selected (Required).
+This is the form that is opened when a list item is selected (*Required*).
 
 #### **Selection Mode** `object`  
 Item selection type:

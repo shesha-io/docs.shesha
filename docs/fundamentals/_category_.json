@@ -1,6 +1,6 @@
 {
   "label": "Fundamentals",
-  "position": 10,
+  "position": 5,
   "link": {
     "type": "generated-index",
     "description": "This section covers the fundamental concepts of the Shesha framework, including its architecture, key components, and essential features."

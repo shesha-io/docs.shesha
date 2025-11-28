@@ -18,7 +18,7 @@ The base domain includes entities such as Person, Address, Organisation and Site
 | `Address`                               | Represents an address.                                                                                                                                                                                                                                                                         |
 | `Organisation`                          | Represents an organizational unit, organisation/company, team or similar.                                                                                                                                                                                                                      |
 | `Person`                                | Represents a person in the application such as employee, customer, contact, etc... A Person is not necessarily a system user as this will depend on whether there is a corresponding `User` for Person. See also ([User management fundamentals](/docs/manage-apps-and-users/user-management)). |
-| `Note`                                  | Represents a user note or comment. A list of notes may be associated with any parent entity. See also [notes fundamentals](/docs/fundamentals/notes).                                                                                                                                          |
+| `Note`                                  | Represents a user note or comment. A list of notes may be associated with any parent entity. See also [notes](../front-end-basics/form-components/Entity-References/notes.md).                                                                                                                                          |
 | `ReferenceList` and `ReferenceListItem` | Represents a standard list of values. See also [reference lists](/docs/back-end-basics/reference-lists).                                                                                                                                                                                       |
 | `Site`                                  | Represents a geographic location or physical structure such as location, area, buildings, room etc...                                                                                                                                                                                          |
 | `StoredFile`                            | Represents a file stored in the system. See also [file storage fundamentals](/docs/fundamentals/file-storage).                                                                                                                                                                                 |
@@ -78,7 +78,7 @@ Although it is possible to create entities with any type of Id, it is recommende
 
 To ensure that your new entity can be persisted to the database you will need to create the corresponding database objects. In order to do this you will need to create a database migration class. Shesha uses [Fluent Migrator](https://fluentmigrator.github.io/) for the creation of the database migrations with Shesha specific extensions.
 
-:::info Shesha uses NHiberate as its ORM
+:::info Shesha uses NHibernate as its ORM
 Shesha currently uses NHibernate as its ORM rather than the more common EFCore. NHibernate is a mature ORM that has been around for many years and is used in many enterprise applications, however unlike EFCore, NHibernate does not have the ability to generate database migration classes automatically hence the need to create database migrations manually. Migrating Shesha to use **EFCore as its ORM is a priority feature on the roadmap and is planned Feb 2024**.
 :::
 
@@ -100,7 +100,7 @@ namespace Shesha.Enterprise
              .WithIdAsGuid()
              .WithFullAuditColumns()   // Adds the standard columns required when the new entity inherits from FullAuditedEntity
              .WithColumn("OrderNo").AsString().Nullable()
-             .WithColumn("DelieveryDate").AsDateTime().Nullable()
+             .WithColumn("DeliveryDate").AsDateTime().Nullable()
              .WithColumn("Comment").AsString().Nullable()
              .WithColumn("StatusLkp").AsInt64().Nullable();
 
@@ -228,7 +228,7 @@ Note that in addition to the naming rules above, if the property is being added 
 
 The Module Database Prefix helps clearly identify all objects within a database belonging to a specific module. This is especially important when a Shesha application is composed of many modules and it useful to have visibility of source of a database object.
 
-For example, all Tables and Columns belonging to Shesha framework are prefixed with `Frwk_` or `Core_`. Similarly, all Tables and Columns added by your application could be prefixed with `MyApp_`, clearly identifying them at at the database layer.
+For example, all Tables and Columns belonging to Shesha framework are prefixed with `Frwk_` or `Core_`. Similarly, all Tables and Columns added by your application could be prefixed with `MyApp_`, clearly identifying them at the database layer.
 
 The prefix is defaulted to `App_` in the default starter project but can be changed by editing or adding the following lines to the `AssemblyInfo.cs` file on the project within which the entity is defined.
 
@@ -241,6 +241,35 @@ The prefix is defaulted to `App_` in the default starter project but can be chan
 // highlight-end
 [assembly: BelongsToConfigurableModule("Shesha.Enterprise")]
 ...
+```
+
+> Another example can be found in the starter project on Shesha's GitHub repository. In this project, the Module Database Prefix is defined in the domain module as shown below:
+
+```c# title="shesha-starter/backend/src/Module/ShaCompanyName.ShaProjectName.Domain/Properties/AssemblyInfo.cs" {23} 
+using System.Reflection;
+using System.Runtime.InteropServices;
+using Intent.RoslynWeaver.Attributes;
+using Shesha.Attributes;
+
+// General Information about an assembly is controlled through the following
+// set of attributes. Change these attribute values to modify the information
+// associated with an assembly.
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("ShaCompanyName.ShaProjectName.Common")]
+
+[assembly: AssemblyTrademark("")]
+
+// Setting ComVisible to false makes the types in this assembly not visible
+// to COM components. If you need to access a type in this assembly from
+// COM, set the ComVisible attribute to true on that type.
+[assembly: ComVisible(false)]
+
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("541f6f3c-1e7f-4ded-9807-12ea3ec7a650")]
+
+[assembly: TablePrefix("ShaProjectName_")]
+[assembly: IntentTemplate("Boxfusion.Modules.Domain.Properties", Version = "1.0")]
 ```
 
 ## Domain Repositories

@@ -12,19 +12,13 @@ The following properties are available to configure the behavior of the componen
 
 ### Common
 
-#### **Component Name** `string`  
-A unique identifier for the panel. *(Required)*
-
-#### **Label** `string`  
-The panel header text.
-
 #### **Custom Header** `boolean`
 Enable a custom header layout instead of the standard title and icon.
 
 #### **Icon Position** `object`
 Position of the icon in the header:
 
-- End (default)
+- End *(default)*
 - Hide
 - Start
 
@@ -36,9 +30,6 @@ If enabled, the panel starts off collapsed.
 
 #### **Hide When Empty** `boolean`
 If true, hides the panel when it contains no content.
-
-#### **Hide** `boolean`  
-Conditionally hides the entire panel.
 
 ___
 
@@ -55,40 +46,5 @@ Applies an accent border to visually emphasize the panel.
 
 #### **Hide Top Bar** `boolean`
 Hides the top bar area including title, icon, and actions.
-
-#### **Dimensions** ``object``
-
-Set the width, height, min/max sizes of the component.
-
-#### **Border** ``object``
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-#### **Shadow** ``object``
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
-
 
 

@@ -1,6 +1,6 @@
 # Tabs
 
-Tabs are used to organize content into separate sections or panes, where users can switch between these sections by clicking on the tabs. Each tab represents a different section, and only one section is visible at a time.
+The Tabs component is used to organize content into separate sections or panes, where users can switch between these sections by clicking on the tabs. Each tab represents a different section, and only one section is visible at a time.
 
 [//]: # '<iframe width="100%" height="500" src="https://pd-docs-adminportal-test.shesha.dev/shesha/forms-designer/?id=41d541dc-75c9-4436-ad41-3b39ea828efb" title="Tabs Component" ></iframe>'
 
@@ -12,10 +12,6 @@ Tabs are used to organize content into separate sections or panes, where users c
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 ### Common
-
-#### **Component Name** ``string``
-
-Gives your Tabs component an identity. This name helps distinguish it from its peers on the form.
 
 #### **Default Active Tab** ``enum``
 
@@ -37,7 +33,7 @@ ___
 
 ![Image](../images/tabs2.png)
 
- The user can use the configure tabs option to add the tabs that they want to have.
+ The configure tabs option can be used to add the tabs that at user wants to have.
  An array of tab configuration objects. Each tab supports:
  - **Name** ``string`` – Internal identifier used to reference the tab.
  - **Title** ``string`` – Text displayed on the tab label.
@@ -56,10 +52,6 @@ ___
     - Disabled
     - Inherited from Edit Mode
  - **Destroy Inactive Tab Pane** ``boolean`` – Whether to remove DOM of inactive tabs.
-
-#### **Hide** ``boolean``
-
-Control the visibility of the Tabs component entirely.
 ___
 
 ### Appearance
@@ -72,49 +64,6 @@ Set where your tabs appear:
 - Bottom
 - Left
 - Right
-
-#### **Font** ``object`` 
-
-Customize how your tab labels look. Choose the font family, size, weight, and color.
-
-#### **Dimensions** ``object`` 
-
-Specify the size of your component:
-- Width, Height
-- Min/Max Width and Height
-- Overflow behavior
-
-#### **Border** ``object`` 
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-Also tweak background size, position, and repeat behavior.
-
-#### **Shadow** ``object`` 
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
 
 #### **Card Styles** ``object`` 
 

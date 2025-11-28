@@ -82,7 +82,7 @@ _After any of the button events, you can handle both success and failure._
 
 - This allows for a custom `javascript` code to be added to determine whether a button is enabled. For instance, you may want to prevent users from proceeding before entering mandatory fields. In such cases, the button can be disabled and only enabled after the mandatory fields are captured.
 
-_In this example, the fields `firstName`, `lastName` and `emailAddress1` are manadatory and movement to the next step should be restricted if they have not been captured_
+_In this example, the fields `firstName`, `lastName` and `emailAddress1` are mandatory and movement to the next step should be restricted if they have not been captured_
 
 ```javascript
 if (form.formMode != "designer") {
@@ -127,54 +127,13 @@ Actions to move between steps:
 - `contexts.wizardName.api.next()` - to the next step
 - `contexts.wizardName.api.back()` - to the previous step
 - `contexts.wizardName.api.done()` - finish the wizard (execute Done configurable actions)
-- `contexts.wizardName.api.cancel()` - canel the wizard (execute Cancel configurable actions)
+- `contexts.wizardName.api.cancel()` - cancel the wizard (execute Cancel configurable actions)
 - `contexts.wizardName.api.setStep(index)` - move to the step with Index (will be executed `On Before Render` configurable action)
 ___
-
-#### **Hide** `boolean`  
-Controls the visibility of the entire wizard component.
 
 ___
 
 ### Appearance
-
-#### **Font** ``object`` 
-
-Customize how your wizard look. Choose the font family, size, weight, and color.
-
-#### **Dimensions** ``object``
-
-Set the width, height, min/max sizes of the component.
-
-#### **Border** ``object``
-
-Personalize the borders:
-- Set border width, color, and style
-- Round the corners for a softer touch
-
-#### **Background** ``object``
-
-Pick your flavor of background:
-
-- Color
-- Gradient
-- Image URL
-- Uploaded Image
-- Stored File
-
-#### **Shadow** ``object``
-
-Give depth with adjustable shadows:
-
-- Offset, Blur, Spread, Color
-
-#### **Margin & Padding** ``object``
-
-Fine-tune spacing inside and around the component.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
 
 #### **Additional Styles** ``object``
 

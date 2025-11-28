@@ -10,42 +10,7 @@ The Time Picker component allows users to select a time with precision and flexi
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
 
-### Common
-
-#### **Property Name** ``string``
-
-Unique identifier used to bind the component's value to your data model.
-
-#### **Label** ``object``
-
-Customize whether to display a label. Hiding it can simplify the UI in some layouts.
-
-#### **Placeholder** ``string``/``function``
-
-Shows hint text inside the input to guide users on what to enter.
-
-
-#### **Tooltip**  ``string``/``function``
-
-Provides extra context via a hover message — perfect for subtle hints.
-
-#### **Edit Mode**  ``object``
-
-Control the field's input mode:
-
-- **Inherited *(default)***: Follows the parent form’s edit mode.
-
-- **Editable**: Users can select a time freely.
-
-- **Read Only**: Users can view the value but cannot change it.
-
-#### **Hide** ``boolean``
-
-Allows the component to be conditionally hidden from the form.
-
-___
-
-### Main Settings
+### Data
 
 #### **Hour Step** ``number``/``function``
 
@@ -89,7 +54,7 @@ Hide options that are not available for selection.
 
 #### **Range** ``boolean``
 
-Enable to allow users to select a range of times instead of a single time.
+Enable this to allow users select a range of times instead of a single time.
 
 ___
 
@@ -108,18 +73,6 @@ Adjust the size of the component:
 - **Middle *(default)***: Standard medium-sized picker.
 
 - **Large**: Bigger, easier-to-click version for accessibility.
-
-####  **Custom Styles** ``function``
-
-Inject your own CSS styles via JavaScript (must return a style object).
-
-___
-
-### Validation
-
-#### **Required** ``boolean``
-
-Set whether the field must be filled before form submission.
 
 
 

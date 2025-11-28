@@ -19,17 +19,17 @@ Form versioning refers to the practice of managing different versions of a form.
 
 ### Draft
 
-- A "Draft" version is a work in progress. It is a form that is being created or modified but is not yet ready for use or publication. During this stage, form designers can make changes, add new fields, or update existing ones without affecting the live version.
+- A **Draft** version is a work in progress. It is a form that is being created or modified but is not yet ready for use or publication. During this stage, form designers can make changes, add new fields, or update existing ones without affecting the live version.
 
 ### Ready
 
-- The "Ready" version is a form that has been finalized and is ready for deployment. It represents a snapshot of the form that is stable and complete. Once a form is marked as "Ready," it indicates that the form has undergone necessary reviews and is considered suitable for use. The system displays ready versions where available with fallback to live.
+- The **Ready** version is a form that has been finalized and is ready for deployment. It represents a snapshot of the form that is stable and complete. Once a form is marked as "Ready", it indicates that the form has undergone necessary reviews and is considered suitable for use. The system displays ready versions where available with fallback to live.
 
 ### Live
 
-- The "Live" version is the actively used form that is accessible to users or respondents. It represents the current version of the form that people interact with. When a form is moved from the "Ready" state to "Live," it becomes the version that is deployed for public use.
+- The **Live** version is the actively used form that is accessible to users or respondents. It represents the current version of the form that people interact with. When a form is moved from the "Ready" state to "Live", it becomes the version that is deployed for public use.
 
-The typical workflow involves creating or modifying a form in the "Draft" state, reviewing and finalizing it in the "Ready" state, and then deploying it as the "Live" version for users to fill out. If further changes are needed, a new draft can be created, and the cycle continues.
+The typical workflow involves creating or modifying a form in the **Draft** state, reviewing and finalizing it in the **Ready** state, and then deploying it as the **Live** version for users to fill out. If further changes are needed, a new draft can be created, and the cycle continues.
 
 This versioning system helps organizations manage changes to forms in a controlled manner, preventing unintended modifications to live forms and allowing for a structured development and deployment process. It also provides a clear distinction between the different stages of a form's life cycle, making it easier to track and manage changes.
 
@@ -43,7 +43,7 @@ This versioning system helps organizations manage changes to forms in a controll
 - **Module:** Specifies the application module the new form configuration will be saved under.
 - **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
 - **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
-- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and '-'.
+- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and a dash(**—**) symbol.
 - **Label:** Label of the item, can be used as a user friendly name.
 - **Description:** Additional information about the form.
 
@@ -289,7 +289,7 @@ Let’s create a form to enable viewing and editing of our newly registered memb
 
 ### Adding a Dynamic Title
 
-We can make the title of the view dynamic to give it a more personal touch. To display dynamic text Shesha uses mustache templating as its templating syntax. It works by simply inserting 'tags' where dynamic text should be inserted, E.g. `My template text {{propertyName}}`.
+We can make the title of the view dynamic to give it a more personal touch. To display dynamic text Shesha uses mustache templating as its templating syntax. It works by simply inserting **tags** where dynamic text should be inserted, E.g. `My template text {{propertyName}}`.
 
 1. Select the `text` component > Set the component's `Content` property to `Membership for: {{fullName}}`.
 
@@ -321,7 +321,7 @@ To navigate to the newly created details form, we now have to go back to the `me
    - `dynamic` - standard URL segment indicating that the form to navigate to is a configured (dynamic) form.
    - `Shesha.Membership` - is the name of the module the form to navigate to lives in.
    - `member-details` - is the name of the form to navigate to.
-   - `?id={{selectedRow.id}}` - queries the row that was selected. A more detailed explanation is provided [here](#) (TODO: Link selected row object).
+   - `?id={{selectedRow.id}}` - queries the row that was selected. A more detailed explanation is provided [here](/front-end-basics/configured-views/client-side-scripting/shesha-objects/selectedRow.md) 
 
 ![Image](./images/navigate2.png)
 

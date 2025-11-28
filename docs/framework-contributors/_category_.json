@@ -1,0 +1,8 @@
+{
+  "label": "Framework Contributors",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "This section is for those who want to contribute to Shesha at a deeper level - not just building applications with the platform, but helping to build and evolve the platform itself. As a Framework Contributor, you're stepping into the engine room - the place where design decisions are made, improvements are debated, and the future of Shesha is shaped. Whether you're interested in proposing new features, improving existing ones, refining documentation, or just understanding how things work under the hood, this is your starting point."
+  }
+}

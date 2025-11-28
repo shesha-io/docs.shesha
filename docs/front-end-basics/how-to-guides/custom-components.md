@@ -79,7 +79,7 @@ This folder is responsible for integrating the component into the **Shesha Frame
 
 ```ts
 import { useSheshaApplication } from "@shesha-io/reactjs";
-import { Theecomponents } from "../../designer-components";
+import { TheComponents } from "../../designer-components";
 import React, { PropsWithChildren, useEffect } from "react";
 
 export const REPORTING_PLUGIN_NAME = "Custom-Plugin";
@@ -92,7 +92,7 @@ export const CustomPlugin: React.FC<PropsWithChildren<ICustomPluginProps>> = ({
   const { registerFormDesignerComponents } = useSheshaApplication();
 
   useEffect(() => {
-    registerFormDesignerComponents(REPORTING_PLUGIN_NAME, Theecomponents);
+    registerFormDesignerComponents(REPORTING_PLUGIN_NAME, TheComponents);
   }, []);
 
   return <>{children}</>;
@@ -111,9 +111,9 @@ To view the list of exposed components in the Shesha Form Builder, open `Custom 
 
 The `src\designer-components\index.tsx` file uses an array to group components. This structure allows for organizing multiple component modules when needed.
 
-The array is typed using the `IToolboxComponentGroup` interface, ensuring that the correct structure is followed. It is recommended to type `TheeComponents` as demonstrated in the example below:
+The array is typed using the `IToolboxComponentGroup` interface, ensuring that the correct structure is followed. It is recommended to type `TheComponents` as demonstrated in the example below:
 
-#### Example Code: `TheeComponents`
+#### Example Code: `TheComponents`
 
 ```ts
 import { IToolboxComponentGroup } from "@shesha-io/reactjs";
@@ -128,7 +128,7 @@ import { IToolboxComponentGroup } from "@shesha-io/reactjs";
 import CustomCardComponent from "./custom-card";
 import CustomNavigationComponent from "./navigate";
 
-export const Theecomponents: IToolboxComponentGroup[] = [
+export const TheComponents: IToolboxComponentGroup[] = [
     {
         name: "Custom Components",
         components: [CustomCardComponent, CustomNavigationComponent],
@@ -141,7 +141,7 @@ export const Theecomponents: IToolboxComponentGroup[] = [
 
 ## Component Definition
 
-In this example, we will demonstrate the standard way of creating a component in Next.js, including the use of typed props that extend the IConfigurableFormComponent interface from the Shesha Framework.
+In this example, we will demonstrate the standard way of creating a component in Next.js, including the use of typed props that extend the `IConfigurableFormComponent` interface from the Shesha Framework.
 
 **Note**: This component will be handled by the Factory method within the custom-card designer component.
 
@@ -177,7 +177,7 @@ export default CustomCard;
 
 ## Designer Component Definition
 
-The custom-card component must implement the IToolboxComponent interface to maintain consistency within the Form Builder, and this rule applies to all custom components. One more thing to point out is the Factory method—this is the method that will return our custom card JSX from the components folder.
+The custom-card component must implement the `IToolboxComponent` interface to maintain consistency within the Form Builder, and this rule applies to all custom components. One more thing to point out is the Factory method—this is the method that will return our custom card JSX from the components folder.
 
 #### Example Component: `CustomCard`
 
@@ -414,7 +414,7 @@ export interface ICustomCard extends IConfigurableFormComponent {
 
 To expose custom components, wrap your application's root provider with the `Custom-Plugin`. This step makes the components available in the form builder.
 
-Navigate to the `app-provider.tsx` file located in the `adminportal` directory: `src > app > app-provider.tsx`
+Navigate to the `app-provider.tsx` file located in the `adminportal` directory: `src --> app --> app-provider.tsx`
 
   <!-- figure 11 -->
 

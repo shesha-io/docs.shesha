@@ -20,7 +20,9 @@ _Read more about each of these Shesha objects [here](/docs/category/shesha-objec
 
 This provides a code editor that allows the user to enter custom JavaScript code. It also includes a list of variables, which can be used for the convenience of the configurator as it exposes common JavaScript functions and also gives you the functionality to execute HTTP functions.
 
-![Image](./images/action3.png)
+![Image](./images/updatedaction3.png)
+
+
 ![Image](./images/action4.png)
 
 _Read more about custom javascript scripting [here](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting)_

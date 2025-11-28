@@ -6,7 +6,7 @@ sidebar_position: 3
 
 Let's customize the model so we can update the information we need to properly track the status and location of members.
 
-In this section, you learn how to:
+In this section, you'll learn how to:
 
 - Extend an Existing Entity
 - Create a Reference List
@@ -30,9 +30,9 @@ The concept of a `table prefix` on the backend is often associated with database
 
 ### Create a Reference List
 
-1. Create a folder called Enums in Module > Shesha.Membership.Domain.
-2. Right click on the Enums folder, Add > Class.
-3. Give your class the name of: RefListMembershipStatuses.cs, and click on Add.
+1. Create a folder called **Enums** in the project called Shesha.Membership.Domain.
+2. Right click on the Enums folder, **Add** --> **Class**.
+3. Give your class the name of: `RefListMembershipStatuses.cs`, and click on **Add**.
 4. Add the below code:
 
 ```csharp
@@ -73,9 +73,9 @@ namespace Shesha.Membership.Domain.Enums
 
 ### Create a New Entity
 
-1. Navigate to `Shesha.Membership.Domain` > `Domain`
-2. Right click on the `Domain` folder, `Add` > `Class`
-3. Give your class the name of: `Member.cs`, and click on `Add`- This is where we will be adding properties we want as an addition to the Person table.
+1. Navigate to `Shesha.Membership.Domain` --> `Domain`
+2. Right click on the `Domain` folder, **Add** --> **Class**
+3. Give your class the name of: `Member.cs`, and click on **Add**- This is where we will be adding properties we want as an addition to the Person table.
 
 This is how your class should be constructed:
 
@@ -121,8 +121,8 @@ namespace Shesha.Membership.Domain.Domain
 
 ### Create a Migration Class
 
-1. Navigate to `Shesha.Membership.Domain` > `Migrations`
-2. Right click on the `Migrations` folder, `Add` > `Class`
+1. Navigate to `Shesha.Membership.Domain` --> `Migrations`
+2. Right click on the `Migrations` folder, **Add** --> **Class**
 3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124085300.cs for 24 November 2023 08:53:00**.
 4. Add the below code:
 
@@ -166,7 +166,7 @@ namespace Shesha.Membership.Domain.Migrations
 
 _You can check out [Fluent Migrator](https://fluentmigrator.github.io/index.html) for more options about database migrations._
 
-5.  You can run your application by going to the menu and selecting `Debug` > `Start Debugging` or by clicking `F5`
+5.  You can run your application by going to the menu and selecting `Debug` --> `Start Debugging` or by clicking `F5`
 6.  The application should open in your browser on the default Swagger API page.
 7.  Search and navigate to the `Member` endpoints that have been dynamically created by Shesha.
 
@@ -191,7 +191,7 @@ This can be done by updating the Model Type property in all our views from `Shes
 1. Navigate to the `member-create` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
 2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
 
-With the addition of properties to our entity, to facilitate for an overall cleaner and more managable UI, we are going to be utilizing a `wizard` component for properly delinating the different sections of information required for the member registration.
+With the addition of properties to our entity, to facilitate for an overall cleaner and more manageable UI, we are going to be utilizing a `wizard` component for properly separating the different sections of information required for the member registration.
 
 _You can find more information about implementation of the wizard component [here](../../../front-end-basics/form-components/Layouts/wizard)_
 
@@ -275,7 +275,7 @@ Once on the form designer, on the `Data Panel`, drag and drop properties onto th
 
 Save your form and head back to the `member-create` form designer
 
-10. Select the `Entity Picker` component > `Allow New Record`
+10. Select the `Entity Picker` component -- > `Allow New Record`
 11. Populate the `Dialogue Settings` with the following:
 
 - Title: `Add Address`
@@ -331,7 +331,7 @@ _This is because we will be using the default `wizard` buttons that were configu
 1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
 2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
 
-With the addition of properties to our entity, to facilitate for an overall cleaner and more managable UI, we are going to be utilizing a `tab` component for properly delinating the different sections of the membership information.
+With the addition of properties to our entity, to facilitate for an overall cleaner and more manageable UI, we are going to be utilizing a `tab` component for properly separating the different sections of the membership information.
 
 _You can find more information about implementation of the tab component [here](/docs/front-end-basics/form-components/Layouts/tabs)_
 
@@ -381,7 +381,7 @@ _You can find more information about implementation of the entity reference comp
      - Title: `Address`
      - Show Modal Buttons: `true`
      - Submit Http Verb: `PUT`
-     - Handle Success: `Designer Form` > `Refresh`
+     - Handle Success: `Designer Form` --> `Refresh`
 
 _This will render the address details on a dialog and allow for editing and updating the address entry on the rendered dialog_
 

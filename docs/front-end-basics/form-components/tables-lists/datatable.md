@@ -2,7 +2,7 @@
 
 import LayoutBanners from './LayoutBanners';
 
-A Datatable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
+The DataTable component is a versatile tool used to manage and configure the columns in a table, often within the context of a low-code or no-code platform. This component allows users to define, organize, and manipulate the structure and appearance of columns in a table-based display.
 
 ![Image](./images/selectedRow.png)
 
@@ -18,12 +18,6 @@ ___
 
 The following properties are available to configure the behavior of the component from the form editor (this is in addition to [common properties](/docs/front-end-basics/form-components/common-component-properties)).
 
-### Common
-#### **Component Name** `string`  
-A unique identifier to bind the component to your form.
-
-___
-
 ### Data
 #### **Customize Columns** 
 
@@ -36,6 +30,7 @@ Configure columns using a visual builder. Optionally supports expression logic f
     - Action 
     - CRUD operations 
     - Form
+    
 - **Property Name** ``string`` – The underlying field name from the data source.
 
 - **Tooltip** ``string`` – Hover text shown in the column header.
@@ -55,6 +50,11 @@ Configure columns using a visual builder. Optionally supports expression logic f
 
 - **Create Component** ``string`` – Component used for data entry in create forms.
 
+#### **Show Expanded View** `boolean`  
+Displays a detailed view of each row.
+
+#### **Freeze Headers** `boolean`  
+Keeps the header fixed during scroll.
 
 #### **Use Multi-select** `boolean`  
 Enables checkbox selection of multiple rows.
@@ -69,12 +69,42 @@ Controls inline edit behavior:
 - **Inherit** *(default)*
 - **Expression**
 
+#### **Can Edit Inline Expression** `function`  
+Conditionally enables inline editing.
+
+#### **Row Edit Mode** `object` *(when Can Edit Inline is Yes/Expression)* 
+- One By One *(default)*  
+- All At Once
+
+#### **Save Mode** `object` *(when Can Edit Inline is Yes/Expression)*
+- Manual *(default)*  
+- Auto
+
+#### **Custom Update Url** `string` *(when Can Edit Inline is Yes/Expression)*
+
+Endpoint to handle row updates.
+
+
 #### **Can Add Inline** `object`  
 Controls row creation:
 - **Yes**
 - **No**
 - **Inherit** *(default)*
 - **Expression**
+
+#### **New Row Capture Position** `object` *(When Can Add Inline is Yes/Inherit)*
+This controls where the new row entry field appears. Options include:
+- Top *(default)*
+- Bottom
+
+#### **Custom Create URL** `string` *(When Can Add Inline is Yes/Inherit)*  
+This specifies a custom endpoint where the new row data is posted.
+
+#### **New Row Init** `function` *(When Can Add Inline is Yes/Inherit)*
+Provides a JavaScript function to initialize a new row's default state. Great for pre-filling or conditional defaults.
+
+#### **Can Add Inline Expression** `function` *(When Can Add Inline is Expression)* 
+This function dynamically determines whether the user can add a new row.
 
 #### **Can Delete Inline** `string`  
 Controls delete access:
@@ -83,6 +113,11 @@ Controls delete access:
 - **Inherit** *(default)*
 - **Expression**
 
+#### **Custom Delete URL** `string` *(When Can Delete Inline is Yes/Inherit)*
+This specifies a custom endpoint to send delete requests to.
+
+#### **Can Delete Inline Expression** `function` *(When Can Add Inline is Expression)*
+Allows dynamic evaluation to determine if a row can be deleted inline. Perfect for permission-based deletion rules.
 ___
 
 ### Appearance
