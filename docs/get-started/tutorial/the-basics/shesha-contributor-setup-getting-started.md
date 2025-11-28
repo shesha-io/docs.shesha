@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Setup
 
-This guide explains how to set up your environment to run Shesha applications locally, including both the backend (.NET) and frontend (React.js), with Microsoft SQL Server running in Docker / directly on your windows machine.
+This guide explains how to set up your environment to run Shesha applications locally, including both the backend (.NET) and frontend (React.js), with Microsoft SQL Server running in Docker or directly on your Windows machine.
 
 ## Tools You Need
 
@@ -18,14 +18,14 @@ This guide explains how to set up your environment to run Shesha applications lo
 - **Microsoft Visual Studio** - Recommended IDE for editing backend code on Windows.
 - **Azure Data Studio** – To connect to SQL Server, browse databases, and run queries. Alternatively, use extensions on VS Code.
 
-> **Tip:** Some commands may require administrator privileges. In that case, prefix them with (on windows you have to enable 'sudo' on your Settings first if it is not already available on shell clis):
+> **Tip:** Some commands may require administrator privileges. In that case, prefix them with `sudo`. On Windows, you may need to enable 'sudo' in your settings first if it is not already available in your CLI shell.
 > ```bash
 > sudo ...
 > ```
 
 ## 1. Download & Install Docker
 
-**Windows Users Can Skip this if they have SQL Server on Windows**
+**Windows Users Can Skip This if they have SQL Server on Windows**
 
 Download Docker Desktop for Windows from [docker.com](https://www.docker.com) and install it.  
 Once Docker is running, you can use `docker` commands in the terminal to create, start, stop, and manage containers.
@@ -60,7 +60,7 @@ Make sure to enable **host networking** in Docker Desktop so that your machine�
 
 ## 2. Importing the Starter Database into SQL Server
 
-On Windows, we could use Microsoft SQL Server Management Studio's *Import Data-tier Application* wizard. On Mac OS, we use **SQL-Package** instead.
+On Windows, you can use Microsoft SQL Server Management Studio's *Import Data-tier Application* wizard. On macOS, we use **SQL-Package** instead.
 
 ### 2.1 Install .NET 8
 If not already installed, download the Arm64 (Apple Silicon) or x64 (Intel) version here:  
@@ -76,8 +76,8 @@ Close and reopen your terminal after installation.
 
 Documentation: [Install SQL-Package](https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download?view=sql-server-ver17)
 
-### 2.3 Cloning the Shesha project
-1. Create a fork on GitHub to your account, the [Shesha Framework Repo](https://github.com/shesha-io/shesha-framework), which contains:
+### 2.3 Cloning the Shesha Project
+1. Create a fork of the [Shesha Framework Repo](https://github.com/shesha-io/shesha-framework) to your GitHub account. The repository contains:
     - ...
     - **shesha-core** – The main Shesha "Core" backend class libraries
     - **shesha-functional-tests** – The `Shesha Functional Testing` project that is using the latest framework code on the current branch of the repository
@@ -90,7 +90,7 @@ Documentation: [Install SQL-Package](https://learn.microsoft.com/en-us/sql/tools
         - **Backend** – ASP.NET Core backend
         - **Database** – Seeded SQL Server `.bacpac` file
 
-2. Once you have the fork on your github account, you can now clone to your machine.
+2. Once you have the fork on your GitHub account, you can now clone it to your machine.
 
 ```bash
 cd ~
@@ -112,13 +112,13 @@ sqlpackage /Action:Import /SourceFile:"./shesha-framework/shesha-starter/databas
 
 Once complete, open Azure Data Studio or your choice of SQL Server client and verify that the `ShaProjectName` database exists.
 
-Connect using the connection string on point *3.2* below
+Connect using the connection string in section 3.2 below.
 
 ---
 
 ## 3. Running the Shesha-Core Backend
 
-### 3.1 Open shesha-core in VS Code / Mircorosft Visual Studio
+### 3.1 Open shesha-core in VS Code / Microsoft Visual Studio
 Open the `shesha-core` directory in your code editor.
 
 ### 3.2 Update Connection String
@@ -153,7 +153,7 @@ Build:
 dotnet build
 ```
 
-Run (replace `*` with your actual project name):
+Run:
 ```bash
 dotnet run --project src/Shesha.Web.Host/Shesha.Web.Host.csproj --urls "http://localhost:21021;https://localhost:44362"
 ```
@@ -177,6 +177,30 @@ npm run dev
 The frontend should now be running locally and connected to your backend.
 
 > **Note:** Ensure your backend is running before starting the frontend to establish proper connectivity.
+
+---
+
+At this point, you have the running shesha-core and shesha-reactjs solutions.
+You may want to make certain changes to the code, for example:
+
+    - Change properties of an entity
+    - Create a special endpoint
+    - etc.
+
+These backend changes are done by modifying the code in the various class libraries found in the shesha-core solution.
+
+Frontend changes are done by modifying the code in the shesha-reactjs solution.
+Here the changes could be:
+
+    - Extending functionality of certain React providers or components
+    - Implementing new Shesha components
+    - etc.
+
+The world is your oyster. What is important for any Shesha contributor is to fix or implement according to what a specific GitHub issue requires, and to maintain the Shesha standard of coding.
+
+GitHub issues can be found [here](https://github.com/shesha-io/shesha-framework/issues). We advise developers to look at the current open and closed Pull Requests [here](https://github.com/shesha-io/shesha-framework/pulls).
+
+If a developer wants to open a discussion, we encourage them to do so [here](https://github.com/shesha-io/shesha-framework/discussions).
 
 ## 🎉 You're Ready to Go!
 
