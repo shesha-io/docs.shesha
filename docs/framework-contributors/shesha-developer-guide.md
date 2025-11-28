@@ -1,8 +1,8 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
-# Shesha Developer Guide
+# Developing configurable components
 
 A comprehensive guide to developing configurable components in the **Shesha low-code platform**.
 
