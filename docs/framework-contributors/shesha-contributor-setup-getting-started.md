@@ -1,6 +1,6 @@
 ---
-title: Environment Setup 
-sidebar_position: 1
+title: Environment Setup for Shesha Contributors
+sidebar_position: 3
 ---
 
 # Setup
