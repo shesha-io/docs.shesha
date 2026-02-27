@@ -40,7 +40,7 @@ services.AddTransient<INotificationChannelSender, EmailChannelSender>();
 services.AddTransient<INotificationChannelSender, SmsChannelSender>();
 ```
 
-To add a custom channel, implement the `INotificationChannelSender` interface and register it in the same way.
+To add a custom channel, implement the `INotificationChannelSender` interface and register it in the same way. See [Custom Notification Channels](custom-notification-channels.md) for a full guide.
 
 ### Notification Types and Templates
 
@@ -436,4 +436,8 @@ Failed notifications are automatically retried up to **3 times** with delays of 
 - `RetryCount` — number of attempts made
 - `Status` — `Preparing`, `Sent`, `WaitToRetry`, or `Failed`
 - `ErrorMessage` — details of the last failure
+
+## Custom Notification Channels
+
+The built-in Email and SMS channels cover most use cases. If you need to deliver notifications through a different medium (e.g. Slack, Microsoft Teams, WhatsApp), Shesha's plugin architecture makes it straightforward to add custom channels. See [Custom Notification Channels](custom-notification-channels.md) for a step-by-step guide.
 
