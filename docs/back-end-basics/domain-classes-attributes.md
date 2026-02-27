@@ -21,7 +21,7 @@ sidebar_position: 2
 | **Attribute** | **Description** |
 | --- | --- |
 | `[Audited]`                                     | Identifies fields whose changes should be logged for easy tracking of when the change was made and the user responsible for that change. When used on the class level, all properties of that entity will be audited. See also [audit logging](/docs/fundamentals/audit-logging). |
-| `[CascadeUpdateRules]`                          | Applies to properties that reference other entities to specify if updates and create actions should be cascaded to the referenced entity. |
+| `[CascadeUpdateRules]`                          | Applies to properties that reference other entities to control whether create, update, and delete operations should cascade to the referenced entity. See [CascadeUpdateRules details](#cascadeupdaterules) below. |
 | `[Description("Description of Property name")]` | Description of Class/Property Name. |
 | `[Encrypt]`                                     | Identifies fields that should be persisted in the database as an encrypted string. |
 | `[EntityDisplayName]`                           | Specifies the property that represents the entity's display name to users. If not explicitly defined, the framework defaults to using a property named 'Name,' if it exists. |
@@ -86,3 +86,99 @@ namespace Shesha.Domain
     }
 }
 ```
+
+## CascadeUpdateRules
+
+The `[CascadeUpdateRules]` attribute controls how create, update, and delete operations cascade from a parent entity to a referenced child entity through Shesha's dynamic CRUD APIs. Without this attribute, updating a parent entity that references another entity will only update the reference (i.e., which entity is pointed to), but will **not** modify the properties of the referenced entity itself.
+
+### Attribute Signature
+
+```csharp
+[CascadeUpdateRules(canCreate, canUpdate, deleteUnreferenced)]
+```
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `canCreate` | `bool` | `false` | When `true`, allows creating a new child entity inline when the parent is created or updated via the CRUD API. |
+| `canUpdate` | `bool` | `false` | When `true`, allows updating properties of the referenced child entity when the parent is updated via the CRUD API. |
+| `deleteUnreferenced` | `bool` | `false` | When `true`, automatically deletes the child entity if the reference is removed **and** no other entities reference it. |
+
+The attribute can be applied at either the **property level** or the **class level** (on the child entity type). When applied at the class level, it sets the default cascade behavior for all properties that reference that entity type. A property-level attribute takes precedence over a class-level attribute.
+
+### Usage Examples
+
+#### Allowing cascade updates only
+
+In this example, when a `Person` is updated via the CRUD API, the properties of the associated `User` entity can also be updated in the same API call. However, creating a new `User` through the `Person` API is not permitted.
+
+```csharp
+public class Person : FullAuditedEntity<Guid>
+{
+    public virtual string FirstName { get; set; }
+
+    public virtual string LastName { get; set; }
+
+    // highlight-start
+    [CascadeUpdateRules(canCreate: false, canUpdate: true)]
+    public virtual User User { get; set; }
+    // highlight-end
+}
+```
+
+#### Allowing cascade create and update
+
+In this example, the `PrimaryContact` can be both created and updated through the `Organisation` CRUD API. If no existing `Person` is referenced, a new one can be created inline.
+
+```csharp
+public class Organisation : FullAuditedEntity<Guid>
+{
+    public virtual string Name { get; set; }
+
+    // highlight-start
+    [CascadeUpdateRules(canCreate: true, canUpdate: true)]
+    public virtual Person PrimaryContact { get; set; }
+    // highlight-end
+}
+```
+
+#### Enabling cascade delete of unreferenced children
+
+When `deleteUnreferenced` is set to `true`, removing or changing the reference will automatically delete the previously referenced child entity — **but only if no other entities still reference it**. This prevents accidental data loss from shared references.
+
+```csharp
+public class Membership : FullAuditedEntity<Guid>
+{
+    public virtual string MemberNo { get; set; }
+
+    // highlight-start
+    [CascadeUpdateRules(canCreate: true, canUpdate: true, deleteUnreferenced: true)]
+    public virtual MembershipCard Card { get; set; }
+    // highlight-end
+}
+```
+
+In this example, if `Card` is set to `null` or changed to a different `MembershipCard`, the previously referenced `MembershipCard` will be deleted **only if** no other entity in the system references it.
+
+### How It Works at Runtime
+
+When a CRUD API request is received:
+
+1. **Create scenario** (`canCreate: true`): If the request body contains a nested object for the property (without an `id`), the framework creates a new child entity and populates its properties from the nested object.
+2. **Update scenario** (`canUpdate: true`): If the request body contains a nested object with an `id` matching the currently referenced entity, the framework updates the referenced entity's properties from the nested object.
+3. **Delete unreferenced scenario** (`deleteUnreferenced: true`): If the property value is set to `null` or changed to reference a different entity, the framework checks whether any other entities still reference the old child entity. If none do, the child entity is deleted. If other references exist, the child entity is preserved.
+
+:::warning Validation errors
+If a CRUD API request attempts to create or update a child entity but the corresponding cascade rule is not enabled, the framework will return a validation error indicating that the operation is not allowed.
+:::
+
+### Configuring Cascade Rules Without Code
+
+Cascade rules can also be configured through the Shesha administration UI without modifying source code:
+
+1. Navigate to **Administration > Entity Configurations**
+2. Select the parent entity
+3. Go to the **Properties** tab
+4. Select the entity reference property
+5. Configure the **Cascade Create**, **Cascade Update**, and **Cascade Delete Unreferenced** settings
+
+Rules defined via the `[CascadeUpdateRules]` attribute in code take precedence over configuration-based rules. Configuration-based rules are applied only when the corresponding attribute value is not set.
