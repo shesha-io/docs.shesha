@@ -275,10 +275,10 @@ using Shesha.Attributes;
 ## Domain Repositories
 
 ### See Also:
-[//]: # "TODO:GenericEntityReferences - Ignore for now as advanced feature"
 [//]: # "TODO:Json Entities - Ignore for now as advanced feature"
 
 - [Reference Lists](/docs/back-end-basics/reference-lists)
 - [Domain Class Attributes](/docs/back-end-basics/domain-classes-attributes)
+- [Generic Entity References](/docs/back-end-basics/generic-entity-references)
 
 

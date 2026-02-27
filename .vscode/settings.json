@@ -4,9 +4,9 @@
     ],
     "window.title": "DOCS - ${activeEditorShort}${separator}${rootName}",
     "workbench.colorCustomizations": {
-        "titleBar.activeBackground": "#E67E22",
+        "titleBar.activeBackground": "#FF8C00",
         "titleBar.activeForeground": "#FFFFFF",
-        "titleBar.inactiveBackground": "#B8651B",
-        "titleBar.inactiveForeground": "#CCCCCC"
+        "titleBar.inactiveBackground": "#FF8C00",
+        "titleBar.inactiveForeground": "#FFFFFFCC"
     }
 }
