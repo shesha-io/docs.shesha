@@ -169,11 +169,10 @@ Place notification-related classes in a `Notifications` folder within your Appli
 
 ```
 MyProject.Application/
-└── Services/
-    └── Notifications/
-        ├── IOrderNotificationSender.cs      // Interface
-        ├── OrderNotificationSender.cs        // Implementation
-        └── OrderNotificationModel.cs         // Template data model
+└── Notifications/
+    ├── IOrderNotificationSender.cs      // Interface
+    ├── OrderNotificationSender.cs        // Implementation
+    └── OrderNotificationModel.cs         // Template data model
 ```
 
 ### Step 1 — Define the Template Data Model
@@ -183,7 +182,7 @@ Create a class extending `NotificationData` with properties that map to your tem
 ```csharp
 using Abp.Notifications;
 
-namespace MyProject.Services.Notifications
+namespace MyProject.Notifications
 {
     public class OrderNotificationModel : NotificationData
     {
@@ -275,7 +274,7 @@ Create an interface and implementation class that encapsulates the notification 
 **Interface:**
 
 ```csharp
-namespace MyProject.Services.Notifications
+namespace MyProject.Notifications
 {
     public interface IOrderNotificationSender
     {
@@ -293,7 +292,7 @@ using Shesha.Domain;
 using Shesha.Domain.Enums;
 using Shesha.Notifications;
 
-namespace MyProject.Services.Notifications
+namespace MyProject.Notifications
 {
     public class OrderNotificationSender : IOrderNotificationSender, ITransientDependency
     {

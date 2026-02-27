@@ -1,5 +1,12 @@
 {
     "cSpell.words": [
         "Shesha"
-    ]
+    ],
+    "window.title": "DOCS - ${activeEditorShort}${separator}${rootName}",
+    "workbench.colorCustomizations": {
+        "titleBar.activeBackground": "#E67E22",
+        "titleBar.activeForeground": "#FFFFFF",
+        "titleBar.inactiveBackground": "#B8651B",
+        "titleBar.inactiveForeground": "#CCCCCC"
+    }
 }
