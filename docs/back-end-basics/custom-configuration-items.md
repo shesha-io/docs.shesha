@@ -479,6 +479,44 @@ namespace YourModule.Application.ApprovalConfigs.Distribution.Dto
 
 The base `DistributedConfigurableItemBase` already includes: `Id`, `OriginId`, `Name`, `Label`, `ItemType`, `Description`, `ModuleName`, `FrontEndApplication`, `VersionNo`, `VersionStatus`, `ParentVersionId`, `Suppress`, and `BaseItem`.
 
+#### Handling references to other configuration items
+
+When your configuration item has a property that references **another `ConfigurationItemBase` entity** (e.g., a notification type, a form configuration, or another custom config item), the distribution DTO must use **Name + Module string pairs** instead of Guid IDs:
+
+```csharp
+// CORRECT: portable across environments
+public string RelatedConfigName { get; set; }
+public string RelatedConfigModule { get; set; }
+
+// WRONG: GUIDs differ between environments, making packages non-portable
+// public Guid? RelatedConfigId { get; set; }
+```
+
+GUIDs are environment-specific — the same configuration item will have different IDs in dev, staging, and production databases. Name + Module pairs are stable identifiers that make exported `.shaconfig` packages portable.
+
+:::note
+The base class properties `OriginId`, `BaseItem`, and `ParentVersionId` are the exception — these use GUIDs because they track version lineage within the same item, not cross-references to different items.
+:::
+
+For references to **regular (non-configuration-item) entities**, use `Guid?` as these entities do not follow the Name + Module convention.
+
+#### Handling StoredFile properties
+
+When your configuration item has a `StoredFile` property (e.g., a document template, an uploaded image), the file content must be serialized into the export package. Add three string properties to the DTO for each file:
+
+```csharp
+/// <summary>File name of the document template</summary>
+public string DocumentTemplateFileName { get; set; }
+
+/// <summary>MIME type of the document template</summary>
+public string DocumentTemplateFileType { get; set; }
+
+/// <summary>Base64-encoded content of the document template</summary>
+public string DocumentTemplateBase64 { get; set; }
+```
+
+Without this, imported configuration items would have broken file references since `StoredFile` records are environment-specific.
+
 ### Exporter
 
 Define the interface and implementation:
@@ -530,7 +568,7 @@ namespace YourModule.Application.ApprovalConfigs.Distribution
             return await ExportItemAsync(item);
         }
 
-        public Task<DistributedConfigurableItemBase> ExportItemAsync(
+        public async Task<DistributedConfigurableItemBase> ExportItemAsync(
             ConfigurationItemBase item)
         {
             if (item is not ApprovalConfig config)
@@ -559,9 +597,28 @@ namespace YourModule.Application.ApprovalConfigs.Distribution
                 AllowAutoApproval = config.AllowAutoApproval,
                 AutoApprovalTimeoutHours = config.AutoApprovalTimeoutHours,
                 ApproverInstructions = config.ApproverInstructions,
+
+                // Cross-config-item references: export as Name + Module
+                // RelatedConfigName = config.RelatedConfig?.Name,
+                // RelatedConfigModule = config.RelatedConfig?.Module?.Name,
             };
 
-            return Task.FromResult<DistributedConfigurableItemBase>(result);
+            // StoredFile properties: read file content and encode as base64
+            // if (config.DocumentTemplate != null)
+            // {
+            //     result.DocumentTemplateFileName = config.DocumentTemplate.FileName;
+            //     result.DocumentTemplateFileType = config.DocumentTemplate.FileType;
+            //
+            //     using var stream = await _storedFileService.GetStreamAsync(config.DocumentTemplate);
+            //     if (stream != null)
+            //     {
+            //         using var memoryStream = new MemoryStream();
+            //         await stream.CopyToAsync(memoryStream);
+            //         result.DocumentTemplateBase64 = Convert.ToBase64String(memoryStream.ToArray());
+            //     }
+            // }
+
+            return result;
         }
 
         public async Task WriteToJsonAsync(
@@ -574,6 +631,10 @@ namespace YourModule.Application.ApprovalConfigs.Distribution
     }
 }
 ```
+
+:::tip StoredFile support in the exporter
+If your configuration item has `StoredFile` properties, inject `IStoredFileService` (`Shesha.Services`) into the exporter constructor and use `GetStreamAsync` to read the file content for base64 encoding. The `ExportItemAsync(ConfigurationItemBase)` method must be `async` (not returning `Task.FromResult`) when performing file I/O.
+:::
 
 ### Importer
 
@@ -689,6 +750,31 @@ namespace YourModule.Application.ApprovalConfigs.Distribution
             target.AllowAutoApproval = source.AllowAutoApproval;
             target.AutoApprovalTimeoutHours = source.AutoApprovalTimeoutHours;
             target.ApproverInstructions = source.ApproverInstructions;
+
+            // Cross-config-item references: resolve from Name + Module
+            // target.RelatedConfig = !string.IsNullOrWhiteSpace(source.RelatedConfigName)
+            //     ? await _relatedConfigRepo.FirstOrDefaultAsync(x =>
+            //         x.Name == source.RelatedConfigName
+            //         && (x.Module == null && source.RelatedConfigModule == null
+            //             || x.Module != null && x.Module.Name == source.RelatedConfigModule)
+            //         && x.IsLast)
+            //     : null;
+
+            // StoredFile properties: recreate the file from base64 content
+            // if (!string.IsNullOrWhiteSpace(source.DocumentTemplateBase64))
+            // {
+            //     var fileBytes = Convert.FromBase64String(source.DocumentTemplateBase64);
+            //     using var stream = new MemoryStream(fileBytes);
+            //     var storedFile = await _storedFileService.SaveFileAsync(
+            //         stream,
+            //         source.DocumentTemplateFileName,
+            //         file => file.FileType = source.DocumentTemplateFileType);
+            //     target.DocumentTemplate = storedFile;
+            // }
+            // else
+            // {
+            //     target.DocumentTemplate = null;
+            // }
         }
 
         public async Task<DistributedConfigurableItemBase> ReadFromJsonAsync(
@@ -711,6 +797,10 @@ The base class `ConfigurationItemImportBase` provides helper methods:
 - **`GetModuleAsync`** - Resolves a module by name, optionally creating it if missing.
 - **`GetFrontEndAppAsync`** - Resolves a front-end application by app key.
 - **`SortItemsAsync`** - Override if your items have dependencies that require a specific import order.
+
+:::tip StoredFile and cross-config-item support in the importer
+If your configuration item references other configuration items, inject `IRepository<TRelatedConfig, Guid>` for each referenced type and resolve by Name + Module + `IsLast` (the same pattern used for the main item lookup). If it has `StoredFile` properties, inject `IStoredFileService` and use `SaveFileAsync` to recreate files from base64 content during import.
+:::
 
 ### Exported package structure
 
