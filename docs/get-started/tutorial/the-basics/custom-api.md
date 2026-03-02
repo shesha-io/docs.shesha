@@ -23,7 +23,7 @@ In this section, you'll learn how to:
 1. Navigate to `Shesha.Membership.Application`
 2. Create a new `Services` folder
 3. Right click on the newly created `Services` folder, **Add** --> **Class**
-4. Give your class the name of: `MemberActions.cs`, and click on **Add**
+4. Give your class the name of: `MemberAppService.cs`, and click on **Add**
 5. Populate your app service with the following:
 
 ```csharp
@@ -38,12 +38,12 @@ using System.Threading.Tasks;
 
 namespace Shesha.Membership.Common.Services
 {
-    public class MemberActionsAppService: SheshaAppServiceBase
+    public class MemberAppService: SheshaAppServiceBase
     {
         private readonly IRepository<Member, Guid> _memberRepository;
         private readonly IRepository<MembershipPayment, Guid> _membershipPaymentRepository;
 
-        public MemberActionsAppService(IRepository<Member, Guid> memberRepository, IRepository<MembershipPayment, Guid> membershipPaymentRepository)
+        public MemberAppService(IRepository<Member, Guid> memberRepository, IRepository<MembershipPayment, Guid> membershipPaymentRepository)
         {
             _memberRepository = memberRepository;
             _membershipPaymentRepository = membershipPaymentRepository;
