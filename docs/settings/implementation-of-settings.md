@@ -17,10 +17,40 @@ Before diving in, here are the building blocks you'll work with:
 
 | Concept | What it is |
 |---|---|
-| **Setting accessor interface** | A C# interface (extending `ISettingAccessors`) that declares your settings as strongly typed properties. |
+| **Setting accessor interface** | A C# interface (extending `ISettingAccessors`) that declares your settings as strongly typed properties. By convention, each Shesha module has **one** accessor interface — see [Organizing settings](#organizing-settings) below. |
 | **`ISettingAccessor<T>`** | The property type for each setting. `T` is the data type — `int`, `bool`, `string`, or a custom class for compound settings. |
 | **Setting name** | A unique string identifier for each setting (e.g. `"Shesha.Membership.DebitDay"`). |
 | **Module registration** | A one-line call in your module's `Initialize` (or `PreInitialize`) method that tells Shesha about your settings and their default values. |
+
+### Organizing settings
+
+**Use a single setting accessor per module.** Having one interface centralizes all your module's settings in one place, making them easy to find, inject, and maintain. Place it at:
+
+```
+YourModule.Domain/
+  Configuration/
+    IMembershipSettings.cs        ← accessor interface
+    MembershipSettingNames.cs     ← setting name constants
+    MembershipPaymentSettings.cs  ← compound setting classes (if any)
+```
+
+The naming convention is `I{ModuleName}Settings.cs`. For example, a module called `Membership` would have `IMembershipSettings`, a module called `Leave` would have `ILeaveSettings`, and so on.
+
+:::tip When to split into multiple accessors
+You _can_ create more than one accessor interface per module if you have a good reason — for example, separating global settings from user-specific settings, or isolating a large, self-contained feature area. But start with one and only split when a single interface becomes unwieldy.
+:::
+
+### Simple vs. compound settings
+
+Shesha supports two styles of settings, and **compound settings are generally preferred**:
+
+- **Simple settings** — a single primitive value (`int`, `string`, `bool`). Good for standalone toggles or numbers that don't relate to other settings.
+- **Compound settings** — a custom class containing multiple related properties. This is the **recommended approach** for most cases because:
+  - **Grouping** — related values stay together (e.g. all payment-related settings in one object), making the code easier to understand.
+  - **Efficiency** — multiple related values are retrieved in a single call instead of one call per setting.
+  - **Richer UI** — compound settings use a custom editor form, giving you full control over the layout, validation, and user experience for administrators.
+
+When in doubt, use a compound setting. Even if you start with just two or three related values, a compound setting scales better as requirements grow.
 
 ## Creating a Simple Setting
 
@@ -28,10 +58,10 @@ A "simple" setting stores a single value — a number, a string, a boolean, etc.
 
 ### Step 1 — Define setting names
 
-In your **Domain** layer, create a folder structure like `Configuration/Membership` and add a class to hold your setting name constants:
+In your **Domain** layer, create a `Configuration` folder and add a class to hold your setting name constants:
 
 ```cs
-namespace YourApp.Domain.Configuration.Membership
+namespace YourApp.Domain.Configuration
 {
     public class MembershipSettingNames
     {
@@ -44,14 +74,14 @@ Using constants avoids typos and makes it easy to reference the same name everyw
 
 ### Step 2 — Define the setting accessor interface
 
-In the same folder, create an interface that extends `ISettingAccessors`. Each property represents one setting:
+In the same `Configuration` folder, create an interface that extends `ISettingAccessors`. Each property represents one setting. Following the [one-accessor-per-module convention](#organizing-settings), name it `I{ModuleName}Settings`:
 
 ```cs
 using Shesha.Settings;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace YourApp.Domain.Configuration.Membership
+namespace YourApp.Domain.Configuration
 {
     [Category("Membership")]
     public interface IMembershipSettings : ISettingAccessors
@@ -171,12 +201,16 @@ Simple-type settings (`number`, `string`, `boolean`) are strongly typed in the e
 
 ## Compound Settings
 
-Sometimes a single setting isn't enough — you need a group of related values managed together. For example, a payment configuration with a debit day, reminder intervals, and toggle flags. Shesha handles this with **compound settings**, where `T` in `ISettingAccessor<T>` is a custom class instead of a primitive type.
+Compound settings are the **recommended approach** for most settings in Shesha. Instead of defining many individual simple settings, you group related values into a single class. This keeps related configuration together, retrieves all values in one call, and lets you design a custom editor form for a better admin experience.
+
+For example, rather than separate simple settings for a debit day, reminder intervals, and toggle flags, you define a single `MembershipPaymentSettings` class that holds all of them.
 
 ### Step 1 — Create the settings class
 
+Place this in your `Configuration` folder alongside the accessor interface:
+
 ```cs
-namespace YourApp.Domain.Configuration.Membership
+namespace YourApp.Domain.Configuration
 {
     public class MembershipPaymentSettings
     {
@@ -215,7 +249,7 @@ namespace YourApp.Domain.Configuration.Membership
 
 ### Step 2 — Add the setting name and accessor property
 
-Add a new constant:
+Add a new constant to your existing setting names class:
 
 ```cs
 public class MembershipSettingNames
@@ -225,7 +259,7 @@ public class MembershipSettingNames
 }
 ```
 
-Add a new property to the accessor interface. Note the `EditorFormName` — this tells Shesha which configurable form to use as the editor for this compound setting:
+Add the compound setting as a new property on your **existing** `IMembershipSettings` interface (keeping everything in one accessor per module). Note the `EditorFormName` — this tells Shesha which configurable form to use as the editor for this compound setting:
 
 ```cs
 [Category("Membership")]
