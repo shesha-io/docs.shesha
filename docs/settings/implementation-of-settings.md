@@ -2,447 +2,446 @@
 sidebar_label: Implementation of Settings
 ---
 
-# Implementation of Settings
+# Application Settings
 
-Shesha uses custom implementation of the application settings.
+Application settings let you store configurable values — like feature flags, default numbers, API credentials, or complex option groups — that administrators can change at runtime without redeploying code. Think of them as a key-value store that is strongly typed, editable through the Shesha UI, and accessible from both back-end and front-end code.
 
-**Key features**:
-1. Settings are strongly typed on the back-end, a developer doesn't need to serialize/deserialize values from strings.
-2. Auto-registration of setting accessors.
-3. Setting definitions are stored in the DB.
-4. Settings defined in the code gets saved to the DB at the application start.
-4. Support of client specific settings.
-5. Unlimited length of the setting value.
+**When to use settings:**
+- You need a value that might change between environments or over time (e.g. a default debit day, an SLA duration, a toggle to enable/disable a feature).
+- You want administrators to adjust behaviour from the Settings UI without involving a developer.
+- You need user-specific preferences (e.g. notification frequency).
 
-## How to define a setting
-A setting must be defined before its use, it should be done in two steps:
-1. Define a settings accessor.
-2. Register accessors and provide default values.
+## Key Concepts
 
-### Define a settings accessor
-Settings accessor is an interface that provides an access to settings values, also it's used to define setting details (display name, description etc.).
-You just need to create and interface that extends `ISettingAccessors` and add property for each setting as `ISettingAccessor<T>` where T - type of the setting.
+Before diving in, here are the building blocks you'll work with:
 
-```cs
-    [Category("Membership")]
-    public interface IMembershipSettings : ISettingAccessors
-    {
-        ///<summary>
-        ///
-        ///</summary>
-        [Display(Name = "Debit day", Description = "Specific day on which a financial transaction is processed.")]
-        [Setting(MembershipSettingNames.DebitDay)]   
-        ISettingAccessor<int> DebitDay { get; set; }
+| Concept | What it is |
+|---|---|
+| **Setting accessor interface** | A C# interface (extending `ISettingAccessors`) that declares your settings as strongly typed properties. |
+| **`ISettingAccessor<T>`** | The property type for each setting. `T` is the data type — `int`, `bool`, `string`, or a custom class for compound settings. |
+| **Setting name** | A unique string identifier for each setting (e.g. `"Shesha.Membership.DebitDay"`). |
+| **Module registration** | A one-line call in your module's `Initialize` (or `PreInitialize`) method that tells Shesha about your settings and their default values. |
 
-        ///<summary>
-        ///
-        ///</summary>
-        [Display(Name = "Membership Payments", Description = "Membership Payment debit days and reminder frequencies.")]
-        [Setting(MembershipSettingNames.MembershipPayments, EditorFormName = "membership-payment-settings")]
-        ISettingAccessor<MembershipPaymentSettings> MembershipPayments { get; set; }
-    }
-``` 
+## Creating a Simple Setting
 
-On the example above you can see the `IMembershipSettings` interface, it has 2 strongly typed properties:
-1. DebitDay - `int`
-2. MembershipPayments - complex object of type `MembershipPaymentSettings`
+A "simple" setting stores a single value — a number, a string, a boolean, etc. We'll walk through creating a **Debit Day** setting that controls which day of the month a membership payment is processed.
 
-Properties and the interface itself are decorated with the following attributes:
-1. `DisplayAttribute` - is used to define a `Display Name`, `Description` and `Category` (using `GroupName` property)
-2. `Category` - defines `Category` of the setting, can be applied on the interface level. Note: if the `CategoryAttribute` and `DisplayAttribute` are defined at the same time on the property level the value from `CategoryAttribute` will be applied.
-3. `Setting` - defines setting-specific properties:
-    - 3.1 `Name` - name of the setting. Property name is used when attribute is missing
-    - 3.2 `IsClientSpecific` - indicates that the setting is a client-specific
-    - 3.3 `EditorFormName` - name of the custom form that is used as a setting editor
-    - 3.4 `IsUserSpecific` - settings that are tailored to individual users
+### Step 1 — Define setting names
 
-### Register a settings accessor
-After creating a settings accessor, we must register it in the PreInitialize method of our module:
-```cs
-            IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
-            {
-                x.DebitDay.WithDefaultValue(1);
-                x.MembershipPayments.WithDefaultValue(new MembershipPaymentSettings
-                {
-                    DebitDay = 1,
-                    InitialReminder = 3,
-                    DueDateReminder = true,
-                    FirstOverdueReminder = 1,
-                    SubsequentOverdueReminder = 7,
-                    FinalNotice = 30
-                });
-            });
-```
-
-## Simple Application Settings
-
-We'll kick off this section by configuring the simple setting that describes a **Debit day**, which we have previously [defined](#define-a-settings-accessor). This is the day a customer's membership payment is debited from their bank account.
-
-In your Shesha Backend Application, Navigate to the `domain` layer and create a folder called `Configurations`. Then while in the `Configurations` folder, add another folder called `Membership` which gives us some flexibility, in case we want to add other types of settings
-
-![Image](./images/modules3.png)
-
-In the `Membership` folder, create a new file called `MembershipSettingNames` and add the below code snippet to it 
+In your **Domain** layer, create a folder structure like `Configuration/Membership` and add a class to hold your setting name constants:
 
 ```cs
+namespace YourApp.Domain.Configuration.Membership
+{
     public class MembershipSettingNames
     {
         public const string DebitDay = "Shesha.Membership.DebitDay";
     }
+}
 ```
 
-This file will store our **Debit day** setting, as well as an additional setting we want to add to the module.
+Using constants avoids typos and makes it easy to reference the same name everywhere.
 
-Next, create an Interface class called `IMembershipSettings` that extends the [ISettingAccessors](#define-a-settings-accessor) class and then add the code below to it; 
+### Step 2 — Define the setting accessor interface
+
+In the same folder, create an interface that extends `ISettingAccessors`. Each property represents one setting:
 
 ```cs
+using Shesha.Settings;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+
+namespace YourApp.Domain.Configuration.Membership
+{
     [Category("Membership")]
     public interface IMembershipSettings : ISettingAccessors
     {
-        ///<summary>
-        ///
-        ///</summary>
-        [Display(Name = "Debit day", Description = "Specific day on which a financial transaction is processed.")]
-        [Setting(MembershipSettingNames.DebitDay)]   
+        [Display(Name = "Debit day", Description = "Day of the month when membership payments are debited.")]
+        [Setting(MembershipSettingNames.DebitDay)]
         ISettingAccessor<int> DebitDay { get; set; }
-
     }
+}
 ```
 
-Next is to head over to your Module file, depending on what your application name is;
+**What the attributes do:**
 
-![Image](./images/modules4.png)
+| Attribute | Purpose |
+|---|---|
+| `[Category("Membership")]` | Groups this setting under "Membership" in the Settings UI. Can be applied at the interface or property level. |
+| `[Display(Name, Description)]` | Sets the label and tooltip shown in the Settings UI. |
+| `[Setting(...)]` | Links the property to its unique setting name. Also supports optional flags — see [Setting attribute options](#setting-attribute-options) below. |
 
-And then in the `PreInitialize` method, add the following code;
+### Step 3 — Register the accessor in your module
+
+Open your module class (the class that extends `SheshaModule`) and register the setting accessor. This is also where you provide a default value:
 
 ```cs
-    public override void PreInitialize()
+public override void Initialize()
+{
+    var thisAssembly = Assembly.GetExecutingAssembly();
+    IocManager.RegisterAssemblyByConvention(thisAssembly);
+
+    // Register settings with default values
+    IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
     {
-        base.PreInitialize();
-        IocManager.RegisterSettingAccessor<IMembershipSettings>(x => x.DebitDay.WithDefaultValue(1));
-    }
+        x.DebitDay.WithDefaultValue(1);
+    });
+}
 ```
 
-Here, we have registered the **Debit day** setting and given it a default value of One(1), which means we want the debit to occur on the first day of each month.
+The default value (`1`) is used when no value has been saved yet — in this case, payments default to the 1st of each month.
 
-Now, run your backend and head over to your local build to see the setting we've just created.
+### Step 4 — Verify in the UI
 
-Under `Configurations` and then `Settings` you should see the new **Debit day** setting under the module `Membership`.
+Run your back-end, then navigate to **Configurations > Settings** in the Shesha UI. You should see the new **Debit day** setting under the **Membership** category:
 
 ![Image](./images/modules5.png)
 
-## Compound Application Settings
+That's it — you have a working application setting.
 
-Let's create some more settings to give the user more control of the application. We're going to create some Compound settings that will handle more of the payment model. This section builds upon the [Simple settings](#simple-application-settings) section to help differentiate and understand both more easily, so please review that that section first if you haven’t already.
+---
 
-First thing is to create a new `MembershipSettingName` called `MembershipPayments`, like so;
+## Reading and Writing Settings in Back-End Code
+
+To use a setting in your services or jobs, inject the accessor interface via constructor injection. Shesha auto-generates the implementation when you call `RegisterSettingAccessor`.
 
 ```cs
-    public class MembershipSettingNames
-    {
-        public const string DebitDay = "Shesha.Membership.DebitDay";
+public class PaymentReminderJob
+{
+    private readonly IMembershipSettings _membershipSettings;
 
-        public const string MembershipPayments = "Shesha.Membership.Payments";
+    public PaymentReminderJob(IMembershipSettings membershipSettings)
+    {
+        _membershipSettings = membershipSettings;
     }
+
+    public async Task ProcessReminders()
+    {
+        // Read the current value
+        var debitDay = await _membershipSettings.DebitDay.GetValueAsync();
+
+        // Update the value
+        await _membershipSettings.DebitDay.SetValueAsync(15);
+    }
+}
 ```
 
-**MembershipPayments** is the name of the Compound Setting, similar to how **Debit day** was the name of our simple setting. 
+| Method | Description |
+|---|---|
+| `GetValueAsync()` | Returns the stored value, or the default if none has been saved. |
+| `SetValueAsync(value)` | Saves a new value to the database. |
+| `GetValue()` | Synchronous version of `GetValueAsync()`. |
+| `GetValueOrNullAsync()` | Returns `null` instead of the default when no value has been saved. |
 
-Next, in the Domain Layer, under the **Configuration** and then **Membership** folders, create a new class called `MembershipPaymentSettings` with this piece of code added;
+In most cases you'll use `GetValueAsync` and `SetValueAsync`. The synchronous and nullable variants exist for edge cases where async isn't available or you need to distinguish "not set" from "default".
+
+---
+
+## Reading and Writing Settings on the Front-End
+
+All registered settings are available in form script editors via the `application.settings` object. Settings are organized by module and group:
+
+```
+application.settings.[module].[group].[setting]
+```
+
+For example, to read and write the stars count setting from a module aliased as `functionalTests` with a group aliased as `common`:
+
+```javascript
+const settings = application.settings.functionalTests.common;
+
+// Read
+const starsCount = await settings.starsCount.getValueAsync();
+
+// Write
+await settings.starsCount.setValueAsync(starsCount + 1);
+```
+
+![Image](./images/modules15.png)
+
+Simple-type settings (`number`, `string`, `boolean`) are strongly typed in the editor, so you get autocomplete and type checking.
+
+:::tip How module and group names are resolved
+- **Module**: uses the module's `Alias` (if set), otherwise the module name in camelCase.
+- **Group**: uses the `[Alias]` attribute on the interface (if set), otherwise the interface name without the `I` prefix and `Settings` suffix, in camelCase.
+- **Setting**: uses the `[Alias]` attribute on the property (if set), otherwise the property name in camelCase.
+:::
+
+---
+
+## Compound Settings
+
+Sometimes a single setting isn't enough — you need a group of related values managed together. For example, a payment configuration with a debit day, reminder intervals, and toggle flags. Shesha handles this with **compound settings**, where `T` in `ISettingAccessor<T>` is a custom class instead of a primitive type.
+
+### Step 1 — Create the settings class
 
 ```cs
+namespace YourApp.Domain.Configuration.Membership
+{
     public class MembershipPaymentSettings
     {
         /// <summary>
-        /// Specific day on which a financial transaction is processed, resulting in the withdrawal of funds from an account.
+        /// Day of the month when payments are debited.
         /// </summary>
         public int DebitDay { get; set; }
 
         /// <summary>
-        /// Sent a few days before the payment due date to remind the debtor of upcoming payment.
+        /// Days before the due date to send the initial reminder.
         /// </summary>
         public int InitialReminder { get; set; }
 
         /// <summary>
-        /// Sent on the due date to remind the debtor that the payment is due today.
+        /// Whether to send a reminder on the due date itself.
         /// </summary>
         public bool DueDateReminder { get; set; }
 
         /// <summary>
-        /// Sent immediately after the payment is overdue, typically 1-3 days after the due date.
+        /// Days after the due date to send the first overdue reminder.
         /// </summary>
         public int FirstOverdueReminder { get; set; }
 
         /// <summary>
-        /// Sent at regular intervals (e.g every 7, 14, or 30 days) until the payment is made or further action is taken.
+        /// Interval in days between subsequent overdue reminders.
         /// </summary>
         public int SubsequentOverdueReminder { get; set; }
 
         /// <summary>
-        /// A stern reminder sent when the payment is significantly overdue, often indicating potential legal action.
+        /// Days after which a final notice is sent.
         /// </summary>
-        public int FinalNotice {  get; set; }
+        public int FinalNotice { get; set; }
     }
+}
 ```
 
-Now, let's add a new property to the `IMembershipSettings` class;
+### Step 2 — Add the setting name and accessor property
+
+Add a new constant:
 
 ```cs
-    [Category("Membership")]
-    public interface IMembershipSettings : ISettingAccessors
+public class MembershipSettingNames
+{
+    public const string DebitDay = "Shesha.Membership.DebitDay";
+    public const string MembershipPayments = "Shesha.Membership.Payments";
+}
+```
+
+Add a new property to the accessor interface. Note the `EditorFormName` — this tells Shesha which configurable form to use as the editor for this compound setting:
+
+```cs
+[Category("Membership")]
+public interface IMembershipSettings : ISettingAccessors
+{
+    [Display(Name = "Debit day", Description = "Day of the month when membership payments are debited.")]
+    [Setting(MembershipSettingNames.DebitDay)]
+    ISettingAccessor<int> DebitDay { get; set; }
+
+    [Display(Name = "Membership Payments", Description = "Payment debit days and reminder frequencies.")]
+    [Setting(MembershipSettingNames.MembershipPayments, EditorFormName = "membership-payment-settings")]
+    ISettingAccessor<MembershipPaymentSettings> MembershipPayments { get; set; }
+}
+```
+
+### Step 3 — Register with default values
+
+```cs
+IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
+{
+    x.DebitDay.WithDefaultValue(1);
+    x.MembershipPayments.WithDefaultValue(new MembershipPaymentSettings
     {
-
-        ......
-
-        ///<summary>
-        ///
-        ///</summary>
-        [Display(Name = "Membership Payments", Description = "Membership Payment debit days and reminder frequencies.")]
-        [Setting(MembershipSettingNames.MembershipPayments, EditorFormName = "membership-payment-settings")]
-        ISettingAccessor<MembershipPaymentSettings> MembershipPayments { get; set; }
-    }
+        DebitDay = 1,
+        InitialReminder = 3,
+        DueDateReminder = true,
+        FirstOverdueReminder = 1,
+        SubsequentOverdueReminder = 7,
+        FinalNotice = 30
+    });
+});
 ```
 
-We have created a new property `MembershipPayments`, with its `ISettingAccessor<T>` type set to the `MembershipPaymentSettings` class we just created.
+### Step 4 — Create the editor form
 
-Please take note of the `EditorFormName` property, as with Compound settings, we'll need to bind that particular property to a configurable Form on the frontend, so the `EditorFormName` property name must match the exact form name that was configured.
+For compound settings, you need a configurable form in Shesha whose **form name** matches the `EditorFormName` you specified (`membership-payment-settings` in this example).
 
-Just like the Simple Settings before, the last step is to register our new Compound Settings in the module file with default values, so modify the `PreInitialize` method so it looks like this;
+1. Create a new form and set its name to `membership-payment-settings`:
+
+   ![Image](./images/modules6.png)
+
+2. Add form fields for each property in `MembershipPaymentSettings`. Use camelCase for the property names (e.g. `debitDay`, `initialReminder`) and add descriptions so administrators understand what each field does:
+
+   ![Image](./images/modules7.png)
+
+3. Navigate to **Configurations > Settings** to see your compound setting:
+
+   ![Image](./images/modules8.png)
+
+### Reading and writing compound settings in code
 
 ```cs
-        public override void PreInitialize()
-        {
-            base.PreInitialize();
-            IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
-            {
-                x.DebitDay.WithDefaultValue(1);
-                x.MembershipPayments.WithDefaultValue(new MembershipPaymentSettings
-                {
-                    DebitDay = 1,
-                    InitialReminder = 3,
-                    DueDateReminder = true,
-                    FirstOverdueReminder = 1,
-                    SubsequentOverdueReminder = 7,
-                    FinalNotice = 30
-                });
-            });
-        }
+// Read — returns the full object
+var paymentSettings = await _membershipSettings.MembershipPayments.GetValueAsync();
+var finalNotice = paymentSettings.FinalNotice;
+
+// Write — pass a new instance with updated values
+await _membershipSettings.MembershipPayments.SetValueAsync(new MembershipPaymentSettings
+{
+    DebitDay = paymentSettings.DebitDay,
+    InitialReminder = paymentSettings.InitialReminder + 1,
+    DueDateReminder = paymentSettings.DueDateReminder,
+    FirstOverdueReminder = paymentSettings.FirstOverdueReminder,
+    SubsequentOverdueReminder = paymentSettings.SubsequentOverdueReminder,
+    FinalNotice = paymentSettings.FinalNotice
+});
 ```
 
-To be able to check out the new Compound setting, create a new form and set its name to the same name as the `EditorFormName` we discussed earlier. 
+---
 
-![Image](./images/modules6.png)
+## User-Specific Settings
 
-Next, add all the properties in `MembershipPaymentSettings` class to the new form. Make sure to camelCase the property name and add tool descriptions so that the end user has an idea what a property does.
+By default, settings are global — they apply to the entire application. Shesha also supports **user-specific settings** that store a separate value per user. This is useful for personal preferences like notification frequency or UI preferences.
 
-![Image](./images/modules7.png)
+### Defining user-specific settings
 
-When you navigate to `Configurations` and then `Settings` you should see the new **Membership Payments** compound settings under the module `Membership`.
-
-![Image](./images/modules8.png)
-
-
-## Configuration Migrations
-
-In this section, we'll look at how we can make configurations, which are available in one environment, and have them deployed to another(i.e Test, QA or Production)
-
-We'll try to export the Compound Application Setting we just defined above and then have then deployed in any environment we want.
-
-First, we'll navigate to our **Forms** view and click the **Export** button
-
-![Image](./images/modules9.png)
-
-Make sure to toggle the version of your Form to make what you're working with. In our case we will use **Latest** just because we have not published our form and there is not a live version as yet.
-
-![Image](./images/modules10.png)
-
-Next is select the module and then select our configured form, which in our case is the **membership-payment-settings** form and then click **Export**.
-
-![Image](./images/modules11.png)
-
-Clicking this create a *.shaconfig* file that provides the configuration in Json format.
-
-![Image](./images/modules12.png)
-
-To have the configuration available as part of our application, we need to add it as sort of a migration. 
-
-Now, in the **Application** layer in your backend, create a folder called **ConfigMigrations** and paste in the downloaded *.shaconfig* file
-
-![Image](./images/modules13.png)
-
-Next, is to set the Build Action of the *.shaconfig* file to **Embedded Resource** in the file properties pane.
-This makes sure the configuration file is embedded within the *.dll* that gets compiled.
-
-![Image](./images/modules14.png)
-
-## Read and write setting values on back-end
-To read and write setting values you just need to resolve your settings interface (`IMembershipSettings` from the example above) and use it's properties. Shesha generates an implementation of the interface automatically when you call `RegisterSettingAccessor`.
-
-In the example below we resolve `IMembershipSettings` using constructor injection. The `TestSetting` method reads and writes both the `DebitDay` and `MembershipPayments`, 
+The process is the same as global settings, with one addition: set `IsUserSpecific = true` on the `[Setting]` attribute.
 
 ```cs
-  private readonly IMembershipSettings _membershipSettings;
-
-  public PaymentReminderJob(IMembershipSettings membershipSettings)
-  {
-          _membershipSettings = membershipSettings;
-  }
-
-  public async Task TestSetting()
-  {
-      //Get Simple application settings
-      var simpleSettings = await _membershipSettings.DebitDay.GetValueAsync();
-
-      //Get Compound application settings
-      var compoundSettings = await _membershipSettings.MembershipPayments.GetValueAsync();
-
-      var finalNotice =compoundSettings.FinalNotice;
-
-      //Update Simple application settings
-      await _membershipSettings.DebitDay.SetValueAsync(simpleSettings + 1);
-
-      //Update Compound application settings
-      await _membershipSettings.MembershipPayments.SetValueAsync(new MembershipPaymentSettings
-      {
-          DebitDay = compoundSettings.DebitDay + 1,
-          InitialReminder = compoundSettings.InitialReminder + 1,
-          DueDateReminder = compoundSettings.DueDateReminder,
-          FirstOverdueReminder = compoundSettings.FirstOverdueReminder + 1,
-          SubsequentOverdueReminder = compoundSettings.SubsequentOverdueReminder + 1,
-          FinalNotice = compoundSettings.FinalNotice + 1
-      });
-  }
-```
-
-For Simple settings, it is enough to simply await the `GetValueAsync` method to get the values that have been set. However, for Compound settings, awaiting the `GetValueAsync` method returns an object that contains all the properties contained. This is the `compoundSettings` object from the snippet above.
-
-Updating Settings follows a similar pattern. For Simple settings, we can await the `SetValueAsync` method and provide a single updated value by incrementing its current value by **1**. For Compound Settings, we need to create a new instance of the Compound setting object, in our case this is `MembershipPaymentSettings`, and set each property of the object individually.
-
-
-Note: client-specific settings are handled automatically and you can use the same methods `GetValueAsync` and `SetValueAsync` for reading and writing.
-
-## Read setting values on front-end
-The read and write functionalities are accessible via the frontend under the **application** object, which is available on all the code editors across all forms.
-
-The **application** object gives you access to the different settings that have been registered on the application, giving you flexibility to read or write to your settings from anywhere on your application.
-
-![Image](./images/modules15.png)
-
-
-## User Specific Settings
-Shesha also supports user-specific settings, allowing you to define and manage settings that are tailored to individual users. These settings can be used for personal preferences or user-specific configurations, offering greater flexibility and personalization.
-
-Practical examples of this implementation could be `Notification Preferences`
-- `Email Notifications`: Users can configure how frequently they receive email updates (e.g., daily, weekly, or instant).
-    - Example: LinkedIn lets users adjust email notifications for connections, messages, and job recommendations.
-- `Push Notifications`: Allow users to enable or disable specific push notifications, such as reminders or promotional messages.
-    - Example: A weather app like AccuWeather enables users to choose notifications for severe weather alerts.
-
-### Define User Specific Settings
-Defining user-specific settings is similar to the process for global settings but includes an additional step to specify that the setting is tied to a particular user.
-
-#### 1. Define the User Setting Names
-Add a static class to define the user-specific setting names. This helps ensure consistency when referencing the settings.
-
-``` csharp
 public class UserSettingNames
 {
     public const string NotificationFrequency = "Shesha.User.NotificationFrequency";
     public const string EnablePushNotifications = "Shesha.User.EnablePushNotifications";
 }
 
-```
-
-#### 2. Define a User-Specific Settings Accessor
-
-Create an interface that extends `ISettingAccessors`, just like other settings. Use the `IsUserSpecific` property of the `Setting` attribute to indicate that the setting is user-specific.
-
-Example: 
-```csharp
 [Category("Notification Preferences")]
 public interface IUserNotificationPreferenceSettings : ISettingAccessors
 {
-    ///<summary>
-    /// 
-    ///</summary>
-    [Display(Name = "Notification Frequency", Description = "Users can configure how frequently they receive email updates (e.g., daily, weekly, or instant).")]
+    [Display(Name = "Notification Frequency",
+             Description = "How often the user receives email updates (e.g. daily, weekly, instant).")]
     [Setting(UserSettingNames.NotificationFrequency, IsUserSpecific = true)]
     ISettingAccessor<string> NotificationFrequency { get; set; }
 
-    ///<summary>
-    /// 
-    ///</summary>
-    [Display(Name = "Enable Push Notifications", Description = "Allow users to enable or disable specific push notifications, such as reminders or promotional messages.")]
+    [Display(Name = "Enable Push Notifications",
+             Description = "Whether push notifications are enabled for this user.")]
     [Setting(UserSettingNames.EnablePushNotifications, IsUserSpecific = true)]
     ISettingAccessor<bool> EnablePushNotifications { get; set; }
 }
 ```
-#### 3. Register the User Settings Accessor
-Just like with global settings, register the user-specific settings accessor in the PreInitialize method of your module. Provide default values that will be applied if a user-specific value has not been set.
 
-```csharp
-public override void PreInitialize()
+Register with defaults as usual:
+
+```cs
+IocManager.RegisterSettingAccessor<IUserNotificationPreferenceSettings>(x =>
 {
-    base.PreInitialize();
-
-    IocManager.RegisterSettingAccessor<IUserSettings>(x =>
-    {
-        x.NotificationFrequency.WithDefaultValue("Weekly");
-        x.EnablePushNotifications.WithDefaultValue(true);
-    });
-}
+    x.NotificationFrequency.WithDefaultValue("Weekly");
+    x.EnablePushNotifications.WithDefaultValue(true);
+});
 ```
 
-### Back-End API Design
+Reading and writing user-specific settings in back-end code works exactly the same way (`GetValueAsync` / `SetValueAsync`) — Shesha automatically scopes the value to the current user.
 
-#### Get Endpoint
-- URL: `/api/services/app/Settings/GetUserValue`
-- Method: `GET`
-- Parameters:
-    - `moduleName` (string) - Specifies the module name to which the setting belongs.
-    - `settingName` (string) - Name of the setting to retrieve.
-    - `defaultValue` (optional, string) - Value to use if the setting does not already exist.
-    - `dataType` (optional, string) - Specifies the data type for validation before saving.
+### Front-end API for user settings
 
-- Behavior:
-    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](#2-define-a-user-specific-settings-accessor)
-    - If it does not exist:
-        - Create the setting with the provided `defaultValue`,  if specified.
-        - If `defaultValue` is not provided, use the `defaultValue` from the [UserSettingConfig](#3-register-the-user-settings-accessor) (if it exists).
-        - If no `defaultValue` is found, use an empty string ("").
+User settings are accessible via the `application.user` object in form script editors:
 
-#### Update Endpoint
-- URL: `/api/services/app/Settings/UpdateUserValue`
-- Method: `POST`
-- Parameters:
-    - `moduleName` (string) - Specifies the module name to which the setting belongs.
-    - `settingName` (string) - Name of the setting to update.
-    - `defaultValue` (optional, string) - Value to set for the setting.
-    - `dataType` (optional, string) - Specifies the data type for validation before saving.
-    
-- Behavior:
-    - Check if the setting exists for the user in the database - these are settings created by defined [settings accessors](#2-define-a-user-specific-settings-accessor)
-    - If it does not exist:
-        - Create the setting with the provided `defaultValue`.
-        - Validate the `defaultValue` by attempting to deserialize it into the `dataType` (if provided). If validation fails, return an error.
-    - If it exists, update the setting with the new value.
-    - Save the updated setting in the database.
+```javascript
+// Read a user setting
+const frequency = await application.user.getUserSettingValueAsync(
+    "NotificationFrequency",  // setting name
+    "Shesha.User",            // module name
+    "Weekly"                  // default value (optional)
+);
 
-### Read user setting values on front-end
-The read and write functionalities are accessible via the frontend under the application object, which is available on all the code editors across all forms.
-
-The `application.user` object gives you access to the different endpoints exposed for reading and updating user specific settings, giving you flexibility to read or write to your settings from anywhere on your application.
-
-#### Get Endpoint
-``` javascript
-(method) UserApi.getUserSettingValueAsync(name: string, module: string, defaultValue?: any, dataType?: string): Promise<any>
-Get User Setting
-```
-
-#### Update Endpoint
-``` javascript
-(method) UserApi.updateUserSettingValueAsync(name: string, module: string, value: any, dataType?: string): Promise<void>
-Update User Setting
+// Update a user setting
+await application.user.updateUserSettingValueAsync(
+    "NotificationFrequency",
+    "Shesha.User",
+    "Daily"
+);
 ```
 
 ![Image](./images/user-settings-UI.png)
+
+### REST API endpoints
+
+If you need to call the API directly (e.g. from a custom front-end):
+
+| Action | Method | URL | Key Parameters |
+|---|---|---|---|
+| Get value | `GET` | `/api/services/app/Settings/GetUserValue` | `moduleName`, `settingName`, `defaultValue` (optional), `dataType` (optional) |
+| Update value | `POST` | `/api/services/app/Settings/UpdateUserValue` | `moduleName`, `settingName`, `defaultValue`, `dataType` (optional) |
+
+Both endpoints automatically create the setting for the user if it doesn't exist yet, using the provided default or the registered default.
+
+---
+
+## Deploying Settings Across Environments (Configuration Migrations)
+
+When you configure a compound setting's editor form in one environment (e.g. dev), you'll want to deploy it to other environments (test, QA, production) without manual re-creation.
+
+1. Navigate to **Forms**, click **Export**, and select the version to export (use "Latest" if you haven't published yet):
+
+   ![Image](./images/modules9.png)
+   ![Image](./images/modules10.png)
+
+2. Select your module and form (e.g. `membership-payment-settings`), then click **Export**:
+
+   ![Image](./images/modules11.png)
+
+3. This downloads a `.shaconfig` file containing the form configuration as JSON:
+
+   ![Image](./images/modules12.png)
+
+4. In your back-end **Application** layer, create a `ConfigMigrations` folder and add the `.shaconfig` file:
+
+   ![Image](./images/modules13.png)
+
+5. Set the file's **Build Action** to **Embedded Resource** in the file properties pane. This embeds it in the compiled DLL so it's automatically applied on startup:
+
+   ![Image](./images/modules14.png)
+
+---
+
+## Reference
+
+### Setting attribute options
+
+The `[Setting]` attribute supports the following properties:
+
+| Property | Type | Description |
+|---|---|---|
+| `Name` | `string` | Unique name of the setting. Falls back to the property name if not specified. |
+| `IsClientSpecific` | `bool` | Indicates the setting can have different values per front-end client. |
+| `IsUserSpecific` | `bool` | Indicates the setting stores a separate value per user. |
+| `EditorFormName` | `string` | Name of a configurable form used to edit compound settings in the UI. |
+
+### Alias resolution for front-end access
+
+When accessing settings from front-end code via `application.settings.[module].[group].[setting]`, names are resolved as follows:
+
+| Level | Resolution |
+|---|---|
+| **Module** | `Alias` property of `SheshaModuleInfo`, or the module name in camelCase. |
+| **Group** | `[Alias]` attribute on the `ISettingAccessors` interface, or the interface name without `I` prefix and `Settings` suffix in camelCase. |
+| **Setting** | `[Alias]` attribute on the property, or the property name in camelCase. |
+
+**Example:** An interface `ITestSetting` with `[Alias("common")]` in a module with `Alias = "functionalTests"`, and a property `StarsCount` with `[Alias("stars")]`, resolves to:
+
+```javascript
+application.settings.functionalTests.common.stars
+```
+
+### SettingManagementContext (advanced)
+
+All `GetValueAsync` / `GetValue` methods accept an optional `SettingManagementContext` parameter. This lets you explicitly read a setting for a specific front-end app, tenant, or user — overriding the automatic context detection:
+
+```cs
+var context = new SettingManagementContext
+{
+    AppKey = "my-frontend-app",  // target a specific front-end application
+    TenantId = 42,               // target a specific tenant
+    UserId = 123                  // target a specific user
+};
+
+var value = await _settings.DebitDay.GetValueAsync(context);
+```
+
+You rarely need this — Shesha resolves the correct context automatically in most scenarios. It's mainly useful in background jobs or multi-tenant operations where the ambient context isn't available.
