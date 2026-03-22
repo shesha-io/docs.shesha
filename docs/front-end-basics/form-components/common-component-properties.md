@@ -4,206 +4,333 @@ sidebar_position: 1
 
 # Common Properties & Events
 
-This section describes the properties which are common to all form components.
+Every component you place on a Shesha form shares a set of common properties. These control things like what the component is called, where it reads and writes its value, whether it is visible or editable, how it looks, and how it responds to user interactions. Understanding these properties once means you can configure any component in Shesha. 
+
+---
 
 ### Common
+
+This group contains the fundamental settings that identify the component and connect it to your form's data.
+
 #### **Component Name** `string`
-This name must be unique within the form, contain only alphanumeric characters and underscores (no spaces), and is used to access the component programmatically through its parent form's context property.
 
-#### **Property Name** `string`
- This specifies the name of the property on the form's [Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) or [Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object the form component will be bound to.
+The component name is a unique identifier for this component within the form. Shesha uses it internally to reference the component in scripts and in the designer.
 
-#### **Context** `object`
- This specifies where the form component's value will be bound to. By default the form component will be bound to and update the [Form data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data) if left empty, otherwise it will be bound to the selected [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context).
-
- 
-#### **Title** `string`
-
-The heading displayed at the top of the component.
-
-#### **Show Title** `boolean`  
-Toggles visibility of the component title.
-
-#### **Label** `boolean\string`
-Toggles the display of the label. When enabled, a text field appears to enter the label name.
-
-#### **Hide** `boolean`
- Controls the visibility of the component.
-  - `return true` if you want to hide the component
-  - `return false` if you want to show the component
+The name must be unique across the entire form. It can only contain letters, numbers, and underscores - no spaces or special characters. A good convention is to use camelCase (e.g. `firstNameInput`, `statusDropdown`).
 
 :::tip
-`return data.gender != 2` - This shows the component if the gender is 2
+Component Name is different from Property Name. Component Name is how you refer to the component itself (in code). Property Name is the field on your data that the component reads from and writes to.
 :::
 
+#### **Property Name** `string`
+
+The property name tells Shesha which field on the form's data object this component is bound to. When the form loads data, Shesha reads this field and fills the component. When the user saves, Shesha writes the component's value back to this field.
+
+For example, if your form is bound to a `Person` entity and you want a text field to show the person's first name, set the Property Name to `firstName`. Use dot notation to reach nested fields, such as `address.city` to reach the `city` field inside an `address` object.
+
+:::info
+Property Name maps directly to the field name on your backend entity. Make sure the spelling and casing match exactly - Shesha is case-sensitive here.
+:::
+
+#### **Context** `object`
+
+By default, a component reads from and writes to the form's own data object (the current record). The Context setting lets you point the component at a different data source instead - specifically an [App Context](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/app-context) object.
+
+Leave this blank if you want the component to work with the form's data as normal. Set it to a named App Context if you want the component to read from and write to shared application-level state instead.
+
+#### **Label** `boolean / string`
+
+The label is the text that appears next to a component to tell the user what the field is for. When the Label setting is enabled, a text field appears where you type the label text. If you disable it, no label is shown and the component appears without any accompanying text.
+
+:::tip
+Hiding the label is useful inside table rows, modal forms with tight layouts, or anywhere the context already makes the field's purpose obvious without a label.
+:::
+
+#### **Title** `string`
+
+The title is a heading displayed at the top of certain components, such as panels or sub-forms. Use it when the component represents a logical group and you want to give that group a name the user can see. The **Show Title** toggle controls whether the title is visible.
+
 #### **Description** `string`
- Additional description for the component, more for internal configurator/developer use.
+
+The description is an internal note about what this component does or why it was configured a certain way. It is only visible to configurators in the form designer - it does not appear to end users at all.
+
+Use this to leave a note for yourself or your team, such as "This field is pre-filled by the On After Data Load event" or "Required by the compliance workflow."
 
 #### **Edit Mode** `object`
-Set the component’s interaction behavior:
-- **Inherited** - Takes the edit mode of the parent form that the component belongs to.
-- **Editable** - Enables the user to edit the component's value or perform operations on the component.
-- **Read Only** - The component serves as a form of data display, and the user cannot edit the component's value or the component functionality will be disabled (greyed out).
+
+Edit Mode controls whether the user can interact with this component. There are three options:
+
+| Option | Behaviour |
+|---|---|
+| **Inherited** | The component takes the edit mode of the form it belongs to. If the form is read-only, so is the component. This is the default. |
+| **Editable** | The user can always interact with this component, regardless of the form's mode. |
+| **Read Only** | The component is always display-only. The user can see the value but cannot change it. |
+
+Use Inherited for most components. Switch to Read Only when you want a specific field to always be locked, even on an edit form - for example, showing a system-assigned ID or an audit timestamp.
 
 #### **Tooltip** `string`
- Additional information to display to the user as a tooltip.
+
+The tooltip is a short piece of additional information that appears when the user hovers over the component. Use it to explain what a field is for, what format is expected, or any constraints the user should know about.
+
+Keep tooltips brief. They are a hint, not a full description.
 
 #### **Placeholder** `string`
- Placeholder text to display to the user when no value is specified.
 
-#### **Collapsible** `boolean`  
-Choose if the component should be collapsible.
+The placeholder is grey text that appears inside an input component when it has no value yet. It disappears as soon as the user starts typing. Use it to show an example value or a short instruction, such as "e.g. community@shesha.io" or "Enter your full address".
+
+#### **Hide** `function`
+
+The Hide setting controls whether the component is visible on the form. You write a small JavaScript expression that returns `true` to hide the component or `false` to show it.
+
+This is how you create conditional visibility - showing a field only when another field has a specific value.
+
+**Example - Show a "Spouse Name" field only when marital status is "Married":**
+
+```js
+// Assuming 2 is the integer value for 'Married' in the marital status reference list
+return data.maritalStatus !== 2;
+```
+
+When this expression returns `true`, the component is hidden. When it returns `false`, the component is visible.
+
+:::warning
+Always use the integer value from the reference list enum, not the string label. String labels can change; the underlying integer value is stable. Check the backend enum in your domain project to confirm the correct value.
+:::
+
+#### **Collapsible** `boolean`
+
+When enabled, this adds a collapse/expand toggle to the component, allowing the user to hide the component's content to save space. This is most commonly used on panel and sub-form components.
+
 ___
 
 ### Data
 
-#### **Data Source Type** `object`  
-Defines the source from which data is pulled. The options are:
-- **Entity Type** *(default)*
-- **URL**
-- **Form**
+Some components, such as dropdowns and entity pickers, need to fetch a list of options or records from somewhere. The Data Source Type setting controls where that data comes from.
 
- ___
+#### **Data Source Type** `object`
+
+This setting defines where the component fetches its list of data from. The available options depend on the component, but common choices are:
+
+| Option | Description |
+|---|---|
+| **Entity Type** | Fetches records from a Shesha entity using the standard API. This is the default for most list-based components. |
+| **URL** | Fetches data from a custom API endpoint you specify. |
+| **Form** | Uses data already present on the form rather than calling an API. |
+
+___
 
 ### Validation
 
+These settings control what the user must enter before the form can be submitted.
+
 #### **Required** `boolean`
- If checked, prohibits form submission if the component does not have a value (mandatory). Indicated by a red asterisk mark (<span style={{ color: 'red' }}>*</span>) next to the component.
 
- #### **Min Length / Max Length** ``number``
+When Required is checked, Shesha will not allow the form to be submitted if this component has no value. A red asterisk (<span style={{ color: 'red' }}>*</span>) appears next to the component's label to signal to the user that the field is mandatory.
 
-Set how short or long the input must be.
- ___
+:::note
+Required validation runs when the user clicks Submit. It does not block the user from navigating the form while the field is empty.
+:::
+
+#### **Min Length / Max Length** `number`
+
+These settings constrain how long a text value can be. Set **Min Length** to enforce a minimum number of characters, and **Max Length** to cap the input at a certain length.
+
+For example, a password field might require at least 8 characters (Min Length = 8). A short code field might be exactly 6 characters (Min Length = 6, Max Length = 6).
+
+___
 
 ### Appearance
 
-#### **Font** ``object`` 
+These settings control how the component looks - its size, colours, borders, fonts, spacing, and any custom CSS.
 
-Customize how your component labels look. Choose the **font family**, **size**, **weight**, and **color**.
+#### **Font** `object`
 
-#### **Dimensions** ``object`` 
+The Font settings let you customise the typography of the component's label and content. You can set the font family, size, weight, and colour.
 
-Define the size and behavior of the component, including:
-- Width and height
-- Minimum/maximum width and height
-- Overflow handling
+#### **Dimensions** `object`
 
-#### **Border** ``object`` 
-Controls card border styling, with the following options:
+The Dimensions settings define how much space the component takes up. You can set the width and height as fixed values or percentages, and also set minimum and maximum constraints for each. The Overflow setting controls what happens when the content is larger than the component's boundaries.
 
-  - **Border Type**: Defines the type or style of the border.
+#### **Border** `object`
 
-  - **Radius Type**: Defines the shape or roundness of the corners.
+The Border settings control the line drawn around the component. You can set the border style (solid, dashed, dotted), width, colour, and the corner radius. Use a higher radius value to get rounded corners.
 
-#### **Background** ``object``
+#### **Background** `object`
 
-Select a type of background. The options are:
+The Background settings let you fill the component's background with a colour, a gradient, or an image. When choosing Image, you can provide the image as a URL, a base64-encoded string, or a stored file ID from Shesha's file storage.
 
-- **Color**
-- **Gradient**
-- **Image URL**
-- **Uploaded Image**
-- **Stored File**
+You can also control how the background image is sized (contain or cover), positioned, and whether it repeats.
 
-Also tweak background size, position, and repeat behavior.
+#### **Shadow** `object`
 
-#### **Shadow** ``object`` 
-
-Adds depth to the card with customizable shadow settings, including **offset**, **blur**, **spread**, and **color**.
+The Shadow settings add a drop shadow behind the component to give it visual depth. You can control the horizontal and vertical offset, the blur radius, the spread, and the colour of the shadow.
 
 #### **Style** `function`
- Allows configurators to specify custom CSS styling through code. May be used when standard styling properties are insufficient to achieve the required look and feel.
 
-Example:
+The Style setting lets you write a JavaScript expression that returns a CSS style object. Use this when the standard styling controls are not enough to achieve the look you need, or when you want the appearance to change based on the form's data.
 
-```javascript
+The expression must return a plain JavaScript object where the keys are camelCase CSS property names.
+
+**Example - Change the background colour based on a status value:**
+
+```js
 return {
-  backgroundColor: "white",
-  fontSize: "10px",
+  backgroundColor: data.status === 1 ? '#e6f7e6' : '#fde8e8',
+  borderRadius: '4px',
+  padding: '8px',
+};
+```
+
+**Example - Apply a fixed style:**
+
+```js
+return {
+  backgroundColor: 'white',
+  fontSize: '14px',
+  fontWeight: '600',
 };
 ```
 
 #### **Size** `object`
- The size of the component, the options are :
-  - **Small**
-  - **Middle**
-  - **Large**
+
+Controls the overall size of the component. The options are:
+
+| Value | Description |
+|---|---|
+| **Small** | A compact version, suitable for dense layouts. |
+| **Middle** | The default size for most forms. |
+| **Large** | An enlarged version, useful for prominent or accessibility-focused inputs. |
 
 #### **Margin and Padding** `object`
-The padding property defines the space between an element’s content and its border, creating inner spacing within the element. In contrast, the margin property controls the space outside an element’s border, determining the distance between the element and surrounding elements. Together, they help adjust spacing and layout for a more precise and visually appealing design.
+
+Margin and Padding let you control the spacing around and inside the component.
+
+**Padding** is the space between the component's content and its own border. Increasing padding makes the component feel more spacious internally.
+
+**Margin** is the space between the component's outer edge and the surrounding components. Use margin to push components apart on the form.
+
+:::tip
+Use the visual margin/padding editor in the designer to set values for each side independently (top, right, bottom, left) using standard CSS shorthand values such as `8px 16px`.
+:::
 
 ___
 
 ### Security
 
-#### Permissions `object`
- Specifies the permissions required to access the component. The component will be hidden from any user that does not have any of the specified permissions.
+#### **Permissions** `object`
 
- **Example**: `user:Roles`
- ___
+The Permissions setting restricts who can see this component. You specify one or more permission names, and Shesha will hide the component from any user who does not hold at least one of those permissions.
+
+This is a display-level restriction - the component simply does not appear for users without the required permissions. For sensitive data, always combine this with server-side permission checks as well.
+
+**Example:** To restrict a component to users with the `User:Roles` permission, enter `User:Roles` in the permissions field.
+
+:::warning
+Hiding a component via Permissions only removes it from the UI. A determined user could still attempt to submit values directly to the API. Always enforce access rules on the server side for sensitive operations.
+:::
+
+___
 
 ### Events
- Event handlers are functions that get triggered on specific events in a component lifecycle.
 
-All form components have a set of event handlers that can be used to respond to specific triggers as the user interacts with the application. These include the following:
+Events are JavaScript functions that run automatically when the user interacts with a component. Every component supports a set of event handlers. You write your own code in each handler to respond to what the user is doing.
+
+All event handlers have access to the same set of variables:
+
+| Variable | What it gives you |
+|---|---|
+| `data` | The current values of all fields on the form. See [Form Data](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data). |
+| `form` | The form instance. Use `form.setFieldsValue({ fieldName: value })` to update field values. |
+| `http` | An Axios instance for making HTTP requests to the server. |
+| `message` | Functions to show toast notifications: `message.success(...)`, `message.error(...)`, `message.warning(...)`. |
+| `moment` | The Moment.js library for working with dates and times. |
+| `mode` | The current form mode: `'edit'`, `'readonly'`, or `'designer'`. |
+| `initialValues` | The values the form had when it first loaded. |
+| `parentFormValues` | The field values of the parent form, if this component is inside a sub-form. |
+| `event` | The raw browser event object (available on input events like onChange and onFocus). |
 
 #### **On Change** `function`
 
-Triggered on change of the component's value such as on input changes or change of selection in the case of selected based components such as radio buttons, check boxes or drop down list.
+This event fires every time the component's value changes - when the user types into a text field, selects a new option, checks a checkbox, or clears a value.
+
+Use it to react to a field change in real time, such as computing a derived value, triggering a lookup, or updating a related field.
+
+**Example - Automatically build a full name when first or last name changes:**
+
+```js
+const fullName = `${data.firstName ?? ''} ${data.lastName ?? ''}`.trim();
+if (fullName !== data.fullName) {
+  form.setFieldsValue({ fullName });
+}
+```
+
+:::warning Avoid infinite loops
+If your onChange code calls `form.setFieldsValue`, that can trigger onChange on the updated field. Always guard your updates with a condition so you only set a value when it actually needs to change.
+:::
 
 #### **On Focus** `function`
 
-Triggered on the component receives the focus.
+This event fires when the user clicks into or tabs into the component. It is useful for highlighting content, showing contextual help, or loading data just before the user is about to interact with a field.
 
 #### **On Blur** `function`
 
-Triggered when a previously selected component loses focus.
+This event fires when the user leaves the component - clicking or tabbing away after having interacted with it. Use it for field-level validation or to trigger a lookup after the user has finished entering a value.
+
+**Example - Validate an email address format when the user leaves the field:**
+
+```js
+const email = data.emailAddress1;
+if (email && !email.includes('@')) {
+  message.warning('This does not look like a valid email address.');
+}
+```
 
 #### **On Select** `function`
 
-An event which is triggered every time an [address](/front-end-basics/form-components/Advanced/address.md) is selected.
+This event fires when an item is selected from a list-based component - for example, when the user picks an address from an autocomplete dropdown or chooses a record from an entity picker.
+
+Use it to populate related fields after the user makes a selection.
+
+**Example - Fill in address fields after the user selects an address:**
+
+```js
+if (data.selectedAddress) {
+  form.setFieldsValue({
+    streetLine1: data.selectedAddress.addressLine1,
+    suburb: data.selectedAddress.suburb,
+    postalCode: data.selectedAddress.postalCode,
+  });
+}
+```
 
 #### **On Click** `function`
 
-An event triggered when the component is clicked.
+This event fires when the user clicks the component. It is most commonly used on buttons or icon components to trigger a custom action.
 
 #### **On File List Changed** `function`
 
-Triggered when files are added to or removed from the [file list](/front-end-basics/form-components/Entity-References/files.md).
+This event fires when files are added to or removed from a file upload component. Use it to react to file uploads, such as validating the number of files or updating a status field.
 
 #### **On Create** `function`
 
-Triggered when a new component is created.
+This event fires when a new item is created inside the component - for example, when a new row is added to an editable data table. Use it to set default values on the new row.
 
 #### **On Update** `function`
 
-Triggered when an existing component is updated.
+This event fires when an existing item inside the component is updated - for example, when a row in an editable table is edited. Use it to react to changes at the row level.
 
 #### **On Delete** `function`
 
-Triggered when a component is deleted.
+This event fires when an item inside the component is deleted. Use it to run cleanup logic or prompt the user before the deletion completes.
 
 #### **On Double-Click** `function`
 
-Triggered when a row is double-clicked by the user.
+This event fires when the user double-clicks on an item inside the component, such as a row in a data table. A common use is to open the clicked record in a detail view.
 
 #### **On Row Save Success** `function`
 
-Triggered after a row is successfully saved.
+This event fires after a row inside an inline-editable component is saved successfully. Use it to show a confirmation message or refresh related data.
 
-#### **On Row Delete Success** `function` 
+#### **On Row Delete Success** `function`
 
-Triggered after a row is successfully deleted.
-
-These events contain a standard list of variables that give the user access to certain variables and functions facilitating the need to respond to various scenarios. Namely:
-
-- [formData](/docs/front-end-basics/configured-views/client-side-scripting/shesha-objects/data)
-- `event` callback when an input is made
-- current `mode` of the form (_readonly, designer, edit_)
-- A function used to [setFormData](/docs/front-end-basics/configured-views/client-side-scripting/set-form-data)
-- `moment` function for DateTime operations
-- `ParentFormValues`
-- [initialValues](/docs/how-to-guides/initialize-dialog-from-parent)
-- [toast message](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting#calling-an-api-using-the-get-method-to-retrieve-data-from-the-back-end) functionality
-- `form instance`
-- axios instance used to make [http](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting#calling-an-api-using-the-get-method-to-retrieve-data-from-the-back-end) requests
+This event fires after a row inside an inline-editable component is deleted successfully. Use it to show a confirmation or update any running totals.
