@@ -703,22 +703,22 @@ Wrap logic in a try/catch whenever the operation could fail for reasons outside 
 ```typescript
 // ✅ Good — specific, scoped, informative
 try {
-  const result = await fetchEntityData(entityId);
-  setData(result);
+  const result = await http.get('api/crud/getUsers');
+  form.setFieldValue('result', result);
 } catch (error) {
   logger.error('DataTable | Failed to fetch entity data', {
     entityId,
     error: error instanceof Error ? error.message : String(error),
   });
-  setData(null); // fall back to a safe state
+  form.setFieldValue('result', null); // fall back to a safe state
 }
 ```
  
 ```typescript
 // ❌ Bad — silent catch, swallows the error entirely
 try {
-  const result = await fetchEntityData(entityId);
-  setData(result);
+  const result = await http.get('api/crud/getUsers');
+  form.setFieldValue('result', result);
 } catch {
   // nothing here — no log, no fallback, no trace
 }
