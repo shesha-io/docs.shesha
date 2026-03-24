@@ -672,3 +672,159 @@ Before handing off to QA, developers must confirm:
 1. Components bound to entity properties inherit formatting defaults from the **Entity Configuration layer**.
 2. Inherited formatting is applied consistently in **Builder** and **Runtime**.
 3. Overrides work correctly when explicitly set, but inheritance remains the default behaviour.
+
+## 11. Error Handling & Informative Console Error Messages
+
+### Purpose of the Feature
+To keep component quality, we need to adopt good error handling. When a misconfiguration, bad API responses, or an unexpected runtime state occurs. By having an error handler ensures the component fails smoothly, the UI stays stable, and developers have the context to debug.
+
+This section covers two concerns:
+- **Try/catch patterns**: how to safely wrap error-prone logic
+- **Informative console error messages**: what a good error message looks like and the key concepts behind it
+
+### *Core Requirments*
+All components must:
+-   Catch and handle errors without crashing the UI
+-   Log errors in a standardised, informative way
+-   Never surface raw or cryptic errors to the end user
+
+### **Try/Catch Patterns**
+ 
+#### **When to use try/catch**
+ 
+Wrap logic in a try/catch whenever the operation could fail for reasons outside your control. This includes:
+- **API / async calls** — network failures, timeouts, unexpected response shapes
+- **JSON parsing** — user-supplied or externally sourced data that may be malformed
+- **Dynamic property access** — reading deeply nested object paths that may not exist
+- **Third-party or Ant Design interactions** — library calls that may throw in edge cases
+- **Data transformation logic** — mapping, filtering, or reducing data that has unknown shape
+
+#### **What good try/catch looks like (Node.js/TypeScript)**
+```typescript
+// ✅ Good — specific, scoped, informative
+try {
+  const result = await http.get('api/crud/getUsers');
+  form.setFieldValue('result', result);
+} catch (error) {
+  logger.error('DataTable | Failed to fetch entity data', {
+    entityId,
+    error: error instanceof Error ? error.message : String(error),
+  });
+  form.setFieldValue('result', null); // fall back to a safe state
+}
+```
+ 
+```typescript
+// ❌ Bad — silent catch, swallows the error entirely
+try {
+  const result = await http.get('api/crud/getUsers');
+  form.setFieldValue('result', result);
+} catch {
+  // nothing here — no log, no fallback, no trace
+}
+```
+ 
+```typescript
+// ❌ Bad — catch is too broad, resets global state unnecessarily
+try {
+  parseComponentConfig(config);
+} catch (e) {
+  resetEntireForm();
+}
+```
+#### **Key try/catch rules**
+- **Always log inside the catch block** — a silent catch is worse than no catch at all
+- **Scope the try block tightly** — only wrap the line(s) that can actually throw, not entire functions
+- **Provide a safe fallback** — after catching, return `null`, an empty array, or a default state so the component stays stable
+- **Never rethrow without context** — if you rethrow, add information before doing so
+- **Avoid swallowing async errors** — ensure promises are `await`ed inside try blocks, or `.catch()` is chained
+
+---
+
+### **Informative Console Error Messages**
+
+#### **What makes an error message informative?**
+A good error message answers three questions immediately:
+ 
+1. **Where** did this happen? (Which component or function?)
+2. **What** went wrong? (The actual failure, not just "error occurred")
+3. **Why** does it matter / what was the context? (The data or state involved)
+
+#### **Structure of a good error message**
+ 
+```
+[ComponentName | FunctionName] Short description of what failed — { relevant context }
+```
+
+**Examples:**
+```typescript
+// ✅ Good
+console.error('DataTable | fetchRows — API returned unexpected shape', {
+  endpoint: '/api/entity/list',
+  receivedType: typeof response.data,
+  entityId,
+});
+ 
+// ✅ Good
+console.error('DatePicker | parseDefaultValue — Failed to parse date string', {
+  rawValue: defaultValue,
+  expectedFormat: 'YYYY-MM-DD',
+  error: error.message,
+});
+ 
+// ❌ Bad — no context, no location, not actionable
+console.error('Something went wrong');
+ 
+// ❌ Bad — logs the raw error object only (poor readability in some environments)
+console.error(error);
+ 
+// ❌ Bad — uses console.log for an error (gets lost in noise)
+console.log('Error loading data');
+```
+
+#### **Key concepts for error messages**
+ 
+| Concept | Description |
+|---|---|
+| **Prefix with component name** | Always start with the component or module name so the source is immediately clear in a busy console |
+| **Be specific about what failed** | "Failed to parse config" is better than "Error". "API returned 403 on entity fetch" is better than "Request failed" |
+| **Include the relevant state** | Log the values that caused the failure — `entityId`, `fieldName`, `rawValue` — so the bug is reproducible |
+| **Use the correct log level** | `console.error` for real failures, `console.warn` for degraded-but-recoverable states, never `console.log` for errors |
+| **Avoid leaking sensitive data** | Do not log tokens, passwords, or personally identifiable information |
+| **Use structured logging** | Pass a second argument object with key/value pairs rather than string concatenation — it's searchable and readable |
+
+---
+ 
+### **Logging Levels — When to Use Which**
+ 
+| Level | When to use |
+|---|---|
+| `console.error` | Component threw, data fetch failed, the UI cannot proceed as intended |
+| `console.warn` | Something unexpected happened but the component can still render (e.g. missing optional prop, fell back to default) |
+| `console.info` | Significant lifecycle events useful for debugging (use sparingly) |
+| `console.log` | Development-only debugging — **must not appear in committed code** |
+ 
+---
+ 
+### **User-Facing Error Messages vs Console Errors**
+ 
+Console errors are for **developers**. What the user sees is a separate concern.
+ 
+| Audience | Goal | Example |
+|---|---|---|
+| **Developer (console)** | Full context, stack trace, relevant state | `'FormBuilder \| loadConfig — Failed to parse JSON config: Unexpected token at position 42'` |
+| **End user (UI)** | Clear, calm, actionable — no technical jargon | `"This field couldn't load its options. Please refresh or contact your administrator."` |
+ 
+Never expose raw error messages, stack traces, or internal field names to the end user. Always translate them into plain language.
+ 
+---
+ 
+### **Developer Pre-QA Summary**
+ 
+Before handing off to QA, developers must confirm:
+1. **All error-prone logic is wrapped in try/catch** — API calls, JSON parsing, dynamic access, and third-party interactions.
+2. **Every catch block logs an informative message** — including component name, what failed, and relevant context values.
+3. **No silent catches exist** — every catch either logs, falls back gracefully, or both.
+4. **Correct log levels are used** — `console.error` for failures, `console.warn` for degraded states, no `console.log` in committed code.
+5. **The UI always falls back to a stable state** — a caught error must never leave the component broken or blank without a safe fallback.
+6. **User-facing messages are plain and actionable** — no raw errors, stack traces, or internal identifiers are shown to the end user.
