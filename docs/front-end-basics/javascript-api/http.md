@@ -2,51 +2,49 @@
 
 HTTP is the object that provides access to the HTTP API that can be used to make HTTP requests. HTTP Requests are the lifeblood of a Shesha application. In order for the application to function well, the front-end needs to send data to the backend, for that data to be saved in the database. This is where HTTP requests come in. The Shesha front-end uses axios under the hood, and an axios instance is exposed on almost all the available `Scripts` on the configurator. For more on Shesha Scripts, see [here](/docs/front-end-basics/configured-views/client-side-scripting/basic-scripting/).
 
+All examples below use `async/await` with `try/catch`. This is preferred over `.then().catch()` chaining because it is easier to read and avoids a common mistake where developers forget to `return` the promise, causing silent failures.
+
 ## GET Method
 
-This type of request is used to retrieve data from the backend server. The `GET` method returns a JavaScript promise (_see [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)_). This means that as the developer, you need to write the code that will be executed once the promise is fulfilled. Say for example, you have an API that allows you to fetch user details provided with an ID. In order to make a request for a user with ID #1, you would typically do it like this:
+This type of request is used to retrieve data from the backend server. Say for example, you have an API that allows you to fetch user details provided with an ID. In order to make a request for a user with ID #1, you would typically do it like this:
 
 ```JavaScript
 const userId = 1;
 const apiUrl = `/api/services/app/User/Get?id=${userId}`;
 
-// Make the http request
 // The `http` instance is already provided for you on the Shesha Script and you don't need to
 // redefine it
-http.get(apiUrl)
-	.then(response => {
-		// do something with the response here
-		return Promise.resolve(response);
-	})
-	.catch(error => {
-		// do something with the error caught
-		return Promise.reject(error);
-	});
+try {
+	const response = await http.get(apiUrl);
+	// do something with the response here
+} catch (error) {
+	// do something with the error caught
+	console.error(error);
+	throw error;
+}
 ```
-
-The `Promise.resolve` and `Promise.reject` are used to return a promise object when resolution of the said promise has been fulfilled or rejected. The `.then()` method is used to "fulfill" the promise, while the `.catch()` is used when handling resultant errors.
 
 ## POST Method
 
-This type of request is used to send data to the backend server. It is usually used for creating resources, or even for doing certain operations on the server. Like the `GET` method, the `POST` method returns a promise as well. A very good example of a `POST` request in action, would be the `LOGIN` functionality. If you want a person to login to your application, they have to provide you with a username/password combination, and you would send that to the server, where you get a response from the server either as a success or a failure.
+This type of request is used to send data to the backend server. It is usually used for creating resources, or even for doing certain operations on the server. A very good example of a `POST` request in action, would be the `LOGIN` functionality. If you want a person to login to your application, they have to provide you with a username/password combination, and you would send that to the server, where you get a response from the server either as a success or a failure.
 
 ```JavaScript
 // The values of the username and password could be retrieved from the form data object.
-// Assume the form data object looks like this: {username: "userx@somecompany.com", "password987"}
+// Assume the form data object looks like this: {username: "userx@somecompany.com", password: "password987"}
 const loginPayload = {
 	username: data.username,
 	password: data.password
 }
 const loginUrl = `/api/TokenAuth/Authenticate`
-http.post(loginUrl, loginPayload)
-	.then(response => {
-		// do something with the response here
-		return Promise.resolve(response);
-	})
-	.catch(error => {
-		// do something with the error here
-		return Promise.reject(error);
-	});
+
+try {
+	const response = await http.post(loginUrl, loginPayload);
+	// do something with the response here
+} catch (error) {
+	// do something with the error here
+	console.error(error);
+	throw error;
+}
 ```
 
 Another example is when you want to create a user, on the backend. This can be done through the following http request:
@@ -58,36 +56,36 @@ Another example is when you want to create a user, on the backend. This can be d
 // like below:
 const { otherData, ...userData } = data;
 const userCreationUrl = `/api/services/app/User/Create`
-http.post(userCreationUrl, userData)
-	.then(response => {
-		// do something with the response here
-		return Promise.resolve(response);
-	})
-	.catch(error => {
-		// do something with the error here
-		return Promise.reject(error);
-	});
+
+try {
+	const response = await http.post(userCreationUrl, userData);
+	// do something with the response here
+} catch (error) {
+	// do something with the error here
+	console.error(error);
+	throw error;
+}
 ```
 
 ## PUT Requests
 
-A `PUT` request is usually used to update a specific resource on the server. The client sends the representation of the resource to be updated / replaced, and the server will updated. This request is similar to a `POST` request in the sense that data needs to be sent to the server.
+A `PUT` request is usually used to update a specific resource on the server. The client sends the representation of the resource to be updated / replaced, and the server will update it. This request is similar to a `POST` request in the sense that data needs to be sent to the server.
 
 ```JavaScript
 // assume we have a data object like { id: 5, firstname: "Verence" }
 const userUpdateUrl = `/api/services/app/User/Update`
-http.put(userUpdateUrl, data)
-	.then(response => {
-		// do something with the response
-		return Promise.resolve(response);
-	})
-	.catch(error => {
-		// do something with the error here
-		return Promise.reject(error);
-	});
+
+try {
+	const response = await http.put(userUpdateUrl, data);
+	// do something with the response
+} catch (error) {
+	// do something with the error here
+	console.error(error);
+	throw error;
+}
 ```
 
-The above request will update the user with the `id` 1, with the supplied details, which in case it's the first name will be changed to Verence.
+The above request will update the user with the `id` 5, with the supplied details, which in this case changes the first name to Verence.
 
 ## DELETE Requests
 
@@ -96,15 +94,15 @@ As the name implies, `DELETE` requests are used for removing resources on the se
 ```JavaScript
 // assume the user id you want to delete is 5
 const deleteUserUrl = `/api/services/app/User/Delete?id=${id}`
-http.delete(deleteUserUrl)
-	.then(response => {
-		// do something with the response
-		return Promise.resolve(response);
-	})
-	.catch(error => {
-		// do something with the error
-		return Promise.reject(error);
-	});
+
+try {
+	const response = await http.delete(deleteUserUrl);
+	// do something with the response
+} catch (error) {
+	// do something with the error
+	console.error(error);
+	throw error;
+}
 ```
 
 ## Request Parameters
@@ -126,7 +124,7 @@ http.delete(`${url}`, { headers: requestHeaders })
 
 By default, Shesha application endpoints require JWT authentication using Bearer tokens. However, **as long as the user is authenticated on the front-end, the Shesha framework will automatically append the bearer token to the http request**, so the developer doesn't have to worry about authentication.
 
-There are some scenarios where you would want your response to come back as a `blob` instead if a `string` or `json`. In these cases, you would have to change the response type to the appropriate type. Current options for response types are: `json` (_which is the default_), `arraybuffer`, `document`, `text`, `stream`, `blob`. However, the `blob` option is only available in the browser.
+There are some scenarios where you would want your response to come back as a `blob` instead of a `string` or `json`. In these cases, you would have to change the response type to the appropriate type. Current options for response types are: `json` (_which is the default_), `arraybuffer`, `document`, `text`, `stream`, `blob`. However, the `blob` option is only available in the browser.
 
 A good example of a scenario where you would need to use different response types, is when your server returns a `Stream` or `File`. Imagine if you have the following C# code on a certain API endpoint:
 
@@ -144,15 +142,21 @@ In your http request, you would then do the following:
 
 ```JavaScript
 // specify file url and download the specified file through an http request
-...
 const fileDownloadUrl = `/api/services/Reports/DownloadReport`;
-http.get(fileDownloadUrl, {
-	headers: {
-		"Content-Type": "application/json-patch+json"
-	},
-	responseType: "blob"
-})
-...
+
+try {
+	const response = await http.get(fileDownloadUrl, {
+		headers: {
+			"Content-Type": "application/json-patch+json"
+		},
+		responseType: "blob"
+	});
+	// response.data is now a Blob — use it to trigger a file download or display the file
+} catch (error) {
+	// do something with the error
+	console.error(error);
+	throw error;
+}
 ```
 
 By specifying the response type as a blob, the response data will be formatted as a blob instead of a json string, which makes it easier to download from your code script.
