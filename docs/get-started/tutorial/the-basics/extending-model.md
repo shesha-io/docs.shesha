@@ -211,19 +211,16 @@ _You can find more information about implementation of the wizard component [her
    - After Done Action: `Execute Script` >
 
 ```javascript
-(function () {
-  const PATH = `/api/dynamic/Shesha.Membership/Member/Create`;
+const PATH = `/api/dynamic/Shesha.Membership/Member/Create`;
 
-  http.post(`${PATH}`, data).then(onSuccess).catch(onError);
-})();
-
-function onSuccess(resp) {
+try {
+  const resp = await http.post(`${PATH}`, data);
   // Navigate to details view of the created member
   window.location.href = `/dynamic/Shesha.Membership/member-details?id=${resp.data.result.id}`;
-}
-
-function onError(_e) {
+} catch (_e) {
   message.error(`Failed to create member: ${_e}`, 10);
+  console.error(_e);
+  throw _e;
 }
 ```
 

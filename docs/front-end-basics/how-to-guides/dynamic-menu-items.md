@@ -63,21 +63,18 @@ import useSWR from "swr";
 export const useTemplates = () => {
   const { backendUrl, httpHeaders } = useSheshaApplication();
 
-  const fetcher = () => {
-    return (
-      axios.get <
-      IAjaxResponse <
-      Template >>
-        (URLS.GET_ALL_TEMPLATES,
-        {
-          baseURL: backendUrl,
-          headers: httpHeaders,
-        }).then((res) => {
-          const result = res.data.result;
-
-          return result.items;
-        })
-    );
+  const fetcher = async () => {
+    try {
+      const res = await axios.get<IAjaxResponse<Template>>(URLS.GET_ALL_TEMPLATES, {
+        baseURL: backendUrl,
+        headers: httpHeaders,
+      });
+      return res.data.result.items;
+    } catch (error) {
+      // do something with the error
+      console.error(error);
+      throw error;
+    }
   };
 
   return useSWR([URLS.GET_ALL_TEMPLATES, httpHeaders], fetcher, {
