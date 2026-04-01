@@ -9,21 +9,19 @@ The sections below provides sample code for common use cases where scripting is 
 
 ### Making API calls
 
-Since Action Scripts are **asynchronous**, you need to return a **Promise**. 
+Since Action Scripts are **asynchronous**, use `async/await` with `try/catch` to handle the result.
 For example, say you want to create a book on your API server, your action script would typically look like the following:
 ```JavaScript
-// This is what the Action script looks like
-// Notice the async() and the Promise<any> ?
 const executeScriptAsync = async (): Promise<any> => {
   const bookData = { name: "Artemis Fowl", author: "Some Irish dude", genre: "dunno" };
   const bookCreationApi = `/api/services/app/Books/Create`;
-  return http.post(bookCreationApi, bookData)
-    .then(response => {
-      return Promise.resolve(response);
-    })
-    .catch(error => {
-      return Promise.reject(error);
-    });
+  try {
+    const response = await http.post(bookCreationApi, bookData);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 ```
 
