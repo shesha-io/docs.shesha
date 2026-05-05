@@ -113,13 +113,12 @@ This document defines the visual, behavioural, and structural standards for Form
 
 ### **10. Entity Configuration Inheritance (Formatting Defaults)**
 
-- Components bound to entity properties must **inherit formatting defaults** from the **Entity Configuration layer**.
-- This includes formatting such as:
-  - Date format
-  - Prefix / suffix
-  - Thousand separator
-  - Number of decimal places
-- Component-level formatting overrides are supported, but inheritance must be the default behaviour.
+- Components bound to entity properties must **inherit formatting defaults** from the **Entity Configuration layer** by default.
+- Inheritance must be visible in the **Properties Panel** and use the same inheritance model as **Theme → Component** values.
+- The panel must clearly distinguish **Theme inherited**, **Entity inherited**, and **Custom / overridden** values, and allow users to **override** or **resume inheritance** without accidentally changing the current value.
+- The inheritance popup replaces the old tooltip, appears consistently across supported property types, and shows the source, actions, and any relevant update information.
+- If an inherited value is intentionally empty, the **entire input** must still show the inherited/custom state so the user can see that the value is not plain default text.
+- If the upstream inherited value changes after a form was configured, the component must inherit the new value automatically and show an **information/update indicator** to notify the user.
 
 ## 2. WYSIWYG Components.
 
@@ -646,7 +645,7 @@ Before handing off to QA, developers must confirm:
 To encourage consistency and follow the **DRY principle**, formatting-related configuration can be defined centrally at the **Entity Configuration layer**.  
 Any form component binding to those entity properties should therefore **inherit those formatting settings by default**.
 
-This ensures formatting for things like numbers and dates stays consistent across all forms without requiring manual reconfiguration in every component.
+This ensures formatting for things like numbers and dates stays consistent across all forms without requiring manual reconfiguration in every component. It also ensures the **Properties Panel** makes inherited values easy to identify, understand, and override safely.
 
 ### **Core Requirement**
 
@@ -657,7 +656,12 @@ This includes (but is not limited to):
 - Prefix
 - Suffix
 - Thousand separator
+- Number format
 - Number of decimal places
+
+The same inheritance UX model must be used consistently for:
+- **Entity → Component** formatting inheritance
+- **Theme → Component** inherited values shown in the same Properties Panel
 
 ### **Expected Behaviour**
 - Inheritance must be the default behaviour for bound fields.
@@ -665,13 +669,51 @@ This includes (but is not limited to):
 - Inherited formatting must apply consistently in both:
   - **Form Builder**
   - **Runtime**
+- The Properties Panel must clearly show whether a value is:
+  - **Theme inherited**
+  - **Entity inherited**
+  - **Custom / overridden**
+- Users must be able to **Override Inheritance** without accidentally changing the current value.
+- Users must be able to explicitly **Resume Inheritance** after a local override was applied.
+- A local value that happens to match the inherited value must still remain a **custom/overridden value** until the user explicitly resumes inheritance.
+
+### **Properties Panel Visual Rules**
+- Inherited/custom state is shown using the approved state colours in the Properties Panel:
+  - **Theme inherited**
+  - **Entity inherited**
+  - **Custom / overridden**
+- The standard treatment is to highlight the **label text** and/or **value text** using the state colour with the small coloured block behind it, as shown in the approved mockups.
+- If the value is intentionally **empty**, but that empty state is still inherited or custom, the **entire input field** must be highlighted so the inheritance state remains visible.
+- The same visual language must be used consistently across supported property types so users do not need to learn different inheritance cues for different controls.
+
+### **Inheritance Popup Rules**
+- The old tooltip should be replaced with a richer **inheritance popup**.
+- The popup must appear on the **same trigger/event** for supported property types.
+- The popup must include:
+  - Existing tooltip/help content
+  - The inheritance source
+  - The correct inheritance action
+- The popup must support:
+  - **Override Inheritance**
+  - **Resume Inheritance**
+
+### **Upstream Change Notification**
+If an inherited source value changes **after** a form/component has already been configured:
+- The component must automatically inherit the updated value if it is still in inherited mode.
+- An **information/update indicator** must appear to notify the user that the inherited source changed after the form/component was configured.
+- Hovering the indicator should explain what changed and that the value was updated through inheritance.
 
 ### **Developer Pre-QA Summary**
 
 Before handing off to QA, developers must confirm:
-1. Components bound to entity properties inherit formatting defaults from the **Entity Configuration layer**.
+1. Components bound to entity properties inherit formatting defaults from the **Entity Configuration layer** by default.
 2. Inherited formatting is applied consistently in **Builder** and **Runtime**.
-3. Overrides work correctly when explicitly set, but inheritance remains the default behaviour.
+3. The Properties Panel clearly distinguishes **Theme inherited**, **Entity inherited**, and **Custom / overridden** values.
+4. Users can **override inheritance** without unintentionally changing the current value.
+5. Users can explicitly **resume inheritance** after a local override.
+6. Empty inherited/custom values still visibly show their state by highlighting the **entire input field**.
+7. The inheritance popup replaces the old tooltip and appears consistently across supported property types.
+8. If an inherited source changes after a form/component was configured, an **information/update indicator** appears and explains the update.
 
 ## 11. Error Handling & Informative Console Error Messages
 
