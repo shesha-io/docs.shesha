@@ -1,14 +1,43 @@
+---
+sidebar_label: Form Templates
+---
+
 # Form Templates
 
-For convenience Shesha provides a number of form templates that can be used to quickly create forms.
+Every form in Shesha starts from a template. A template sets the layout container your form uses as its foundation. Choosing the right template means Shesha pre-wires the correct display and interaction behaviour for your use case, saving you from building common layouts from scratch.
 
-When creating a new form you will be required to specify a template. Each template caters for the most commonly used types of forms and layouts. The templates are:
-- Details - Used for displaying details of an entity. All details forms also have an edit mode, allowing users to edit the details of the entity.
-- Table - Also known as Index view. Lists details of an entity in a table. Also allows filtering and searching.
-- Kanban - Used for displaying a Kanban board for an entity. Kanban boards are most useful for displaying items that can be moved between different states. For example, a Kanban board can be used to display tasks that are in different states such as "To Do", "In Progress", and "Done". The Kanban view allows users to drag and drop items between different states, making it easy to manage and track progress.
-- Create - Used for creating a new entity. The create form is a form that allows users to enter details for a new entity and typically is limited to allow the user to capture only key information for quick creation and is used in conjunction with the Details form to create a new entity and then display its details.
-- Picker - Used for selecting an entity from a list. The picker form is typically used in conjunction with an Entity Reference Form Component to allow users to select an entity from a list of available entities. The picker form can be configured to display different types of entities and can be customized to include additional filters or search options to help users find the entity they are looking for.
-- Quickview - The quick view is used in conjunction with an Entity Reference Form Component to display key information for an entity in a pop-up without having to navigate away from the current screen.
-- Master-Details - Used for displaying a master-detail relationship between two entities. The master details form is typically used to display a list of items (the master) and the details of the selected item (the detail). The master details view can be configured to display different types of entities and can be customized to include additional filters or search options to help users find the entity they are looking for.
-- Calendar - Used for displaying entities with date and time properties on a calendar. The calendar view is typically used to display events or tasks that are scheduled for a specific date and time.
-- Custom - Used for displaying an entirely custom layout and functionality. The custom form template is essentially a blank form from which users can configure for advanced use cases where the standard templates do not meet the requirements.
+You select a template when you create a new form in the form designer. You cannot change the template after the form is created.
+
+---
+
+## Available Templates
+
+| Template | Use it when... |
+|---|---|
+| `Blank` | You need a fully custom layout with no pre-configured structure. |
+| `Table` | You need to list, search, and filter multiple records in a table. |
+| `Details` | You want to display and edit the details of an existing record. |
+
+---
+
+### Blank
+
+The Blank template starts with an empty canvas and no pre-configured layout container. Use it when none of the other templates fit your requirements, or when you want full control over every component you place on the form.
+
+Because there is no default container, you are responsible for adding all the components yourself. This makes Blank the most flexible option, but also the most time-consuming for common use cases.
+
+___
+
+### Table
+
+The Table template places a **Table View** container on the canvas. This container manages fetching, paginating, filtering, and sorting a list of records from an entity or custom endpoint.
+
+Use this template for index views - pages that show a list of records the user can browse, search, and act on. From a table view you can link to a Details form to open individual records.
+
+___
+
+### Details
+
+The Details template places a **Details View** container on the canvas. This container is optimised for displaying a record in a read-only layout that also supports switching to an edit mode inline, without navigating to a separate form.
+
+Use this template when you want users to see the full details of a record and be able to edit them from the same page. Set the form's loader to Default so it reads the record by ID from the URL.
