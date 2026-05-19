@@ -66,12 +66,14 @@ If not already installed, download the Arm64 (Apple Silicon) or x64 (Intel) vers
 [.NET 8 Download](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 
 ### 2.2 Install SQL-Package
+
+> **Important:** Install version `162.4.92` specifically. Newer versions of SQL-Package require .NET 10, which is incompatible with Shesha's .NET 8 backend. Installing without a version will pull the latest and silently fail.
+
 ```bash
-dotnet tool install -g microsoft.sqlpackage
+dotnet tool install -g microsoft.sqlpackage --version 162.4.92
 ```
 
-After installation, follow the terminal instructions to add SQL-Package to your PATH.  
-Close and reopen your terminal after installation.
+After installation, close your terminal and open a new one so that the `sqlpackage` command is available on your PATH.
 
 Documentation: [Install SQL-Package](https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download?view=sql-server-ver17)
 
@@ -108,11 +110,14 @@ Once complete, use your choice of SQL Server client and verify that the `ShaProj
 Open the `backend` directory in your code editor.
 
 ### 3.2 Update Connection String
-Edit:
+
+Edit `appsettings.json` in:
 ```
 /src/OrganisationName.ProjectName.Web.Host/appsettings.json
 ```
-Replace the `Default` connection string:
+
+The starter project ships with a Windows authentication connection string. Replace it with SQL authentication so it works with Docker on Mac:
+
 ```json
 {
     "ConnectionStrings": {
