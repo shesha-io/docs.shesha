@@ -1,5 +1,6 @@
 ---
-sidebar_label: Implementation of Settings
+sidebar_label: Creating Custom Settings
+sidebar_position: 2
 ---
 
 # Application Settings

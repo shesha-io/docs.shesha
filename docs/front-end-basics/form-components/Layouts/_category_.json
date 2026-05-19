@@ -1,6 +1,6 @@
 {
   "label": "Layout",
-  "position": 3,
+  "position": 4,
   "link": {
     "type": "generated-index",
     "description": "Layout components are components which are used to organize and define the structure and layout of other child components within a page."

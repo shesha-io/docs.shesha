@@ -1,5 +1,6 @@
 ---
-sidebar_label: Settings Overview
+sidebar_label: Settings Page Overview
+sidebar_position: 1
 ---
 
 # General Settings
