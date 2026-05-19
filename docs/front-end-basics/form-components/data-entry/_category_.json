@@ -1,6 +1,6 @@
 {
   "label": "Data Entry",
-  "position": 3,
+  "position": 5,
   "link": {
     "type": "generated-index",
     "description": "Data entry components are components that allow users to capture and edit application data."
