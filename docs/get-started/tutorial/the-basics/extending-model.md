@@ -1,148 +1,147 @@
 ---
+sidebar_label: Extending the Domain Model
 sidebar_position: 3
+title: Extending the Domain Model
 ---
 
 # Extending the Domain Model
 
-Let's customize the model so we can update the information we need to properly track the status and location of members.
+The starter project ships with a base `Person` entity that handles common person attributes (name, contact details, gender, and so on). In this step you will extend it with a `Member` entity that adds membership-specific properties, a reference list for membership status, and a database migration to apply the schema change.
 
-In this section, you'll learn how to:
+You will then come back to the forms from the previous step and re-point them at the new `Member` entity.
 
-- Extend an Existing Entity
-- Create a Reference List
-- Create a Migration Class
-- Update front-end configurations to fit extended model
-
-Let's dive right into the code!
+---
 
 ## Extending an Existing Entity
 
-Navigate to the `backend` > `Shesha.Membership.sln` folder in your project directory.
+Open the `backend/Shesha.Membership.sln` solution in Visual Studio 2022.
 
-### Adding a Table Prefix
+### 1. Set a Table Prefix
 
-The concept of a `table prefix` on the backend is often associated with database management systems, where it involves adding a specific string or identifier to the names of database tables. This is typically done to avoid naming conflicts and to organize tables based on certain criteria.
+A table prefix is a short string added to the front of database table and column names. It groups your module's tables together visually, helps avoid naming conflicts with other modules, and makes it easy to see at a glance which schema a column belongs to.
 
-1. Navigate to `Shesha.Membership.Domain` > `Domain` > `Properties` > `AssemblyInfo.cs`
-2. Modify the table prefix attribute tag to be `[assembly: TablePrefix("Mem_")]`, instead of `[assembly: TablePrefix("Membership_")]`
+1. Navigate to `Shesha.Membership.Domain > Properties > AssemblyInfo.cs`.
+2. Change the table prefix to `Mem_`:
 
-> **Note:** While short prefixes offer these advantages, it's also crucial to strike a balance. The prefix should be long enough to be meaningful and avoid potential conflicts, but not so long that it becomes burdensome. A well-chosen, concise prefix enhances the overall quality and maintainability of the codebase.
+**Example - Setting the table prefix in AssemblyInfo.cs:**
 
-### Create a Reference List
+```cs
+[assembly: TablePrefix("Mem_")]
+```
 
-1. Create a folder called **Enums** in the project called Shesha.Membership.Domain.
-2. Right click on the Enums folder, **Add** --> **Class**.
-3. Give your class the name of: `RefListMembershipStatuses.cs`, and click on **Add**.
-4. Add the below code:
+:::tip Keep prefixes short but meaningful
+Three-or-four-character prefixes are usually the sweet spot. They are short enough to not clutter column names, but long enough to remain unique and recognisable.
+:::
 
-```csharp
+### 2. Create a Reference List
+
+Reference lists are how Shesha represents controlled vocabularies (the equivalent of an enum on the database side). You define them as C# enums decorated with attributes that tell Shesha how to render them in forms.
+
+1. In the `Shesha.Membership.Domain` project, create an `Enums` folder.
+2. Right-click the folder and choose **Add > Class**.
+3. Name the class `RefListMembershipStatuses.cs`.
+
+**Example - The MembershipStatuses reference list:**
+
+```cs
 using Shesha.Domain.Attributes;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shesha.Membership.Domain.Enums
 {
     /// <summary>
-    /// Statuses for a Members Membership
+    /// Statuses for a Member's Membership.
     /// </summary>
-    [ReferenceList("Mem", "MembershipStatuses")]
+    [ReferenceList("MembershipStatuses")]
     public enum RefListMembershipStatuses : long
     {
-        /// <summary>
-        /// Membership status is still being processed
-        /// </summary>
         [Description("In Progress")]
         InProgress = 1,
-        /// <summary>
-        /// Membership status is active
-        /// </summary>
+
         [Description("Active")]
         Active = 2,
-        /// <summary>
-        /// Membership status is cancelled
-        /// </summary>
+
         [Description("Cancelled")]
         Cancelled = 3
     }
 }
 ```
 
-### Create a New Entity
+:::note ReferenceList constructor
+Use the single-parameter form `[ReferenceList("Name")]`. The two-parameter form that took a separate namespace is marked obsolete.
 
-1. Navigate to `Shesha.Membership.Domain` --> `Domain`
-2. Right click on the `Domain` folder, **Add** --> **Class**
-3. Give your class the name of: `Member.cs`, and click on **Add**- This is where we will be adding properties we want as an addition to the Person table.
+```cs
+// Correct - single-parameter form
+[ReferenceList("MembershipStatuses")]
+public enum RefListMembershipStatuses : long { ... }
 
-This is how your class should be constructed:
+// Obsolete - two-parameter form with separate namespace
+[ReferenceList("Shesha.Membership", "MembershipStatuses")]
+public enum RefListMembershipStatuses : long { ... }
+```
+:::
 
-```csharp
+### 3. Create the Member Entity
+
+The `Member` class inherits from the base `Person` entity, so it picks up all of Person's existing properties (firstName, lastName, etc.) and adds new ones on top.
+
+1. Navigate to `Shesha.Membership.Domain > Domain`.
+2. Right-click the folder and choose **Add > Class**.
+3. Name the class `Member.cs`.
+
+**Example - The Member entity that extends Person:**
+
+```cs
 using Shesha.Domain.Attributes;
 using Shesha.Domain;
+using Shesha.Membership.Domain.Enums;
 using System;
-using Shesha.Membership.Domain.Domain.Enums;
 
 namespace Shesha.Membership.Domain.Domain
 {
     /// <summary>
-    /// A person within the application that is a Member
+    /// A person within the application that is a Member.
     /// </summary>
     [Entity(TypeShortAlias = "Mem.Member")]
     public class Member : Person
     {
-        /// <summary>
-        /// The membership number for the Member
-        /// </summary>
         public virtual string MembershipNumber { get; set; }
-        /// <summary>
-        /// The date when the Members membership started
-        /// </summary>
+
         public virtual DateTime? MembershipStartDate { get; set; }
-        /// <summary>
-        /// The date when the Members membership ended
-        /// </summary>
+
         public virtual DateTime? MembershipEndDate { get; set; }
-        /// <summary>
-        /// Identification document for the Member
-        /// </summary>
+
         public virtual StoredFile IdDocument { get; set; }
-        /// <summary>
-        /// The status of the membership
-        /// </summary>
-        [ReferenceList("Mem", "MembershipStatuses")]
+
+        [ReferenceList("MembershipStatuses")]
         public virtual RefListMembershipStatuses? MembershipStatus { get; set; }
     }
 }
-
 ```
 
-### Create a Migration Class
+### 4. Create the Migration
 
-1. Navigate to `Shesha.Membership.Domain` --> `Migrations`
-2. Right click on the `Migrations` folder, **Add** --> **Class**
-3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124085300.cs for 24 November 2023 08:53:00**.
-4. Add the below code:
+Because `Member` inherits from `Person`, the new properties are stored as additional columns on the existing `Core_Persons` table. FluentMigrator runs migrations in date order, so name the class with a timestamp.
 
-```csharp
+1. Navigate to `Shesha.Membership.Domain > Migrations`.
+2. Right-click the folder and choose **Add > Class**.
+3. Name the class using the format `M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs`, for example `M20231124085300.cs`.
+
+**Example - Migration that adds the Member columns to Core_Persons:**
+
+```cs
 using FluentMigrator;
 using Shesha.FluentMigrator;
 using System;
 
 namespace Shesha.Membership.Domain.Migrations
 {
-    // <summary>
-    /// Adding the Members table
+    /// <summary>
+    /// Adds membership-specific columns to the Core_Persons table.
     /// </summary>
-
     [Migration(20231124085300)]
     public class M20231124085300 : Migration
     {
-        /// <summary>
-        /// Code to execute when executing the migrations
-        /// </summary>
         public override void Up()
         {
             Alter.Table("Core_Persons")
@@ -152,269 +151,338 @@ namespace Shesha.Membership.Domain.Migrations
                 .AddColumn("Mem_MembershipEndDate").AsDateTime().Nullable()
                 .AddColumn("Mem_MembershipStatusLkp").AsInt64().Nullable();
         }
-        /// <summary>
-        /// Code to execute when rolling back the migration
-        /// </summary>
+
         public override void Down()
         {
             throw new NotImplementedException();
         }
     }
 }
-
 ```
 
-_You can check out [Fluent Migrator](https://fluentmigrator.github.io/index.html) for more options about database migrations._
+:::info FluentMigrator extensions
+`AddForeignKeyColumn` is a Shesha extension over FluentMigrator. It creates the column and the foreign key constraint in a single call. For more migration options see the [FluentMigrator docs](https://fluentmigrator.github.io/index.html).
+:::
 
-5.  You can run your application by going to the menu and selecting `Debug` --> `Start Debugging` or by clicking `F5`
-6.  The application should open in your browser on the default Swagger API page.
-7.  Search and navigate to the `Member` endpoints that have been dynamically created by Shesha.
+5. Start the application (**Debug > Start Debugging** or **F5**).
+6. The app should open on the Swagger page.
+7. Search for **Member** in Swagger to see the auto-generated CRUD endpoints.
 
 ![Image](./images/extendSwagger.png)
 
-_Read more about dynamic APIs [here](/docs/back-end-basics/crud-apis)_
+:::tip Want to learn more about the auto-generated APIs?
+See [CRUD APIs](/docs/back-end-basics/crud-apis) for details on what endpoints Shesha exposes for each entity and how to customise them.
+:::
 
-## Updating Configurations
+---
 
-Now that we have fully extended our domain model, it is time to go back and update our views so that we can reference our newly created fields in the `Member` entity.
+## Updating the Front-End Configurations
 
-This can be done by updating the Model Type property in all our views from `Shesha.Domain.Person (Shesha.Core.Person)` to `Shesha.Membership.Domain.Member (Mem.Member)`, changing CRUD endpoints to point to the relevant model type, and adding the following fields:
+Now that the domain model has been extended, the forms from the previous step need to be re-pointed at `Member` and updated to show the new properties.
 
-    - MembershipNumber - `Textfield`: `string`
-    - MembershipStatus - `RadioButton`: `RefListMembershipStatuses`
-    - MembershipStartDate - `Datefield`: `DateTime`
-    - MembershipEndDate - `Datefield`: `DateTime`
-    - IdDocument - `File`: `StoredFile`
+The basic pattern is the same for each form:
 
-## Create View
+1. Open the form's **Settings** in the designer.
+2. Change the **Entity** from `Shesha.Domain.Person (Shesha.Core.Person)` to `Shesha.Membership.Domain.Member (Mem.Member)`.
+3. Update any CRUD endpoints referenced on the form to match the new entity.
+4. Add the new fields:
 
-1. Navigate to the `member-create` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
+| Property | Component | Type |
+|---|---|---|
+| `MembershipNumber` | Textfield | `string` |
+| `MembershipStatus` | RadioButton | `RefListMembershipStatuses` |
+| `MembershipStartDate` | Datefield | `DateTime` |
+| `MembershipEndDate` | Datefield | `DateTime` |
+| `IdDocument` | File | `StoredFile` |
 
-With the addition of properties to our entity, to facilitate for an overall cleaner and more manageable UI, we are going to be utilizing a `wizard` component for properly separating the different sections of information required for the member registration.
+---
 
-_You can find more information about implementation of the wizard component [here](../../../front-end-basics/form-components/Layouts/wizard)_
+## Updating the Create View
 
-3. Search and drag in a `wizard` component from the `Builder Widgets`
-4. Drag in all the existing components onto the `wizard` component's draggable area
+The create form now needs to capture the new membership fields. To keep the form manageable you will split it into two wizard steps.
+
+1. Open the [member-create form designer](./configuring-first-view.md#accessing-the-form-designer).
+2. In **Settings**, change the **Entity** to `Shesha.Membership.Domain.Member (Mem.Member)`.
+
+For more on the wizard component, see [the wizard component reference](../../../front-end-basics/form-components/Layouts/wizard.md).
+
+3. Search for **wizard** in the **Builder Widgets** and drag it onto the form.
+4. Drag the existing components into the wizard's draggable area.
 
 ![Image](./images/extendCreate.png)
 
-5. `Configure Wizard Steps` to rename the default `Step 1` and add an additional step to the wizard:
-   - Biographical Information
-   - Membership Information
+5. Click **Configure Wizard Steps** and set up two steps:
+
+| Step | Name |
+|---|---|
+| `1` | Biographical Information |
+| `2` | Membership Information |
 
 ![Image](./images/extendCreate1.png)
 
-6. Update the `Membership Information` step's `Done` button to the following:
+### Wizard Done Action
 
-   - After Done Action: `Execute Script` >
+On the **Membership Information** step, configure the **Done** button to POST to the Member create endpoint and then navigate to the new member's details view.
+
+**Form type to use:** Wizard step `After Done Action` on the member-create form.
+
+**Example - Submitting the wizard and navigating to the new member:**
 
 ```javascript
 const PATH = `/api/dynamic/Shesha.Membership/Member/Create`;
 
 try {
-  const resp = await http.post(`${PATH}`, data);
-  // Navigate to details view of the created member
+  const resp = await http.post(PATH, data);
+  // Navigate to the details view of the created member
   window.location.href = `/dynamic/Shesha.Membership/member-details?id=${resp.data.result.id}`;
-} catch (_e) {
-  message.error(`Failed to create member: ${_e}`, 10);
-  console.error(_e);
-  throw _e;
+} catch (e) {
+  message.error(`Failed to create member: ${e}`, 10);
+  console.error(e);
+  throw e;
 }
 ```
 
-7. While on the `Biographical Information` step of the wizard, search and drag in the `File` component from the `Builder Widgets`.
+:::tip Why use window.location.href here?
+The wizard's Done action runs in JavaScript, so this is a one-off custom script. For most navigation needs in the designer, use the built-in **Navigate** action type rather than writing scripted navigation.
+:::
 
-_You can find more information about implementation of the file component [here](/front-end-basics/form-components/Entity-References/files.md)_
+### Adding the File and Entity Picker Components
 
-8. Configure the `File` component with the following:
+On the **Biographical Information** step:
 
-   - Property Name : `idDocument`
-   - Label : `Id Document`
-   - Owner Id: _leave empty_
+1. Drag in a **File** component (see the [File component reference](/front-end-basics/form-components/Entity-References/files.md)):
 
-9. While on the `Biographical Information` step of the wizard, search and drag in the `Entity Picker` component from the `Builder Widgets`.
+| Field | Value |
+|---|---|
+| `Property Name` | `idDocument` |
+| `Label` | `Id Document` |
+| `Owner Id` | *(leave empty)* |
 
-_You can find more information about implementation of the entity picker component [here](/front-end-basics/form-components/Entity-References/entity-picker.md)_
+2. Drag in an **Entity Picker** (see the [Entity Picker reference](../../../front-end-basics/form-components/Entity-References/entity-picker.md)):
 
-10. Configure the `Entity Picker` component with the following:
+| Field | Value |
+|---|---|
+| `Property Name` | `address` |
+| `Label` | `Address` |
+| `Entity Type` | `Shesha.Domain.Address (Shesha.Core.Address)` |
 
-   - Property Name : `address`
-   - Label : `Address`
-   - Entity Type: `Shesha.Domain.Address (Shesha.Core.Address)`
+3. Configure the Entity Picker's columns:
 
-11. `Configure Columns` of the wizard to include the following columns:
-   - addressLine1
-   - suburb
-   - town
+| Column |
+|---|
+| `addressLine1` |
+| `suburb` |
+| `town` |
 
 ![Image](./images/extendCreate2.png)
 
-One of the `Entity Picker` components many benefits is that it provides the flexibility to allow the addition of a new record, should the `address` entry not exist in any of the existing records brought back from the backend. To tap into the full functionality, we need to go create a form that will allow us to enter the details of the new address entry.
+### Allowing New Addresses
 
-**In another tab, go create a new form with the following information:**
+The Entity Picker can let users add a new address inline if one doesn't already exist. First, build a quick form to capture a new address.
 
-- Module: `Shesha`
-- Template: `blank-view`
-- Name: `address-create`
-- Label: `Address Create`
-- Description: `This create view is used to create a new address`
-- Model Type: `Shesha.Domain.Address (Shesha.Core.Address)`
+Create a new form with:
 
-Once on the form designer, on the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
+| Field | Value |
+|---|---|
+| `Module` | `Shesha` |
+| `Template` | `blank-view` |
+| `Name` | `address-create` |
+| `Label` | `Address Create` |
+| `Description` | `This create view is used to create a new address` |
+| `Model Type` | `Shesha.Domain.Address (Shesha.Core.Address)` |
 
-- addressLine1
-- suburb
-- town
+Add these fields to the form:
+
+| Property |
+|---|
+| `addressLine1` |
+| `suburb` |
+| `town` |
 
 ![Image](./images/extendCreate3.png)
 
-Save your form and head back to the `member-create` form designer
+Save and head back to **member-create**.
 
-10. Select the `Entity Picker` component -- > `Allow New Record`
-11. Populate the `Dialogue Settings` with the following:
+1. Select the **Entity Picker**, enable **Allow New Record**, and populate the **Dialogue Settings**:
 
-- Title: `Add Address`
-- Modal Form: `address-create`
-- Show Modal Buttons: `true`
+| Field | Value |
+|---|---|
+| `Title` | `Add Address` |
+| `Modal Form` | `address-create` |
+| `Show Modal Buttons` | `true` |
 
-12. Click on the `next` button on the `Wizard` component to go to the next step.
+### Wizard Step Two: Membership Information
 
-13. On the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
+On the **Membership Information** step, drag in the following:
 
-    - membershipNumber
-    - membershipStartDate
-    - membershipEndDate
-    - membershipStatus
+| Property |
+|---|
+| `membershipNumber` |
+| `membershipStartDate` |
+| `membershipEndDate` |
+| `membershipStatus` |
 
 ![Image](./images/extendCreate4.png)
 
-14. Add additional validations on the `membershipStartDate` and `membershipEndDate` properties by selecting the respective `DateField` components and configure the following:
+To stop users picking impossible dates, add validations:
 
-    - Disabled Date Mode: `Function Template`
-    - Disabled Date Template: `Disable Past Dates`
+| Property | Setting | Value |
+|---|---|---|
+| `membershipStartDate` | Disabled Date Mode | `Function Template` |
+| `membershipStartDate` | Disabled Date Template | `Disable Past Dates` |
+| `membershipEndDate` | Disabled Date Mode | `Function Template` |
+| `membershipEndDate` | Disabled Date Template | `Disable Past Dates` |
 
 ![Image](./images/extendCreate5.png)
 
-15. Save your form
+Save the form.
 
-## Table View
+---
 
-1. Navigate to the `members-table` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
+## Updating the Table View
+
+1. Open the [members-table form designer](./configuring-first-view.md#accessing-the-form-designer).
+2. In **Settings**, change the **Entity** to `Shesha.Membership.Domain.Member (Mem.Member)`.
 
 ![Image](./images/extendTable.png)
 
-3. Select the `Datatable Context` component and change the `Entity Type` to `Shesha.Membership.Domain.Member (Mem.Member)`
+3. Select the **Datatable Context** component and change its **Entity Type** to `Shesha.Membership.Domain.Member (Mem.Member)`.
 
 ![Image](./images/extendTable1.png)
 
-4. Select the `Datatable` component > `Customize Columns` to add the relevant columns
+4. Select the **Datatable** component, click **Customize Columns**, and add the new membership columns.
 
 ![Image](./images/extendTable2.png)
 
-5. Select the `Button Group` component on the `toolbar` to customize the `Create Member` button
-6. Update the `Create Member` button configurations by seeting the `Button Type` property to `None`.
+5. Select the **Button Group** component on the toolbar and update the **Create Member** button:
 
-_This is because we will be using the default `wizard` buttons that were configured on the `member-create`._
+| Field | Value |
+|---|---|
+| `Button Type` | `None` |
+
+This hides the button because the wizard's own buttons handle the submit flow now.
 
 ![Image](./images/extendTable3.png)
 
-7. Save your form
+6. Save the form.
 
-## Details View
+---
 
-1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Select `Settings` and change the `Entity` to `Shesha.Membership.Domain.Member (Mem.Member)`
+## Updating the Details View
 
-With the addition of properties to our entity, to facilitate for an overall cleaner and more manageable UI, we are going to be utilizing a `tab` component for properly separating the different sections of the membership information.
+1. Open the [member-details form designer](./configuring-first-view.md#accessing-the-form-designer).
+2. In **Settings**, change the **Entity** to `Shesha.Membership.Domain.Member (Mem.Member)`.
 
-_You can find more information about implementation of the tab component [here](/docs/front-end-basics/form-components/Layouts/tabs)_
+For more on the tab component, see [the tab component reference](/docs/front-end-basics/form-components/Layouts/tabs).
 
-3. Search and drag in a `tab` component from the `Builder Widgets` onto the `details` panel
-4. Drag in all the existing components onto the `tab` component's draggable area
+3. Drag in a **tab** component from the **Builder Widgets** onto the details panel.
+4. Drag the existing components into the tab's first pane.
 
 ![Image](./images/extendDetails.png)
 
-5. `Configure Tab Panes` to rename the default `Tab 1` and add an additional tab.
+5. Click **Configure Tab Panes** and create two tabs:
+
+| Tab | Name |
+|---|---|
+| `1` | Biographical Information |
+| `2` | Membership Information |
 
 ![Image](./images/extendDetails1.png)
 
-6. While on the `Biographical Information` tab, search and drag in the `File` component from the `Builder Widgets`.
+### Biographical Information Tab
 
-_You can find more information about implementation of the file component [here](/docs/front-end-basics/form-components/Entity-References/files)_
+Drag in a **File** component for the ID document (see the [File component reference](/docs/front-end-basics/form-components/Entity-References/files)):
 
-7. Configure the `File` component with the following:
+| Field | Value |
+|---|---|
+| `Property Name` | `idDocument` |
+| `Label` | `Id Document` |
+| `Owner Id` | `{data.id}` |
+| `Owner Type` | `Shesha.Membership.Domain.Domain.Member` |
 
-   - Property Name : `idDocument`
-   - Label : `Id Document`
-   - Owner Id: `{data.id}`
-   - Owner Type: `Shesha.Membership.Domain.Domain.Member`
+To display the linked Address, you have several options:
 
-- Viewing the details of a foreign key on a details view can be achieved in a number of ways:
-  - [Autocomplete](/docs/front-end-basics/form-components/Advanced/autocomplete)
-  - [Entity Picker](/front-end-basics/form-components/Entity-References/entity-picker.md)
-  - [Entity Reference](/front-end-basics/form-components/Entity-References/entity-references.md)
-  - [Sub Form](/docs/front-end-basics/form-components/Layouts/subform)
+| Option | When to use |
+|---|---|
+| `Autocomplete` | When users will search by typing. See [Autocomplete](/docs/front-end-basics/form-components/Advanced/autocomplete). |
+| `Entity Picker` | When users will pick from a paged list. See [Entity Picker](/front-end-basics/form-components/Entity-References/entity-picker.md). |
+| `Entity Reference` | When you want to display the value and optionally open a modal to edit it. See [Entity Reference](/front-end-basics/form-components/Entity-References/entity-references.md). |
+| `Sub Form` | When you want to embed a full form for the related entity. See [Sub Form](/docs/front-end-basics/form-components/Layouts/subform). |
 
-_For the purposes of this tutorial, we are going to be utilizing the `Entity Reference` component_
+For this tutorial, use **Entity Reference**.
 
-8. While on the `Biographical Information` tab, search and drag in the `Entity Reference` component from the `Builder Widgets`.
+Drag in an **Entity Reference** and configure:
 
-_You can find more information about implementation of the entity reference component [here](/front-end-basics/form-components/Entity-References/entity-references.md)_
+| Field | Value |
+|---|---|
+| `Property Name` | `address` |
+| `Label` | `Address` |
+| `Get Entity Url` | `/api/dynamic/Shesha/Address/Get` |
+| `Entity Type` | `Shesha.Domain.Address (Shesha.Core.Address)` |
+| `Display Property` | `fullAddress` |
+| `Entity Reference Type` | `Modal Dialog Box` |
+| `Form Selection Mode` | `Name` |
+| `Form` | `address-create` |
 
-9. Configure the `Entity Reference` component with the following:
+Then set the **Dialog Settings**:
 
-   - Property Name : `address`
-   - Label : `Address`
-   - Get Entity Url : `/api/dynamic/Shesha/Address/Get`
-   - Entity Type : `Shesha.Domain.Address (Shesha.Core.Address)`
-   - Display Property : `fullAddress`
-   - Entity Reference Type: `Modal Dialog Box`
-   - Form Selection Mode: `Name`
-   - Form: `address-create`
-   - Dialog Settings:
-     - Title: `Address`
-     - Show Modal Buttons: `true`
-     - Submit Http Verb: `PUT`
-     - Handle Success: `Designer Form` --> `Refresh`
+| Field | Value |
+|---|---|
+| `Title` | `Address` |
+| `Show Modal Buttons` | `true` |
+| `Submit Http Verb` | `PUT` |
+| `Handle Success` | `Designer Form > Refresh` |
 
-_This will render the address details on a dialog and allow for editing and updating the address entry on the rendered dialog_
+### Membership Information Tab
 
-10. Click on the `Membership Information` tab on the `tab panel` to go to the next tab.
+Switch to the **Membership Information** tab and drag in:
 
-11. On the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
+| Property |
+|---|
+| `membershipNumber` |
+| `membershipStartDate` |
+| `membershipEndDate` |
+| `membershipStatus` |
 
-    - membershipNumber
-    - membershipStartDate
-    - membershipEndDate
-    - membershipStatus
+### Personalising the Header
 
-To further personalize the membership details view, let's make some changes to our `header` section.
+1. Select the **text** title component and change its **Content** to:
 
-11. Select the `text` component used for the title and change the `content` property to `{{fullName}} - {{membershipNumber}}`
+```
+{{fullName}} - {{membershipNumber}}
+```
 
 ![Image](./images/extendDetails2.png)
 
-12. Search and drag in the `Reference List Status` component from the `Builder Widgets` next to the `text` title component
-
-_You can find more information about implementation of the reference list status component [here](../../../front-end-basics/form-components/Advanced/reference-list-status)_
+2. Drag a **Reference List Status** component (see the [Reference List Status reference](../../../front-end-basics/form-components/Advanced/reference-list-status.md)) next to the title.
 
 ![Image](./images/extendDetails3.png)
 
-7. Configure the `Reference List Status` component with the following:
+3. Configure the **Reference List Status**:
 
-   - Property Name : `membershipStatus`
-   - Reference List: `MembershipStatuses`
+| Field | Value |
+|---|---|
+| `Property Name` | `membershipStatus` |
+| `Reference List` | `MembershipStatuses` |
 
-8. Save your form
+4. Save the form.
 
-_Let's test out our new changes!_
+---
 
-- Using the main menu, navigate to the `members-table` and refresh your page to make sure your changes have taken effect.
-- Register a new member!
+## Test It
+
+- From the main menu, navigate to the **members-table** and refresh.
+- Register a new member through the wizard.
+- Confirm the new fields appear on both the table and the details view.
 
 ![Image](./images/extendView.png)
+
 ![Image](./images/extendView1.png)
+
 ![Image](./images/extendView2.png)
+
+---
+
+## Next Step
+
+Continue with [Adding New Entities and Child Tables](./new-entities.md) to create a `MembershipPayment` entity and wire it up as a child table on the member's details view.
