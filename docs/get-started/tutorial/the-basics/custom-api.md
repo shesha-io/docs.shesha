@@ -195,4 +195,4 @@ Reference list values are stored as integers on the backend. `2` is the `Active`
 
 ## You're Done
 
-You have now built a complete Shesha application end-to-end: a custom domain model, a child table, a custom API enforcing a business rule, and a UI that surfaces all of it. From here, dive into the [Fundamentals](../../../fundamentals/) section to understand the concepts at a deeper level, or jump straight to [Front-End Basics](../../../front-end-basics/) to see what else the form designer can do.
+You have now built a complete Shesha application end-to-end: a custom domain model, a child table, a custom API enforcing a business rule, and a UI that surfaces all of it. From here, dive into the [Fundamentals](/docs/category/fundamentals) section to understand the concepts at a deeper level, or jump straight to [Front-End Basics](/docs/category/front-end-basics) to see what else the form designer can do.
