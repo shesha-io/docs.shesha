@@ -1,4 +1,8 @@
 {
   "label": "Back-End Basics",
-  "position": 4
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "Dive into the fundamentals of back-end development in Shesha. This section covers domain modelling, CRUD APIs, custom APIs, reference lists, and other essential server-side building blocks."
+  }
 }

@@ -1,28 +1,30 @@
 ---
+sidebar_label: New Entities and Child Tables
 sidebar_position: 4
+title: Adding New Entities and Child Tables
 ---
 
 # Adding New Entities and Child Tables
 
-This membership isn't free! Let's create a `Membership Payment` entity to track all the payments related to a Member.
+This step shows how to add a brand-new entity (not just an extension of an existing one) and wire it up as a child table on the parent's details view. You will create a `MembershipPayment` entity that tracks all payments related to a Member, and surface those payments inline on the member details view.
 
-In this section, you'll learn how to:
+This is the most common shape for "one-to-many" relationships in Shesha: a child entity with a foreign key back to the parent, and a child table on the parent's details view that supports inline editing.
 
-- Create a New Entity
-- Create a Migration Class
-- Configure a Child Table
-- Configure a Filter for the Table
-- Implement a Script to Call an Endpoint
+---
 
-## Create a New Entity
+## Create the MembershipPayment Entity
 
-1. Navigate to `Shesha.Membership.Domain` --> `Domain`
-2. Right click on the `Domain` folder, **Add** --> **Class**
-3. Give your class the name of: `MembershipPayment.cs`, and click on **Add**
+Open the `backend/Shesha.Membership.sln` solution in Visual Studio 2022.
 
-This is how your class should be constructed:
+### 1. Add the Entity Class
 
-```csharp
+1. Navigate to `Shesha.Membership.Domain > Domain`.
+2. Right-click the folder and choose **Add > Class**.
+3. Name the class `MembershipPayment.cs`.
+
+**Example - The MembershipPayment entity:**
+
+```cs
 using Abp.Domain.Entities.Auditing;
 using Shesha.Domain.Attributes;
 using System;
@@ -30,36 +32,42 @@ using System;
 namespace Shesha.Membership.Domain.Domain
 {
     /// <summary>
-    /// A member's membership payment
+    /// A payment made by a Member towards their membership.
     /// </summary>
     [Entity(TypeShortAlias = "Mem.MembershipPayment")]
     public class MembershipPayment : FullAuditedEntity<Guid>
     {
         /// <summary>
-        /// The unique member
+        /// The Member who made the payment.
         /// </summary>
         public virtual Member Member { get; set; }
+
         /// <summary>
-        /// The payment amount
+        /// The amount paid.
         /// </summary>
         public virtual double Amount { get; set; }
+
         /// <summary>
-        /// The date when the payment was made
+        /// The date the payment was made.
         /// </summary>
         public virtual DateTime? PaymentDate { get; set; }
     }
 }
-
 ```
 
-## Create a Migration Class
+:::info Why FullAuditedEntity?
+`FullAuditedEntity<Guid>` is an Abp base class that gives the entity a Guid primary key plus standard audit columns: CreatedBy, CreationTime, LastModifiedBy, LastModificationTime, IsDeleted, DeleterUserId, and DeletionTime. Use it whenever you need full audit history with soft-delete behaviour.
+:::
 
-1. Navigate to `Shesha.Membership.Domain` --> `Migrations`
-2. Right click on the `Migrations` folder, **Add** --> **Class**
-3. Create a new migration class with a file name following this format: **M[YEAR][MONTH][DAY][HOUR][MINUTE][SECONDS].cs e.g. M20231124090300.cs for 24 November 2023 08:53:00**.
-4. Add the below code:
+### 2. Create the Migration
 
-```csharp
+1. Navigate to `Shesha.Membership.Domain > Migrations`.
+2. Right-click the folder and choose **Add > Class**.
+3. Name the class with a timestamp, for example `M20231124090300.cs`.
+
+**Example - Migration creating the Mem_MembershipPayments table:**
+
+```cs
 using FluentMigrator;
 using Shesha.FluentMigrator;
 using System;
@@ -69,9 +77,6 @@ namespace Shesha.Membership.Domain.Migrations
     [Migration(20231124090300)]
     public class M20231124090300 : Migration
     {
-        /// <summary>
-        /// Code to execute when executing the migrations
-        /// </summary>
         public override void Up()
         {
             Create.Table("Mem_MembershipPayments")
@@ -81,9 +86,7 @@ namespace Shesha.Membership.Domain.Migrations
                 .WithColumn("Amount").AsDouble().Nullable()
                 .WithColumn("PaymentDate").AsDateTime().Nullable();
         }
-        /// <summary>
-        /// Code to execute when rolling back the migration
-        /// </summary>
+
         public override void Down()
         {
             throw new NotImplementedException();
@@ -92,91 +95,114 @@ namespace Shesha.Membership.Domain.Migrations
 }
 ```
 
-_You can check out [Fluent Migrator](https://fluentmigrator.github.io/index.html) for more options about database migrations._
+:::tip Shesha FluentMigrator helpers
+`WithIdAsGuid` adds a Guid primary key. `WithFullAuditColumns` adds the audit columns that match `FullAuditedEntity<Guid>`. `WithForeignKeyColumn` creates a column and its foreign key in a single call. These helpers come from `Shesha.FluentMigrator`. For more options see the [FluentMigrator docs](https://fluentmigrator.github.io/index.html).
+:::
 
-5.  You can run your application by going to the menu and selecting `Debug` --> `Start Debugging` or by clicking `F5`
-6.  The application should open in your browser on the default Swagger API page.
-7.  Search and navigate to the `Member` endpoints that have been dynamically created by Shesha.
+4. Start the application (**Debug > Start Debugging** or **F5**).
+5. The app opens on the Swagger page.
+6. Search for **MembershipPayment** in Swagger to see the auto-generated CRUD endpoints.
 
 ![Image](./images/childSwagger.png)
 
-_Read more about dynamic APIs [here](/docs/back-end-basics/crud-apis)_
+See [CRUD APIs](/docs/back-end-basics/crud-apis) for what each endpoint does and how to customise the generated set.
 
-## Updating Configurations
+---
 
-### Details View
+## Wire the Child Table into the Details View
 
-1. Navigate to the `member-details` [form designer](/docs/get-started/tutorial/the-basics/configuring-first-view#accessing-form-designer)
-2. Search and drag in a `DataTable Context` component from the `Builder Widgets` below the existing `details` panel
+Now surface the payments inline on the member's details view, with a filter so each member only sees their own payments.
 
-_You can find more information about implementation of the DataTable Context component [here](/docs/front-end-basics/form-components/tables-lists/datatable-context)_
+### 1. Add a DataTable Context
 
-3. Set the `Entity Type` property of the `DataTable Context` to the newly created `Membership Payment` entity
+1. Open the [member-details form designer](./configuring-first-view.md#accessing-the-form-designer).
+2. Drag a **DataTable Context** (see the [DataTable Context reference](/docs/front-end-basics/form-components/tables-lists/datatable-context)) onto the form, below the existing **details** panel.
+3. Set its **Entity Type** to the new `MembershipPayment` entity.
 
 ![Image](./images/child.png)
 
-4. Search and drag in a `Panel` component from the `Builder Widgets` onto the `DataTable Context`
-5. Give the panel component a label of `Member Payments`
+### 2. Add a Panel and DataTable
+
+1. Drag a **Panel** (see the [Panel reference](/front-end-basics/form-components/Layouts/panel.md)) onto the DataTable Context.
+2. Label the panel `Member Payments`.
 
 ![Image](./images/child2.png)
 
-_You can find more information about implementation of the Panel component [here](/front-end-basics/form-components/Layouts/panel.md)_
+3. Drag a **DataTable** (see the [DataTable reference](/docs/front-end-basics/form-components/tables-lists/datatable)) onto the panel.
+4. Configure the columns:
 
-6.  Search and drag in a `DataTable` component from the `Builder Widgets` onto the `Panel`
-7.  Configure columns with the following information:
-
-    | Type            | Property Name | Caption       | Create Component |
-    | --------------- | ------------- | ------------- | ---------------- |
-    | CRUD Operations | _N/A_         | _leave empty_ | _N/A_            |
-    | Data            | amount        | Amount        | Number Field     |
-    | Data            | paymentDate   | Payment Date  | Date Field       |
+| Type | Property Name | Caption | Create Component |
+|---|---|---|---|
+| `CRUD Operations` | *N/A* | *(leave empty)* | *N/A* |
+| `Data` | `amount` | `Amount` | `Number Field` |
+| `Data` | `paymentDate` | `Payment Date` | `Date Field` |
 
 ![Image](./images/child3.png)
 
 ![Image](./images/child4.png)
 
-8.  Click `save` on the `configure columns` modal.
+5. Click **Save** on the **Configure Columns** modal.
 
-_You can find more information about implementation of the DataTable component [here](/docs/front-end-basics/form-components/tables-lists/datatable)_
+### 3. Enable Inline Editing
 
-Taking full advantage of Shesha's DataTable functionalities, we are going to be utilizing the **inline-editing** to input the `Member Payments`.
+Inline editing lets users add payments directly into the table without opening a separate dialog. See the [inline editing how-to](/docs/front-end-basics/how-to-guides/inline-editing) for the full flow.
 
-_Check out the inline-editing [how-to-guide](/docs/front-end-basics/how-to-guides/inline-editing)_
+Configure the DataTable:
 
-9. Update the `DataTable` configuration to the following:
+| Setting | Value |
+|---|---|
+| `Can add inline` | `Yes` |
 
-- Can add inline: `Yes`
-- New row init:
-  ```javascript
-  return {
-    member: form.data.id,
-  };
-  ```
+**Form type to use:** Configured on a DataTable inside a member-details (details view) form.
 
-_Let's accessorize our `DataTable` and make it more flexible._
+**Example - New row initialiser that links each payment to the current member:**
 
-10. Search and drag in the following components from the `Builder Widgets` onto the header of the `Member Payments` panel:
-    - [Quick Search](/docs/front-end-basics/form-components/tables-lists/quick-search)
-    - [Table Pager](/docs/front-end-basics/form-components/tables-lists/table-pager)
-    - [Table View Selector](/docs/front-end-basics/form-components/tables-lists/table-view-selector)
+```javascript
+return {
+  member: form.data.id,
+};
+```
+
+This sets the `member` foreign key on each new payment row to the currently displayed member.
+
+### 4. Add Toolbar Components
+
+To make the table easier to use, drag the following onto the **Member Payments** panel header:
+
+| Component | Purpose |
+|---|---|
+| [Quick Search](/docs/front-end-basics/form-components/tables-lists/quick-search) | Free-text filter across columns. |
+| [Table Pager](/docs/front-end-basics/form-components/tables-lists/table-pager) | Paging controls. |
+| [Table View Selector](/docs/front-end-basics/form-components/tables-lists/table-view-selector) | Switches between named filters. |
 
 ![Image](./images/child5.png)
 
-11. Select the `Table View Selector` component and update the filter configurations to look like this:
+### 5. Filter Payments to the Current Member
+
+Select the **Table View Selector** and configure a filter that restricts the table to payments belonging to the current member:
 
 ![Image](./images/child6.png)
 
-_This filters all the `membership payments` to only show payments of the member whose details we are viewing._
-
-12. Save your filter and toggle the `Hidden` property to `true`
+Save the filter and set the **Table View Selector**'s **Hidden** property to `true` - users don't need to see it, but the filter still applies.
 
 ![Image](./images/child7.png)
 
-13. Save your form
+6. Save the form.
 
-- Using the main menu, navigate to the `members-table` and refresh your page to make sure your changes have taken effect.
-- Drill down into the `details view` of your recently created member.
-- Create a `Membership Payment`
+---
+
+## Test It
+
+- From the main menu, navigate to the **members-table** and refresh.
+- Drill down into the details view of any member.
+- Add a **Membership Payment** using inline editing.
 
 ![Image](./images/child8.png)
+
 ![Image](./images/child9.png)
+
+---
+
+## Next Step
+
+Continue with [Custom APIs](./custom-api.md) to build a custom app service that enforces business rules before activating a membership.
