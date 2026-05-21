@@ -111,5 +111,5 @@ See [Access Control](../fundamentals/security/access-control.md) for a deeper ex
 | `Community channel (Discord)` | Ask questions, share what you are building, and chat with the Shesha team and community in real time. [Join the Discord](https://discord.com/invite/KBV4ZBwRbr). |
 
 :::info Documentation is the fastest first stop
-Almost every "how do I..." question is covered in the [Front-End Basics](../front-end-basics/) or [Back-End Basics](../back-end-basics/) sections. You can use the search bar at the top of the docs site to search specific concepts.
+Almost every "how do I..." question is covered in the [Front-End Basics](/docs/category/front-end-basics) or [Back-End Basics](/docs/category/back-end-basics) sections. You can use the search bar at the top of the docs site to search specific concepts.
 :::
