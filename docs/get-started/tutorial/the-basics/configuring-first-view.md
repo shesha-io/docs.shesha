@@ -1,334 +1,359 @@
 ---
+sidebar_label: Configuring Your First View
 sidebar_position: 3
+title: Configuring Your First View
 ---
 
 # Configuring Your First View
 
-In this section, we are configuring the most common types of views taking advantage of the base domain model and the drag-and-drop form configuration interface. We are going to take you through the process of configuring some basic views to allow the user to:
+This step walks you through configuring three views against the built-in `Person` entity: a table to list people, a create form to register a new person, and a details view to display and edit an existing record. You will also wire a menu item so the table view is reachable from the main menu.
 
-- View a list of people
-- Register a new person
-- View the details of the registered person
-- Access the list view of the persons from the main menu
+By the end of this step you will have a fully working CRUD experience without writing any backend code - everything is configured in the Shesha designer.
+
+---
 
 ## Form Versioning
 
-Form versioning refers to the practice of managing different versions of a form. Each version represents a distinct state of the form, and organizations often use multiple versions to handle changes, updates, or different stages of the form's life cycle. The three versions available —Live, Ready, and Draft— suggest a common workflow for form versioning. Let's break down their meanings:
+Forms in Shesha have three versions, which together support a simple draft -> ready -> live workflow. Knowing how versioning works will help when you publish your first form.
 
 ![Image](./images/FormVersioning.png)
 
-### Draft
+| Version | Purpose |
+|---|---|
+| `Draft` | Work in progress. Designers can change fields and layout without affecting the version in use. |
+| `Ready` | Stable and reviewed. The system displays the Ready version where available, with a fallback to Live. |
+| `Live` | The version currently in use by end users. |
 
-- A **Draft** version is a work in progress. It is a form that is being created or modified but is not yet ready for use or publication. During this stage, form designers can make changes, add new fields, or update existing ones without affecting the live version.
+The typical flow is: build in **Draft**, finalise to **Ready**, then promote to **Live**. To make further changes, create a new draft. This keeps live forms protected from accidental edits while giving designers room to iterate.
 
-### Ready
-
-- The **Ready** version is a form that has been finalized and is ready for deployment. It represents a snapshot of the form that is stable and complete. Once a form is marked as "Ready", it indicates that the form has undergone necessary reviews and is considered suitable for use. The system displays ready versions where available with fallback to live.
-
-### Live
-
-- The **Live** version is the actively used form that is accessible to users or respondents. It represents the current version of the form that people interact with. When a form is moved from the "Ready" state to "Live", it becomes the version that is deployed for public use.
-
-The typical workflow involves creating or modifying a form in the **Draft** state, reviewing and finalizing it in the **Ready** state, and then deploying it as the **Live** version for users to fill out. If further changes are needed, a new draft can be created, and the cycle continues.
-
-This versioning system helps organizations manage changes to forms in a controlled manner, preventing unintended modifications to live forms and allowing for a structured development and deployment process. It also provides a clear distinction between the different stages of a form's life cycle, making it easier to track and manage changes.
+---
 
 ## Creating a New Form
 
-- On the `Main Menu`, navigate to `Configurations > Forms`.
-- Click on the `Create New` button on the toolbar.
+Every form starts the same way: from the **Forms** configuration page.
 
-### Form Fields
+1. From the **Main Menu**, open **Configurations > Forms**.
+2. Click **Create New** on the toolbar.
+3. Fill in the form metadata.
 
-- **Module:** Specifies the application module the new form configuration will be saved under.
-- **Entity:** Specifies the type of `Model Type` you want the form to bind to. This determines the information that the form will be able to access and display.
-- **Template:** Specifies the default layout to use for the new form (e.g. table or form view).
-- **Name:** This forms part of the form path. This should be unique within the module selected and may only contain alpha-numeric characters and a dash(**—**) symbol.
-- **Label:** Label of the item, can be used as a user friendly name.
-- **Description:** Additional information about the form.
+| Field | What it means |
+|---|---|
+| `Module` | The application module the configuration is saved under. |
+| `Entity` | The model type the form binds to. Determines which properties the form can read and write. |
+| `Template` | Default layout to start from (e.g. `table-view`, `blank-view`, `details-view`). |
+| `Name` | Part of the form's URL path. Must be unique within the module. Alphanumeric and dashes only. |
+| `Label` | Friendly name shown in lists. |
+| `Description` | Free-text notes about the form. |
+
+---
 
 ## Table View
 
-To manage the information of the people registered onto the system, we need to create a table view.
+You will start by building a table that lists everyone in the database.
 
-1. **Create a new form with the following information:**
+### 1. Create the Table Form
 
-   - Module: `Shesha.Membership`
-   - Entity: `Shesha.Domain.Person`
-   - Template: `table-view`
-   - Name: `members-table`
-   - Label: `Members Table`
-   - Description: `This table view is used to display a list of all members`
+Create a new form with the following values:
 
 ![Image](./images/memberTable.png)
 
-2. You will then be redirected to the **Form Designer**, which should have basic table components readily configured for your convenience based on the selected template. All that’s left to do is to configure the columns you want visible, and add a title!
+The designer opens with a pre-configured table layout based on the template. All you need to do is choose which columns to show and give the table a title.
 
 ![Image](./images/formdesigner.png)
 
-- ### Configuring Table Columns
+### 2. Configure the Columns
 
-  - First, click the `Tables and Lists` dropdown and then hover over the `datatable` component handle on your form's components and click it to see the properties of the `datatable` component in the `Properties` sidebar.
+1. Open the **Tables and Lists** group in the toolbox and select the **datatable** component on the canvas to see its properties.
 
-    ![Image](./images/table0.png)
+![Image](./images/table0.png)
 
-  - Click on `Configure Columns` > `Add Column`
+2. Click **Configure Columns > Add Column**.
 
-    ![Image](./images/table1.png)
+![Image](./images/table1.png)
 
-  - On the Property Name setting on the Properties sidebar, this provides an autocomplete of all the properties available on the chosen `Model Type`. If the property name selected is what you would like your caption to be, you can use the suffixed lightning bolt icon button to autocomplete the column caption to match the property name. You also have the option to modify the caption if need be.
+3. On the **Property Name** setting, type to autocomplete from the properties available on the selected model. The lightning bolt button to the right copies the property name into the caption.
 
-  - Add the following columns by searching and selecting on the `Property Name`:
+4. Add the following columns:
 
-    - title
-    - firstName
-    - lastName
-    - mobileNumber1
-    - emailAddress1
-    - gender
+![Image](./images/table2.png)
 
-    ![Image](./images/table2.png)
+5. Click **Save** on the **Configure Columns** modal.
 
-  - Click `save` on the `configure columns` modal.
+The table now displays seeded `Person` records from the starter database.
 
-- The `member-table` should now be populated with pre-populated data from the `Person` entity, which is part of the base Shesha Model as included in the Starter Project database.
+![Image](./images/table3.png)
 
-  ![Image](./images/table3.png)
+### 3. Add a Title via the Table View Selector
 
-- ### Adding Title
+The **Table View Selector** component doubles as a heading at the top of the table.
 
-  - The `Table View Selector` can be used as a table heading.
+1. Select the **Table View Selector** component, then click **Add Filter Item**.
 
-    - Select the `Table View Selector` component > `Add filter Item`
+![Image](./images/table4.png)
 
-    ![Image](./images/table4.png)
+2. Rename the filter to `All Members`.
 
-    - Rename the title of the filter to `All Members`
+![Image](./images/table5.png)
 
-    ![Image](./images/table5.png)
+3. Save the form.
 
-    - Save the form. Read more on form versioning [here](#form-versioning)
-
-- ### Accessing our Form
-
-  - Now that we have saved our form, where do we access it?
-    - For this tutorial, we will be creating a `direct link from the main menu`
+---
 
 ## Updating the Main Menu
 
-- Toggle Edit Mode
+To reach the new form, add it to the main menu.
 
-      - This mode allows you to make changes to your form configuration, data bindings, and layout.
-      - During this mode, form designers can make changes, add new fields, or update existing ones.
+1. Toggle **Edit Mode** to allow changes to the menu.
 
-- ![Image](./images/FomEditMode.png)
+![Image](./images/FomEditMode.png)
 
-- Click the now `highlighted` main menu to toggle the `Main Menu Configuration` dialog box
-- Click on `Add New Item`
-- Configure your new menu item with the following information:
+2. Click the now-highlighted main menu to open the **Main Menu Configuration** dialog.
+3. Click **Add New Item** and set:
 
-  - Item Type - The type of menu item to create.
-    - Select Button
-  - Title - The title for the menu item.
-    - E.g. Members
-  - Icon - The icon to display for the menu item.
-    - E.g. IdcardOutlined
-  - Button Action - The action to be performed when the user selects the menu item.
-    - Select Navigate
-  - Target Url - The URL to navigate to when the user selects the menu item. The URL for configured forms needs to follow this convention: `/dynamic/{Module name}/{Form name}` where:
-    - `dynamic` - standard segment that indicates the URL is for a configured (dynamic) form
-    - `{Module name}` - The name of the module the form to navigate to belongs to.
-    - `{Form name}` - The name of the configured form to navigate to.
-    - The value should therefore be `/dynamic/Shesha.Membership/members-table`
+| Field | Value |
+|---|---|
+| `Item Type` | `Button` |
+| `Title` | `Members` |
+| `Icon` | `IdcardOutlined` |
+| `Button Action` | `Navigate` |
+| `Target Url` | `/dynamic/Shesha.Membership/members-table` |
 
-  ![Image](./images/table7.png)
+**How the Target URL is built:**
 
-  - Toggle the switch to go back to live mode
-  - Since our `table-view` has not been published and is still on `Draft` mode, it is **important** to toggle the `form versioning` from `Live` to `Latest` to be able to view the form since it has not been published. Read more on form versioning [here](#form-versioning).
+| Segment | What it means |
+|---|---|
+| `dynamic` | Tells Shesha this URL points at a configured (dynamic) form. |
+| `Shesha.Membership` | The module the form lives in. |
+| `members-table` | The configured form's `Name`. |
 
-  ![Image](./images/table8.png)
+![Image](./images/table7.png)
+
+4. Toggle the switch to go back to live mode.
+
+:::warning Switch form versioning to Latest while iterating
+If your form is still in **Draft**, navigating to the menu item will not find it unless you switch the form versioning toggle from **Live** to **Latest**. Once published, switch it back.
+:::
+
+![Image](./images/table8.png)
+
+---
 
 ## Create View
 
-Now that we have a way to view a list of our Members in a table and can access the table, we will need a way to create new members.
+Now add a form that lets users register new members.
 
-1. **Create a new form with the following information:**
+### 1. Create the Form
 
-   - Module: `Shesha.Membership`
-   - Entity: `Shesha.Domain.Person`
-   - Template: `blank-view`
-   - Name: `member-create`
-   - Label: `Member Create`
-   - Description: `This create view is used to register a new member`
+Create a new form with these values:
 
-2. Once on the form designer, on the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
+| Field | Value |
+|---|---|
+| `Module` | `Shesha.Membership` |
+| `Entity` | `Shesha.Domain.Person` |
+| `Template` | `blank-view` |
+| `Name` | `member-create` |
+| `Label` | `Member Create` |
+| `Description` | `This create view is used to register a new member` |
 
-   - firstName
-   - lastName
-   - mobileNumber1
-   - emailAddress1
-   - dateOfBirth
-   - gender
+### 2. Add Fields
 
-   You will notice that Shesha automatically binds the different properties to a component compatible for data entry based on the properties defined `data type` in the backend.
+On the **Data Panel**, drag the following properties onto the Edit Area, autocompleting or changing labels as needed:
 
-   ![Image](./images/create1.png)
+| Property |
+|---|
+| `firstName` |
+| `lastName` |
+| `mobileNumber1` |
+| `emailAddress1` |
+| `dateOfBirth` |
+| `gender` |
 
-3. In cases where you want to use a different component than the one that is bound to your property by default, you have the choice of searching for a component on the `Builder Widgets`, bind to the relevant property, and modify accordingly. To showcase:
+Shesha automatically binds each property to a sensible default component (text fields for strings, date pickers for dates, etc.) based on the property's data type.
 
-   - Search for `dropdown` on the `Builder Widgets` and drag it onto the edit area.
-   - Bind it to the `Title` property in your `Person` entity by searching and selecting from the `Property Name` autocomplete.
-   - Autocomplete the caption by clicking on the suffixed lightning bolt.
+![Image](./images/create1.png)
 
-   ![Image](./images/create2.png)
+### 3. Swap a Default Component for a Dropdown
 
-   - Scroll down to populate the `Reference List` that the dropdown should source its information from. E.g. `Shesha.Core.PersonTitles`
+To show how to replace the default component, swap the `title` field for a dropdown bound to a reference list.
 
-   ![Image](./images/create3.png)
+1. Search for `dropdown` in the **Builder Widgets** and drag it onto the edit area.
+2. Set its `Property Name` to `title`.
+3. Click the lightning bolt next to the caption to autocomplete.
+
+![Image](./images/create2.png)
+
+4. Set the **Reference List** the dropdown sources its options from, for example `Shesha.Core.PersonTitles`.
+
+![Image](./images/create3.png)
+
+---
 
 ## Custom Validations
 
-For Custom Validations, please see the How-To guide [Adding custom validations](../../../how-to-guides/adding-custom-validation-on-the-frontend.md).
+For a full walkthrough of writing custom validation rules, see the [Adding custom validations](../../../how-to-guides/adding-custom-validation-on-the-frontend.md) how-to guide. The example below shows a quick property-level validation rule.
 
-### Disabling Dates before year 2000
+### Disabling Dates Before 1990
 
-1. In the spirit of discriminating against people born before 1990 :), we will be disabling dates before then. On the `Datetime` component, navigate to the `Disabled Date Mode` > `Custom function`.
-2. On the `Disabled Date func` code editor, copy the code and paste inside the given isDateDisabled function to execute the following JavaScript expression.
+On the **dateOfBirth** component:
 
-   ```javascript
-   // disabling before year 1900
-   var year1990 = moment("1990-01-01");
-   return current && current < year1990;
-   ```
+1. Set **Disabled Date Mode** to **Custom function**.
+2. In the **Disabled Date func** editor, return a boolean indicating whether the current date should be disabled.
 
-### Required Properties
+**Example - Disabling all dates before 1990:**
 
-Toggle the `Required` property on the `Date Of Birth` component
+```javascript
+const year1990 = moment("1990-01-01");
+return current && current < year1990;
+```
+
+### Marking the Field Required
+
+Toggle the **Required** property on the **Date Of Birth** component.
 
 ![Image](./images/create6.png)
 
-Save your form
+Save your form.
 
-## Adding a Button to Display the Create View
+---
 
-We now need to go back and update the configuration of the `member-table` to add a toolbar button that will display the Member Create View so that users can create new members.
+## Adding a Button to Open the Create View
 
-### Accessing Form Designer
+Now wire up a toolbar button on the members table so users can open the create form from there.
 
-Navigate to the `member-table` form designer to start making your changes. This can be achieved in multiple ways:
+### Accessing the Form Designer
 
-- Navigate to the rendered `member-table` view by using the menu item created earlier > Select the `versioning toggle` > Toggle `Show form Info` on. This will provide a shortcut to the form designer of all forms available in the view using an icon next to the form information.
+There are two ways to get back to a form's designer:
+
+| Method | How |
+|---|---|
+| `From the rendered view` | Open the menu item, toggle **Show form Info** on the versioning toggle, then click the shortcut icon next to the form info. |
+| `From the Forms list` | Open **Configurations > Forms**, search for your form, and click the form designer icon. |
 
 ![Image](./images/bindCreate1.png)
 
-- Navigate to `Configurations` > `Forms` using the main menu. Search for your form. In this case, it is `members-table`. Navigate to the form designer by clicking the `form designer icon`.
-
 ![Image](./images/bindCreate2.png)
 
-1. Click on the `Button Group` component > `Customize Button Group`.
+### Configure the Button
+
+1. Click the **Button Group** component and then **Customize Button Group**.
 
 ![Image](./images/bindCreate3.png)
 
-2. Edit the `Add` button to have the following configurations:
+2. Edit the **Add** button:
 
-   - Label: `Create Member`
-   - Button Type: `Link`
-   - Action Name: `Common` > `Show Dialog`
-   - Title: `Add New Member`
-   - Modal Form: `member-create`
-   - Show Modal Buttons: `True`
-   - Submit HTTP Verb: `POST`
-   - Handle Success: `True`
-   - Action Name: `indexTable: Refresh table`
+| Field | Value |
+|---|---|
+| `Label` | `Create Member` |
+| `Button Type` | `Link` |
+| `Action Name` | `Common > Show Dialog` |
+| `Title` | `Add New Member` |
+| `Modal Form` | `member-create` |
+| `Show Modal Buttons` | `True` |
+| `Submit HTTP Verb` | `POST` |
+| `Handle Success` | `True` |
+| `Action Name (on success)` | `indexTable: Refresh table` |
 
 ![Image](./images/bindCreate4.png)
 
-3. Save `Button Group` customization.
-4. Save your form.
-5. Using the main menu, navigate to the `members-table` and refresh your page if the changes have not taken effect.
-6. Click on `Create Member` > Fill in member details > Click `Ok`.
+3. Save the **Button Group** customisation, then save the form.
+4. From the main menu, navigate to the members table and refresh the page if needed.
+5. Click **Create Member**, fill in member details, and click **OK**.
 
 ![Image](./images/bindCreate5.png)
 
-7. Once the table refreshes, you should now be able to see the record of your newly created member.
+6. Once the table refreshes, the new record appears.
 
 ![Image](./images/bindCreate6.png)
 
+---
+
 ## Details View
 
-Let’s create a form to enable viewing and editing of our newly registered members.
+Now add a form that shows and edits the details of a single member.
 
-1. **Create a new form with the following information:**
+### 1. Create the Form
 
-   - Module: `Shesha.Membership`
-   - Entity: `Shesha.Domain.Person`
-   - Template: `details-view`
-   - Name: `member-details`
-   - Label: `Member Details`
-   - Description: `This details view is used to view the details of a member`
+Create a new form with these values:
 
-2. You will then be redirected to the **Form Designer**, which should have basic details view components readily configured for your convenience based on the selected template. Let’s drag-and-drop all the properties we want visible!
-3. Delete the default `name` text field that comes standard with the `details-view`.
-4. To create a cleaner UI, search and drag in the `column` from the `Builder Widgets` into the existing `Panel` component.
+| Field | Value |
+|---|---|
+| `Module` | `Shesha.Membership` |
+| `Entity` | `Shesha.Domain.Person` |
+| `Template` | `details-view` |
+| `Name` | `member-details` |
+| `Label` | `Member Details` |
+| `Description` | `This details view is used to view the details of a member` |
+
+The details-view template comes with a default panel pre-configured. You only need to set up the layout and fields.
+
+### 2. Lay Out the Form
+
+1. Delete the default `name` text field that ships with the template.
+2. For a cleaner layout, drag a **column** component from the **Builder Widgets** into the existing **Panel** component. The defaults give you a two-column layout. To customise further, see the [columns component reference](../../../front-end-basics/form-components/Layouts/columns.md).
 
 ![Image](./images/details05.png)
 
-5. Since we want to create a 2-column layout, the default settings fit our specifications. There is also an option to configure the columns to fit your UI requirements. Read more about the implementation [here](../../../front-end-basics/form-components/Layouts/columns.md).
-
-6. On the `Data Panel`, drag and drop properties onto the `Edit Area` and autocomplete or change the labels accordingly:
-
-   - title
-   - firstName
-   - lastName
-   - mobileNumber1
-   - emailAddress1
-   - dateOfBirth
-   - gender
+3. On the **Data Panel**, drag the following properties onto the columns:
 
 ![Image](./images/details1.png)
 
-### Adding a Dynamic Title
+### 3. Add a Dynamic Title
 
-We can make the title of the view dynamic to give it a more personal touch. To display dynamic text Shesha uses mustache templating as its templating syntax. It works by simply inserting **tags** where dynamic text should be inserted, E.g. `My template text {{propertyName}}`.
+Shesha uses **Mustache** templating syntax for dynamic text. Anywhere you can write a string in the designer, you can include `{{propertyName}}` tags that get replaced with the corresponding value from the form's data object.
 
-1. Select the `text` component > Set the component's `Content` property to `Membership for: {{fullName}}`.
+1. Select the **text** component and set its **Content** to:
 
-That should enable the text component to have access to the `data` object and display its contents dynamically based on whose membership we are going to be viewing.
+```
+Membership for: {{fullName}}
+```
+
+The text component now reads from the loaded record and displays the person's full name.
 
 ![Image](./images/details2.png)
 
-## Navigation from Table to Details View
+---
 
-To navigate to the newly created details form, we now have to go back to the `members-table` to add a column that allows us to drill-down into the details of a particular Member.
+## Navigating from Table to Details View
 
-1. Navigate to the `members-table` form designer using one of the methods mentioned above.
-2. Select the `Datatable` component > `Customize Columns`.
+The final step is to let users drill from the table into a specific member's details view.
+
+1. Open the **members-table** form designer.
+2. Select the **datatable** component and click **Customize Columns**.
 
 ![Image](./images/navigate1.png)
 
-3. Add a new column with the following information:
+3. Add a new column:
 
-   - Type – `Action`
-   - Caption - _leave empty_
-   - Icon – `SearchOutlined`
-   - Min Width – `50`
-   - Max Width - `50`
-   - Action Name - `Common` > `Navigate`
-   - Target Url - `/dynamic/Shesha.Membership/member-details?id={{selectedRow.id}}`
+| Field | Value |
+|---|---|
+| `Type` | `Action` |
+| `Caption` | *(leave empty)* |
+| `Icon` | `SearchOutlined` |
+| `Min Width` | `50` |
+| `Max Width` | `50` |
+| `Action Name` | `Common > Navigate` |
+| `Target Url` | `/dynamic/Shesha.Membership/member-details?id={{selectedRow.id}}` |
 
-   **Understanding the Target URL:**
+**How the Target URL is built:**
 
-   - `dynamic` - standard URL segment indicating that the form to navigate to is a configured (dynamic) form.
-   - `Shesha.Membership` - is the name of the module the form to navigate to lives in.
-   - `member-details` - is the name of the form to navigate to.
-   - `?id={{selectedRow.id}}` - queries the row that was selected. A more detailed explanation is provided [here](/front-end-basics/configured-views/client-side-scripting/shesha-objects/selectedRow.md) 
+| Segment | What it means |
+|---|---|
+| `dynamic` | Tells Shesha this URL points at a configured form. |
+| `Shesha.Membership` | The module the form lives in. |
+| `member-details` | The form's `Name`. |
+| `?id={{selectedRow.id}}` | Passes the selected row's id as a query parameter. See the [selectedRow reference](/front-end-basics/configured-views/client-side-scripting/shesha-objects/selectedRow.md) for the full object. |
 
 ![Image](./images/navigate2.png)
 
-4. Save `Column Customization`.
-5. Save your form.
-6. Using the main menu, navigate to the `members-table` and refresh your page if the changes have not taken effect.
+4. Save the column customisation, then save the form.
+5. From the main menu, navigate to the members table and refresh the page if needed.
 
-Once on the new and updated Members Table View read-only mode with the additional column, when you click on the search icon for a relevant row, you will be redirected to the details view for the selected member.
+Clicking the search icon on a row now navigates to the details view for that member.
 
 ![Image](./images/navigate3.png)
+
+---
+
+## Next Step
+
+Continue with [Extending the Domain Model](./extending-model.md) to add a custom `Member` entity and a reference list for membership status.
