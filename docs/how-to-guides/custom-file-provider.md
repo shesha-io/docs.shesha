@@ -1,28 +1,42 @@
 ---
 sidebar_label: Custom File Storage Provider
+title: Implementing a Custom File Storage Provider
 ---
 
 # Implementing a Custom File Storage Provider
 
-Shesha ships with two file storage providers — local file system and Azure Blob Storage. If your application needs to store files in a different environment (e.g., Amazon S3, Google Cloud Storage, SFTP, or a custom archive system), you can implement your own provider.
+Shesha ships with two built-in file storage providers - local disk and Azure Blob Storage. If your application needs to store files somewhere else (Amazon S3, Google Cloud Storage, SFTP, a custom archive system), you can plug in your own provider without changing the rest of the framework. The base class handles all of the metadata, versioning, and attachment logic for you; your provider only needs to read and write bytes.
 
-## Architecture overview
+This guide walks through the architecture, shows a complete S3 example, and lists the rules to follow for any other backend.
 
-The file storage system is built around these key types:
+---
 
+## Architecture Overview
+
+The file storage system is built around a small set of types:
+
+```text
+IStoredFileService                          - marker interface (inject this)
+    -- IStoredFileServiceBase<StoredFile>   - full service contract
+            -- StoredFileServiceBase        - abstract base class (metadata, versioning, copy)
+                    -- StoredFileService         (local disk)
+                    -- AzureStoredFileService    (Azure Blob Storage)
+                    -- YourCustomService         (your implementation)
 ```
-IStoredFileService                          ← Marker interface (inject this)
-    └── IStoredFileServiceBase<StoredFile>   ← Full service contract
-            └── StoredFileServiceBase        ← Abstract base class
-                    ├── StoredFileService         (Local disk)
-                    ├── AzureStoredFileService     (Azure Blob Storage)
-                    └── YourCustomService          (Your implementation)
-```
 
-`StoredFileServiceBase` implements all the metadata, versioning, attachment, and copy logic. Your custom provider only needs to implement **seven abstract methods** that handle physical storage I/O:
+The relevant source files on `releases/0.43`:
+
+| Type | Source |
+|---|---|
+| `IStoredFileService` | `shesha-core/src/Shesha.Framework/Services/IStoredFileService.cs` |
+| `StoredFileServiceBase` | `shesha-core/src/Shesha.Framework/Services/StoredFiles/StoredFileServiceBase.cs` |
+| `StoredFileService` | `shesha-core/src/Shesha.Framework/Services/StoredFiles/StoredFileService.cs` |
+| `AzureStoredFileService` | `shesha-core/src/Shesha.Framework/Services/StoredFiles/AzureStoredFileService.cs` |
+
+`StoredFileServiceBase` already implements all the metadata, versioning, attachment, and copy logic. Your custom provider only needs to implement **seven abstract methods** that handle physical storage I/O.
 
 | Method | Description |
-| ------ | ----------- |
+|---|---|
 | `GetStreamAsync(StoredFileVersion)` | Read file content from storage and return as a `Stream`. |
 | `GetStream(StoredFileVersion)` | Synchronous version of the above. |
 | `UpdateVersionContentAsync(StoredFileVersion, Stream)` | Write file content to storage. |
@@ -31,11 +45,15 @@ IStoredFileService                          ← Marker interface (inject this)
 | `DeleteFromStorageAsync(StoredFileVersion)` | Delete a file from storage (async). |
 | `DeleteFromStorage(StoredFileVersion)` | Delete a file from storage (sync). |
 
-## Sample: Amazon S3 provider
+---
 
-Below is a complete example of a custom provider that stores files in Amazon S3. You can adapt this pattern for any storage backend.
+## Sample - Amazon S3 Provider
 
-### Step 1: Create the service class
+Below is a complete example of a custom provider that stores files in Amazon S3. The same pattern adapts to any other backend.
+
+### Step 1 - Create the Service Class
+
+**Example - A full S3 storage service:**
 
 ```csharp
 using Amazon.S3;
@@ -106,7 +124,7 @@ namespace YourApp.Services.StoredFiles
 
         public override Stream GetStream(StoredFileVersion fileVersion)
         {
-            // Synchronous wrapper — avoid in new code where possible
+            // Synchronous wrapper - avoid in new code where possible
             return GetStreamAsync(fileVersion).GetAwaiter().GetResult();
         }
 
@@ -176,9 +194,9 @@ namespace YourApp.Services.StoredFiles
 }
 ```
 
-### Step 2: Configure S3 settings
+### Step 2 - Configure S3 Settings
 
-Add the following to your `appsettings.json`:
+Add S3 connection details to `appsettings.json`:
 
 ```json
 {
@@ -192,9 +210,11 @@ Add the following to your `appsettings.json`:
 }
 ```
 
-### Step 3: Register the provider
+### Step 3 - Register the Provider
 
-Register your service in your application's module class. The registration follows the same pattern Shesha uses for its built-in providers — a factory method on `IStoredFileService` that selects the implementation based on configuration.
+Register the service in your application's module. The registration follows the same pattern Shesha uses for its built-in providers - a factory method on `IStoredFileService` that selects the implementation based on configuration.
+
+**Example - Register the S3 service alongside the built-in providers:**
 
 ```csharp
 using Abp.Modules;
@@ -245,26 +265,37 @@ Then set the provider in `appsettings.json`:
 ```
 
 :::tip
-If you only need to replace the default provider (e.g., you always use S3), you can simplify the factory method to always return your implementation. The factory pattern is useful when you want to support multiple providers selectable via configuration.
+If you only ever use one provider (for example, your project always uses S3), simplify the factory to always return your implementation. The switch-based factory is useful when you want to choose providers per environment via configuration.
 :::
 
-## Implementing your own provider
+---
 
-To implement a provider for a different backend, follow the same pattern:
+## Implementing Your Own Provider
+
+For any other backend, follow the same shape:
 
 1. **Create a class** that extends `StoredFileServiceBase` and implements `IStoredFileService`.
-2. **Implement the seven abstract methods** listed above. Each method receives a `StoredFileVersion` that contains the file's Id, file type (extension), and a reference to the parent `StoredFile` (which has the `Folder` property).
-3. **Build a storage key/path** from the version's properties. The convention is `{folder}/{versionId}.{extension}`, but you can use any scheme.
+2. **Implement the seven abstract methods** listed above. Each receives a `StoredFileVersion` that exposes the file's Id, file type (extension), and the parent `StoredFile` (which has the `Folder` property).
+3. **Build a storage key or path** from the version's properties. The convention is `{folder}/{versionId}.{extension}`, but any scheme works as long as it is deterministic.
 4. **Register your service** in your module's `Initialize` method as shown above.
 
-### Key considerations
+### Things to Watch Out For
 
-- **Stream handling**: When returning streams from `GetStreamAsync`, copy to a `MemoryStream` first so the underlying connection/resource can be disposed. This prevents file locks and connection leaks.
-- **Version metadata**: After writing content in `UpdateVersionContentAsync`, update `version.FileSize` and call `VersionRepository.UpdateAsync(version)` so the database stays in sync.
-- **Error handling**: The base class does not catch exceptions from your storage methods — if S3/GCS/etc. is unavailable, the exception propagates to the caller. Add retry logic or circuit breakers in your implementation if needed.
-- **Synchronous methods**: `GetStream` and `DeleteFromStorage` are synchronous counterparts required by the interface. If your storage SDK only provides async APIs, it is acceptable to use `.GetAwaiter().GetResult()` as shown in the example.
-- **Dependency injection**: Your service receives the same repositories (`IRepository<StoredFile, Guid>`, etc.) as the built-in providers. Pass them to the base constructor. Add any storage-specific dependencies (SDK clients, configuration) to your own constructor.
+| Topic | Guidance |
+|---|---|
+| `Stream handling` | When returning streams from `GetStreamAsync`, copy into a `MemoryStream` first so the underlying connection or SDK response can be disposed. Returning the raw response stream often leads to lock or connection-leak bugs. |
+| `Version metadata` | After writing content in `UpdateVersionContentAsync`, update `version.FileSize` and call `VersionRepository.UpdateAsync(version)` so the database stays in sync with what is actually in storage. |
+| `Error handling` | The base class does not catch exceptions from your storage methods. If S3 (or whatever backend) is unavailable, the exception propagates to the caller. Add retry or circuit-breaker logic in your implementation if you need resilience. |
+| `Synchronous methods` | `GetStream` and `DeleteFromStorage` are sync counterparts required by the interface. If your SDK only exposes async APIs, wrapping with `.GetAwaiter().GetResult()` (as shown in the sample) is acceptable. |
+| `Dependency injection` | Your service receives the same repositories (`IRepository<StoredFile, Guid>`, and so on) as the built-in providers. Pass them through to the base constructor. Add storage-specific dependencies (SDK clients, configuration) to your own constructor. |
 
-# See Also
-- [File Storage](../fundamentals/file-storage.md) — Overview of Shesha's file storage system
-- [File/FileList form component](/front-end-basics/form-components/Entity-References/files.md) — Frontend file components
+:::warning .GetAwaiter().GetResult() can deadlock
+Blocking sync-over-async calls (`.GetAwaiter().GetResult()`) are convenient but can deadlock if the application uses a synchronisation context that captures the calling thread (for example, classic ASP.NET or WinForms). ASP.NET Core does not capture context by default, so it is safe in a typical Shesha host - but be aware of the risk if you reuse the provider elsewhere.
+:::
+
+---
+
+## See Also
+
+- [File Storage](../fundamentals/file-storage.md) - overview of Shesha's file storage system
+- [File / FileList form component](/front-end-basics/form-components/Entity-References/files.md) - the front-end components for uploading and displaying files

@@ -1,124 +1,161 @@
 ---
-sidebar_label: Json Entities to Form
-title: Json Entities to Form
+sidebar_label: JSON Entities to Form
+title: JSON Entities to Form
 ---
 
-Forms can now automatically bind to JSON properties without additional code, preserving the Low-Code development experience.
+# JSON Entities to Form
 
-### Configuring the Backend
+A `JsonEntity` is a Shesha concept that lets you store a richly typed object inside a single JSON column on a parent entity, without giving that object its own database table. JSON entities are useful for embedded value objects (an address inside a person, a configuration block inside a workflow step) and for polymorphic content where different shapes can be stored under the same field.
 
-We are using a Entity class that has a `JsonEntity` property. In the example, we use only two properties `TestProp` - as a text name and `JsonProp` - as storage of any `JsonEntity` objects.
+This guide shows how to bind a Shesha form directly to a `JsonEntity` property, and how to switch between different concrete types of `JsonEntity` at runtime using a `SubForm` and a `Dropdown`.
 
-```cs
-    [Table("SheshFunctionalTests_TestClasses")]
-    [Entity(TypeShortAlias = "Boxfusion.SheshFunctionalTests.Domain.TestClass")]
-    public class TestClass : Entity<Guid>
-    {
-        public virtual string TestProp { get; set; }
+---
 
-        public virtual JsonEntity JsonProp { get; set; }
-    }
-```
+## Configure the Back-End
 
-We're going to use several classes created from `JsonEntity`
+The host entity has a regular property of type `JsonEntity`. The polymorphic content lives in subclasses of `JsonEntity`.
+
+**Example - The host entity with a JsonEntity property:**
 
 ```cs
-    public class JsonHouse : JsonEntity
-    {
-        public Address Address { get; set; }
+[Table("SheshFunctionalTests_TestClasses")]
+[Entity(TypeShortAlias = "Boxfusion.SheshFunctionalTests.Domain.TestClass")]
+public class TestClass : Entity<Guid>
+{
+    public virtual string TestProp { get; set; }
 
-        public string Name { get; set; }
-
-        public Person Person { get; set; }
-    }
+    public virtual JsonEntity JsonProp { get; set; }
+}
 ```
+
+The `JsonProp` column stores whichever concrete `JsonEntity` subclass you assign to it.
+
+**Example - Several JsonEntity subclasses that the host can hold:**
 
 ```cs
-    public class JsonCar
-    {
-        public virtual string Make { get; set; }
+public class JsonHouse : JsonEntity
+{
+    public Address Address { get; set; }
+    public string Name { get; set; }
+    public Person Person { get; set; }
+}
 
-        public virtual string  Model { get; set; }
+public class JsonCar : JsonEntity
+{
+    public virtual string Make { get; set; }
+    public virtual string Model { get; set; }
+    public virtual string VinNumber { get; set; }
+    public virtual IList<JsonWheel> Wheels { get; set; }
+}
 
-        public virtual string VinNumber { get; set; }
+public class JsonWheel : JsonEntity
+{
+    public virtual string Type { get; set; }
+    public virtual long Size { get; set; }
 
-        public virtual IList<JsonWheel> Wheels { get; set; }
-    }
+    [SaveAsJson]
+    public virtual IList<JsonSpoke> Spoke { get; set; }
+}
+
+public class JsonSpoke
+{
+    public virtual double Length { get; set; }
+    public virtual string Material { get; set; }
+    public virtual double Thickness { get; set; }
+}
+
+public class TestJsonEntity : JsonEntity
+{
+    public virtual Organisation SomeOrganisation { get; set; }
+    public virtual string SomeName { get; set; }
+}
 ```
 
-```cs
-    public class JsonWheel : JsonEntity
-    {
-        public virtual string Type { get; set; }
+:::note The SaveAsJson attribute
+`[SaveAsJson]` on a property tells the ORM to persist that property as JSON inside the parent JSON column rather than as its own column.
+:::
 
-        public virtual long Size { get; set; }
+That is everything needed on the back-end - no tables, no migrations, no custom DTOs.
 
-        [SaveAsJson]
-        public virtual IList<JsonSpoke> Spoke { get; set; }
-    }
-```
+---
 
-```cs
-    public class JsonSpoke
-    {
-        public virtual double Length { get; set; } 
-        public virtual string Material { get; set; } 
-        public virtual double Thickness { get; set; }
-    }
-```
+## Configure the Front-End
 
-```cs
-    public class TestJsonEntity : JsonEntity
-    {
-        public virtual Organisation SomeOrganisaion { get; set; }
+You need two kinds of form:
 
-        public virtual string SomeName { get; set; }
-    }
-```
+- One **detail form per `JsonEntity` subclass** (one for `JsonHouse`, one for `JsonCar`, one for `JsonWheel`, and so on).
+- One **host form** for the parent entity that contains the `JsonEntity` property.
 
-These will be all the Entities we'll need for the backend.
+### Detail Forms
 
-### Configuring the Frontend
-
-We need to create forms for each type of `JsonEntity`. The picture below shows an example of a form for a `JsonHouse` type
+Create one form for each concrete `JsonEntity` subclass. Each form is bound to its own type and contains the fields specific to that type.
 
 ![Image](./images/json-entities-to-forms/jsonentities1.jpg)
 
-Then, we can use the `Entity configurator` to configure the `Views` and each type of `JsonEntity`
+Once the detail forms exist, register them in the **Entity Configurator** under **Views** so the framework knows which form to use for each `JsonEntity` type.
 
 ![Image](./images/json-entities-to-forms/jsonentities2.jpg)
 
-Next is to create a form for viewing/editing the main object(in our example - `TestClass`)
+### Host Form
 
-There are three(3) components on the form; `TextField` - for `testDrop`, `Dropdown` - to select the type of `JsonEntity`, `SubForm` - to display the details of specific `JsonEntity`
+Now build the host form for the parent entity (`TestClass` in this example). It needs three components:
+
+| Component | Purpose |
+|---|---|
+| `TextField` | Bound to the parent's plain `TestProp` field |
+| `Dropdown` | Lets the user pick which `JsonEntity` type to store in `JsonProp` |
+| `SubForm` | Renders the detail form for the selected `JsonEntity` type |
 
 ![Image](./images/json-entities-to-forms/jsonentities3.jpg)
 
-For the Dropdown, we'll configure the `Property name`=`jsonProp._className`, `DataSource type` = `Values` and `Values` as `Type name` + `Type class` 
+#### Configure the Dropdown
+
+The Dropdown is bound to the special `_className` discriminator on the JSON property, so picking a value tells the framework which subclass is stored.
+
+- **Property name:** `jsonProp._className`
+- **DataSource type:** `Values`
+- **Values:** for each option, the Label is the friendly type name and the Value is the fully qualified class name.
 
 ![Image](./images/json-entities-to-forms/jsonentities4.jpg)
 
-For the `SubForm` property, we'll set `Property name` = `jsonProp`(bind the `SubForm` to the `JsonEntity` data). Set `Form selection mode` = `Dynamic` and `Form type` = `Create` (these settings mean that the `SubForm` will automatically determine which form to show based on the `_className` field of the data that we bind)
+#### Configure the SubForm
 
-So, when selecting one of the values in the `Dropdown`, the name of the class of the specific `JsonEntity` will be added to the `jsonProp._className` field and `SubForm` will automatically change form.
+The SubForm is bound to the JSON property itself, with **Dynamic** form selection so the framework picks the right detail form based on `_className`.
+
+- **Property name:** `jsonProp` (binds the SubForm to the JsonEntity data)
+- **Form selection mode:** `Dynamic`
+- **Form type:** `Create`
 
 ![Image](./images/json-entities-to-forms/jsonentities5.jpg)
 
-### Adding work to the List
+When the user picks a value from the Dropdown, the `_className` field on `jsonProp` updates. The SubForm sees this change and swaps to the matching detail form automatically.
 
-On the form:
-1. `Add` button is configured to show a dialog box for adding a new `TestClass` object, using the previous form (the usual setting for any Entity creation dialog box)
-2. `DataTable` for `TestClass` list (the usual setting for any `Entity`)
-3. `SubForm` with settings
+---
+
+## Adding a List View
+
+To list and edit existing records, build a separate list/detail form with the following pattern:
+
+1. An **Add** button that opens a dialog using the host form above (the standard pattern for any new-record dialog).
+2. A **DataTable** bound to the host entity (the standard pattern for any entity list).
+3. A **SubForm** that displays the selected row's `JsonEntity` data.
+
 ![Image](./images/json-entities-to-forms/jsonentities6.jpg)
-and the `Query Params` will look like
-![Image](./images/json-entities-to-forms/jsonentities7.jpg)
-likewise, the `PUT Url` will have this structure
-![Image](./images/json-entities-to-forms/jsonentities8.jpg)
-4. The `Submit` button with `Action configuration` = `subForm: Update form data`
 
-When we select some record from the table, the data in `contexts.DataTableContext1.selectedRow` changes and therefore the `Query params` of the `SubForm` changes. The `SubForm` loads the data  of a specific `TestClass`, which has the  `_className` value of the `JsonEntity` object in `jsonProp`. Based on this value, the `SubForm` automatically changes form and the data is displayed.
+The SubForm needs to fetch the JSON content for the currently selected row, so configure its **Query Params** to pass the selected row's Id:
+
+![Image](./images/json-entities-to-forms/jsonentities7.jpg)
+
+The **PUT URL** for saving back follows the same structure:
+
+![Image](./images/json-entities-to-forms/jsonentities8.jpg)
+
+4. A **Submit** button with **Action configuration** set to `subForm: Update form data`.
+
+When the user picks a row in the table, `contexts.DataTableContext1.selectedRow` updates. This changes the SubForm's Query Params, which loads the JSON data for the selected `TestClass`. The SubForm reads `_className` off the loaded data and swaps to the matching detail form automatically.
 
 ![Image](./images/json-entities-to-forms/jsonentities9.jpg)
 
-
+:::tip Why this pattern works
+The `_className` discriminator is what makes polymorphism over JSON work at runtime. As long as every detail form is bound to its concrete `JsonEntity` subclass and registered in the Entity Configurator, the SubForm can swap between them without any custom code on the host form.
+:::

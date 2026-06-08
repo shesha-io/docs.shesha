@@ -3,51 +3,66 @@ sidebar_label: Copy Form
 title: Copy Form
 ---
 
-Hey there!
+# Copy Form
 
-Shesha provides you with many cool features that make configuring your project much more seamless while catering to your exact need. One of such features is the ability to **Copy a Form**.
-
-Let’s say you wanted to create your own version of a Shesha form. It could be a Default form or an existing form you have already created. 
+Shesha makes it easy to create your own version of an existing form by **copying** it. This is useful when you want to start from one of Shesha's built-in forms (or a form already in your application) and customise it without affecting the original. This guide walks through finding the form you want to copy, picking the right version, and creating the copy.
 
 ![Image](./images/copy-form-pictures/copyform1.png)
 
-Here’s how you can do that, all within a few small steps;
+---
 
-First, from your homepage, navigate to your forms page to see the list of forms available
+## 1. Find the Form to Copy
+
+From the home page, navigate to the forms list.
 
 ![Image](./images/copy-form-pictures/copyform2.png)
 
-If you don’t see the form in question simply search for it using the **search bar**.
+If the form you want is not visible, search for it using the search bar at the top of the list. For this example we will copy the `shesha-advanced-entity-picker` form.
 
-We are going to copy the second form in the table above, **shesha-advanced-entity-picker**
+---
 
-To see further details about the form, click on the magnifier icon on the form row to open the details view.
+## 2. Open the Form's Details View
+
+Click the magnifier icon on the form's row to open its details view.
 
 ![Image](./images/copy-form-pictures/copyform3.png)
 
-When the details view opens up, scroll down to the bottom of the page to see all versions of the form
+Scroll to the bottom of the details view to see all versions of the form.
 
 ![Image](./images/copy-form-pictures/copyform4.png)
 
-Depending on what version of the form you’d like to copy, you can select it again by clicking the magnifier icon to select a particular form version.
+---
+
+## 3. Select the Version to Copy
+
+Pick which version you want as the starting point. Click the magnifier icon next to the version to open it.
 
 ![Image](./images/copy-form-pictures/copyform5.png)
 
-After that, at the top of the screen, simply click the **Copy Form** button
+---
+
+## 4. Click Copy Form
+
+At the top of the screen, click the **Copy Form** button.
 
 ![Image](./images/copy-form-pictures/copyform6.png)
 
-From there, simply choose the module name, Name, Label and description of your copied form and click **OK**
+Enter the **Module name**, **Name**, **Label**, and **Description** for the new form, then click **OK**.
 
 ![Image](./images/copy-form-pictures/copyform7.png)
 
-And viola! You have successfully created a copy of your form.
+The copy is created.
 
 ![Image](./images/copy-form-pictures/copyform8.png)
 
-If you’d like to see your new copied form in the List of Forms, simply navigate back to the forms page and search for your form
+---
+
+## 5. Find the Copied Form in the List
+
+To find your new form in the list, navigate back to the forms page and search for it.
 
 ![Image](./images/copy-form-pictures/copyform9.png)
 
-This guide has shown you how to leverage Shesha's awesome Copy Form feature to enhance your productivity while working with forms. But there's so much more to discover! Check out the [documentation](/docs/overview/Introduction).
-
+:::tip
+Copy Form duplicates the configuration of the form at the version you selected. The new form is independent - changes you make to it do not affect the original, and changes made to the original do not flow into the copy.
+:::
