@@ -1,26 +1,29 @@
 ---
 sidebar_label: Custom SMS Gateway
+title: Adding a Custom SMS Gateway
 ---
 
 # Adding a Custom SMS Gateway
 
-This guide walks through implementing and registering a custom SMS gateway in Shesha.
+Shesha's notification framework can send SMS messages, but only through registered **gateways** - the concrete classes that know how to talk to a specific SMS provider (Twilio, Clickatell, your in-house gateway). The framework ships with a couple of built-in gateways, but most projects eventually need to plug in one of their own. This guide walks through implementing and registering a custom SMS gateway end-to-end.
 
-## Overview
+At runtime, Shesha resolves the active SMS gateway by reading the `SmsGateway` UID from application settings and locating the matching registered implementation. To add a new gateway you need to:
 
-Shesha resolves the active SMS gateway at runtime by reading the `SmsGateway` UID from application settings and locating the matching registered implementation. To add a new gateway you need to:
-
-1. Create a settings class
-2. Create a settings accessor interface
-3. Create a marker interface for the gateway
-4. Implement the gateway class
-5. Register everything in an ABP module
+1. Create a settings class.
+2. Create a settings accessor interface.
+3. Create a marker interface for the gateway.
+4. Implement the gateway class.
+5. Register everything in an ABP module.
+6. Add the module to your host application.
+7. Select the gateway in admin settings.
 
 ---
 
-## Step 1 — Settings class
+## Step 1 - Settings Class
 
-Create a plain class to hold the gateway's configuration (API keys, host, etc.).
+Create a plain class to hold the gateway's configuration (API keys, base URL, and so on).
+
+**Example - A settings class for a hypothetical gateway:**
 
 ```csharp
 public class MyGatewaySettings
@@ -32,7 +35,9 @@ public class MyGatewaySettings
 
 ---
 
-## Step 2 — Setting name constants
+## Step 2 - Setting Name Constants
+
+Stash the setting names in a constant class so they are not stringly-typed throughout your code.
 
 ```csharp
 public static class MyGatewaySettingNames
@@ -43,7 +48,7 @@ public static class MyGatewaySettingNames
 
 ---
 
-## Step 3 — Settings accessor interface
+## Step 3 - Settings Accessor Interface
 
 Extend `ISettingAccessors` and declare a typed accessor for the settings class. The `[Setting]` attribute ties the property to a named setting stored in the database. The optional `EditorFormName` points to a Shesha configuration form used to edit the settings in the admin UI.
 
@@ -59,7 +64,9 @@ public interface IMyGatewaySettings : ISettingAccessors
 
 ---
 
-## Step 4 — Marker interface
+## Step 4 - Marker Interface
+
+The marker interface is what the IoC container registers against. Inherit from `IConfigurableSmsGateway<TSettings>` (`shesha-core/src/Shesha.Application/Sms/IConfigurableSmsGateway.cs`) and supply your settings type.
 
 ```csharp
 public interface IMyGatewaySmsGateway : IConfigurableSmsGateway<MyGatewaySettings>
@@ -67,16 +74,16 @@ public interface IMyGatewaySmsGateway : IConfigurableSmsGateway<MyGatewaySetting
 }
 ```
 
-This interface is used when registering with the IoC container (see Step 6).
-
 ---
 
-## Step 5 — Gateway implementation
+## Step 5 - Gateway Implementation
 
-Extend `ConfigurableSmsGateway<TSettings>` and decorate the class with:
+Extend `ConfigurableSmsGateway<TSettings>` (`shesha-core/src/Shesha.Application/Sms/ConfigurableSmsGateway.cs`) and decorate the class with:
 
-- `[ClassUid]` — a stable GUID that uniquely identifies this gateway. This is stored in the `SmsGateway` setting to select which gateway is active.
-- `[Display(Name = "...")]` — the human-readable name shown in the admin UI.
+- `[ClassUid]` - a stable GUID that uniquely identifies this gateway. The framework stores this UID in the `SmsGateway` setting to select which gateway is active. Once shipped, do not change this value. Source: `shesha-core/src/Shesha.Framework/Attributes/ClassUidAttribute.cs`.
+- `[Display(Name = "...")]` - the human-readable name shown in the admin UI.
+
+**Example - A skeleton gateway implementation:**
 
 ```csharp
 [ClassUid("your-unique-guid-here")]
@@ -114,23 +121,33 @@ public class MyGatewaySmsGateway : ConfigurableSmsGateway<MyGatewaySettings>, IM
 }
 ```
 
-### `SendStatus`
+### SendStatus
 
-`SendSmsAsync` must return a `SendStatus`:
+`SendSmsAsync` must return a `SendStatus`. The framework uses the result to decide whether to retry and to record the outcome on the audit trail.
 
 | Method | When to use |
 |---|---|
-| `SendStatus.Success()` | Message accepted by the provider |
-| `SendStatus.Failed("reason")` | Provider rejected or an error occurred |
+| `SendStatus.Success()` | The message was accepted by the provider. |
+| `SendStatus.Failed("reason")` | The provider rejected the message, or an error occurred. The reason is surfaced in the audit log. |
+
+:::warning Never throw from SendSmsAsync
+The framework expects a `SendStatus` value, not an exception. Wrap external calls in a `try/catch` and translate any exceptions into `SendStatus.Failed(ex.Message)`. Throwing here breaks the retry queue.
+:::
 
 ---
 
-## Step 6 — ABP module
+## Step 6 - ABP Module
 
-Create an ABP module that registers the settings accessor (with defaults) and the gateway.
+Create an ABP module that registers the settings accessor (with defaults) and the gateway implementation.
+
+**Example - A module that registers the gateway and its default settings:**
 
 ```csharp
-[DependsOn(typeof(SheshaFrameworkModule), typeof(SheshaApplicationModule), typeof(AbpAspNetCoreModule))]
+[DependsOn(
+    typeof(SheshaFrameworkModule),
+    typeof(SheshaApplicationModule),
+    typeof(AbpAspNetCoreModule)
+)]
 public class MyGatewayModule : SheshaModule
 {
     public const string ModuleName = "MyCompany.MyGateway";
@@ -162,7 +179,7 @@ public class MyGatewayModule : SheshaModule
             });
         });
 
-        // Register the gateway — Forward<> is required so ISmsGateway resolves correctly
+        // Register the gateway - Forward<> is required so ISmsGateway resolves correctly
         IocManager.IocContainer.Register(
             Component.For<IMyGatewaySmsGateway>()
                      .Forward<MyGatewaySmsGateway>()
@@ -173,19 +190,20 @@ public class MyGatewayModule : SheshaModule
 }
 ```
 
-> **Why `.Forward<>()`?**
-> Shesha discovers gateways by scanning all `ISmsGateway` registrations. Using `.Forward<>()` on the concrete type ensures the same instance registration is resolvable as both `IMyGatewaySmsGateway` and `ISmsGateway`.
+:::info Why use Forward&lt;&gt;()?
+Shesha discovers gateways by scanning all `ISmsGateway` registrations. Using `.Forward<>()` on the concrete type ensures the same registration is resolvable as `IMyGatewaySmsGateway`, `MyGatewaySmsGateway`, and (via inheritance) `ISmsGateway` - without the container creating three separate instances.
+:::
 
 ---
 
-## Step 7 — Add the module to your host application
+## Step 7 - Add the Module to Your Host Application
 
-In your host application's module class, add a `[DependsOn]` reference:
+In your host application's module class, add a `[DependsOn]` reference to the new gateway module.
 
 ```csharp
 [DependsOn(
     typeof(SheshaApplicationModule),
-    typeof(MyGatewayModule),  // <-- add this
+    typeof(MyGatewayModule),
     // ... other modules
 )]
 public class MyApplicationModule : AbpModule
@@ -194,10 +212,16 @@ public class MyApplicationModule : AbpModule
 }
 ```
 
+Without this dependency, ABP will not load `MyGatewayModule` and your gateway will silently not be registered.
+
 ---
 
-## Selecting the gateway
+## Selecting the Gateway
 
-Once deployed, navigate to **Admin → Settings → SMS** and select your gateway from the **SMS Gateway** dropdown. The dropdown is populated by scanning all registered `ISmsGateway` implementations, matching them by their `[ClassUid]`.
+Once the module is deployed, navigate to **Admin > Settings > SMS** in the admin portal and pick your gateway from the **SMS Gateway** dropdown. The dropdown is populated by scanning every registered `ISmsGateway` implementation and matching them by their `[ClassUid]`.
 
 The `IsSmsEnabled` flag must also be enabled for any messages to be sent.
+
+:::tip
+After deploying a new gateway, restart the application before changing the dropdown - new IoC registrations are discovered at startup, not at runtime.
+:::

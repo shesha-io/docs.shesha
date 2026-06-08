@@ -1,109 +1,132 @@
 ---
 sidebar_label: Calculated Properties
+title: Calculated Properties
 ---
 
-Sometimes a property needs to return the result of a calculation rather than the value of data stored in the database. To implement this type of property there are usually a couple of different approaches.
+# Calculated Properties
 
-# Properties Calculated within the Entity
+A **calculated property** is a property whose value is derived from other data rather than stored as a column in the database. There are two main ways to implement one in a Shesha application: do the calculation **in the entity** (in C#) or do it **in the database** (with a computed column). The right choice depends on how much data the calculation needs and where that data lives.
 
-When calculations are fairly straightforward and can be done without having to retrieve lots of other data from the database, then adding the calculation within the property getter is the simplest approach.
+This guide explains both approaches, when to pick each one, and what to watch out for.
 
-#### Example
+---
+
+## Properties Calculated in the Entity
+
+When the calculation is straightforward and only depends on the entity's own state, the simplest approach is to put it directly into the C# property's `get` accessor. The property is decorated with `[NotMapped]` so NHibernate does not try to persist it.
+
+**Example - Compute whether a person is under-age from their stored Age:**
+
 ```cs
-    public int Age { get; set; }
+public int Age { get; set; }
 
-    /// <summary>
-    /// Specifies the remaining capacity. Calculated column based on: Capacity less SUM of all Active appointments.
-    /// </summary>
-    [NotMapped]
-    public bool IsUnderAge
+/// <summary>
+/// True when the person is under the legal age (18).
+/// </summary>
+[NotMapped]
+public bool IsUnderAge
+{
+    get
     {
-        get
-        {
-            return Age < 18;
-        }
+        return Age < 18;
     }
-```
-Note the following:
-
-1.  `[NotMapped]` attribute needs to be added to indicate that the property should not be mapped to the database
-1.  The property setter should have the `protected` modifier
-
-# Properties Calculated by the Database
-The calculation requires access to lots of data only available from the database, the calculation should be performed by the database through a calculated column, <a href="https://database.guide/create-a-computed-column-that-uses-data-from-another-table-in-sql-server/" target="_blank">see article on computed columns</a>.
-
-Though more complex to implement, this approach will typically have some significant advantages:
-
-* Performance will be significantly better than retrieving the required data in the application and performing the calculation at the application level
-* Centralises the calculation logic in a single place
-* Calculated column is also available to reports which typically query the database directly.
-
-Some disadvantages that implementers should take note of:
-
-* Since the value is calculated at database level the data may get stale i.e. it will not update immediately as changes are made to the state at application level. You may need to re-query the database to refresh the entities.
-* It places additional logic at the database level which make more difficult in future to port to another database platform.
-
-## How to Implement
-
-### Step 1 - Make the property read-only
-
-Add the property that needs be based on a calculated value as follows. In particluar:
-
-   1. Add `[ReadonlyProperty]` attribute to the property
-   1. Make the property setter protected so that users cannot inadvertently update the property e.g. `public virtual int? RemainingCapacity { get; protected set; }`
-
-#### Example
-```cs
-        /// <summary>
-        /// Specifies the remaining capacity. Calculated column based on: Capacity less SUM of all Active appointments.
-        /// </summary>
-        [ReadonlyProperty]
-        public virtual int? RemainingCapacity { get; protected set; }
+}
 ```
 
-### Step 2 - Create the calculated column in the database
+Two things to watch out for:
 
-Add the new calculated column as you would any other database object, by creating a database migrator file.
+1. Add the `[NotMapped]` attribute so the property is not mapped to a database column.
+2. The setter (if any) should be `protected`, so callers cannot accidentally assign a value to a property that should always be derived.
 
-The migrator file should:
+:::tip
+This approach is best when the calculation is cheap and only depends on values already loaded on the entity. As soon as the calculation needs to count or aggregate rows from related tables, prefer the database approach below.
+:::
 
-1. Create a new function that performs the required calculation.
-1. Add the calculated column to the required table.
+---
 
-#### Example
+## Properties Calculated in the Database
+
+When the calculation depends on data that is expensive (or impossible) to load through NHibernate - typically because it aggregates over related rows - move the calculation into the database as a **computed column**. See this [overview of computed columns](https://database.guide/create-a-computed-column-that-uses-data-from-another-table-in-sql-server/) for the underlying SQL concept.
+
+This approach has clear advantages:
+
+- **Performance** - the database calculates the value as part of the query, so you do not have to round-trip rows to the application.
+- **Single source of truth** - the rule is defined once, in the database, and applied everywhere.
+- **Reusable in reports** - reporting tools that query the database directly see the same value.
+
+It also has trade-offs:
+
+- The value is calculated by the database, so the in-memory entity can become stale after edits. You may need to re-query to see the latest value.
+- It places logic in the database, which makes it harder to port the application to a different database platform later.
+
+:::warning Computed columns can be slow on writes
+Every insert or update to the underlying tables forces the column to be recalculated. Test write performance on representative volumes - especially when the function aggregates over a large child table.
+:::
+
+### Step 1 - Declare the Property as Read-Only
+
+ 1. On the entity, declare the property and mark it with `[ReadonlyProperty]` attribute 
+ 1.  Make the setter `protected` so callers cannot try to assign to it.
+
+**Example - A RemainingCapacity property backed by a calculated column:**
 
 ```cs
-    [Migration(20220303180801)]
-    public class M20220303180801 : Migration
+/// <summary>
+/// Remaining capacity. Calculated column = Capacity minus the sum of all Active appointments.
+/// </summary>
+[ReadonlyProperty]
+public virtual int? RemainingCapacity { get; protected set; }
+```
+
+### Step 2 - Add the Calculated Column With a Migration
+
+Create a FluentMigrator migration that:
+
+1. Defines a SQL function performing the calculation.
+2. Adds a calculated column to the table that uses the function.
+
+**Example - Migration that adds a RemainingCapacity computed column to Fhir_Slots:**
+
+```cs
+[Migration(20220303180801)]
+public class M20220303180801 : Migration
+{
+    public override void Up()
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public override void Up()
-        {
-            Execute.Sql(@"CREATE FUNCTION [dbo].[fn_Book_GetNumValidAppointmentsForSlot] (@SlotId uniqueidentifier)  
+        Execute.Sql(@"
+            CREATE FUNCTION [dbo].[fn_Book_GetNumValidAppointmentsForSlot] (@SlotId uniqueidentifier)
                 RETURNS int
-                AS  
-                BEGIN  
-                    DECLARE @AppointmentCount int;
+            AS
+            BEGIN
+                DECLARE @AppointmentCount int;
 
-                    SELECT @AppointmentCount = COUNT(Id)
-	                FROM Fhir_Appointments app 
-	                WHERE app.SlotId = @SlotId 
-		                AND app.StatusLkp NOT IN (6 /*cancelled*/, 8 /*enteredInerror*/)
+                SELECT @AppointmentCount = COUNT(Id)
+                FROM Fhir_Appointments app
+                WHERE app.SlotId = @SlotId
+                  AND app.StatusLkp NOT IN (6 /* cancelled */, 8 /* enteredInError */);
 
-                    RETURN @AppointmentCount;
-                END;
-                GO
-				
-                ALTER TABLE Fhir_Slots ADD RemainingCapacity AS Capacity - dbo.fn_Book_GetNumValidAppointmentsForSlot(Id);
-                GO
-            ");
-        }
+                RETURN @AppointmentCount;
+            END;
+            GO
 
-        public override void Down()
-        {
-            throw new NotImplementedException();
-        }
+            ALTER TABLE Fhir_Slots
+                ADD RemainingCapacity AS Capacity - dbo.fn_Book_GetNumValidAppointmentsForSlot(Id);
+            GO
+        ");
     }
+
+    public override void Down()
+    {
+        throw new NotImplementedException();
+    }
+}
 ```
+
+After the migration runs:
+
+- `RemainingCapacity` is a real column on `Fhir_Slots`, calculated on the fly by SQL Server.
+- The C# entity reads it like any other property - except that writes are rejected by the `[ReadonlyProperty]` attribute.
+
+:::note Database portability
+The example uses T-SQL syntax. If you need to support PostgreSQL as well, write the equivalent migration for that database too.
+:::

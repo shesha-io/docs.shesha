@@ -1,52 +1,92 @@
 ---
-sidebar_label: Initializing dialog with edit properties
-title: Initializing dialog with edit properties
+sidebar_label: Initializing Dialog With Edit Properties
+title: Initializing a Dialog With Edit Properties
 ---
 
-Consider a situation where you made an error on a table and you don't want to drill all the way down into the details view to be able to edit your information. 
+# Initializing a Dialog With Edit Properties
+
+Sometimes the user wants to edit a single row in a table without drilling all the way down to its details view. Shesha lets you add an inline **Edit** action column to the table that opens a pre-populated dialog seeded with the row's data. This guide walks through wiring up that action - adding the column, configuring the dialog, passing the row Id in, and refreshing the table on success.
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue1.png)
 
-If you need to edit your table row information on a dialogue, we need to initialize that dialogue with the following row information. We can do that by navigating to the specific form;
+---
+
+## 1. Open the Form and Configure the Table Columns
+
+Navigate to the form in the designer:
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue2.png)
 
-From there, click on the dataTable Component and then the **Configure Columns** button under properties
+Select the data table component and click **Configure Columns** under its properties.
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue3.png)
 
-Once, there add a new Column and move it to the top of the list
+---
+
+## 2. Add an Action Column
+
+Add a new column and move it to the top of the list:
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue4.png)
 
-Then, configure it by first setting the **Type** to **Action** and removing the column caption
+Configure the column:
+
+- Set **Type** to **Action**.
+- Clear the column caption (so the column shows just the icon).
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue5.png)
 
-Click the **Select Icon** button to add an Icon. On the Icon search screen, search *Edit* and use the *EditOutlined* icon.
+Click **Select Icon** to choose an icon. Search for **Edit** and pick **EditOutlined**.
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue6.png)
 
-Next add an **Action Configuration** of **Show Dialog**, a **Title** of **Edit Payment**, the **Modal form** will be the membership payment we created earlier and the **Submit Http Verb** will be **PUT**
+---
+
+## 3. Configure the Show Dialog Action
+
+Set the column's **Action Configuration** to **Show Dialog**, with:
+
+- **Title:** `Edit Payment`
+- **Modal form:** the Membership Payment form
+- **Submit HTTP Verb:** `PUT`
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue7.png)
 
-Next, under the **Additional Properties** section, click the **Click to Add Items** button 
+---
+
+## 4. Pass the Selected Row's Id Into the Dialog
+
+The dialog needs to know which record it is editing. Pass the Id through the **Additional Properties** section.
+
+Click **Click to Add Items**:
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue8.png)
 
-Then, add a new KeyValue pair of `id` and `{{selectedRow.id}}`
+Add a new key/value pair:
+
+- **Key:** `id`
+- **Value:** `{{selectedRow.id}}`
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue9.png)
 
-Finally, toggle the **Handle Success** property to true and set its Action Name to `Form: Refresh`
+:::info
+`selectedRow` is the data of the row whose Edit button was clicked. The `{{ ... }}` syntax substitutes the value into the dialog's arguments when the action fires.
+:::
+
+---
+
+## 5. Refresh the Table on Success
+
+Toggle **Handle Success** to true and set its action to **Form: Refresh**. This causes the table to re-fetch its data once the edit is saved, so the user immediately sees the updated row.
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue10.png)
 
-Then save the configuration and your form.
+Save the column configuration and save the form.
 
-Now we can edit our payment Amount or Date
+---
+
+## 6. Try It
+
+Click the new Edit icon on any row. The dialog opens pre-populated with that row's data, and any changes are saved and reflected back in the table.
 
 ![Image](./images/initilizing-dialogue-with-edit-properties/initilizingdialogue11.png)
-
-
