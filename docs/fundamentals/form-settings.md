@@ -376,6 +376,14 @@ return data?.id
   : form.defaultApiEndpoints.create;
 ```
 
+`form.defaultApiEndpoints` covers the form's own entity. To get the endpoints of a different entity, use the `getApiEndpointsAsync()` method available on entities through the application API.
+
+```js
+const defaultEndpoints =
+  await application.entities.shesha.Person.getApiEndpointsAsync();
+return data?.id ? defaultEndpoints.update : defaultEndpoints.create;
+```
+
 :::tip
 If you need to do something unusual - like submitting a deletion confirmation with a reason field - you can point the form at a custom endpoint using `Custom (Static)` or `Custom (Dynamic)`.
 :::
@@ -394,6 +402,10 @@ Shesha normally includes a `_formFields` list in the payload when submitting. Th
 **Leave it off (the default) when:**
 - You are using Default Submit on a standard Shesha entity form.
 - Your form only shows a subset of the entity's fields - `_formFields` protects the fields that are not on the form from being accidentally nulled out on save.
+
+:::note
+This functionality may be reviewed in the next major release.
+:::
 
 ---
 
@@ -446,7 +458,7 @@ Pre-submission confirmation dialogs (e.g. "Are you sure?") are not available dir
 
 This event runs **after** the data has been successfully saved to the server. Use it to tell the user that their save worked, send them to another page, or trigger any follow-up actions.
 
-At this point the save is complete. You have access to the submitted data via `data` and the server's response via `response`..
+At this point the save is complete. You have access to the submitted data via `data`.
 
 **Example - Show a success message**
 
@@ -465,7 +477,7 @@ The server response is not available in `On Submit Success` when using the Defau
 
 This event runs **when the save fails** - for example, if the server returns an error or the network is unavailable. Use it to show the user a clear, helpful error message instead of leaving them with a blank or confusing screen.
 
-When using the Default submit type, this handler is called with no arguments — the error object is not passed in. Use it to show a generic failure message or display validation errors on the form.
+When using the Default submit type, this handler is called with no arguments. The error object is not passed in. Use it to show a generic failure message or display validation errors on the form.
 
 **Example - Show a generic failure message:**
 

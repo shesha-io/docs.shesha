@@ -1,19 +1,22 @@
 ---
 sidebar_label: File Storage
+title: File Storage
 ---
 
 # File Storage
 
-File storage, display, and management are common needs in many business applications. Shesha caters to these needs with its built-in file management features. These include:
+Storing, displaying, and managing files is a common need in business applications, and Shesha provides built-in file management to handle it. These features include:
 
-1. APIs for the uploading, downloading, deletion, updating (incl. version management) of files
-1. UI components that can bind to entities and allow uploading, downloading and viewing of files
-1. Storage providers that allow files to be stored in various types of storage locations. Currently, local file storage and Azure Blob Storage are supported, with the option for custom providers to be implemented.
-1. Metadata management for all files uploaded
+1. APIs for uploading, downloading, deleting, and updating files, including version management.
+2. UI components that bind to entities and allow uploading, downloading, and viewing of files.
+3. Storage providers that allow files to be kept in different storage locations. Local file storage and Azure Blob Storage are supported out of the box, and you can implement custom providers.
+4. Metadata management for every file uploaded.
 
-# Adding a file to an entity
+---
 
-If you wish to be able to upload a file against an entity, simply add a property of type `StoredFile` to the entity as follows:
+## Adding a file to an entity
+
+To upload a single file against an entity, add a property of type `StoredFile` to the entity:
 
 ```csharp
 public class MyEntityWithFile : Entity
@@ -26,34 +29,39 @@ public class MyEntityWithFile : Entity
 }
 ```
 
-On the front-end you can then use the `File` form component and bind it to your new `StoredFile` property as illustrated below:
+On the front-end, use the `File` form component and bind it to your new `StoredFile` property.
 
 ![Image](./images/file-storage-images/file-component.png)
 
-Refer to the [File form component](../front-end-basics/form-components/Entity-References/files.md) for more details on how to configure the component.
+Refer to the [File form component](../front-end-basics/form-components/Entity-References/files.md) for more on how to configure the component.
 
-# Adding a list of files to an entity
+---
 
-If you wish to be able to upload a list of files against an entity, no changes are required to your domain model. Simply add the `FileList` form component to your form and bind it to your entity as illustrated below:
+## Adding a list of files to an entity
+
+To upload a list of files against an entity, no changes are required to your domain model. Add the `FileList` form component to your form and bind it to your entity.
 
 ![Image](./images/file-storage-images/file-list-component.png)
 
-The `FileList` component will automatically track which files are part of the list using the `Owner` and `Category` properties of the `StoredFile` entity.
-Note that the `FileList` component will only be able to update these properties accurately if properly configured. Refer to the [FileList form component](/front-end-basics/form-components/Entity-References/files.md) for more details on how to configure the component.
+The `FileList` component automatically tracks which files belong to the list using the `Owner` and `Category` properties of the `StoredFile` entity. It can only update these properties accurately if it is configured correctly. Refer to the [FileList form component](/front-end-basics/form-components/Entity-References/files.md) for more on how to configure the component.
 
-**Note:** In cases where files are uploaded before the owner entity has been persisted and therefore assigned an Id, the dynamically generated Create end-point will automatically update the `Owner` and `Category` properties for all previously created `StoredFile` entities once the owner entity has been persisted and assigned an Id. See [Temporary Files and Delayed Binding](#temporary-files-and-delayed-binding) for more details.
+:::note
+When files are uploaded before the owner entity has been saved (and therefore before it has an Id), the dynamically generated Create endpoint automatically updates the `Owner` and `Category` properties of those `StoredFile` entities once the owner has been saved and assigned an Id. See [Temporary files and delayed binding](#temporary-files-and-delayed-binding) for more details.
+:::
 
-# The `[StoredFile]` Property Attribute
+---
 
-The `[StoredFile]` attribute can be applied to `StoredFile` properties on your entities to control file storage behavior. It supports the following parameters:
+## The `[StoredFile]` property attribute
 
-| Parameter              | Type   | Description                                                                                          |
-| ---------------------- | ------ | ---------------------------------------------------------------------------------------------------- |
-| `IsVersionControlled`  | bool   | If `true`, uploading a new file creates a new version instead of overwriting. Default is `false`.    |
-| `IsEncrypted`          | bool   | If `true`, the file content will be encrypted when stored. Default is `false`.                       |
-| `Accept`               | string | A file type filter (e.g., `".pdf,.docx"`) that restricts which file types can be uploaded.           |
+Apply the `[StoredFile]` attribute to `StoredFile` properties to control file storage behaviour. It supports the following parameters.
 
-**Example:**
+| Parameter | Type | Description |
+|---|---|---|
+| `IsVersionControlled` | bool | If `true`, uploading a new file creates a new version instead of overwriting. Default is `false`. |
+| `IsEncrypted` | bool | If `true`, the file content is encrypted when stored. Default is `false`. |
+| `Accept` | string | A file type filter (for example `".pdf,.docx"`) that restricts which file types can be uploaded. |
+
+**Example - Version-control a contract document and restrict its file types:**
 
 ```csharp
 public class ContractEntity : Entity
@@ -63,164 +71,184 @@ public class ContractEntity : Entity
 }
 ```
 
-# StoredFile Entity and File Metadata
+---
 
-The `StoredFile` entity is used to store metadata about files uploaded into the application and has the following properties:
+## StoredFile entity and file metadata
 
-| Property            | Type                     | Description                                                                                                                                                                                                     |
-| ------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Owner               | GenericEntityReference   | A generic reference to the owning entity of the file. Stores both the owner's Id and type, allowing a file to be linked to any entity in the system. See [GenericEntityReference](../back-end-basics/generic-entity-references.md) for more details. |
-| FileName            | string                   | The original name of the file. When saved in the system's storage location the original file name is replaced by a Guid to avoid name clashes. This therefore provides a view of the original name of the file. |
-| FileType            | string                   | The type of the file.                                                                                                                                                                                           |
-| Category            | string                   | The category of the file. Used to group files when multiple file lists are attached to the same entity.                                                                                                         |
-| Description         | string                   | The description of the file.                                                                                                                                                                                    |
-| SortOrder           | int                      | The sort order of the file.                                                                                                                                                                                     |
-| ParentFile          | StoredFile               | The parent file of the current file. Used to reference related files, such as a template used to generate this file.                                                                                            |
-| Folder              | string                   | The folder where the file is stored relative to the root location of the file storage location.                                                                                                                 |
-| IsVersionControlled | bool                     | Indicates whether the file is version controlled. See [File Versioning](#file-versioning) for details.                                                                                                          |
-| Temporary           | bool                     | If `true`, indicates the file was uploaded before being linked to an owner entity. See [Temporary Files and Delayed Binding](#temporary-files-and-delayed-binding).                                              |
-| TenantId            | int?                     | The ID of the tenant.                                                                                                                                                                                           |
+The `StoredFile` entity stores metadata about files uploaded into the application and has the following properties.
+
+| Property | Type | Description |
+|---|---|---|
+| Owner | GenericEntityReference | A generic reference to the file's owning entity. Stores both the owner's Id and type, so a file can be linked to any entity in the system. See [GenericEntityReference](../back-end-basics/generic-entity-references.md) for more details. |
+| FileName | string | The original name of the file. When saved in the storage location, the original name is replaced by a Guid to avoid clashes, so this preserves a view of the original name. |
+| FileType | string | The type of the file. |
+| Category | string | The category of the file. Used to group files when several file lists are attached to the same entity. |
+| Description | string | The description of the file. |
+| SortOrder | int | The sort order of the file. |
+| ParentFile | StoredFile | The parent file of the current file. Used to reference related files, such as a template used to generate this file. |
+| Folder | string | The folder where the file is stored, relative to the root of the storage location. |
+| IsVersionControlled | bool | Indicates whether the file is version controlled. See [File versioning](#file-versioning) for details. |
+| Temporary | bool | If `true`, indicates the file was uploaded before being linked to an owner entity. See [Temporary files and delayed binding](#temporary-files-and-delayed-binding). |
+| TenantId | int? | The Id of the tenant. |
 
 ### StoredFileVersion
 
 Each upload creates a `StoredFileVersion` record. When version control is enabled, previous versions are preserved; otherwise the existing version is overwritten.
 
-| Property    | Type       | Description                                                                                                                                                            |
-| ----------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| File        | StoredFile | The StoredFile this version relates to.                                                                                                                                |
-| VersionNo   | int        | The version number.                                                                                                                                                    |
-| FileSize    | Int64      | The size of the file stored in Bytes.                                                                                                                                  |
-| FileName    | string     | The name of the file on the storage location. Note this will differ from the original name of the file as it is replaced with a Guid when stored to ensure uniqueness. |
-| FileType    | string     | The type of the file as per the file extension of the file when uploaded.                                                                                              |
-| Description | string     | An optional description for the file version.                                                                                                                          |
-| IsLast      | bool       | If true, indicates that this is the latest version for the file.                                                                                                       |
-| IsSigned    | bool       | If true, indicates that this file version has been digitally signed.                                                                                                   |
+| Property | Type | Description |
+|---|---|---|
+| File | StoredFile | The StoredFile this version relates to. |
+| VersionNo | int | The version number. |
+| FileSize | Int64 | The size of the file in bytes. |
+| FileName | string | The name of the file in the storage location. This differs from the original name because it is replaced with a Guid when stored to ensure uniqueness. |
+| FileType | string | The type of the file, taken from the file extension when uploaded. |
+| Description | string | An optional description for the file version. |
+| IsLast | bool | If `true`, this is the latest version of the file. |
+| IsSigned | bool | If `true`, this file version has been digitally signed. |
 
-# File Versioning
+---
+
+## File versioning
 
 File versioning controls whether uploading a new file replaces the existing content or creates a new version in the history.
 
 ### Version-controlled files (`IsVersionControlled = true`)
 
-- Each upload creates a **new version** with an incremented `VersionNo`.
+- Each upload creates a new version with an incremented `VersionNo`.
 - All previous versions are preserved and can be retrieved.
 - The `IsLast` flag on `StoredFileVersion` marks the most recent version.
 
+___
+
 ### Non-version-controlled files (default)
 
-- Uploading a new file **overwrites** the existing version.
+- Uploading a new file overwrites the existing version.
 - Only the latest content is available.
 
-You can enable version control in two ways:
+You can enable version control in two ways. The first is the `[StoredFile]` attribute on the entity property, which is recommended for design-time configuration:
 
-1. **Via the `[StoredFile]` attribute** on the entity property (recommended for design-time configuration):
-   ```csharp
-   [StoredFile(IsVersionControlled = true)]
-   public virtual StoredFile MyDocument { get; set; }
-   ```
+```csharp
+[StoredFile(IsVersionControlled = true)]
+public virtual StoredFile MyDocument { get; set; }
+```
 
-2. **At runtime** by calling the `UploadNewVersion` API endpoint, which automatically enables version control on the file.
+The second is at runtime, by calling the `UploadNewVersion` API endpoint, which automatically enables version control on the file.
 
-# File Management API
+---
+
+## File management API
 
 The `StoredFile` API provides endpoints for uploading, downloading, managing, and deleting files. All endpoints are available under `/api/StoredFile/`.
 
-## Upload
+### Upload
 
-| Endpoint         | Method | Description                                                                                                |
-| ---------------- | ------ | ---------------------------------------------------------------------------------------------------------- |
-| `/Upload`        | `POST` | Upload a file. Supports three upload modes via the `filesCategory` parameter (see below).                  |
-| `/UploadNewVersion` | `POST` | Upload a new version of an existing file. Automatically enables version control if not already enabled.  |
+| Endpoint | Method | Description |
+|---|---|---|
+| `/Upload` | `POST` | Upload a file. Supports three upload modes via the `filesCategory` parameter (see below). |
+| `/UploadNewVersion` | `POST` | Upload a new version of an existing file. Automatically enables version control if not already enabled. |
 
-### Upload modes
+The upload mode determines how the file is linked.
 
-The `filesCategory` parameter on the upload endpoint determines how the file is linked:
+| Mode | Description |
+|---|---|
+| property | The file is linked to a specific `StoredFile` property on an entity. Specify `ownerType`, `ownerId`, and `propertyName`. |
+| attachment | The file is added as a categorized attachment to an entity. Specify `ownerType`, `ownerId`, and optionally `filesCategory`. |
+| temporary | The file is uploaded without an owner. The `Temporary` flag is set to `true`. See [Temporary files and delayed binding](#temporary-files-and-delayed-binding). |
 
-| Mode             | Description                                                                                               |
-| ---------------- | --------------------------------------------------------------------------------------------------------- |
-| **property**     | The file is linked to a specific `StoredFile` property on an entity. Specify `ownerType`, `ownerId`, and `propertyName`. |
-| **attachment**   | The file is added as a categorized attachment to an entity. Specify `ownerType`, `ownerId`, and optionally `filesCategory`. |
-| **temporary**    | The file is uploaded without an owner. The `Temporary` flag is set to `true`. See [Temporary Files and Delayed Binding](#temporary-files-and-delayed-binding). |
+The common upload parameters are:
 
-### Common upload parameters
-
-| Parameter      | Description                                                          |
-| -------------- | -------------------------------------------------------------------- |
-| `ownerType`    | The full class name of the owning entity.                            |
-| `ownerId`      | The Id of the owning entity.                                         |
+| Parameter | Description |
+|---|---|
+| `ownerType` | The full class name of the owning entity. |
+| `ownerId` | The Id of the owning entity. |
 | `propertyName` | The name of the `StoredFile` property on the entity (property mode). |
-| `filesCategory`| A category label to group related files (attachment mode).           |
+| `filesCategory` | A category label to group related files (attachment mode). |
 
-## Download
+___
 
-| Endpoint          | Method | Description                                                                                       |
-| ----------------- | ------ | ------------------------------------------------------------------------------------------------- |
-| `/Download`       | `GET`  | Download a file by `id`. Optionally specify `versionNo` to download a specific version.           |
-| `/DownloadZipped` | `GET`  | Download multiple files as a single ZIP archive. Pass a list of file `id`s.                       |
-| `/GetThumbnail`   | `GET`  | Get a thumbnail image for a stored file. Specify `id`, `width`, and `height`.                     |
+### Download
+
+| Endpoint | Method | Description |
+|---|---|---|
+| `/Download` | `GET` | Download a file by `id`. Optionally specify `versionNo` to download a specific version. |
+| `/DownloadZip` | `GET` | Download multiple files as a single ZIP archive. Pass a list of file `id`s. |
+| `/DownloadThumbnail` | `GET` | Get a thumbnail image for a stored file. Specify `id`, `width`, and `height`. |
 
 :::note
 Downloads are tracked by the framework. Each download records which user accessed the file and when.
 :::
 
-## File Information
+___
 
-| Endpoint            | Method | Description                                                           |
-| ------------------- | ------ | --------------------------------------------------------------------- |
-| `/Get`              | `GET`  | Retrieve metadata for a specific file by `id`.                        |
-| `/GetFileVersions`  | `GET`  | Get all versions for a version-controlled file by `id`.               |
+### File information
 
-## Delete
+| Endpoint | Method | Description |
+|---|---|---|
+| `/Get` | `GET` | Retrieve metadata for a specific file by `id`. |
+| `/GetFileVersions` | `GET` | Get all versions for a version-controlled file by `id`. |
 
-| Endpoint     | Method   | Description                                |
-| ------------ | -------- | ------------------------------------------ |
-| `/Delete`    | `DELETE` | Delete a file and all its versions by `id`.|
-| `/DeleteFile`| `DELETE` | Delete a file by `ownerType`, `ownerId`, and `fileId`. |
+___
 
-# Temporary Files and Delayed Binding
+### Delete
 
-In many UI workflows, a user uploads files while filling in a form for a **new entity** that has not yet been saved. Since the entity does not yet have an Id, the file cannot be immediately linked to an owner.
+| Endpoint | Method | Description |
+|---|---|---|
+| `/Delete` | `DELETE` | Delete a file and all its versions by `id`. |
+| `/DeleteFile` | `DELETE` | Delete a file by `ownerType`, `ownerId`, and `fileId`. |
 
-Shesha handles this with **temporary files**:
+---
 
-1. The file is uploaded using the **temporary** upload mode. The `Temporary` flag on `StoredFile` is set to `true`.
+## Temporary files and delayed binding
+
+In many UI workflows, a user uploads files while filling in a form for a new entity that has not yet been saved. Because the entity does not have an Id yet, the file cannot be linked to an owner immediately.
+
+Shesha handles this with temporary files:
+
+1. The file is uploaded using the temporary upload mode. The `Temporary` flag on `StoredFile` is set to `true`.
 2. The user completes the form and saves the entity, which creates it in the database and assigns an Id.
-3. The dynamically generated **Create endpoint** automatically detects any temporary files associated with the form and updates their `Owner` reference and `Category` to link them to the newly created entity.
+3. The dynamically generated Create endpoint automatically detects any temporary files associated with the form and updates their `Owner` reference and `Category` to link them to the newly created entity.
 
-This process is transparent when using the `File` and `FileList` form components — the front-end handles the temporary upload and deferred binding automatically.
+This process is transparent when using the `File` and `FileList` form components, because the front-end handles the temporary upload and deferred binding automatically.
 
-# Storage of Files
+---
 
-Uploaded files are not stored in the database, but rather as separate binary files in a file storage location. Shesha provides for the storage of files in the following types of locations:
+## Storage of files
+
+Uploaded files are not stored in the database. Instead, they are kept as separate binary files in a file storage location. Shesha supports the following locations:
 
 - Local disk
 - Azure Blob Storage
 
-Additional storage locations can be added by implementing the `IFileStorageProvider` interface.
+To store files elsewhere, implement a custom storage provider by extending `StoredFileServiceBase` (see [Custom storage providers](#custom-storage-providers)).
 
-## Storage Provider Selection
+### Storage provider selection
 
-The `IsAzureEnvironment` setting in `appsettings.json` controls which storage provider is used:
+The `IsAzureEnvironment` setting in `appsettings.json` controls which storage provider is used.
 
-| `IsAzureEnvironment` | Provider              | Description                                      |
-| --------------------- | --------------------- | ------------------------------------------------ |
-| `true`                | Azure Blob Storage    | Files are stored in Azure Blob Storage.          |
-| `false` (default)     | Local file storage    | Files are stored on the local file system.       |
+| `IsAzureEnvironment` | Provider | Description |
+|---|---|---|
+| `true` | Azure Blob Storage | Files are stored in Azure Blob Storage. |
+| `false` (default) | Local file storage | Files are stored on the local file system. |
 
-## Local File Storage
+___
+
+### Local file storage
 
 When `IsAzureEnvironment` is `false` (or not set), files are stored on the local file system.
 
-The upload folder is controlled by the **`Shesha.UploadFolder`** setting. This can be configured in the application's settings or in `appsettings.json`. If not specified, the framework uses a default folder within the application's directory.
+The upload folder is controlled by the `Shesha.UploadFolder` setting, which can be configured in the application's settings or in `appsettings.json`. If it is not specified, the framework uses a default folder within the application's directory.
 
 Files are stored using the pattern:
+
 ```
 {UploadFolder}/{StoredFileVersionGuid}.{extension}
 ```
 
-Each file version is saved with a unique Guid-based filename to avoid name clashes.
+Each file version is saved with a unique Guid-based filename to avoid clashes.
 
-## Azure Blob Storage
+___
+
+### Azure Blob Storage
 
 When `IsAzureEnvironment` is `true`, files are stored in Azure Blob Storage. Update your `appsettings.json` as follows:
 
@@ -238,26 +266,30 @@ When `IsAzureEnvironment` is `true`, files are stored in Azure Blob Storage. Upd
 }
 ```
 
-| Setting                              | Description                                                                                      |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------ |
-| `ConnectionStrings:BlobStorage`      | The Azure Storage connection string.                                                             |
-| `CloudStorage:ContainerName`         | The name of the blob container. Defaults to `"files"` if not specified.                          |
-| `CloudStorage:DirectoryName`         | Optional. A subdirectory within the container to organize files.                                 |
-| `IsAzureEnvironment`                 | Must be set to `true` to enable Azure Blob Storage.                                              |
+| Setting | Description |
+|---|---|
+| `ConnectionStrings:BlobStorage` | The Azure Storage connection string. |
+| `CloudStorage:ContainerName` | The name of the blob container. Defaults to `"files"` if not specified. |
+| `CloudStorage:DirectoryName` | Optional. A subdirectory within the container used to organise files. |
+| `IsAzureEnvironment` | Must be set to `true` to enable Azure Blob Storage. |
 
-The blob container is automatically created if it does not exist.
+The blob container is created automatically if it does not exist.
 
-## Custom Storage Providers
+___
 
-If you need to store files in a different environment (e.g., Amazon S3, Google Cloud Storage, SFTP), you can implement a custom storage provider by extending `StoredFileServiceBase`. The base class handles all metadata, versioning, and attachment logic — your implementation only needs to handle the physical storage I/O.
+### Custom storage providers
 
-See [Implementing a Custom File Storage Provider](../how-to-guides/custom-file-provider.md) for a full walkthrough with a sample implementation.
+To store files in a different environment (for example Amazon S3, Google Cloud Storage, or SFTP), implement a custom storage provider by extending `StoredFileServiceBase`. This is the same base class that the built-in `AzureStoredFileService` extends. The base class handles all metadata, versioning, and attachment logic, so your implementation only needs to handle the physical storage input and output.
 
-# Backend File Services
+See [Implementing a custom file storage provider](../how-to-guides/custom-file-provider.md) for a full walkthrough with a sample implementation.
 
-Shesha provides the `IStoredFileService` interface for working with files in your backend code. This service is automatically injected via dependency injection and handles all file operations including upload, download, versioning, and attachment management.
+---
 
-## Injecting the service
+## Backend file services
+
+Shesha provides the `IStoredFileService` interface for working with files in your backend code. This service is injected via dependency injection and handles all file operations, including upload, download, versioning, and attachment management.
+
+### Injecting the service
 
 ```csharp
 using Shesha.Services;
@@ -273,12 +305,11 @@ public class MyAppService : ApplicationService
 }
 ```
 
-## Common operations
+### Common operations
 
-### Creating a new file
+**Example - Create a new file from a stream:**
 
 ```csharp
-// Create a file from a stream
 using var stream = new MemoryStream(fileBytes);
 var version = await _fileService.CreateFileAsync(stream, "report.pdf", file =>
 {
@@ -288,7 +319,7 @@ var version = await _fileService.CreateFileAsync(stream, "report.pdf", file =>
 });
 ```
 
-### Uploading / updating file content
+**Example - Update file content:**
 
 ```csharp
 // Update an existing file with new content
@@ -301,7 +332,7 @@ using var stream2 = new MemoryStream(newContent);
 await _fileService.UpdateVersionContentAsync(latestVersion, stream2);
 ```
 
-### Downloading / reading file content
+**Example - Download or read file content:**
 
 ```csharp
 // Get file content as a stream
@@ -315,7 +346,7 @@ var versionStream = await _fileService.GetStreamAsync(version);
 await _fileService.MarkDownloadedAsync(version);
 ```
 
-### Working with attachments
+**Example - Work with attachments:**
 
 ```csharp
 // Get all files attached to an entity
@@ -335,7 +366,7 @@ var latestVersions = await _fileService.GetLastVersionsOfAttachmentsAsync(
     myEntity.Id, "MyModule.MyEntity", "Documents");
 ```
 
-### Copying files between entities
+**Example - Copy files between entities:**
 
 ```csharp
 // Copy a single file to a new owner
@@ -345,7 +376,7 @@ var copiedFile = await _fileService.CopyToOwnerAsync(sourceFile, destinationEnti
 await _fileService.CopyAttachmentsToAsync(sourceEntity, destinationEntity);
 ```
 
-### Version management
+**Example - Manage versions:**
 
 ```csharp
 // Get all versions of a file
@@ -355,23 +386,23 @@ var versions = await _fileService.GetFileVersionsAsync(storedFile);
 var newVersion = await _fileService.GetNewOrDefaultVersionAsync(storedFile);
 ```
 
-### Deleting files
+**Example - Delete a file:**
 
 ```csharp
-// Delete a file and all its versions (from both DB and storage)
+// Delete a file and all its versions (from both the database and storage)
 await _fileService.DeleteAsync(storedFile);
 ```
 
-### Renaming files
+**Example - Rename a file:**
 
 ```csharp
 await _fileService.RenameFileAsync(storedFile, "new-name.pdf");
 ```
 
-## Key service methods reference
+### Key service methods reference
 
 | Method | Description |
-| ------ | ----------- |
+|---|---|
 | `CreateFileAsync(stream, fileName, prepareAction?)` | Create a new file and return the created version. |
 | `UpdateFileAsync(file, stream, fileName)` | Update an existing file with new content and name. |
 | `GetStreamAsync(file)` | Get the content stream of the latest version. |
@@ -388,11 +419,14 @@ await _fileService.RenameFileAsync(storedFile, "new-name.pdf");
 | `CopyAttachmentsToAsync(source, destination)` | Copy all attachments from one entity to another. |
 | `MarkDownloadedAsync(fileVersion)` | Record that the current user downloaded a version. |
 | `RenameFileAsync(file, fileName)` | Rename a file. |
-| `DeleteAsync(storedFile)` | Delete a file and all its versions from storage and database. |
+| `DeleteAsync(storedFile)` | Delete a file and all its versions from storage and the database. |
 | `FileExistsAsync(id)` | Check whether a file exists. |
 | `GetOrNullAsync(id)` | Get a file by Id, or `null` if not found. |
 
-# See Also
-- Configuring the [File/FileList form component](/front-end-basics/form-components/Entity-References/files.md)
+---
+
+## See also
+
+- Configuring the [File and FileList form component](/front-end-basics/form-components/Entity-References/files.md)
 - [GenericEntityReference](../back-end-basics/generic-entity-references.md)
-- [Implementing a Custom File Storage Provider](../how-to-guides/custom-file-provider.md)
+- [Implementing a custom file storage provider](../how-to-guides/custom-file-provider.md)

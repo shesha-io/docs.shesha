@@ -1,62 +1,77 @@
 ---
 sidebar_label: Entity Configuration
+title: Entity Configuration
 ---
 
 # Entity Configuration
 
-The **Entity Configuration** lists all entities within the system, providing extensive access and flexibility to update entities directly from the frontend without requiring code changes. These configurations are considered **configurable items**, meaning they can be **exported** and **imported** via the **Forms View**.
+Entity Configuration lists every entity in the system and lets you adjust how each one behaves directly from the front-end, without changing code. These configurations are configurable items, which means they can be exported and imported between environments in the same way as other Shesha configuration items.
+
+The list includes both Dynamic Entities and JsonEntities, with a dropdown that lets you filter the entities by predefined grouping options.
 
 ![Image](./images/entity-configuration-images/entity_configuration_1.png)
 
+---
 
-It includes both **Dynamic Entities** and **JsonEntities**, with a dropdown that allows users to filter and view entities based on predefined grouping options.
+## General
 
-
-### General
+The General tab displays the basic information for the entity.
 
 ![Image](./images/entity-configuration-images/entity_configuration_2.png)
-- Displays **basic information** related to the entity.
-- **Suppress**: Removes the entity from the list.
+
+It also includes a **Suppress** option, which removes the entity from the list.
+
 ![Image](./images/entity-configuration-images/entity_configuration_3.png)
 
-### Properties
+---
+
+## Properties
+
+The Properties tab lists every property on the entity and lets you configure them quickly, without developer involvement.
 
 ![Image](./images/entity-configuration-images/entity_configuration_4.png)
-This tab lists all properties related to the entity and allows for quick configuration without developer intervention. Users can:
-- Set fields as **Required**, **ReadOnly**, or **Audited**.
-- Configure cascading behavior for **Create**, **Update**, and **Delete** actions for unreferenced entities.
-- Modify **date formats** and **number formats** based on the data type of the property.
 
+From this tab you can:
 
-### CRUD APIs
+- Mark fields as **Required**, **ReadOnly**, or **Audited**.
+- Configure cascading behaviour for **Create**, **Update**, and **Delete** actions on unreferenced entities.
+- Change **date formats** and **number formats** based on the data type of the property.
 
-This tab displays the CRUD actions available for the selected entity in the application and specifies the required permissions for accessing each action.
+---
+
+## CRUD APIs
+
+The CRUD APIs tab shows the CRUD actions available for the selected entity and lets you set the permissions required to access each one.
 
 ![Image](./images/entity-configuration-images/entity_configuration_5.png)
 
-There are mainly **five (5)** types of access levels;
+There are five access levels.
 
 ![Image](./images/entity-configuration-images/entity_configuration_6.png)
 
+| Access level | Meaning |
+|---|---|
+| `Inherited` | The endpoint follows the rules defined for the parent configuration. |
+| `Disabled` | The application does not expose the service or endpoint. |
+| `Any Authenticated User` | Any authenticated user can access the endpoint. |
+| `Requires Permissions` | The Required Permissions component is shown, and you must select one or more permissions. |
+| `Allow Anonymous` | No authentication is required for access. |
 
-- **Inherited**: The endpoint follows rules defined for the parent configuration.
-- **Disabled**: The application should not expose the Service or Endpoint.
-- **Any Authenticated User**: Any authenticated user can access the Endpoint.
-- **Requires Permissions**: The `Required Permissions` component is displayed, and the user must select one or more permissions.
-- **Allow Anonymous**: No authentication is required for access.
+:::note
+These access levels also apply to [Custom APIs](/docs/back-end-basics/custom-apis). Custom APIs can be accessed from `dynamic/Shesha/permissioned-objects`.
+:::
 
-*NB: These restriction levels also apply to  [Custom APIs](/docs/back-end-basics/custom-apis).*
-*Custom APIs can be accessed from `dynamic/Shesha/permissioned-objects`.*
 ![Image](./images/entity-configuration-images/entity_configuration_7.png)
 
-### Views
+---
 
-Supports **dynamic rendering** of subforms. Users can define **views** for an entity, ensuring that components call the correct form configuration upon rendering.
+## Views
 
-**Example**:
-If a subform is bound to the **Address** entity and is rendered within the **Person** entity, and the subform is configured to dynamically call the **QuickView** of **Address**, then upon render:
-        1. The subform checks the **ClassName** and **View Type**.
-        2. It retrieves and applies the configured form accordingly.
+The Views tab supports dynamic rendering of subforms. You can define views for an entity so that components call the correct form configuration when they render.
+
+For example, if a subform is bound to the **Address** entity and rendered within the **Person** entity, and the subform is configured to dynamically call the **QuickView** of **Address**, then when it renders:
+
+1. The subform checks the **ClassName** and **View Type**.
+2. It retrieves and applies the configured form accordingly.
+
 ![Image](./images/entity-configuration-images/entity_configuration_8.png)
-
-

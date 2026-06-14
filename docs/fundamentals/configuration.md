@@ -1,72 +1,87 @@
 ---
 sidebar_label: Configuration
+title: Configuration
 ---
 
 # Configuration
 
-As a low-code platform much of the application behavior is defined configuration rather than code. Understanding how configurations are managed and critically how they can be distributed is therefore essential.
+Shesha is a low-code platform, which means a large part of how an application behaves is defined through configuration rather than written in code. Forms, reference lists, settings, and more are set up by configuring them instead of programming them. Because so much of the application lives in configuration, understanding how configuration is managed, and especially how it is moved between environments, is essential.
 
-The most commonly defined and used configurations include form configurations and reference lists. 
+The configuration items you will define most often are form configurations and reference lists.
 
-:::warning Missing Configuration Items
-In addition to forms and reference lists, other items such as menu structures, app settings, roles, permissions, and entity configurations can also be configured. However, currently, these items lack the ability for easy distribution explained below. This will be addressed in future versions of Shesha.
+The key thing that makes something a configuration item is how it is stored and moved. Configuration items are stored as data in the application database, but they can be exported and imported between different instances in a JSON based package format.
+
+---
+
+:::note
+Menu structures cannot yet be distributed through the export and import mechanism described below. This is expected to be addressed in a future version of Shesha.
 :::
 
-The most important distinguishing feature of a configuration item is that they are stored as data in the application database, but can be exported and imported between different instances in a JSON format.
-
 ## Deploy configurations manually
-Configuration can be manually exported and imported between different instances of Shesha.
+
+Configuration can be exported from one instance of Shesha and imported into another by hand. This is the quickest way to move a small set of changes between environments.
 
 ### Export configuration
 
-#TODO: Add more details on how to import configuration
+Use the **Export** function in the application's configuration area to produce a configuration package. The export generates a zip file named in the format `package[yyyy][MM][dd]_[HH][mm].shaconfig`, for example `package20260613_0930.shaconfig`. The package contains the selected configuration items in JSON form.
 
 ### Import configuration
 
-#TODO: Add more details and screenshots on how to import configuration
+Use the **Import** function in the same area and select a previously exported `.shaconfig` package. Shesha reads the package and applies the configuration items it contains to the current instance.
 
+:::info
+Export and import are handled by the `ConfigurationItemAppService`, through its `ExportPackageAsync` and `ImportPackageAsync` operations. The same package format is used for both manual transfer and the automatic deployment described below.
+:::
+
+---
 
 ## Deploy configurations automatically
 
-Configuration has become an integral part of applications, akin to code. As such, it's crucial to have a convenient and seamless method to deploy configuration changes across different environments, just as you would with code changes. To aid in this, configuration packages can be embedded as a resource in a [Shesha module](modules) in the back-end application. Upon application startup, the configuration package is automatically imported, and the configuration is updated. This process is similar to how database migrations operate.
+Configuration has become an integral part of applications, much like code. It is therefore important to have a convenient and reliable way to deploy configuration changes across environments, just as you would with code changes. To support this, configuration packages can be embedded as a resource inside a [Shesha module](modules) in the back-end application. When the application starts, the embedded package is imported automatically and the configuration is updated. This works in a similar way to database migrations.
 
 ### Embed a configuration package
 
-To include configuration changes into a Shesha module:
+To include configuration changes in a Shesha module:
 
-1. Configure required items using corresponding configurators (e.g. forms designer, reference list editor).
-2. Export the configuration changes you need to deploy using the `Export` function. It generates a zip file with the name `package[yyyy][MM][dd]_[HH][mm].shaconfig`.
-3. Add the `.spaconfig` file to the module back-end project under the `ConfigMigrations` folder (You may need to create it if it does not exist). 
-4. Right-mouse click on the file and select 'Properties', then change the 'Build Action' property from 'None' to 'Embedded Resource'. This will ensure that the file is included in the compiled module assembly.
-
-
-[TODO: Show screenshots]
-
+1. Configure the items you need using the matching designers (for example the forms designer or the reference list editor).
+2. Export the changes using the **Export** function. This generates a zip file named `package[yyyy][MM][dd]_[HH][mm].shaconfig`.
+3. Add the `.shaconfig` file to the module's back-end project under a `ConfigMigrations` folder. Create the folder if it does not already exist.
+4. Right-click the file, select **Properties**, and change the **Build Action** property from **None** to **Embedded Resource**. This ensures the file is included in the compiled module assembly.
 
 ### Import configuration on application startup
 
-To trigger the import of embeded configuration packages on application startup, simply call the `InitializeConfigurationAsync` method from the `Initialize` method of your module class. For example:
-``` cs
-public class SuperAppModule : SheshaModule<SuperAppModule>
+To trigger the import of embedded configuration packages on startup, override the `InitializeConfigurationAsync` method in your module class and call `ImportConfigurationAsync` from it. For example:
+
+```csharp
+public class SuperAppModule : SheshaModule
 {
+    public override SheshaModuleInfo ModuleInfo => new SheshaModuleInfo("MyCompany.SuperApp")
+    {
+        FriendlyName = "Super App",
+        Publisher = "MyCompany",
+    };
+
     public override async Task<bool> InitializeConfigurationAsync()
     {
-        // Will import all embedded configuration packages automatically
-        return await ImportConfigurationAsync();    
+        // Imports all embedded configuration packages automatically
+        return await ImportConfigurationAsync();
     }
 
     public override void Initialize()
     {
         ...
     }
-    ...
-    
 }
 ```
 
-:::tip Best Practices for Exporting Configurations 
-It is advisable to export and embed configuration changes in a fairly granular manner, rather than exporting infrequently and in bulk. This approach is particularly beneficial when configuration changes are meant to coincide with corresponding code modifications, ensuring that both are deployed simultaneously. Additionally, this method enhances traceability to specific features. 
+`InitializeConfigurationAsync` runs on every application start and returns a `bool` indicating whether the initialization was performed. `ImportConfigurationAsync` is provided by the base module and imports every embedded configuration package found in the assembly.
+
+:::tip Best practice for exporting configurations
+Export and embed configuration changes in fairly small, granular packages rather than infrequently and in bulk. This is especially helpful when configuration changes are meant to go out alongside matching code changes, because it lets both deploy together. It also makes it easier to trace a configuration change back to the specific feature it belongs to.
 :::
 
+---
+
 ## See also
+
 - [Shesha Modules](modules)

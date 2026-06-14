@@ -1,19 +1,22 @@
 ---
 sidebar_label: Custom Notification Channels
+title: Custom Notification Channels
 ---
 
 # Custom Notification Channels
 
-This guide explains how to extend Shesha's [notification framework](notifications.md) with a custom delivery channel (e.g. Slack, Microsoft Teams, WhatsApp). If you only need to send notifications through the built-in Email and SMS channels, see the main [Notifications](notifications.md) page instead.
+This guide explains how to extend Shesha's [notification framework](notifications.md) with a custom delivery channel, such as Slack, Microsoft Teams, or WhatsApp. If you only need to send notifications through the built-in Email and SMS channels, see the main [Notifications](notifications.md) page instead.
 
 Adding a custom channel involves four steps:
 
-1. Implement the `INotificationChannelSender` interface
-2. Register it in your DI container
-3. Create a `NotificationChannelConfig` record in the database
-4. Add notification templates for the new channel
+1. Implement the `INotificationChannelSender` interface.
+2. Register it in your dependency injection container.
+3. Create a `NotificationChannelConfig` record in the database.
+4. Add notification templates for the new channel.
 
-## Step 1 — Implement `INotificationChannelSender`
+---
+
+## Step 1: Implement `INotificationChannelSender`
 
 The interface defines two methods:
 
@@ -38,11 +41,11 @@ public interface INotificationChannelSender
 ```
 
 | Method | Purpose |
-|--------|---------|
-| `GetRecipientId` | Maps a `Person` entity to the address this channel uses. The built-in `EmailChannelSender` returns `Person.EmailAddress1`; `SmsChannelSender` returns `Person.MobileNumber1`. Your implementation should return whatever identifier your channel needs (e.g. a Slack user ID, a WhatsApp number). |
-| `SendAsync` | Performs the actual delivery. Return `SendStatus.Success()` on success or `SendStatus.Failed("reason")` on failure. When a failure is returned, the framework's retry mechanism will automatically re-attempt delivery (up to 3 times). The `NotificationMessage` parameter contains the already-rendered `Subject` and `Message` — all template placeholders have been resolved before your sender is called. |
+|---|---|
+| `GetRecipientId` | Maps a `Person` entity to the address this channel uses. The built-in `EmailChannelSender` returns `Person.EmailAddress1`, and `SmsChannelSender` returns `Person.MobileNumber1`. Your implementation should return whatever identifier your channel needs, such as a Slack user ID or a WhatsApp number. |
+| `SendAsync` | Performs the actual delivery. Return `SendStatus.Success()` on success or `SendStatus.Failed("reason")` on failure. When a failure is returned, the framework's retry mechanism re-attempts delivery automatically, up to three times. The `NotificationMessage` parameter contains the already-rendered `Subject` and `Message`, so all template placeholders are resolved before your sender is called. |
 
-### Example — Slack Channel
+**Example - A Slack channel sender:**
 
 ```csharp
 using Shesha.Domain;
@@ -122,19 +125,23 @@ namespace MyProject.Notifications
 }
 ```
 
-## Step 2 — Register the Channel Sender
+---
 
-Add the channel sender to your DI container in `Startup.cs`:
+## Step 2: Register the channel sender
+
+Add the channel sender to your dependency injection container in `Startup.cs`:
 
 ```csharp
 services.AddTransient<INotificationChannelSender, SlackChannelSender>();
 ```
 
-## Step 3 — Create the Channel Configuration Record
+---
 
-The framework needs a `NotificationChannelConfig` record in the database to know about your channel. You can create this through the **admin UI** or via a **database migration**.
+## Step 3: Create the channel configuration record
 
-The most important property is `SenderTypeName` — this must be the **fully qualified class name** of your `INotificationChannelSender` implementation. The framework uses this to resolve which sender to invoke at runtime.
+The framework needs a `NotificationChannelConfig` record in the database to know about your channel. You can create this through the admin UI or with a database migration.
+
+The most important property is `SenderTypeName`. This must be the class name of your `INotificationChannelSender` implementation, matched on the simple type name (for example `SlackChannelSender`, not the fully qualified name). The framework uses this name to resolve which sender to invoke at runtime.
 
 ```csharp
 [Migration(20250227100000)]
@@ -142,7 +149,7 @@ public class M20250227100000 : Migration
 {
     public override void Up()
     {
-        Insert.IntoTable("Frwk_NotificationChannelConfigs")
+        Insert.IntoTable("Core_NotificationChannelConfigs")
             .Row(new
             {
                 Id = "B1C2D3E4-F5A6-7890-1234-567890ABCDEF",
@@ -150,7 +157,7 @@ public class M20250227100000 : Migration
                 Description = "Slack incoming webhook notifications",
                 SupportedFormatLkp = 1,       // 1 = PlainText
                 SupportedMechanismLkp = 1,    // 1 = Direct
-                SenderTypeName = "MyProject.Notifications.SlackChannelSender",
+                SenderTypeName = "SlackChannelSender",
                 StatusLkp = 1,                // 1 = Enabled
                 SupportsAttachment = false,
                 CreationTime = DateTime.UtcNow
@@ -159,7 +166,7 @@ public class M20250227100000 : Migration
 
     public override void Down()
     {
-        Delete.FromTable("Frwk_NotificationChannelConfigs")
+        Delete.FromTable("Core_NotificationChannelConfigs")
             .Row(new { Id = "B1C2D3E4-F5A6-7890-1234-567890ABCDEF" });
     }
 }
@@ -174,8 +181,9 @@ public class M20250227100000 : Migration
 | MaxMessageSize | `MaxMessageSize` | Maximum character count (e.g. `160` for SMS, `0` for unlimited) |
 | Status | `StatusLkp` | `1` = Enabled, `2` = Disabled, `3` = Suppressed |
 | SupportsAttachment | `SupportsAttachment` | `true` or `false` |
+---
 
-## Step 4 — Create Templates for the New Channel
+## Step 4: Create templates for the new channel
 
 Add notification templates whose `MessageFormat` matches your channel's `SupportedFormat`. For a `PlainText` channel like Slack, use SMS-style templates:
 
@@ -188,17 +196,19 @@ this.Shesha().NotificationUpdate("MyModule", "OrderConfirmed")
 ```
 
 :::tip Avoiding template collisions
-If your custom channel uses `PlainText` format, it will share templates with the SMS channel (both match on `PlainText`). If you need channel-specific templates, consider using `EnhancedText` as the supported format for your custom channel to keep its templates separate from SMS.
+If your custom channel uses the `PlainText` format, it shares templates with the SMS channel, because both match on `PlainText`. If you need channel-specific templates, consider using `EnhancedText` as the supported format for your custom channel to keep its templates separate from SMS.
 :::
 
-## How the Framework Routes to Your Channel
+---
 
-When a notification is sent, the framework determines which channel(s) to use (see [Channel Selection Logic](notifications.md#channel-selection-logic) on the main notifications page). For each selected channel, it:
+## How the framework routes to your channel
 
-1. Looks up the `NotificationChannelConfig` record
-2. Resolves the `INotificationChannelSender` implementation using the `SenderTypeName`
-3. Finds a `NotificationTemplate` whose `MessageFormat` matches the channel's `SupportedFormat`
-4. Renders the template placeholders against the notification data model
-5. Calls your `SendAsync` method with the rendered `NotificationMessage`
+When a notification is sent, the framework decides which channel or channels to use (see [Channel selection logic](notifications.md#channel-selection-logic) on the main notifications page). For each selected channel, it:
 
-If `SendAsync` returns a failure, the framework queues a retry (up to 3 attempts with delays of 10, 20, and 20 seconds).
+1. Looks up the `NotificationChannelConfig` record.
+2. Resolves the `INotificationChannelSender` implementation by matching its simple type name against `SenderTypeName`.
+3. Finds a `NotificationTemplate` whose `MessageFormat` matches the channel's `SupportedFormat`.
+4. Renders the template placeholders against the notification data model.
+5. Calls your `SendAsync` method with the rendered `NotificationMessage`.
+
+If `SendAsync` returns a failure, the framework queues a retry, up to three attempts with delays of 10, 20, and 20 seconds.
