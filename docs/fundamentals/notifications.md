@@ -1,33 +1,36 @@
 ---
 sidebar_label: Notifications
+title: Notifications
 ---
 
 # Notifications
 
-Shesha provides a built-in notification framework for sending messages through multiple channels such as **Email**, **SMS**, and **Push notifications**. The framework is designed to be:
+Shesha provides a built-in notification framework for sending messages through multiple channels such as Email, SMS, and Push notifications. The framework is designed to be:
 
-- **Multi-channel** — SMS and Email are included out of the box, with a plugin architecture that makes it straightforward to add custom channels (e.g. Slack, Teams, WhatsApp).
-- **Reliable** — Notifications are queued for background processing with automatic retries (up to 3 attempts) on failure.
-- **Auditable** — Every notification sent is recorded with full details including status, timestamps, and error messages.
-- **Configurable** — An admin UI allows you to manage notification types, templates, and channel settings without code changes.
-- **Flexible** — Supports both asynchronous (queued) and synchronous (immediate) delivery for time-sensitive messages like OTPs.
+- **Multi-channel.** SMS and Email are included out of the box, with a plugin architecture that makes it straightforward to add custom channels such as Slack, Teams, or WhatsApp.
+- **Reliable.** Notifications are queued for background processing with automatic retries (up to three attempts) on failure.
+- **Auditable.** Every notification sent is recorded with full details, including status, timestamps, and error messages.
+- **Configurable.** An admin UI lets you manage notification types, templates, and channel settings without code changes.
+- **Flexible.** It supports both asynchronous (queued) and synchronous (immediate) delivery for time-sensitive messages such as OTPs.
 
-## Key Concepts
+---
+
+## Key concepts
 
 ### Channels
 
-A **channel** represents a delivery mechanism (e.g. Email, SMS). Each channel is defined by a `NotificationChannelConfig` entity with the following key properties:
+A channel represents a delivery mechanism such as Email or SMS. Each channel is defined by a `NotificationChannelConfig` entity with the following key properties.
 
 | Property | Description |
 |---|---|
-| **Name** | Display name (e.g. "Email", "SMS") |
-| **SupportedFormat** | Message format the channel accepts: `PlainText`, `RichText`, or `EnhancedText` |
-| **SupportedMechanism** | `Direct`, `BulkSend`, or `Broadcast` |
-| **MaxMessageSize** | Maximum message length (useful for SMS) |
-| **SupportsAttachment** | Whether the channel supports file attachments |
-| **Status** | `Enabled`, `Disabled`, or `Suppressed` |
+| Name | Display name (for example "Email" or "SMS"). |
+| SupportedFormat | Message format the channel accepts: `PlainText`, `RichText`, or `EnhancedText`. |
+| SupportedMechanism | `Direct`, `BulkSend`, or `Broadcast`. |
+| MaxMessageSize | Maximum message length (useful for SMS). |
+| SupportsAttachment | Whether the channel supports file attachments. |
+| Status | `Enabled`, `Disabled`, or `Suppressed`. |
 
-Shesha ships with two pre-configured channels: **SMS** and **Email**.
+Shesha ships with two pre-configured channels: SMS and Email.
 
 ![Notification Channels](images/notification-images/NotificationChannels.png)
 
@@ -40,79 +43,85 @@ services.AddTransient<INotificationChannelSender, EmailChannelSender>();
 services.AddTransient<INotificationChannelSender, SmsChannelSender>();
 ```
 
-To add a custom channel, implement the `INotificationChannelSender` interface and register it in the same way. See [Custom Notification Channels](custom-notification-channels.md) for a full guide.
+To add a custom channel, implement the `INotificationChannelSender` interface and register it the same way. See [Custom Notification Channels](custom-notification-channels.md) for a full guide.
 
-### Notification Types and Templates
+___
 
-A **notification type** (`NotificationTypeConfig`) defines a category of notification (e.g. "Welcome Email", "Password Reset"). Each type has one or more **templates** that define the actual message content for different channels.
+### Notification types and templates
 
-**Notification type properties:**
+A notification type (`NotificationTypeConfig`) defines a category of notification, such as "Welcome Email" or "Password Reset". Each type has one or more templates that define the actual message content for different channels.
 
-| Property | Description |
-|---|---|
-| **Name** | Unique name identifying the notification type |
-| **Description** | Human-readable description |
-| **Disable** | Globally disable this notification type |
-| **CanOptOut** | Whether users can opt out of receiving this notification |
-| **IsTimeSensitive** | If `true`, sends immediately (synchronously) instead of queuing |
-| **AllowAttachments** | Whether attachments can be included |
-| **OverrideChannels** | Force specific channels, bypassing the default channel selection logic |
-| **Category** | Optional grouping label for analysis |
-
-**Template properties:**
+The notification type properties are:
 
 | Property | Description |
 |---|---|
-| **TitleTemplate** | Subject/title using Mustache syntax (e.g. `Dear {{FullName}}`) |
-| **BodyTemplate** | Message body using Mustache syntax |
-| **MessageFormat** | `PlainText` or `RichText` (HTML) — must match the channel's supported format |
+| Name | Unique name identifying the notification type. |
+| Description | Human-readable description. |
+| Disable | Globally disable this notification type. |
+| CanOptOut | Whether users can opt out of receiving this notification. |
+| IsTimeSensitive | If `true`, sends immediately (synchronously) instead of queuing. |
+| AllowAttachments | Whether attachments can be included. |
+| OverrideChannels | Force specific channels, bypassing the default channel selection logic. |
+| Category | Optional grouping label for analysis. |
+
+The template properties are:
+
+| Property | Description |
+|---|---|
+| TitleTemplate | Subject or title using Mustache syntax (for example `Dear {{FullName}}`). |
+| BodyTemplate | Message body using Mustache syntax. |
+| MessageFormat | `PlainText` or `RichText` (HTML). Must match the channel's supported format. |
 
 ![Notification Types](images/notification-images/TypesTV.png)
 
 ![Notification Templates](images/notification-images/NotificationTemplates.png)
 
 :::tip Admin UI
-Notification types and templates can be managed through the admin UI. Navigate to the **Notification Types** configuration section to create, edit, or disable notification types and their associated templates.
+Notification types and templates can be managed through the admin UI. Navigate to the Notification Types configuration section to create, edit, or disable notification types and their associated templates.
 :::
 
 :::note Template-channel matching
-Each template's **MessageFormat** must be compatible with the channel it will be used on. For example, an Email channel typically supports `RichText` (HTML), while an SMS channel supports `PlainText`. If a notification type can be sent through both Email and SMS, create separate templates — one with `RichText` for Email and one with `PlainText` for SMS.
+Each template's `MessageFormat` must be compatible with the channel it is used on. For example, an Email channel typically supports `RichText` (HTML), while an SMS channel supports `PlainText`. If a notification type can be sent through both Email and SMS, create separate templates, one with `RichText` for Email and one with `PlainText` for SMS.
 :::
 
-### Channel Selection Logic
+___
 
-When a notification is sent, the framework determines which channel(s) to use through this priority hierarchy:
+### Channel selection logic
 
-1. **Explicit channel** — If a channel is passed directly in the `SendNotificationAsync` call, only that channel is used.
-2. **User preferences** — If the recipient has set a `UserNotificationPreference` for this notification type, that channel is used.
-3. **Override channels** — If the notification type has `OverrideChannels` configured, those are used.
+When a notification is sent, the framework decides which channel or channels to use through this priority hierarchy:
+
+1. **Explicit channel.** If a channel is passed directly in the `SendNotificationAsync` call, only that channel is used.
+2. **User preferences.** If the recipient has set a `UserNotificationPreference` for this notification type, that channel is used.
+3. **Override channels.** If the notification type has `OverrideChannels` configured, those are used.
    ![Override Channels](images/notification-images/OverrideChannels.png)
-4. **System defaults** — Falls back to the default channels configured per priority level (High / Medium / Low) in the notification settings.
+4. **System defaults.** Falls back to the default channels configured per priority level (High, Medium, or Low) in the notification settings.
    ![Notification Settings](images/notification-images/NotificationSettings.png)
 
-### Application-Level Settings
+___
 
-Global notification settings are configured under the **Notifications** settings category (`Shesha.Notification.Settings`). The settings editor form (`notification-settings`) allows you to configure:
+### Application-level settings
+
+Global notification settings are configured under the Notifications settings category (`Shesha.Notification.Settings`). The settings editor form (`notification-settings`) lets you configure:
 
 | Setting | Description |
 |---|---|
-| **Low priority channels** | Default channel(s) for low-priority notifications |
-| **Medium priority channels** | Default channel(s) for medium-priority notifications |
-| **High priority channels** | Default channel(s) for high-priority notifications |
-| **Test channel** | Channel used for testing notifications |
+| Low priority channels | Default channel or channels for low-priority notifications. |
+| Medium priority channels | Default channel or channels for medium-priority notifications. |
+| High priority channels | Default channel or channels for high-priority notifications. |
+| Test channel | Channel used for testing notifications. |
 
-Additionally, each channel type has its own settings:
+Each channel type also has its own settings:
 
-- **Email settings** — SMTP configuration, enable/disable flag, and a `RedirectAllMessagesTo` option for routing all emails to a test address during development.
-- **SMS settings** — Gateway configuration, enable/disable flag, and a similar `RedirectAllMessagesTo` option for testing.
+- **Email settings:** SMTP configuration, an enable/disable flag, and a `RedirectAllMessagesTo` option for routing all emails to a test address during development.
+- **SMS settings:** Gateway configuration, an enable/disable flag, and a similar `RedirectAllMessagesTo` option for testing.
 
-### INotificationSender Service
+___
 
-`INotificationSender` is the primary service for sending notifications from your application code. It provides two overloads of `SendNotificationAsync`:
+### INotificationSender service
 
-#### Overload 1 — Person-based (simplest)
+`INotificationSender` is the primary service for sending notifications from your application code. It provides two overloads of `SendNotificationAsync`.
 
-The most common usage: pass `Person` entities for sender and recipient.
+The first is person-based and is the simplest. The most common usage passes `Person` entities for the sender and recipient.
 
 ```csharp
 Task SendNotificationAsync<TData>(
@@ -129,9 +138,7 @@ Task SendNotificationAsync<TData>(
 ) where TData : NotificationData;
 ```
 
-#### Overload 2 — Participant-based (advanced)
-
-For scenarios where you need to send to a raw address (e.g. an email or phone number not linked to a `Person` entity), use `IMessageSender` / `IMessageReceiver` participants:
+The second is participant-based and is for advanced scenarios. When you need to send to a raw address (such as an email or phone number not linked to a `Person` entity), use `IMessageSender` and `IMessageReceiver` participants.
 
 ```csharp
 Task SendNotificationAsync<TData>(
@@ -148,22 +155,23 @@ Task SendNotificationAsync<TData>(
 ) where TData : NotificationData;
 ```
 
-**Message participants:**
+There are two message participant types:
 
-- `PersonMessageParticipant` — wraps a `Person` entity. The channel extracts the address (e.g. `EmailAddress1` for email, `MobileNumber1` for SMS) automatically.
-- `RawAddressMessageParticipant` — wraps a raw address string (e.g. `"user@example.com"` or `"+27821234567"`). Useful when you don't have a `Person` record.
+- `PersonMessageParticipant` wraps a `Person` entity. The channel extracts the address automatically (for example `EmailAddress1` for email or `MobileNumber1` for SMS).
+- `RawAddressMessageParticipant` wraps a raw address string (for example `"user@example.com"` or `"+27821234567"`). This is useful when you do not have a `Person` record.
+
+**Example - Send to a raw email address:**
 
 ```csharp
-// Example: sending to a raw email address
 var receiver = new RawAddressMessageParticipant("user@example.com");
 await _notificationSender.SendNotificationAsync(type, null, receiver, data, priority);
 ```
 
 ---
 
-## Implementation Guide
+## Implementation guide
 
-### Project Structure
+### Project structure
 
 Place notification-related classes in a `Notifications` folder within your Application project:
 
@@ -175,7 +183,7 @@ MyProject.Application/
     └── OrderNotificationModel.cs         // Template data model
 ```
 
-### Step 1 — Define the Template Data Model
+### Step 1: Define the template data model
 
 Create a class extending `NotificationData` with properties that map to your template placeholders:
 
@@ -193,7 +201,7 @@ namespace MyProject.Notifications
 }
 ```
 
-The property names must match the Mustache placeholders in your templates (e.g. `{{CustomerName}}`).
+The property names must match the Mustache placeholders in your templates (for example `{{CustomerName}}`).
 
 :::tip Simple alternative
 For simple cases you can skip creating a model class and use `NotificationData` directly as a dictionary:
@@ -205,17 +213,15 @@ data["OrderNumber"] = "ORD-001";
 ```
 :::
 
-### Step 2 — Create Notification Types and Templates
+### Step 2: Create notification types and templates
 
-Notification types and templates are stored in the database. You have two options:
+Notification types and templates are stored in the database. You have two options.
 
-#### Option A — Admin UI
+The first is the admin UI. Create them directly through the admin UI, which is recommended for non-developers or when you want to iterate on template text without redeploying.
 
-Create them directly through the admin UI (recommended for non-developers or when you want to iterate on template text without redeploying).
+The second is a database migration. Use FluentMigrator with Shesha's helper methods to seed notification types and templates as part of your deployment.
 
-#### Option B — Database Migration
-
-Use FluentMigrator with Shesha's helper methods to seed notification types and templates as part of your deployment:
+**Example - Seed a notification type with email and SMS templates:**
 
 ```csharp
 using FluentMigrator;
@@ -252,26 +258,26 @@ public class M20250226120000 : Migration
 }
 ```
 
-**Available migration helper methods:**
+The available migration helper methods are:
 
 | Method | Description |
 |---|---|
-| `NotificationCreate(module, name)` | Create a new notification type |
-| `NotificationUpdate(module, name)` | Update an existing notification type |
-| `.SetDescription(text)` | Set the type's description |
-| `.AddEmailTemplate(id, name, subject, body)` | Add an email template (RichText format) |
-| `.AddSmsTemplate(id, name, body)` | Add an SMS template (PlainText format) |
-| `.AddPushTemplate(id, name, subject, body)` | Add a push notification template |
-| `NotificationTemplateUpdate(id)` | Update an existing template |
-| `NotificationTemplateDelete(id)` | Delete a template |
+| `NotificationCreate(module, name)` | Create a new notification type. |
+| `NotificationUpdate(module, name)` | Update an existing notification type. |
+| `.SetDescription(text)` | Set the type's description. |
+| `.AddEmailTemplate(id, name, subject, body)` | Add an email template (RichText format). |
+| `.AddSmsTemplate(id, name, body)` | Add an SMS template (PlainText format). |
+| `.AddPushTemplate(id, name, subject, body)` | Add a push notification template. |
+| `NotificationTemplateUpdate(id)` | Update an existing template. |
+| `NotificationTemplateDelete(id)` | Delete a template. |
 
 Template IDs are GUIDs that must be unique. Generate them with any GUID generator.
 
-### Step 3 — Implement the Notification Sender
+### Step 3: Implement the notification sender
 
-Create an interface and implementation class that encapsulates the notification logic for your domain:
+Create an interface and implementation class that encapsulates the notification logic for your domain.
 
-**Interface:**
+The interface:
 
 ```csharp
 namespace MyProject.Notifications
@@ -283,7 +289,7 @@ namespace MyProject.Notifications
 }
 ```
 
-**Implementation:**
+The implementation:
 
 ```csharp
 using Abp.Dependency;
@@ -340,7 +346,7 @@ namespace MyProject.Notifications
 }
 ```
 
-### Step 4 — Call the Notification Sender
+### Step 4: Call the notification sender
 
 Inject your notification sender and call it from your application service or workflow:
 
@@ -363,9 +369,13 @@ public class OrderAppService : SheshaAppServiceBase
 }
 ```
 
-### Sending to Multiple Recipients
+---
 
-To notify multiple people, loop through the recipients:
+## Common scenarios
+
+### Sending to multiple recipients
+
+To notify several people, loop through the recipients:
 
 ```csharp
 foreach (var person in recipients)
@@ -375,7 +385,7 @@ foreach (var person in recipients)
 }
 ```
 
-### Forcing a Specific Channel
+### Forcing a specific channel
 
 Pass a `NotificationChannelConfig` to override the default channel selection:
 
@@ -388,7 +398,7 @@ await _notificationSender.SendNotificationAsync(
     channel: emailChannel);
 ```
 
-### Including Attachments
+### Including attachments
 
 Pass a list of `NotificationAttachmentDto` referencing stored files:
 
@@ -408,12 +418,12 @@ await _notificationSender.SendNotificationAsync(
 ```
 
 :::note
-Attachments are only sent if the notification type has `AllowAttachments` set to `true` **and** the channel supports attachments (`SupportsAttachment = true`).
+Attachments are only sent if the notification type has `AllowAttachments` set to `true` and the channel supports attachments (`SupportsAttachment = true`).
 :::
 
-### Linking a Triggering Entity
+### Linking a triggering entity
 
-Use `GenericEntityReference` to link the notification to the entity that triggered it, useful for audit trails:
+Use `GenericEntityReference` to link the notification to the entity that triggered it, which is useful for audit trails:
 
 ```csharp
 await _notificationSender.SendNotificationAsync(
@@ -422,21 +432,26 @@ await _notificationSender.SendNotificationAsync(
     triggeringEntity: new GenericEntityReference(order));
 ```
 
-## Asynchronous vs Synchronous Delivery
+---
 
-By default, notifications are **queued** for background processing. This is suitable for most cases (e.g. confirmations, reminders).
+## Asynchronous vs synchronous delivery
 
-For **time-sensitive** messages (e.g. OTPs, security alerts), set `IsTimeSensitive = true` on the notification type. This causes the notification to be sent immediately in the current thread, bypassing the background queue.
+By default, notifications are queued for background processing. This suits most cases, such as confirmations and reminders.
 
-## Retry Behaviour
+For time-sensitive messages such as OTPs and security alerts, set `IsTimeSensitive = true` on the notification type. This causes the notification to be sent immediately in the current thread, bypassing the background queue.
 
-Failed notifications are automatically retried up to **3 times** with delays of 10, 20, and 20 seconds respectively. The `NotificationMessage` entity tracks:
+---
 
-- `RetryCount` — number of attempts made
-- `Status` — `Preparing`, `Sent`, `WaitToRetry`, or `Failed`
-- `ErrorMessage` — details of the last failure
+## Retry behaviour
 
-## Custom Notification Channels
+Failed notifications are retried automatically up to three times, with delays of 10, 20, and 20 seconds respectively. The `NotificationMessage` entity tracks:
 
-The built-in Email and SMS channels cover most use cases. If you need to deliver notifications through a different medium (e.g. Slack, Microsoft Teams, WhatsApp), Shesha's plugin architecture makes it straightforward to add custom channels. See [Custom Notification Channels](custom-notification-channels.md) for a step-by-step guide.
+- `RetryCount` - the number of attempts made.
+- `Status` - `Preparing`, `Sent`, `WaitToRetry`, or `Failed`.
+- `ErrorMessage` - details of the last failure.
 
+---
+
+## Custom notification channels
+
+The built-in Email and SMS channels cover most use cases. If you need to deliver notifications through a different medium such as Slack, Microsoft Teams, or WhatsApp, Shesha's plugin architecture makes it straightforward to add custom channels. See [Custom Notification Channels](custom-notification-channels.md) for a step-by-step guide.

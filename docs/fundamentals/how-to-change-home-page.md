@@ -4,13 +4,15 @@ sidebar_label: Changing the Home Page
 
 # Home Page
 
-The default behavior after a successful login is to redirect users to the home page at the / route. However, there are several ways to modify this behavior if needed.
+After a user logs in, Shesha redirects them to the home page at the `/` route by default. This page explains how to change that destination, either to a fixed URL for everyone or to a different page per user based on their role or other criteria.
 
-## Changing the Home Page Url
+---
 
-To specify a different Url the user should be redirected to after login simply ensure the `appSettings.json` file from the back-end project contains the following setting and update accordingly:
+## Changing the home page URL
 
-```json title="appSettings.json"
+To send users to a different URL after login, add the `HomeUrl` setting under `SheshaApp` in the back-end project's `appsettings.json` file and set it to the URL you want:
+
+```json title="appsettings.json"
 {
     ...
     "SheshaApp": {
@@ -21,21 +23,25 @@ To specify a different Url the user should be redirected to after login simply e
 }
 ```
 
-## Updating the Home Page
+---
 
-To update the home page itself, update the `\src\pages\index.tsx` from the front-end project.
+## Updating the home page itself
 
-## Custom Routing
+To change the content of the home page, update `\src\pages\index.tsx` in the front-end project.
 
-There may be situations where you need to direct users to different pages after login, based on their roles or other parameters. To achieve this dynamic routing, you can use the [`IHomePageRouter`](https://github.com/shesha-io/shesha-framework/blob/main/shesha-core/src/Shesha.Application/IHomePageRouter.cs) interface provided by Shesha. By implementing this interface and registering it with the Inversion of Control (IOC) Manager in the Initialize() method of a top-level module in the back-end project, you can control the redirection after login. The GetHomePageUrlAsync method of the IHomePageRouter interface is used to determine the appropriate home page URL for each user.
+---
+
+## Custom routing per user
+
+Sometimes you need to send different users to different pages after login, based on their roles or other parameters. To do this, implement the [`IHomePageRouter`](https://github.com/shesha-io/shesha-framework/blob/main/shesha-core/src/Shesha.Application/IHomePageRouter.cs) interface provided by Shesha and register it with the Inversion of Control (IoC) Manager in the `Initialize()` method of a top-level module in the back-end project. Shesha calls the interface's `GetHomePageUrlAsync` method to work out the correct home page URL for each user.
 
 ### Create an implementation of `IHomePageRouter`
 
-As an example you may reference the default implementation [`NullHomePageRouter`](https://github.com/shesha-io/shesha-framework/blob/main/shesha-core/src/Shesha.Application/NullHomePageRouter.cs)
+The interface defines a single method, `Task<string> GetHomePageUrlAsync(User user)`, which returns the URL to redirect the given user to. For a starting point, see the default implementation, [`NullHomePageRouter`](https://github.com/shesha-io/shesha-framework/blob/main/shesha-core/src/Shesha.Application/NullHomePageRouter.cs).
 
 ### Register the implementation
 
-To register the implementation, update the `Initialize()` method of a top level module in the back-end project as follows:
+To register your implementation, update the `Initialize()` method of a top-level module in the back-end project as follows:
 
 ```csharp
 public class MyAppModule : AbpModule
@@ -52,3 +58,7 @@ public class MyAppModule : AbpModule
     ...
 }
 ```
+
+:::tip
+A custom `IHomePageRouter` takes precedence over the `HomeUrl` setting, so use the setting for a single shared landing page and the router when the destination depends on the user.
+:::
