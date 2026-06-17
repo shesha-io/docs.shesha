@@ -1,0 +1,8 @@
+{
+  "label": "JavaScript API",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "description": "Shesha allows you to interact with the application using its JavaScript API. This API can be used in any user-defined code at the form or form component level. The central point of the JavaScript API is the exposed APPLICATION variable, which provides access to all standard Shesha objects (e.g. user, settings, entities, etc.)."
+  }
+}

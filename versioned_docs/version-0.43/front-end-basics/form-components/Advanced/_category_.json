@@ -1,0 +1,8 @@
+{
+  "label": "Advanced",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Advanced components are components that are more complex and require a higher level of understanding to use effectively."
+  }
+}
