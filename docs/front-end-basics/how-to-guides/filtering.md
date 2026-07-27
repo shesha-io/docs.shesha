@@ -44,3 +44,7 @@ The query builder gives you access to the form data object that you can utilize 
 - Select the `Evaluate(mustache)` function
 
 ![Dynamic Filter 2](./images/filterDynamic2.png)
+
+:::info
+Script-based conditions in the Query Builder are now evaluated on the front-end before the filter is sent to the server. Previously, a script condition was sent to the back-end as a raw, unevaluated string, which could cause the filter to be applied incorrectly. Query Builder filters that use `Evaluate(mustache)` or other scripted conditions now resolve to their final value before the request is made.
+:::

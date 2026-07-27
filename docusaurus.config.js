@@ -44,6 +44,22 @@ const config = {
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
+
+          // Versioning. The "current" docs (the `docs/` folder) is the newest,
+          // in-progress version (v0.45). v0.43 is a frozen snapshot served as
+          // the default version at /docs/... Readers can switch versions via
+          // the dropdown in the navbar.
+          lastVersion: '0.43',
+          versions: {
+            current: {
+              label: '0.45',
+              path: '0.45',
+              banner: 'none',
+            },
+            '0.43': {
+              label: '0.43',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
@@ -89,6 +105,12 @@ const config = {
           {
             type: 'search',
             position: 'left',
+          },
+          {
+            type: 'docsVersionDropdown',
+            position: 'right',
+            // Order shown in the dropdown: v0.43 first, then v0.45 (current).
+            versions: ['0.43', 'current'],
           },
           {
             type: 'custom-customSearchBar', 

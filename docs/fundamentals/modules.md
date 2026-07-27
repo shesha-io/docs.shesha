@@ -25,6 +25,24 @@ You then see the list of installed modules.
 
 ---
 
+## Module inheritance and hierarchy
+
+Modules do not sit in isolation. An application defines an ordered hierarchy of modules, from the most general base modules up to your own application module. A typical hierarchy looks like this:
+
+```
+MyApp > ProductA > Shesha.Enterprise > Shesha.Core
+```
+
+Modules closer to your application take precedence over the base modules they build on. When the framework needs a configuration item by name, it walks the hierarchy from the highest-precedence module down to the lowest and uses the first matching item it finds. This means the most project-specific version of an item always wins, while base modules provide sensible defaults.
+
+### Customising a base module item with Expose
+
+Because base module items are shared, you should not edit them directly. Instead you **Expose** the item into your own module. Exposing creates a protected copy in your module's scope that overrides the base version through the hierarchy described above, while leaving the original untouched. Your customisation is therefore insulated from future upgrades to the base module.
+
+You expose items from the [Configuration Studio](configuration-studio/index.md). For the full explanation of how exposing and the hierarchy work together, see [Expose and module hierarchy](configuration-expose-and-module-hierarchy).
+
+---
+
 ## Create a new module
 
 ### Add the SheshaModule class

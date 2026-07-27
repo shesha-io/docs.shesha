@@ -54,10 +54,10 @@ To manage permissions, including defining new ones, follow these steps:
 
 To manage roles and associate permissions with each role:
 
-1. Access the Roles Configurator from the Configuration main menu, then select **Roles**.
-2. On the Roles table, navigate into the details view of the selected role and toggle edit to select the permissions associated to that role.
+1. Open the **Configuration Studio** and locate the role in the Solution Explorer, or create a new one with **New > Role**.
+2. Open the role to view its details. The **Permissions** panel lists every permission grouped by module — tick the permissions you want to associate with the role, then **Save**.
 
-![Managing Roles](./images/roles.png)
+![A role open in the Configuration Studio, showing the Permissions panel with several permissions ticked.](./images/role-permissions-studio.png)
 
 [More on Role vs. Permission-based Access Control](https://softwareengineering.stackexchange.com/questions/299729/role-vs-permission-based-access-control)
 

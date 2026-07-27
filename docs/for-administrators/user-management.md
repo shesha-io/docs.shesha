@@ -18,31 +18,23 @@ This is a critical part of application security and usability, ensuring that onl
 Users can be added to the system through the application interface by entering required details such as username, password, and email address. The registration process may also involve verifying the user's email to confirm its authenticity.
 
 To add a new user in Shesha, follow these steps:
-:::info Missing GuideFlow
-TODO: Add a GuideFlow for creating a user 
-::: 
 
 ### Editing a User
 To edit an existing user in Shesha, follow these steps:
-:::info Missing GuideFlow
-TODO: Add a GuideFlow for edititng a user 
-::: 
 
 ### Assigning Roles to Users
 In Shesha, users are assigned to roles to control their access within the system. This process involves selecting the appropriate roles that align with the user's responsibilities and the permissions required for their tasks.
 
+:::note
+New users are created with no roles by default, so a newly created user has no role-based access until you assign roles. Assign roles as a deliberate step after creating the user.
+:::
+
 To assign roles to users in Shesha, follow these steps:
-:::info Missing GuideFlow
-TODO: Add a GuideFlow for assigning roles to a user
-::: 
 
 ### Disabling/Locking a User
 Users can be activated to allow access or deactivated to prevent login. Deactivation is useful for suspending or disabling accounts without deleting them.
 
 To disable a user account in Shesha, follow these steps:
-:::info Missing GuideFlow
-TODO: Add a GuideFlow for creating a user 
-::: 
 
 ---
 

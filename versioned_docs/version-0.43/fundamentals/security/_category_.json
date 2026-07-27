@@ -1,0 +1,8 @@
+{
+  "label": "Security",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Security in Shesha is a cornerstone of its architecture, ensuring that systems built on the platform are robust, reliable, and protected against unauthorized access. This documentation provides a comprehensive overview of Shesha's security framework, covering essential topics such as user registration, authentication, access control, role-based permissions, scoped RBAC, and data-level security. By understanding these concepts, developers and administrators can effectively implement security policies that safeguard sensitive information and enforce organizational rules."
+  }
+}

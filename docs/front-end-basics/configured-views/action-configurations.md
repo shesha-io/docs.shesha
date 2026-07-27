@@ -96,6 +96,10 @@ Execute Script opens a code editor where you write JavaScript that runs when the
 **Configuration fields:**
 - **Expression** - the JavaScript code to run.
 
+:::info
+The expression is evaluated asynchronously, so you can `await` calls such as `http` requests directly in the script instead of chaining `.then(...)`. This applies to Execute Script on buttons and to scripts in other Action Configurations.
+:::
+
 The editor exposes a full list of variables available in the current context.
 
 | Variable | Type | Description |
@@ -256,59 +260,11 @@ The debug panel is a developer tool. It is not intended for end users and should
 
 ## Configuration Items
 
-The Configuration Items group contains actions for managing the lifecycle of Shesha configuration items - forms, reference lists, API configurations, and other configurable components. These actions are used by administrators and developers to version, publish, and move configuration between environments.
+The Configuration Items group contains actions for working with Shesha configuration items, such as forms and reference lists, from within a form.
 
-### Create New Item Version
-
-Create New Item Version creates a new draft version of an existing configuration item. Use this when you want to make changes to a published form, reference list, or other configuration item without affecting the live version. The new draft can be edited and tested before being published.
-
-This action has no configuration fields. It targets the configuration item currently open or selected in context.
-
----
-
-### Set Item Ready
-
-Set Item Ready marks the current draft version of a configuration item as ready for review or publishing. Use this as part of a review workflow where a second person needs to approve changes before they go live.
-
-This action has no configuration fields.
-
----
-
-### Delete Item
-
-Delete Item permanently removes a configuration item. Use this to clean up unused or obsolete items from the configuration.
-
-This action has no configuration fields.
-
-:::danger
-Deleting a configuration item is permanent and cannot be undone. Any forms or components that reference the deleted item will stop working. Always confirm that an item is no longer in use before deleting it.
+:::info
+Configuration items are now versioned automatically in the [Configuration Studio](../../fundamentals/configuration-studio/index.md). The older draft, ready, and publish workflow has been removed, so there are no longer actions to create a new version, mark an item as ready, publish a version, or cancel a version. Importing and exporting configuration packages is also handled in the Configuration Studio rather than through a form action.
 :::
-
----
-
-### Publish Item
-
-Publish Item makes the current ready version of a configuration item live. Once published, the item becomes the active version used by the application.
-
-This action has no configuration fields.
-
-:::warning
-Publishing replaces the current live version immediately. Make sure the item has been fully tested before publishing.
-:::
-
----
-
-### Cancel Item Version
-
-Cancel Item Version discards the current draft version of a configuration item and returns it to its previous published state. Use this when changes in the current draft are no longer needed.
-
-This action has no configuration fields.
-
-:::warning
-Cancelling a version permanently discards all unpublished changes in that draft. This cannot be undone.
-:::
-
----
 
 ### Download as JSON
 
@@ -316,26 +272,6 @@ Download as JSON exports a single configuration item directly as a JSON file. Us
 
 **Configuration fields:**
 - **Item ID** - the unique identifier of the configuration item to download.
-
----
-
-### Export Items
-
-Export Items opens the configuration export dialog. From here you can select which forms, reference lists, or other configuration items to include and download them as a package.
-
-This action has no configuration fields.
-
----
-
-### Import Items
-
-Import Items opens the configuration import dialog. From here you can upload a previously exported configuration package to apply it to the current environment.
-
-This action has no configuration fields.
-
-:::warning
-Importing configuration will overwrite existing items that share the same module and name. Always review what is included in a package before importing it into a production environment.
-:::
 
 ---
 

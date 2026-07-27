@@ -128,6 +128,10 @@ Run your back-end, then navigate to **Configurations > Settings** in the Shesha 
 
 ![Image](./images/modules5.png)
 
+:::note
+Setting **values** are managed here, in the **Application Settings** screen. This is separate from the **Configuration Studio**, where settings are defined (in code or configuration). Use the Studio to declare a setting, and this screen to view or change its value.
+:::
+
 That's it — you have a working application setting.
 
 ---

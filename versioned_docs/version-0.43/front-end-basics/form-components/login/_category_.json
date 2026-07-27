@@ -1,0 +1,8 @@
+{
+  "label": "Login",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Login components help users authenticate to the application."
+  }
+}
