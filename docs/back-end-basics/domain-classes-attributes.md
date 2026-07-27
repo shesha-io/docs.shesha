@@ -181,4 +181,6 @@ Cascade rules can also be configured through the Shesha administration UI withou
 4. Select the entity reference property
 5. Configure the **Cascade Create**, **Cascade Update**, and **Cascade Delete Unreferenced** settings
 
+![The Cascade rules tab for an entity reference property in the Configuration Studio, with Create, Update, and Delete all enabled.](./images/cascade-rules-studio.png)
+
 Rules defined via the `[CascadeUpdateRules]` attribute in code take precedence over configuration-based rules. Configuration-based rules are applied only when the corresponding attribute value is not set.

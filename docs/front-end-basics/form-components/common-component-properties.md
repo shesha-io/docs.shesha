@@ -6,6 +6,15 @@ sidebar_position: 1
 
 Every component you place on a Shesha form shares a set of common properties. These control things like what the component is called, where it reads and writes its value, whether it is visible or editable, how it looks, and how it responds to user interactions. Understanding these properties once means you can configure any component in Shesha. 
 
+:::info Configuration indicators
+Shesha marks a component in the designer canvas with a coloured indicator when it needs your attention:
+
+- **Blue** — the component still needs some configuration before it will work correctly, for example a required setting has not been set yet.
+- **Yellow** — the component has a configuration error, for example an invalid script or a setting that conflicts with another property.
+
+Hover over the indicator to see a tooltip with the specific detail.
+:::
+
 ---
 
 ### Common
@@ -150,6 +159,8 @@ The Font settings let you customise the typography of the component's label and 
 #### **Dimensions** `object`
 
 The Dimensions settings define how much space the component takes up. You can set the width and height as fixed values or percentages, and also set minimum and maximum constraints for each. The Overflow setting controls what happens when the content is larger than the component's boundaries.
+
+Width and height apply to the component's own outer dimensions. For example, setting a container to 50% width changes the width of the container itself, while the components placed inside it keep their full available space within that container.
 
 #### **Border** `object`
 

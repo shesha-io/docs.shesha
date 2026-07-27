@@ -65,8 +65,9 @@ public class MyEntity : FullAuditedEntity<Guid>
 
 Alternatively, you may also prevent the generation of CRUD APIs through configuration. This may be preferable if you do not have access to the source code of the entity class or if you wish to give yourself flexibility through configuration.
 
-From your running Shesha application, go to 'Administration > Entity Configuration' on the main menu. Select the entity for which you wish to prevent the generation of CRUD APIs. Click the 'CRUD APIs' tab, then uncheck the 'Generate CRUD APIs' property as illustrated below:
-![Image](./images/crud-apis-entityconfigurator-generate.jpg)
+From your running Shesha application, open the **Configuration Studio**. In the Solution Explorer, locate and open the entity for which you wish to prevent the generation of CRUD APIs. Switch to the **CRUD APIs** tab, then uncheck the **Generate CRUD APIs** property as illustrated below:
+
+![The CRUD APIs tab of the Member entity in the Configuration Studio, with the Generate CRUD APIs property unchecked.](./images/crud-apis-45-unchecked.png)
 
 ## Securing CRUD APIs through code
 
@@ -89,7 +90,7 @@ public class MyEntity : FullAuditedEntity<Guid>
 
 Alternatively, you may also use the entity configuration view to specify the required permissions for each of the CRUD APIs.
 From your running Shesha application, go to 'Administration > Entity Configuration' on the main menu. Select the entity you wish to secure. Click the 'CRUD APIs' tab, then specify the required permissions for each of the CRUD APIs as illustrated below:
-![Image](./images/crud-apis-entityconfigurator-permissions.jpg)
+![Image](./images/crud-apis-entityconfigurator-permissions.png)
 
 ---
 

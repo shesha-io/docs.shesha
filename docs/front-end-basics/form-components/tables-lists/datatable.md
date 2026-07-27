@@ -43,6 +43,10 @@ Each column in the builder has the following settings:
 | `CRUD Operations` | Show a built-in set of edit, save, and delete icons for inline row editing. |
 | `Form` | Embed a small form inside the cell using a separate form definition. |
 
+:::note
+Scripts on an `Action` column now run with the full page context. Variables such as `pageContext`, `form`, and `setGlobalState` are injected and available, where in earlier versions they could arrive as `undefined`.
+:::
+
 **Property Name** - The field name from the data source this column reads its value from. Use dot notation for nested fields, for example `address.town`. Applies to `Data` and `Form` column types.
 
 **Caption** - The text shown in the column header. If left blank, Shesha uses the property name.
@@ -61,9 +65,19 @@ Each column in the builder has the following settings:
 
 ---
 
-#### **Use Multi-Select** `boolean`
+#### **Selection Mode** `object`
 
-When enabled, a checkbox appears at the start of each row. Users can select multiple rows at once. Use this when you need to perform bulk actions on selected records.
+Controls whether and how users can select rows. This uses the same selection model as the DataList component.
+
+| Option | When to use |
+|---|---|
+| `None` | Rows cannot be selected. Use this for a display-only table. |
+| `Single` | Only one row can be selected at a time. |
+| `Multiple` | A checkbox appears at the start of each row, and users can select several rows at once. Use this for bulk actions on the selected records. |
+
+When Selection Mode is `Single` or `Multiple`, the On Row Select and On Selection Change events become available. See [Row events](#row-events).
+
+![The Selection Mode setting on the DataTable's Data tab, with the dropdown open to show the None, Single, and Multiple options.](./images/selection-mode.png)
 
 ---
 
@@ -286,6 +300,26 @@ return formData.approvalStatus !== 2;
 
 ---
 
+### Row events
+
+These events let you respond to how a user interacts with a row. Each one is an [Action Configuration](/docs/front-end-basics/configured-views/action-configurations), so you choose an action to run, such as navigate, show a dialog, or execute a script, when the interaction happens. The row involved in the interaction is available to the action.
+
+| Event | Fires when |
+|---|---|
+| `On Row Click` | A row is clicked. |
+| `On Row Double-Click` | A row is double-clicked. |
+| `On Row Hover` | The pointer hovers over a row. |
+| `On Row Select` | A row is selected. Available when Selection Mode is `Single` or `Multiple`. |
+| `On Selection Change` | The set of selected rows changes. Available when Selection Mode is `Single` or `Multiple`. |
+
+![The Events tab of the DataTable, showing the row event handlers: On Row Click, On Row Double-Click, On Row Hover, On Row Save Success, and On Row Delete Success.](./images/row-events.png)
+
+:::note
+Scripts run from these events receive the full page context, including `pageContext`, `form`, and `setGlobalState`.
+:::
+
+---
+
 ### Layout
 
 #### **Min Height** `number`
@@ -323,6 +357,25 @@ return {
 A JavaScript expression that returns a CSS style object applied directly to the table element.
 
 Available variables: `formData`, `globalState`.
+
+---
+
+### Styles
+
+The Styles tab gives you control over how the table looks, without writing CSS. The main options are grouped as follows.
+
+![The Appearance tab of the DataTable, showing the styling groups including Header Styles, Table Body Styles, Cell Padding, and Action Column Icons.](./images/styles-tab.png)
+
+| Group | What you can control |
+|---|---|
+| Header styles | Header background colour and cell padding. |
+| Row dimensions | Row height and row background. |
+| Striped rows | Alternate row shading to make long lists easier to scan. |
+| Hover highlight | Whether rows highlight on hover, and the hover background colour. |
+| Selected background | The background colour of selected rows. Available when Selection Mode is `Single` or `Multiple`. |
+| Cell styling | Cell border colour and row dividers. |
+
+The `Freeze Headers` option keeps the header row fixed (sticky) while the body scrolls. For one-off styling beyond these options, use the Table Container Style and Table Style functions described under [Layout](#layout).
 
 ---
 

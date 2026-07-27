@@ -12,19 +12,13 @@ By the end of this step you will have a fully working CRUD experience without wr
 
 ---
 
-## Form Versioning
+## Form versioning
 
-Forms in Shesha have three versions, which together support a simple draft -> ready -> live workflow. Knowing how versioning works will help when you publish your first form.
+Forms are configuration items, so they are versioned automatically. Each time you save a form, Shesha records a new revision for you. There is no manual step to mark a form as ready or to publish it before it can be used. Saving is all you need to do.
 
-![Image](./images/FormVersioning.png)
+You can review the saved revisions of a form at any time. Right-click the form in the Solution Explorer and choose **Version History** to see every saved revision, along with who made it and when. For the wider picture of how items are versioned and managed, see the [Configuration Studio](../../../fundamentals/configuration-studio/index.md).
 
-| Version | Purpose |
-|---|---|
-| `Draft` | Work in progress. Designers can change fields and layout without affecting the version in use. |
-| `Ready` | Stable and reviewed. The system displays the Ready version where available, with a fallback to Live. |
-| `Live` | The version currently in use by end users. |
-
-The typical flow is: build in **Draft**, finalise to **Ready**, then promote to **Live**. To make further changes, create a new draft. This keeps live forms protected from accidental edits while giving designers room to iterate.
+![The Revision History panel for a form in the Configuration Studio, listing each saved revision with its timestamp and version number.](./images/version-history.png)
 
 ---
 
@@ -130,8 +124,8 @@ To reach the new form, add it to the main menu.
 
 4. Toggle the switch to go back to live mode.
 
-:::warning Switch form versioning to Latest while iterating
-If your form is still in **Draft**, navigating to the menu item will not find it unless you switch the form versioning toggle from **Live** to **Latest**. Once published, switch it back.
+:::note
+Forms are versioned automatically, so the form is available as soon as you save it. There is no separate publish step.
 :::
 
 ![Image](./images/table8.png)

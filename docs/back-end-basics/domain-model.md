@@ -29,6 +29,12 @@ Though it is not a requirement to use the base domain, it is highly recommended 
 
 While the base domain entities are beneficial, you will likely need to customize them to fit your application's unique requirements. For instance, you might need to create a `Customer` entity derived from the `Person` entity, or a `Supplier` entity derived from the `Organisation` entity. You might also find it necessary to append additional properties to the base entities or introduce entirely new entities.
 
+:::tip Creating and modifying entities without code
+As of v0.45 you can also create and modify entities through the Entity Configurator in the Configuration Studio, without writing code. The code-based approach described here is still used when you need full control in the back-end project. See [Entity Configuration](/docs/fundamentals/entity-Configuration).
+:::
+
+When an entity is created or extended through the Entity Configurator, Shesha generates the entity as a `partial` class. This means you can add a matching `partial class` file of the same name to your back-end project to extend the configurator-generated entity with custom code, such as calculated properties or domain methods, without the generated file overwriting your additions. An entity created through the Configurator can also be marked **extensible**, which allows other modules further down the module hierarchy to add their own properties to it.
+
 ### Creating a new entity
 
 To create a new entity, simply create a new class that inherits from the `Entity` class. The example below illustrates the creation of a `Ticket` entity.

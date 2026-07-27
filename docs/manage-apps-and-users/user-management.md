@@ -137,6 +137,10 @@ To manage users in the frontend:
 
 ### Assigning Roles
 
+:::note
+New users are created with no roles by default. A new user has no role-based access until you explicitly assign roles, so assigning roles is a deliberate step you take after creating the user. Assign the appropriate roles using either of the methods below.
+:::
+
 This can be achieved in 2 different ways:
 
 1. Access the `User Management` from the Administration main menu:

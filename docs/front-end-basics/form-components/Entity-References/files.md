@@ -66,6 +66,10 @@ The entity type that owns this file (for example, `Shesha.Domain.Person`). Use t
 
 Restricts which file types the user can upload. Enter one or more MIME types or file extensions, for example `.pdf`, `image/jpeg`. Leave empty to accept all file types.
 
+:::tip Download status flag
+Once the user downloads the file, its value carries a `userHasDownloaded` flag set to `true`. You can use this flag in conditional expressions on other components, for example to enable a Continue button only after a required file has been downloaded.
+:::
+
 ---
 
 ## File List
@@ -183,6 +187,14 @@ Available variables:
 | `event` | `object` | The event data from the download interaction. |
 
 Plus all standard constants including `formData`, `globalState`, `http`, `moment`.
+
+:::tip Download status flag
+Each file in the list carries a `userHasDownloaded` flag that becomes `true` once the user downloads that file. You can use this flag in conditional expressions on other components, for example to keep a Submit button hidden or disabled until the user has downloaded a required document.
+:::
+
+:::note Files persist across Wizard steps
+Files uploaded through a File List now persist when the user navigates between Wizard steps. A file added on one step is still there if the user moves to another step and back.
+:::
 
 ---
 
