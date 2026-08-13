@@ -770,7 +770,7 @@ Do not hand-roll misconfiguration UI. The framework provides the whole surface:
   ```
 
 - **Raise errors from component code** with the `SheshaError` helpers, never with bare `throw` or `console.error`:
-  - `SheshaError.throwPropertyError(propertyName, message?)` — a specific property is misconfigured. Defaults to *"Please make sure the '{propertyName}' property is configured properly."* and is raised as a `warning`.
+  - `SheshaError.throwPropertyError(propertyName, message?)` — a specific property is misconfigured. Defaults to *"Please make sure the `{propertyName}` property is configured properly."* and is raised as a `warning`.
   - `SheshaError.throwModelErrors(errors)` — several properties at once (`warning`).
   - `SheshaError.throwError(message)` — a genuine failure rather than a misconfiguration (`error`).
 - **Rendering is handled by `ErrorIconPopover`**, which draws the orange filled info icon (`#faad14`, 16px, top-right by default) and resolves a documentation link for the component type from `components/componentErrors/component-docs.json`. If a new component is added, add its documentation URL to that file — otherwise the tooltip loses its "See component documentation" link.
