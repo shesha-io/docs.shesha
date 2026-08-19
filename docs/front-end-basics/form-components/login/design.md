@@ -1,12 +1,25 @@
+---
+sidebar_label: Design
+---
+
 # Design
 
-## Introduction
+The login page in Shesha is a configurable form, not hard-coded markup. It is a configuration item identified as `Shesha/login` (`Shesha` is the module, `login` is the form name), so you can open it in the form designer and change it like any other form.
 
-The new form login page is now configurable. A default configuration page is available on the latest Shesha. If an old version of Shesha is used this login configuration page will be available when the latest migrations are merged.
-The form configuration is `Shesha/login`. (`Shesha` being the module and `login` being the name). The default login page that comes with Shesha will be able to login by default but is also capable of customizing certain actions before and after the login process.
+Because it ships as a standard Shesha form, the default login page can log a user in out of the box, but you can also customize what happens before and after the login process, for example running a script when login fails or redirecting to a different page on success.
+
+:::note
+If you are upgrading an older Shesha application that predates the configurable login page, you need to run the latest database migrations before the `Shesha/login` form configuration becomes available to edit.
+:::
+
+---
 
 ## Look and Feel
 
-The look and feel of the configurable login page are the same as the standard login page. Although it is designed exactly the same as the previous login page, you can change the design completely depending on the requirements.
+Out of the box, the configurable login page looks identical to the classic, hard-coded login page it replaced. Since it is now a regular form, you can redesign it completely using the same form components and settings you would use on any other Shesha form.
 
 ![Image](./images/login-page-design.png)
+
+:::tip
+To open the `Shesha/login` form for editing, find it in Configuration Studio's Solution Explorer and use the designer to change its layout. See [Editing items](/docs/0.45/fundamentals/configuration-studio/editing-items) for how configuration items like forms are opened and edited.
+:::

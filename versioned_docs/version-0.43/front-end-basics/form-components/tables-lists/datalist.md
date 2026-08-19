@@ -1,4 +1,3 @@
-import LayoutBanners from './LayoutBanners';
 
 # DataList
 

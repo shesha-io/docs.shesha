@@ -1,24 +1,57 @@
+---
+sidebar_label: On Initialized
+---
+
 # On Initialized
 
-In Shesha, the execution of queries and JavaScript functions can be automated at the time a page loads. This feature is essential for initializing the page state, fetching data, and preparing the UI for interaction with the user. Automatically running queries and functions provides a smooth user experience by ensuring necessary data is available right from the start.
+**On Initialized** is a form lifecycle event that runs a piece of JavaScript automatically, at the very start of the form's life, before Shesha has fetched any data for it. Use it to prepare things the rest of the form depends on, such as reading a value from the URL, seeding global state, or setting up other conditions the form needs before it starts loading.
 
-Developers use the `on initialized` event handler to execute specific tasks or operations that need to happen as part of the initialization process. This might include setting up initial state, fetching initial data, configuring dependencies, or performing other actions needed for the component to function correctly.
+:::note Also known as On Before Data Load
+`On Initialized` is the legacy name for this event. In the current Form Designer, the same lifecycle point is labelled **On Before Data Load** on the form's Data tab. If you're maintaining an older form that still uses `onInitialized`, it behaves the same way and there is no need to rename it, but any new configuration should use On Before Data Load.
+:::
 
-- **Benefit 1: Initialization Tasks:**
+---
 
-  - The `onInitialized` event handler allows you to execute tasks or set up initial conditions when a component or feature is initialized. This is useful for performing actions that should occur once during the component's lifecycle, such as setting default values, configuring dependencies, or connecting to external resources.
+## When It Fires
 
-- **Benefit 2: Avoiding Race Conditions:**
+This event fires once, the first time the form loads, immediately after the form's settings have been applied and before Shesha makes the API call to load the record's data. Because it runs before that data load, the form's `data` object is generally empty at this point.
 
-  - By providing a designated point for initialization tasks, you can avoid race conditions where certain actions need to be completed before the component is used. This ensures that the component is in a stable and consistent state.
+:::warning
+Don't rely on `data.id` inside this event to get the current record's id, since the record hasn't loaded yet. If you need the id from the URL, use `query.id` instead.
+:::
 
-- **Benefit 3: Code Organization:**
-  - Event handlers contribute to a clean and organized code structure. Initialization-related tasks are encapsulated within the `onInitialized` function, making the codebase more readable and maintainable.
+---
 
-## When does it get triggered?
+## Available Variables
 
-This action will be executed the first time the page loads, just before any API call has been made. At this stage, the form data has no data except for `initialValues`, if passed.
+The On Initialized script has access to the same set of standard variables available throughout the form:
 
-**Usage Examples:**
+| Variable | Description |
+|---|---|
+| `data` | The form's current data (generally empty at this point) |
+| `form` | The form instance, including `form.formMode`, `form.formArguments`, and `form.setFieldsValue` |
+| `query` | The query string parameters from the current URL |
+| `initialValues` | The initial values passed into the form, if any |
+| `parentFormValues` | The data of the parent form, when the current form is a sub form |
+| `globalState` / `setGlobalState` | Read and update global state shared across the application |
+| `contexts` | Access to Form, Page, App, and Web Storage contexts |
+| `pageContext` | The current page's context |
+| `selectedRow` | The selected row, when the form is used inside a table |
+| `http` | The HTTP client used to make API requests |
+| `message` | Toast/notification messages shown to the user |
+| `moment` | The Moment.js library, for working with dates and times |
+| `fileSaver` | Helper for saving files from the browser |
+| `application` | Access to application-level objects such as the current user and settings |
 
-<!-- Provide usage examples here -->
+---
+
+## Example
+
+**Form type to use:** Edit Form - use when you need to capture the record's id from the URL before the form's own data has loaded.
+
+**Example - Store the record id in global state before data loads:**
+
+```javascript
+// query.id is already available here, even though the record's data has not loaded yet
+setGlobalState({ currentRecordId: query?.id });
+```

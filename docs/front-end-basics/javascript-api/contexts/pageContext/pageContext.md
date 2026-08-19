@@ -1,31 +1,59 @@
-# Page context
+---
+sidebar_label: Page Context
+---
 
-Accessed via `contexts.pageContext`  
+# Page Context
 
-Contexts for storing temporary data for page.
+Page Context is a storage area scoped to the current page. Use it to hold temporary data that needs to be shared between the different forms on that page, for example a main form and the SubForms or modal dialogs it opens. When the user navigates away from the page, its Page Context and everything stored in it are cleared.
 
-`pageContext` - page level context. All the data stored in this context is available inside the open page and the forms used on this page (Sub forms, Modal dialogs, Form cells, Data list items, etc.). It can be used to save any temporary data used on the page, transfer data between the forms used on the page. When closing/changing a page, all the page context data is cleared.
+---
 
-## How to use
+## Accessing Page Context
 
-To save data in the context of any of these types, it is enough to specify a variable name and assign a value to it.
+`contexts.pageContext` is available in any script on the page, alongside the other standard script variables.
 
-Setting a value
+It behaves like a plain object: there is no fixed list of properties, so any property you set on it becomes available under that name.
 
-```Javascript
-contexts.pageContext.myPageAvailable = 'test data`;
+**Form type to use:** Edit Form - or any form type, since Page Context is available everywhere standard script variables are.
+
+**Example - Setting a value:**
+
+```javascript
+contexts.pageContext.myPageVariable = 'test data';
 ```
 
-To use data from the context of any of these types, it is also enough to use the variable name.
+**Example - Reading a value:**
 
-Reading a value 
-
-```Javascript
-const getPlaceHolder = () => {
-	return contexts.pageContext.myPageAvailable;
-}
+```javascript
+const getPlaceholder = () => {
+  return contexts.pageContext.myPageVariable;
+};
 ```
 
-## The specifics of form contexts
+You can also bind a component directly to Page Context instead of writing to it from a script. Most Shesha form components use a Property Name control with a **show binding option** link next to it; clicking it reveals a **Context** selector. Choosing the context named `pageContext` there, then a Property Name, makes that component read and write its value directly in `contexts.pageContext.<propertyName>`.
 
-Please note that one `appContext` and one `pageContext` are always available for use. However, there may be multiple `formContext`. For example, if two SubForms are used on a main form, then the main form has its own `formContext`, and each subform has its own `formContext`. The components on each of the forms (SubForms) will only have access to the `formContext` of their form.
+---
+
+## Page Context Is Shared Across the Whole Page
+
+Exactly one App Context and one Page Context are always available, unlike Form Context, where every form instance gets its own. Page Context is the same single object for every form on the page, which makes it a good way to pass data between a main form and the SubForms or modal dialogs it opens - something a `formContext` cannot do, since each of those forms would have its own separate `formContext`.
+
+---
+
+## Example
+
+**Form type to use:** Edit Form - or any form type, since Page Context is available everywhere standard script variables are.
+
+**Example - Share a filter between two forms on the same page:**
+
+Suppose a page in the Membership app has a filter panel form and a member results list form displayed side by side. The filter panel's TextField for the category filter has its On Change event write the value to Page Context:
+
+```javascript
+contexts.pageContext.selectedCategory = data.category;
+```
+
+The results list form, elsewhere on the same page, reads that same value back:
+
+```javascript
+const category = contexts.pageContext.selectedCategory;
+```

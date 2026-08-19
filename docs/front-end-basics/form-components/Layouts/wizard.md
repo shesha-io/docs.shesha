@@ -1,6 +1,5 @@
 # Wizard
 
-import LayoutBanners from './LayoutBanners';
 
 The Wizard component enables multi-step forms by segmenting fields across several pages with navigation controls. It's ideal for complex data entry processes where progressive disclosure improves the user experience.
 

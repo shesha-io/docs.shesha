@@ -1,24 +1,58 @@
+---
+sidebar_label: On Initialized
+---
+
 # On Initialized
 
-In Shesha, the execution of queries and JavaScript functions can be automated at the time a page loads. This feature is essential for initializing the page state, fetching data, and preparing the UI for interaction with the user. Automatically running queries and functions provides a smooth user experience by ensuring necessary data is available right from the start.
+`On Initialized` is a form lifecycle event that runs your JavaScript code before the form loads its data from the server. It is the earliest point at which you can run code against a form, which makes it useful for setting up initial state, reading values passed in through navigation, or preparing anything the rest of the form's script code will depend on.
 
-Developers use the `on initialized` event handler to execute specific tasks or operations that need to happen as part of the initialization process. This might include setting up initial state, fetching initial data, configuring dependencies, or performing other actions needed for the component to function correctly.
+:::note Naming in the Form Designer
+In the Form Settings panel, this event is now labelled **On Before Data Load** (`onBeforeDataLoad`). Forms built with the older **On Initialized** setting keep working. Shesha automatically converts them to use `onBeforeDataLoad`, keeping your existing code and running `form.setFieldsValue({...form.formArguments})` first so any values passed in via navigation are applied before your code runs.
+:::
 
-- **Benefit 1: Initialization Tasks:**
+Running initialization code at this point avoids race conditions where later logic depends on setup that has not happened yet, and keeps that setup code in one clearly named place rather than scattered across the form.
 
-  - The `onInitialized` event handler allows you to execute tasks or set up initial conditions when a component or feature is initialized. This is useful for performing actions that should occur once during the component's lifecycle, such as setting default values, configuring dependencies, or connecting to external resources.
+---
 
-- **Benefit 2: Avoiding Race Conditions:**
+## When Does It Get Triggered?
 
-  - By providing a designated point for initialization tasks, you can avoid race conditions where certain actions need to be completed before the component is used. This ensures that the component is in a stable and consistent state.
+This event runs the first time the form loads, immediately before Shesha fetches any data for it. At this stage, the form's field values only contain whatever was passed in through `form.formArguments` (for example, an ID passed in the URL) - no entity data has been loaded yet.
 
-- **Benefit 3: Code Organization:**
-  - Event handlers contribute to a clean and organized code structure. Initialization-related tasks are encapsulated within the `onInitialized` function, making the codebase more readable and maintainable.
+:::warning
+Because no API call has been made yet, `data` will not yet contain the loaded entity's values. If you need a value from the URL query string at this point, use `query` instead of waiting on `data`.
+:::
 
-## When does it get triggered?
+---
 
-This action will be executed the first time the page loads, just before any API call has been made. At this stage, the form data has no data except for `initialValues`, if passed.
+## Available Variables
 
-**Usage Examples:**
+`On Initialized` has access to the same set of variables as the other form lifecycle events:
 
-<!-- Provide usage examples here -->
+| Variable | Description |
+|---|---|
+| `data` | Current form field values. Not yet populated with loaded entity data at this point. |
+| `initialValues` | The initial values supplied to the form. |
+| `parentFormValues` | Values from the parent form, when this form is nested inside another. |
+| `form` | The form instance, used to read or set field values (for example `form.setFieldsValue({...})`). |
+| `query` | The query string parameters from the current URL. |
+| `globalState` / `setGlobalState` | Read and update global state shared across the application. |
+| `http` | The HTTP client used to call backend APIs. |
+| `message` | Used to show toast notifications to the user. |
+| `moment` | The Moment.js instance, used for date and time manipulation. |
+| `pageContext` | Context for the current page. |
+| `application` | Application-level context and utilities. |
+
+---
+
+## Example
+
+**Form type to use:** Edit Form - use when the user is opening an existing record and you want to react to a value passed in through the URL before the record loads.
+
+**Example - Pre-fill a field from a query string parameter:**
+
+```javascript
+// query.source is available immediately, before the entity has loaded
+if (query.source) {
+  form.setFieldsValue({ source: query.source });
+}
+```
