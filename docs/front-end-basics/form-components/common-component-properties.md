@@ -9,8 +9,8 @@ Every component you place on a Shesha form shares a set of common properties. Th
 :::info Configuration indicators
 Shesha marks a component in the designer canvas with a coloured indicator when it needs your attention:
 
-- **Blue** — the component still needs some configuration before it will work correctly, for example a required setting has not been set yet.
-- **Yellow** — the component has a configuration error, for example an invalid script or a setting that conflicts with another property.
+- **Blue** - the component still needs some configuration before it will work correctly, for example a required setting has not been set yet.
+- **Yellow** - the component has a configuration error, for example an invalid script or a setting that conflicts with another property.
 
 Hover over the indicator to see a tooltip with the specific detail.
 :::

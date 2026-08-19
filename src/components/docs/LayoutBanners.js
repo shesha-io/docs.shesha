@@ -1,15 +1,11 @@
 import { Image } from 'antd';
 import React, { useState } from 'react';
-import wizardthumnail from './images/wizard-thumbnail.png';
 
 const banners = {
-    1: wizardthumnail,
-    //2: membershipBanner,
-    // Add more entries like:
-    // 3: require('./images/another-banner.png')
+
 };
 
-export default function Banner({ url, type }) {
+export default function LayoutBanners({ url, type }) {
     const [showImage, setShowImage] = useState(false);
 
     const handleClick = () => {
@@ -34,7 +30,7 @@ export default function Banner({ url, type }) {
                     width="100%"
                     height="500"
                     allowFullScreen
-                    autoPlay 
+                    autoPlay
                 ></iframe>
             )}
         </div>

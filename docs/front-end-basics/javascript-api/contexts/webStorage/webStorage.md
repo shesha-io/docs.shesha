@@ -1,50 +1,64 @@
-# Web storage
+---
+sidebar_label: Web Storage
+---
 
-It provides access to browser data storages (`sessionStorage` and `localStorage`)
+# Web Storage
 
-To access session storage:
+**Web Storage** gives your form scripts access to the browser's storage, so you can persist small pieces of data either for the current browser tab (session storage) or across browser sessions (local storage). It's available anywhere the standard script variables are available, alongside contexts such as `formContext` and `pageContext`.
 
-```Javascript
+---
+
+## Accessing Web Storage
+
+Session storage is available at:
+
+```javascript
 contexts.webStorage.session
 ```
 
-To access local storage:
+Local storage is available at:
 
-```Javascript
+```javascript
 contexts.webStorage.local
 ```
 
-These variables contain methods similar to those of the `window.localStorage` and `window.sessionStorage` objects.
+Both give you an object with the same set of methods, so everything below applies equally to `session` and `local`. They wrap the browser's own `sessionStorage` and `localStorage`, but are not the native objects themselves - they add automatic JSON serialization on top.
 
-```Javascript
-clear() => void
+---
+
+## Available Methods
+
+| Method | What it does |
+|---|---|
+| `setItem(key, value)` | Stores `value` under `key`. The value is automatically serialized with `JSON.stringify`, so you can store objects and arrays directly, not just strings |
+| `getItem(key)` | Retrieves the value stored under `key`, automatically parsed back from JSON into its original type |
+| `removeItem(key)` | Removes the value stored under `key` |
+| `clear()` | Removes everything stored |
+| `key(index)` | Returns the name of the key at the given position |
+
+:::warning length is not a live item count
+Unlike the browser's native `localStorage`/`sessionStorage`, `contexts.webStorage.local.length` and `contexts.webStorage.session.length` do not report how many items are stored. Reading `.length` is instead treated as looking up an item literally named `length`, so it will return `null` unless you have actually stored something under that key. If you need a count of stored items, track it yourself.
+:::
+
+You can also read and write values directly by referring to them as named properties, instead of calling `getItem`/`setItem` explicitly:
+
+```javascript
+contexts.webStorage.local.author = { name: 'Shesha' }; // same as setItem('author', { name: 'Shesha' })
+const author = contexts.webStorage.local.author; // same as getItem('author')
 ```
 
-```Javascript
-getItem(key: string) => string
+---
+
+## Example
+
+**Form type to use:** Edit Form - or any form type, since Web Storage is available everywhere standard script variables are.
+
+**Example - Save and read a value from local storage:**
+
+```javascript
+// values are serialized automatically, so objects and arrays are stored as-is
+contexts.webStorage.local.setItem('author', { name: 'Shesha', role: 'admin' });
+
+// getItem parses the stored JSON back into its original type
+const author = contexts.webStorage.local.getItem('author');
 ```
-
-```Javascript
-key(index: number) => string
-```
-
-```Javascript
-// length (size) of the local / session storage
-length => number
-```
-
-```Javascript
-removeItem(key: string) => void
-```
-
-```Javascript
-setItem(key: string, value: string) => void
-```
-
-You can save and access storage fields directly by referring to them by name and assigning values.
-
-Example
-
-```Javascript
-const getExpression = () => {
-	contexts.webStorage.local.setItem('author', 'Shesha'); // write
