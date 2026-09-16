@@ -45,12 +45,20 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
 
-          // Versioning. The "current" docs (the `docs/` folder) is the newest,
-          // in-progress version (v0.45). v0.43 is a frozen snapshot served as
-          // the default version at /docs/... Readers can switch versions via
-          // the dropdown in the navbar.
+          // Versioning. Three versions are published:
+          //   v0.46 - frozen snapshot (versioned_docs/version-0.46) at /docs/0.46/...
+          //   v0.45 - the "current" docs (the `docs/` folder)        at /docs/0.45/...
+          //   v0.43 - frozen snapshot, served as the default version at /docs/...
+          // Readers switch versions via the dropdown in the navbar.
+          // Every version sets banner:'none' so no "unreleased"/"unmaintained"
+          // notice is shown - all three are released and maintained.
           lastVersion: '0.43',
           versions: {
+            '0.46': {
+              label: '0.46',
+              path: '0.46',
+              banner: 'none',
+            },
             current: {
               label: '0.45',
               path: '0.45',
@@ -58,6 +66,7 @@ const config = {
             },
             '0.43': {
               label: '0.43',
+              banner: 'none',
             },
           },
         },
@@ -109,8 +118,8 @@ const config = {
           {
             type: 'docsVersionDropdown',
             position: 'right',
-            // Order shown in the dropdown: v0.43 first, then v0.45 (current).
-            versions: ['0.43', 'current'],
+            // Order shown in the dropdown: newest first - v0.46, v0.45 (current), v0.43.
+            versions: ['0.46', 'current', '0.43'],
           },
           {
             type: 'custom-customSearchBar', 
