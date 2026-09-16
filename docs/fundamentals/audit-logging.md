@@ -9,10 +9,6 @@ Audit logging keeps a record of what changed on your data, when it changed, and 
 
 Shesha builds its audit trail on top of the ABP Entity History framework and then adds several Shesha specific features on top. If you want to understand the underlying mechanism, the ABP documentation is a good starting point: <a href="https://aspnetboilerplate.com/Pages/Documents/Entity-History" target="_blank">ABP Entity History</a>.
 
-:::info
-The features described on this page are written against the `releases/0.43` branch of the Shesha framework. All attribute names, method signatures, and stored procedure parameters have been verified against that source.
-:::
-
 ---
 
 ## Logging changes to entity properties

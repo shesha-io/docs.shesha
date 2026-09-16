@@ -103,7 +103,6 @@ export const CustomPlugin: React.FC<PropsWithChildren<ICustomPluginProps>> = ({
 
 To view the list of exposed components in the Shesha Form Builder, open `Custom Components` via the builder widgets, as shown in the image below:
 
-  <!-- figure 7 -->
 
 ![Image](./images/figure8(1).png)
 
@@ -332,7 +331,6 @@ export const getSettings = (data: any) => {
 };
 ```
 
-  <!-- figure 15 -->
 
 ![Image](./images/figure7(1).png)
 
@@ -416,7 +414,6 @@ To expose custom components, wrap your application's root provider with the `Cus
 
 Navigate to the `app-provider.tsx` file located in the `adminportal` directory: `src --> app --> app-provider.tsx`
 
-  <!-- figure 11 -->
 
 ![Image](./images/figure11.png)
 

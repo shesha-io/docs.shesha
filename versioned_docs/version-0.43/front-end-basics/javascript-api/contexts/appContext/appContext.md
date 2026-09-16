@@ -22,7 +22,7 @@ contexts.appContext
 
 ## Binding a Component to App Context
 
-Any component with a [Property Name](/docs/front-end-basics/form-components/common-component-properties#property-name) can be pointed at App Context instead of the form's own data, by setting its [Context](/docs/front-end-basics/form-components/common-component-properties#context) property to `appContext`. Once bound this way, the component reads its value from App Context and writes changes back to App Context, rather than to the form's data object.
+Any component with a [Property Name](/docs/front-end-basics/form-components/common-component-properties#property-name-string) can be pointed at App Context instead of the form's own data, by setting its [Context](/docs/front-end-basics/form-components/common-component-properties#context-object) property to `appContext`. Once bound this way, the component reads its value from App Context and writes changes back to App Context, rather than to the form's data object.
 
 ![Data Entry](./images/context2.png)
 

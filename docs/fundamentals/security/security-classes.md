@@ -6,7 +6,7 @@ title: Security Classes and Interfaces
 
 # Security Classes and Interfaces
 
-Shesha's authorization system is built from a handful of cooperating classes: one that manages roles, one that checks whether a user holds a permission, one that manages the "Protected Objects" a permission applies to, and one that ties the two together to authorize a request. This page covers each of them, verified against the actual `shesha-core` source rather than a general description.
+Shesha's authorization system is built from a handful of cooperating classes: one that manages roles, one that checks whether a user holds a permission, one that manages the "Protected Objects" a permission applies to, and one that ties the two together to authorize a request. This page covers each of them.
 
 ---
 

@@ -1,0 +1,8 @@
+{
+  "label": "Entity References",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "Entity Reference component renders an entity reference (foreign key reference) as links that allows for different navigation/display options from there."
+  }
+}
