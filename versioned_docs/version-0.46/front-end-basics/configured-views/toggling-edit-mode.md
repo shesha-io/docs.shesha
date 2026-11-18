@@ -13,7 +13,7 @@ Every Shesha application runs in one of two modes. **Live Mode** is how your end
 
 ![Images](./images/togglingeditmode.png)
 
-Look for the **Live Mode** / **Edit Mode** switch in the application header. It's only visible to users who hold the `app:Configurator` permission - if you don't have that permission, you won't see it at all.
+Look for the **Live Mode** / **Edit Mode** switch in the application header. It's only visible to users who hold the `Application-Configure` permission (granted by the standard **Configurator** role) - if you don't have that permission, you won't see it at all.
 
 Flipping the switch takes effect straight away, with a brief "You are now in Edit Mode" message confirming the change (and "You are now in Live Mode" when you flip it back). Flip it again to return to Live Mode.
 

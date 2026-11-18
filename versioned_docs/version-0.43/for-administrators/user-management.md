@@ -79,7 +79,7 @@ Most system account management functions you need, such as creating accounts, ac
 Password reset flows support email links, SMS one-time passwords, and security questions.
 
 :::note
-`ResetPasswordAsync` requires the calling user to hold the `Users_ResetPassword` permission. This is checked separately from the general `Pages.Users` permission that guards the rest of the Users screen.
+`ResetPasswordAsync` requires the calling user to hold the `User-ResetPassword` or `User-Manage` permission. The rest of the user APIs require `User-Manage`. Both are granted by the standard **User Administrator** role - see [Standard Roles and Permissions](/docs/fundamentals/security/standard-roles-and-permissions).
 :::
 
 :::note

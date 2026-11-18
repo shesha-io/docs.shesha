@@ -174,7 +174,9 @@ In most cases you'll use `GetValueAsync` and `SetValueAsync`. The synchronous an
 
 ## Reading and Writing Settings on the Front-End
 
-All registered settings are available in form script editors via the `application.settings` object. Settings are organized by module and group:
+All registered settings are available in form script editors via the `application.settings` object. It needs one of the settings permissions, so it suits configuration and admin screens. If normal users need to read a setting, see [Reading settings as a non-admin user](#reading-settings-as-a-non-admin-user).
+
+Settings are organized by module and group:
 
 ```
 application.settings.[module].[group].[setting]
@@ -200,6 +202,84 @@ Simple-type settings (`number`, `string`, `boolean`) are strongly typed in the e
 - **Module**: uses the module's `Alias` (if set), otherwise the module name in camelCase.
 - **Group**: uses the `[Alias]` attribute on the interface (if set), otherwise the interface name without the `I` prefix and `Settings` suffix, in camelCase.
 - **Setting**: uses the `[Alias]` attribute on the property (if set), otherwise the property name in camelCase.
+:::
+
+---
+
+### Reading settings as a non-admin user
+
+Often you need a setting's value for a normal user, for example to decide whether a form should show a dialog. Reading a value is allowed for everyone, but some of the settings APIs are restricted to administrators.
+
+| Settings API | Who can call it |
+|---|---|
+| `GetValue` (read one value) | Anyone. It is `[AllowAnonymous]` and cannot be restricted. |
+| `GetUserValue` / `UpdateUserValue` ([user-specific settings](#user-specific-settings)) | Any logged-in user. |
+| `GetConfigurations` (list all settings) | Only users with `Application-Configure`, `Application-Settings` or `Application-Maintenance`. |
+| `UpdateValue` (change a value) | Only users with `Application-Configure`, `Application-Settings` or `Application-Maintenance`. |
+
+These rules are locked in code (`IsConfigurable = false`, or `[AllowAnonymous]` for `GetValue`), so they can't be changed through the Permissioned Objects UI. See [Endpoint Permissions](../fundamentals/security/endpoint-permissions.md#controlling-access-in-code).
+
+:::warning `application.settings` fails for non-admin users
+`application.settings.[module].[group].[setting].getValueAsync()` calls `GetConfigurations` first, to translate the module, group and setting aliases into the real setting name. For users without one of the permissions above, that call fails with an error saying the required permissions are not granted and listing `Application-Configure`, `Application-Settings` and `Application-Maintenance`. You'll see the failed `GetConfigurations` request in the browser's network tab.
+
+Don't fix this by giving normal users `Application-Settings`. That permission also lets them **change** every application setting. Use one of the options below instead.
+:::
+
+#### Option 1: Call `GetValue` directly from the form
+
+Call the `GetValue` endpoint with the setting's **module name** and **setting name**. These are the real names, not the camelCase aliases used by `application.settings`:
+
+- **`module`** is the name of the module that defines the setting, for example `Shesha` for the framework's own settings. Use the module name, not the camelCase alias (`shesha`).
+- **`name`** is the name passed to `[Setting(...)]`, e.g. `MembershipSettingNames.DebitDay`.
+
+```javascript
+// Works for any user, including anonymous users
+const response = await http.get('/api/services/app/Settings/GetValue', {
+  params: {
+    module: 'YourApp',                    // module name
+    name: 'Shesha.Membership.DebitDay',   // setting name from [Setting(...)]
+  },
+});
+
+const debitDay = response.data.result;
+
+if (debitDay > 25) {
+  // show the dialog
+}
+```
+
+#### Option 2: Return the value from your own application service
+
+If the value is part of business logic, read it on the back end with the [setting accessor](#reading-and-writing-settings-in-back-end-code) and return it from your own endpoint. Reading through the accessor doesn't go through the settings API, so no settings permission is needed. You choose who can call the endpoint with [`[SheshaAuthorize]`](../fundamentals/security/endpoint-permissions.md#controlling-access-in-code).
+
+```cs
+using Microsoft.AspNetCore.Mvc;
+using Shesha.Authorization;
+using Shesha.Domain.Enums;
+
+[SheshaAuthorize(RefListPermissionedAccess.AnyAuthenticated)]
+public class MembershipAppService : SheshaAppServiceBase
+{
+    private readonly IMembershipSettings _membershipSettings;
+
+    public MembershipAppService(IMembershipSettings membershipSettings)
+    {
+        _membershipSettings = membershipSettings;
+    }
+
+    [HttpGet]
+    public async Task<bool> ShouldShowDebitDayReminderAsync()
+    {
+        var debitDay = await _membershipSettings.DebitDay.GetValueAsync();
+        return debitDay > 25;
+    }
+}
+```
+
+The form then calls `/api/services/app/Membership/ShouldShowDebitDayReminder`.
+
+:::note Writing settings
+Changing an application setting (`setValueAsync` or `UpdateValue`) always requires one of the permissions above. To let a normal user store their own preference, use a [user-specific setting](#user-specific-settings) instead.
 :::
 
 ---

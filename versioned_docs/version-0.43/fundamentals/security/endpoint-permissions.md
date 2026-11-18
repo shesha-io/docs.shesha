@@ -24,36 +24,56 @@ Every endpoint is assigned one of five access levels. These are the same options
 
 ## Controlling Access in Code
 
-When Shesha scans your application on startup, it reads any attributes on your AppService classes and methods to determine the initial access level for each endpoint. There are two categories of attribute: hardcoded and configurable.
-
-### Hardcoded Attributes
-
-The following attributes lock an endpoint's access level permanently. Shesha marks any endpoint decorated with one of these as `Hardcoded`, which means the Permissioned Objects UI will display the value but will not let you change it. The code value always wins, on every startup.
-
-| Attribute | Effect |
-|---|---|
-| `[AllowAnonymous]` | Sets access to `Allow Anonymous`. |
-| `[AbpAllowAnonymous]` | Sets access to `Allow Anonymous`. |
-| `[AbpAuthorize]` | Sets access to `Requires Permissions` (or `Any Authenticated` if no permissions are listed). |
-| `[AbpMvcAuthorize]` | Sets access to `Requires Permissions` (or `Any Authenticated` if no permissions are listed). |
+Use the `[SheshaAuthorize]` attribute (`Shesha.Authorization`) to set an endpoint's access level in code. You can put it on an application service class (applies to all its methods) or on a single method (overrides the class).
 
 ```csharp
-// This endpoint can never be locked down via the UI - it is always public.
-[AllowAnonymous]
-[HttpGet, Route("public-status")]
-public async Task<StatusDto> GetPublicStatus()
+[SheshaAuthorize(RefListPermissionedAccess access, params string[] permissions, IsConfigurable = true | false)]
+```
+
+| Parameter | Description |
+|---|---|
+| `access` | One of the `RefListPermissionedAccess` levels above, e.g. `RequiresPermissions` or `AnyAuthenticated`. If you use `RequiresPermissions` but list no permissions, Shesha treats it as `AnyAuthenticated`. |
+| `permissions` | The permission names to check when `access` is `RequiresPermissions`. The user needs **at least one** of them. |
+| `IsConfigurable` | Whether a configurator may override this setting in the **Permissioned Objects** UI. Defaults to `true`. |
+
+Each endpoint falls into one of three cases.
+
+### Case 1: Fixed (`IsConfigurable = false`)
+
+Set `IsConfigurable = false` when the access rule must never be changed through configuration. Shesha marks the endpoint as `Hardcoded`. The Permissioned Objects UI shows the value as read-only, and the code value is applied again on every startup.
+
+**Example - only configurators can call this service:**
+
+```csharp
+using Shesha.Authorization;
+using Shesha.Domain.Enums;
+
+// highlight-start
+[SheshaAuthorize(RefListPermissionedAccess.RequiresPermissions, "Invoice-Approve", IsConfigurable = false)]
+// highlight-end
+public class InvoiceApprovalAppService : SheshaAppServiceBase
 {
-    // ...
+    [HttpPost]
+    public async Task ApproveAsync(Guid invoiceId)
+    {
+        // ...
+    }
 }
 ```
 
-### Configurable Attributes
-
-`[SheshaAuthorizeAttribute]` sets the endpoint's initial access level in the database without marking it as hardcoded. This means the value can later be overridden through the Permissioned Objects UI.
+Use this for security-critical endpoints. The framework's own application services use it, for example:
 
 ```csharp
-using Shesha.Domain.Enums;
+[SheshaAuthorize(RefListPermissionedAccess.RequiresPermissions, PermissionNames.Application_Configure, IsConfigurable = false)]
+public class ModelConfigurationsAppService : SheshaAppServiceBase { ... }
+```
 
+### Case 2: Configurable (`IsConfigurable = true`, the default)
+
+Leave `IsConfigurable` out (or set it to `true`) when you want to ship a sensible default from code, but still let an administrator adjust it later without a deployment.
+
+```csharp
+// The default is RequiresPermissions + WorkOrder-View, but a configurator can change it.
 [SheshaAuthorize(RefListPermissionedAccess.RequiresPermissions, "WorkOrder-View")]
 [HttpGet, Route("{id}")]
 public async Task<WorkOrderDto> GetWorkOrder(Guid id)
@@ -62,11 +82,65 @@ public async Task<WorkOrderDto> GetWorkOrder(Guid id)
 }
 ```
 
-Use this attribute when you want to ship a sensible default from code but still allow a system administrator to adjust the setting without a deployment.
+The code value is written to the database the first time the endpoint is registered. After that, the database is the source of truth. See [How Updates Work](#how-updates-work).
+
+### Case 3: Anonymous with `[AllowAnonymous]`
+
+The ASP.NET Core `[AllowAnonymous]` attribute (and ABP's `[AbpAllowAnonymous]`) makes an endpoint public. It **takes precedence** over `[SheshaAuthorize]` and is **not configurable**: the endpoint is marked `Hardcoded` and shown as read-only in the UI.
+
+```csharp
+// Always public. Can never be locked down through the UI.
+// highlight-start
+[AllowAnonymous]
+// highlight-end
+[HttpGet, Route("public-status")]
+public async Task<StatusDto> GetPublicStatus()
+{
+    // ...
+}
+```
+
+If you want an endpoint to be **anonymous by default, but configurable** (for example, so an administrator can lock it down later), use `[SheshaAuthorize]` instead:
+
+```csharp
+[SheshaAuthorize(RefListPermissionedAccess.AllowAnonymous, IsConfigurable = true)]
+[HttpGet, Route("opening-hours")]
+public async Task<OpeningHoursDto> GetOpeningHours()
+{
+    // ...
+}
+```
+
+### Summary of the three cases
+
+| You want the endpoint to be... | Use |
+|---|---|
+| Secured, and never changed by configuration | `[SheshaAuthorize(access, permissions..., IsConfigurable = false)]` |
+| Secured by default, but adjustable by configuration | `[SheshaAuthorize(access, permissions...)]` |
+| Always public | `[AllowAnonymous]` |
+| Public by default, but adjustable by configuration | `[SheshaAuthorize(RefListPermissionedAccess.AllowAnonymous, IsConfigurable = true)]` |
+
+:::warning `[AbpAuthorize]` and `[Authorize]` are no longer used
+Shesha no longer reads `[AbpAuthorize]`, `[AbpMvcAuthorize]` or the ASP.NET Core `[Authorize]` attribute when it registers permissioned objects. The framework's application services have been converted to `[SheshaAuthorize(..., IsConfigurable = false)]` so the Permissioned Objects UI shows what is actually enforced. Do the same in your own application services:
+
+```csharp
+// Before
+[AbpAuthorize("Invoice-Approve")]
+public class InvoiceApprovalAppService : SheshaAppServiceBase { ... }
+
+// After
+[SheshaAuthorize(RefListPermissionedAccess.RequiresPermissions, "Invoice-Approve", IsConfigurable = false)]
+public class InvoiceApprovalAppService : SheshaAppServiceBase { ... }
+```
+:::
 
 ### No Attribute
 
 If you do not apply any attribute, Shesha registers the endpoint in the database with an access level of `Inherited`. The endpoint will then defer to its parent service's access level, or to the `DefaultEndpointAccess` system setting if the parent is also `Inherited`.
+
+:::note Entity CRUD APIs
+The dynamically generated CRUD APIs of an entity are secured with the `[Entity]` and `[EntityAuthorize]` attributes on the entity class, not with `[SheshaAuthorize]`. See [Dynamic CRUD APIs](/docs/back-end-basics/crud-apis#controlling-and-securing-crud-apis-in-code).
+:::
 
 ---
 
@@ -88,7 +162,7 @@ The `Default Endpoint Access` setting only applies to endpoints that are still s
 
 The Permissioned Objects UI in the Configuration Studio shows every registered endpoint in your application, organised by module and service. From here you can see the current access level and permissions for each endpoint and change them without touching code.
 
-Endpoints marked as `Hardcoded` are shown with a lock indicator. Their values reflect the code attribute and cannot be edited.
+Services and endpoints marked as `Hardcoded` are shown in **bold**. Their values reflect the code (`[AllowAnonymous]` or `[SheshaAuthorize(..., IsConfigurable = false)]`) and cannot be edited.
 
 All other endpoints can be updated directly in the UI. When you save a change, Shesha writes the new value to the database. After that point, the endpoint's access level is controlled by that database record.
 
@@ -105,12 +179,12 @@ On every application startup, Shesha compares each registered endpoint against i
 | Condition | What happens on startup |
 |---|---|
 | Endpoint is new (no DB record) | The code attribute value is written to the database. |
-| Endpoint carries a hardcoded attribute | The code value always overwrites the database record, regardless of what the database says. |
+| Endpoint is hardcoded (`[AllowAnonymous]` or `IsConfigurable = false`) | The code value always overwrites the database record, regardless of what the database says. |
 | DB record exists with a non-`Inherited` access level | The database record is kept. The code attribute value is ignored. |
 | DB record exists and is `Inherited` | The code attribute value is applied. This only occurs if the attribute itself specifies `Inherited`, or if a user has explicitly reset the endpoint to `Inherited` in the UI. |
 
 :::warning
-Changing `[SheshaAuthorizeAttribute]` in code after an endpoint has been initialized will have no effect. The initial seed writes a non-`Inherited` value to the database. On all subsequent startups, that non-`Inherited` database value is kept and the code is not re-applied. To change permissions on an already-initialized endpoint, use the Permissioned Objects UI.
+Changing a configurable `[SheshaAuthorize]` attribute in code after an endpoint has been initialized will have no effect. (This does not apply to `IsConfigurable = false`, where the code is re-applied on every startup.) The initial seed writes a non-`Inherited` value to the database. On all subsequent startups, that non-`Inherited` database value is kept and the code is not re-applied. To change permissions on an already-initialized endpoint, use the Permissioned Objects UI.
 
 The same applies to `DefaultEndpointAccess`: once the value has been saved in the database through the Security Settings page, changing the code-level default has no effect. Configure it through the UI.
 :::
@@ -121,7 +195,7 @@ The same applies to `DefaultEndpointAccess`: once the value has been saved in th
 
 When a request arrives, Shesha resolves the endpoint's effective access level in the following order:
 
-1. If the endpoint carries a hardcoded attribute (`[AllowAnonymous]`, `[AbpAuthorize]`, etc.), that value is used. No database lookup is needed.
+1. If the endpoint is hardcoded (`[AllowAnonymous]`, or `[SheshaAuthorize(..., IsConfigurable = false)]`), that value is used. `[AllowAnonymous]` wins over `[SheshaAuthorize]` if both are present.
 2. If a database record exists with an explicit (non-`Inherited`) access level, that value is used.
 3. If the database record is `Inherited`, Shesha walks up the parent service hierarchy.
 4. If the parent hierarchy is fully `Inherited`, the `DefaultEndpointAccess` system setting is used as the final fallback.

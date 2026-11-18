@@ -82,7 +82,7 @@ IocManager.Register<IValidator<Person>, PersonValidator>();
 
 ##### Example
 ``` csharp
-[AbpAuthorize]
+[SheshaAuthorize(RefListPermissionedAccess.AnyAuthenticated)]
 [ApiVersion("1")]
 [Route("api/v{version:apiVersion}/His/[controller]")]
 public class AppService : SheshaAppServiceBase
