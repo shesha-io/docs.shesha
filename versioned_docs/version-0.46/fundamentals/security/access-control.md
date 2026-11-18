@@ -27,18 +27,17 @@ Shesha's access control framework is built around a few key concepts that form t
 ## Roles
 Shesha implements a **Role-Based Access Control (RBAC)** security model to manage user access and permissions within the system. This model allows Configurators to define roles with specific permissions, which can then be assigned to users. By doing so, users can only perform actions that are permitted by their assigned roles.
 
-### Built-in Roles
-A new Shesha application starts with a small set of built-in ("static") roles, registered in `AppRoleConfig` and seeded by ABP on startup - separately for the host side and each tenant:
+### Standard Roles
+A new Shesha application starts with four standard roles for managing basic user access. They are defined as configuration items in Shesha Core and imported automatically, so they're available on every installation.
 
-| Role | Description |
-|---|---|
-| **Application Administrator** | The default administrative role for the application. |
-| **Application Developer** | Intended for developers working on the application. |
-| **Application Configurator** | Intended for users who configure the application, for example through the Configuration Studio. |
+| Role | Description | Key permissions |
+|---|---|---|
+| **User** | Regular user. Can view and maintain core business data such as accounts, persons and organisations. | `Account-*`, `Person-*`, `Organisation-*` |
+| **User Administrator** | Administers other users, including creating and updating users and assigning roles, but no other system administration. | `User-View`, `User-Manage`, `User-ResetPassword` |
+| **Configurator** | Configures the system: forms, entities, reference lists and other configuration items. | `Application-Configure` |
+| **System Administrator** | General system administration, including access to logs, settings, maintenance tools and scheduled jobs. | All of the above, plus `Application-Administer`, `Application-Settings`, `Application-Maintenance`, `Hangfire-Dashboard`, `Role-Manage` |
 
-:::note
-Shesha does not hardcode which permissions these built-in roles hold. A new application grants them permissions through its own seed data or migrations, and an administrator can adjust their permissions at any time from the Configuration Studio's Roles editor. `ShaPermissionNames` in `shesha-core` defines a handful of framework-level permission constants you'll see referenced this way, such as `app:Configurator` (Configuration Studio access) and `pages:persons`, `pages:shaRoles`, `pages:applicationSettings` (admin screens).
-:::
+The standard roles don't include a separate Developer role. Give developers the **Configurator** role. For the full list of permissions in each role and what each permission controls, see [Standard Roles and Permissions](./standard-roles-and-permissions.md).
 
 ### Creating Roles
 New roles can be created to meet specific organizational needs entirely through the Configuration Studio where new roles can be created, existing ones can be modified, or deleted as necessary.
@@ -81,7 +80,7 @@ We suggest the following naming convention `{Name of thing to secure}-{Action na
 - `User-Suspend`
 
 :::note
-These are illustrative examples of the recommended naming convention, not permissions Shesha ships out of the box. The permission constants Shesha itself defines are listed under [Built-in Roles](#built-in-roles) above.
+These are illustrative examples of the recommended naming convention, not permissions Shesha ships out of the box. Shesha's own permissions follow this convention (for example `Application-Configure`, `Role-Manage` and `Person-View`). See [Framework Permissions](./standard-roles-and-permissions.md#framework-permissions) for the full list.
 :::
 
 #### Naming of Scoped Permissions
@@ -187,6 +186,22 @@ public async Task<CompleteWorkOrderResponse> CompleteWorkOrder(CompleteWorkOrder
 }
 ```
 In this example, the `CompleteWorkOrder` method is secured with the `WorkOrder-Action` permission. Only users with this permission will be able to access this API endpoint.
+
+A configurator can override this access rule later through the **Permissioned Objects** page. See [Endpoint Permissions](./endpoint-permissions.md#controlling-access-in-code) for how code attributes and configuration interact, and how to lock an endpoint so it can't be changed.
+
+### Securing Entity CRUD APIs with Attributes
+The CRUD APIs that Shesha generates for each entity are secured on the entity class, with the `[Entity]` and `[EntityAuthorize]` attributes:
+
+```csharp
+[Entity(CrudActions = CrudActions.All, CrudActionsAccess = CrudActionsAccess.RequiresPermissions, CrudActionsPermissions = ["WorkOrder-Manage"])]
+[EntityAuthorize(CrudAction.Read, ["WorkOrder-View", "WorkOrder-Manage"])]
+public class WorkOrder : FullAuditedEntity<Guid>
+{
+    // ...
+}
+```
+
+See [Controlling and Securing CRUD APIs in Code](../../back-end-basics/crud-apis.md#controlling-and-securing-crud-apis-in-code) for details.
 
 ### Custom Code for more Complex Scenarios
 In some cases, you may need to implement more complex logic to determine whether a user has permission to perform an action. For example, you might want to allow users to complete a work order only if they are assigned to it.

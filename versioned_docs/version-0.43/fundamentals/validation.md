@@ -70,7 +70,7 @@ Or through dependency injection of `IValidator<EntityValidator>`/`IValidator<Ent
 /// <summary>
 /// 
 /// </summary>
-[AbpAuthorize]
+[SheshaAuthorize(RefListPermissionedAccess.AnyAuthenticated)]
 [ApiVersion("1")]
 [Route("api/v{version:apiVersion}/His/[controller]")]
 public class AppService : SheshaAppServiceBase

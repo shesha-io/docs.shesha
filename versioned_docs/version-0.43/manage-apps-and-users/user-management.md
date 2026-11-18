@@ -52,7 +52,7 @@ As a new Healthcare Practitioner gets created in the system, it could be importa
 /// <summary>
 /// Extending the default Crud AppService with a couple of User management related end-points.
 /// </summary>
-[AbpAuthorize]
+[SheshaAuthorize(RefListPermissionedAccess.AnyAuthenticated)]
 [ApiVersion("1")]
 [Route("api/v{version:apiVersion}/Common/[controller]")]
 public class HealthPractitionerAppService : DynamicCrudAppService<HisPractitioner, DynamicDto<HealthPractitioner, Guid>, Guid>, ITransientDependency
@@ -65,7 +65,7 @@ public class HealthPractitionerAppService : DynamicCrudAppService<HisPractitione
     }
 
     [HttpPost, Route("CreateWithUserAccount")]
-    [AbpAuthorize(CommonPermissions.UserManagement.Create)]
+    [SheshaAuthorize(RefListPermissionedAccess.RequiresPermissions, CommonPermissions.UserManagement.Create)]
     public async Task<DynamicDto<HisPractitioner, Guid>> CreateWithUserAccountAsync(CreatePersonAccountDto input)
     {
         // Performing additional validations

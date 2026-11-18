@@ -28,7 +28,7 @@ Imagine a system that manages client information, where only company employees s
 
 ## User Administration Tasks
 
-Administrators manage users through the built-in **Users** screen, which lists all `User` records and is protected by the `Pages.Users` permission. From there you can create, edit, and disable users, and assign roles to them.
+Administrators manage users through the built-in **Users** screen, which lists all `User` records and is protected by the `User-Manage` permission. From there you can create, edit, and disable users, and assign roles to them.
 
 ### Creating a User
 
@@ -80,7 +80,7 @@ If you need to manage users from your own backend code rather than through the U
 | `ResetPasswordAsync(ResetPasswordDto input)` | Lets an administrator reset another user's password |
 
 :::note
-`ResetPasswordAsync` requires the calling user to hold the `Users_ResetPassword` permission. This is checked separately from the general `Pages.Users` permission that guards the rest of the Users screen.
+`ResetPasswordAsync` requires the calling user to hold the `User-ResetPassword` or `User-Manage` permission. The rest of the user APIs require `User-Manage`. Both are granted by the standard **User Administrator** role - see [Standard Roles and Permissions](../fundamentals/security/standard-roles-and-permissions.md).
 :::
 
 :::info Security-question and OTP-based password reset

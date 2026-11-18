@@ -9,7 +9,7 @@ sidebar_label: Authorization and Authentication
 
 In more advanced applications, ensuring that specific actions are only performed by authorized users is crucial. This concept is commonly known as `Authorization` or `Access Control`. Shesha employs a `Permissions-based security model` to enforce authorization, where restricted actions can only be executed by users assigned the relevant permission. However, assigning permissions directly to users is not the standard practice; instead, it is done through roles. Roles are associated with one or more permissions, and by assigning a role to a user, the user automatically inherits all linked permissions.
 
-Consider a scenario where access to the `Reset Password` functionality needs restriction. In this case, the **Reset Password** button on the form configurator is a restricted action. The form configurator allows specifying the required permission(s) for a component through the **Visible Permissions** property (or **Edit Mode Permissions**, if the component should still be visible but read-only to users without the permission). For example, it could be set to the permission `User.ResetPassword`. This permission would then be linked to the role `User Administrator`. To grant user Joe the ability to reset passwords, you would assign the role `User Administrator` to Joe. The scenario is illustrated in the diagram below:
+Consider a scenario where access to the `Reset Password` functionality needs restriction. In this case, the **Reset Password** button on the form configurator is a restricted action. The form configurator allows specifying the required permission(s) for a component through the **Visible Permissions** property (or **Edit Mode Permissions**, if the component should still be visible but read-only to users without the permission). For example, it could be set to the permission `User-ResetPassword`. This permission would then be linked to the role `User Administrator`. To grant user Joe the ability to reset passwords, you would assign the role `User Administrator` to Joe. The scenario is illustrated in the diagram below:
 
 ![Permission Based Security Model](./images/security.png)
 
@@ -52,8 +52,8 @@ Permission names must be unique within a module and follow the naming convention
 - `User-ResetPassword`
 - `User-Suspend`
 
-:::note Shesha's own built-in permissions use a different pattern
-This dash-separated pattern is a recommended convention for permissions you define in your own application. Shesha's built-in framework permissions instead use a dot-separated, hierarchical style, for example `Pages.Users` and `Pages.Roles` (see `PermissionNames` in `Shesha.Framework`). Either style works technically - pick one convention for your own application and stay consistent.
+:::note Shesha's own permissions follow the same pattern
+Shesha's built-in framework permissions use this dash-separated convention too, for example `User-Manage`, `Role-Manage` and `Application-Configure` (see `PermissionNames` in `Shesha.Framework`). Earlier releases used dot-separated names such as `Pages.Users` and `Pages.Roles`. See [Standard Roles and Permissions](../fundamentals/security/standard-roles-and-permissions.md) for the full list.
 :::
 
 ### Permission Granularity

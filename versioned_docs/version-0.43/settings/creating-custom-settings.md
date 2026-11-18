@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Application Settings
 
-Application settings let you store configurable values — like feature flags, default numbers, API credentials, or complex option groups — that administrators can change at runtime without redeploying code. Think of them as a key-value store that is strongly typed, editable through the Shesha UI, and accessible from both back-end and front-end code.
+Application settings let you store configurable values - like feature flags, default numbers, API credentials, or complex option groups - that administrators can change at runtime without redeploying code. Think of them as a key-value store that is strongly typed, editable through the Shesha UI, and accessible from both back-end and front-end code.
 
 **When to use settings:**
 - You need a value that might change between environments or over time (e.g. a default debit day, an SLA duration, a toggle to enable/disable a feature).
@@ -18,8 +18,8 @@ Before diving in, here are the building blocks you'll work with:
 
 | Concept | What it is |
 |---|---|
-| **Setting accessor interface** | A C# interface (extending `ISettingAccessors`) that declares your settings as strongly typed properties. By convention, each Shesha module has **one** accessor interface — see [Organizing settings](#organizing-settings) below. |
-| **`ISettingAccessor<T>`** | The property type for each setting. `T` is the data type — `int`, `bool`, `string`, or a custom class for compound settings. |
+| **Setting accessor interface** | A C# interface (extending `ISettingAccessors`) that declares your settings as strongly typed properties. By convention, each Shesha module has **one** accessor interface - see [Organizing settings](#organizing-settings) below. |
+| **`ISettingAccessor<T>`** | The property type for each setting. `T` is the data type - `int`, `bool`, `string`, or a custom class for compound settings. |
 | **Setting name** | A unique string identifier for each setting (e.g. `"Shesha.Membership.DebitDay"`). |
 | **Module registration** | A one-line call in your module's `Initialize` (or `PreInitialize`) method that tells Shesha about your settings and their default values. |
 
@@ -38,26 +38,26 @@ YourModule.Domain/
 The naming convention is `I{ModuleName}Settings.cs`. For example, a module called `Membership` would have `IMembershipSettings`, a module called `Leave` would have `ILeaveSettings`, and so on.
 
 :::tip When to split into multiple accessors
-You _can_ create more than one accessor interface per module if you have a good reason — for example, separating global settings from user-specific settings, or isolating a large, self-contained feature area. But start with one and only split when a single interface becomes unwieldy.
+You _can_ create more than one accessor interface per module if you have a good reason - for example, separating global settings from user-specific settings, or isolating a large, self-contained feature area. But start with one and only split when a single interface becomes unwieldy.
 :::
 
 ### Simple vs. compound settings
 
 Shesha supports two styles of settings, and **compound settings are generally preferred**:
 
-- **Simple settings** — a single primitive value (`int`, `string`, `bool`). Good for standalone toggles or numbers that don't relate to other settings.
-- **Compound settings** — a custom class containing multiple related properties. This is the **recommended approach** for most cases because:
-  - **Grouping** — related values stay together (e.g. all payment-related settings in one object), making the code easier to understand.
-  - **Efficiency** — multiple related values are retrieved in a single call instead of one call per setting.
-  - **Richer UI** — compound settings use a custom editor form, giving you full control over the layout, validation, and user experience for administrators.
+- **Simple settings** - a single primitive value (`int`, `string`, `bool`). Good for standalone toggles or numbers that don't relate to other settings.
+- **Compound settings** - a custom class containing multiple related properties. This is the **recommended approach** for most cases because:
+  - **Grouping** - related values stay together (e.g. all payment-related settings in one object), making the code easier to understand.
+  - **Efficiency** - multiple related values are retrieved in a single call instead of one call per setting.
+  - **Richer UI** - compound settings use a custom editor form, giving you full control over the layout, validation, and user experience for administrators.
 
 When in doubt, use a compound setting. Even if you start with just two or three related values, a compound setting scales better as requirements grow.
 
 ## Creating a Simple Setting
 
-A "simple" setting stores a single value — a number, a string, a boolean, etc. We'll walk through creating a **Debit Day** setting that controls which day of the month a membership payment is processed.
+A "simple" setting stores a single value - a number, a string, a boolean, etc. We'll walk through creating a **Debit Day** setting that controls which day of the month a membership payment is processed.
 
-### Step 1 — Define setting names
+### Step 1 - Define setting names
 
 In your **Domain** layer, create a `Configuration` folder and add a class to hold your setting name constants:
 
@@ -73,7 +73,7 @@ namespace YourApp.Domain.Configuration
 
 Using constants avoids typos and makes it easy to reference the same name everywhere.
 
-### Step 2 — Define the setting accessor interface
+### Step 2 - Define the setting accessor interface
 
 In the same `Configuration` folder, create an interface that extends `ISettingAccessors`. Each property represents one setting. Following the [one-accessor-per-module convention](#organizing-settings), name it `I{ModuleName}Settings`:
 
@@ -100,9 +100,9 @@ namespace YourApp.Domain.Configuration
 |---|---|
 | `[Category("Membership")]` | Groups this setting under "Membership" in the Settings UI. Can be applied at the interface or property level. |
 | `[Display(Name, Description)]` | Sets the label and tooltip shown in the Settings UI. |
-| `[Setting(...)]` | Links the property to its unique setting name. Also supports optional flags — see [Setting attribute options](#setting-attribute-options) below. |
+| `[Setting(...)]` | Links the property to its unique setting name. Also supports optional flags - see [Setting attribute options](#setting-attribute-options) below. |
 
-### Step 3 — Register the accessor in your module
+### Step 3 - Register the accessor in your module
 
 Open your module class (the class that extends `SheshaModule`) and register the setting accessor. This is also where you provide a default value:
 
@@ -120,15 +120,15 @@ public override void Initialize()
 }
 ```
 
-The default value (`1`) is used when no value has been saved yet — in this case, payments default to the 1st of each month.
+The default value (`1`) is used when no value has been saved yet - in this case, payments default to the 1st of each month.
 
-### Step 4 — Verify in the UI
+### Step 4 - Verify in the UI
 
 Run your back-end, then navigate to **Configurations > Settings** in the Shesha UI. You should see the new **Debit day** setting under the **Membership** category:
 
 ![Image](./images/modules5.png)
 
-That's it — you have a working application setting.
+That's it - you have a working application setting.
 
 ---
 
@@ -170,7 +170,9 @@ In most cases you'll use `GetValueAsync` and `SetValueAsync`. The synchronous an
 
 ## Reading and Writing Settings on the Front-End
 
-All registered settings are available in form script editors via the `application.settings` object. Settings are organized by module and group:
+All registered settings are available in form script editors via the `application.settings` object. It needs one of the settings permissions, so it suits configuration and admin screens. If normal users need to read a setting, see [Reading settings as a non-admin user](#reading-settings-as-a-non-admin-user).
+
+Settings are organized by module and group:
 
 ```
 application.settings.[module].[group].[setting]
@@ -198,6 +200,82 @@ Simple-type settings (`number`, `string`, `boolean`) are strongly typed in the e
 - **Setting**: uses the `[Alias]` attribute on the property (if set), otherwise the property name in camelCase.
 :::
 
+### Reading settings as a non-admin user
+
+Often you need a setting's value for a normal user, for example to decide whether a form should show a dialog. Reading a value is allowed for everyone, but some of the settings APIs are restricted to administrators.
+
+| Settings API | Who can call it |
+|---|---|
+| `GetValue` (read one value) | Anyone. It is `[AllowAnonymous]` and cannot be restricted. |
+| `GetUserValue` / `UpdateUserValue` ([user-specific settings](#user-specific-settings)) | Follows the [Default Endpoint Access](/docs/fundamentals/security/endpoint-permissions#default-endpoint-access) setting (any logged-in user by default). |
+| `GetConfigurations` (list all settings) | Only users with `Application-Configure`, `Application-Settings` or `Application-Maintenance`. |
+| `UpdateValue` (change a value) | Only users with `Application-Configure`, `Application-Settings` or `Application-Maintenance`. |
+
+The last two are locked in code (`IsConfigurable = false`), so they can't be opened up through the Permissioned Objects UI.
+
+:::warning `application.settings` fails for non-admin users
+`application.settings.[module].[group].[setting].getValueAsync()` calls `GetConfigurations` first, to translate the module, group and setting aliases into the real setting name. For users without one of the permissions above, that call fails with an error saying the required permissions are not granted and listing `Application-Configure`, `Application-Settings` and `Application-Maintenance`. You'll see the failed `GetConfigurations` request in the browser's network tab.
+
+Don't fix this by giving normal users `Application-Settings`. That permission also lets them **change** every application setting. Use one of the options below instead.
+:::
+
+#### Option 1: Call `GetValue` directly from the form
+
+Call the `GetValue` endpoint with the setting's **module name** and **setting name**. These are the real names, not the camelCase aliases used by `application.settings`:
+
+- **`module`** is the name of the module that defines the setting, for example `Shesha` for the framework's own settings. Use the module name, not the camelCase alias (`shesha`).
+- **`name`** is the name passed to `[Setting(...)]`, e.g. `MembershipSettingNames.DebitDay`.
+
+```javascript
+// Works for any user, including anonymous users
+const response = await http.get('/api/services/app/Settings/GetValue', {
+  params: {
+    module: 'YourApp',                    // module name
+    name: 'Shesha.Membership.DebitDay',   // setting name from [Setting(...)]
+  },
+});
+
+const debitDay = response.data.result;
+
+if (debitDay > 25) {
+  // show the dialog
+}
+```
+
+#### Option 2: Return the value from your own application service
+
+If the value is part of business logic, read it on the back end with the [setting accessor](#reading-and-writing-settings-in-back-end-code) and return it from your own endpoint. Reading through the accessor doesn't go through the settings API, so no settings permission is needed. You choose who can call the endpoint with [`[SheshaAuthorize]`](/docs/fundamentals/security/endpoint-permissions#controlling-access-in-code).
+
+```cs
+using Microsoft.AspNetCore.Mvc;
+using Shesha.Authorization;
+using Shesha.Domain.Enums;
+
+[SheshaAuthorize(RefListPermissionedAccess.AnyAuthenticated)]
+public class MembershipAppService : SheshaAppServiceBase
+{
+    private readonly IMembershipSettings _membershipSettings;
+
+    public MembershipAppService(IMembershipSettings membershipSettings)
+    {
+        _membershipSettings = membershipSettings;
+    }
+
+    [HttpGet]
+    public async Task<bool> ShouldShowDebitDayReminderAsync()
+    {
+        var debitDay = await _membershipSettings.DebitDay.GetValueAsync();
+        return debitDay > 25;
+    }
+}
+```
+
+The form then calls `/api/services/app/Membership/ShouldShowDebitDayReminder`.
+
+:::note Writing settings
+Changing an application setting (`setValueAsync` or `UpdateValue`) always requires one of the permissions above. To let a normal user store their own preference, use a [user-specific setting](#user-specific-settings) instead.
+:::
+
 ---
 
 ## Compound Settings
@@ -206,7 +284,7 @@ Compound settings are the **recommended approach** for most settings in Shesha. 
 
 For example, rather than separate simple settings for a debit day, reminder intervals, and toggle flags, you define a single `MembershipPaymentSettings` class that holds all of them.
 
-### Step 1 — Create the settings class
+### Step 1 - Create the settings class
 
 Place this in your `Configuration` folder alongside the accessor interface:
 
@@ -248,7 +326,7 @@ namespace YourApp.Domain.Configuration
 }
 ```
 
-### Step 2 — Add the setting name and accessor property
+### Step 2 - Add the setting name and accessor property
 
 Add a new constant to your existing setting names class:
 
@@ -260,7 +338,7 @@ public class MembershipSettingNames
 }
 ```
 
-Add the compound setting as a new property on your **existing** `IMembershipSettings` interface (keeping everything in one accessor per module). Note the `EditorFormName` — this tells Shesha which configurable form to use as the editor for this compound setting:
+Add the compound setting as a new property on your **existing** `IMembershipSettings` interface (keeping everything in one accessor per module). Note the `EditorFormName` - this tells Shesha which configurable form to use as the editor for this compound setting:
 
 ```cs
 [Category("Membership")]
@@ -276,7 +354,7 @@ public interface IMembershipSettings : ISettingAccessors
 }
 ```
 
-### Step 3 — Register with default values
+### Step 3 - Register with default values
 
 ```cs
 IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
@@ -294,7 +372,7 @@ IocManager.RegisterSettingAccessor<IMembershipSettings>(x =>
 });
 ```
 
-### Step 4 — Create the editor form
+### Step 4 - Create the editor form
 
 For compound settings, you need a configurable form in Shesha whose **form name** matches the `EditorFormName` you specified (`membership-payment-settings` in this example).
 
@@ -313,11 +391,11 @@ For compound settings, you need a configurable form in Shesha whose **form name*
 ### Reading and writing compound settings in code
 
 ```cs
-// Read — returns the full object
+// Read - returns the full object
 var paymentSettings = await _membershipSettings.MembershipPayments.GetValueAsync();
 var finalNotice = paymentSettings.FinalNotice;
 
-// Write — pass a new instance with updated values
+// Write - pass a new instance with updated values
 await _membershipSettings.MembershipPayments.SetValueAsync(new MembershipPaymentSettings
 {
     DebitDay = paymentSettings.DebitDay,
@@ -333,7 +411,7 @@ await _membershipSettings.MembershipPayments.SetValueAsync(new MembershipPayment
 
 ## User-Specific Settings
 
-By default, settings are global — they apply to the entire application. Shesha also supports **user-specific settings** that store a separate value per user. This is useful for personal preferences like notification frequency or UI preferences.
+By default, settings are global - they apply to the entire application. Shesha also supports **user-specific settings** that store a separate value per user. This is useful for personal preferences like notification frequency or UI preferences.
 
 ### Defining user-specific settings
 
@@ -371,7 +449,7 @@ IocManager.RegisterSettingAccessor<IUserNotificationPreferenceSettings>(x =>
 });
 ```
 
-Reading and writing user-specific settings in back-end code works exactly the same way (`GetValueAsync` / `SetValueAsync`) — Shesha automatically scopes the value to the current user.
+Reading and writing user-specific settings in back-end code works exactly the same way (`GetValueAsync` / `SetValueAsync`) - Shesha automatically scopes the value to the current user.
 
 ### Front-end API for user settings
 
@@ -466,7 +544,7 @@ application.settings.functionalTests.common.stars
 
 ### SettingManagementContext (advanced)
 
-All `GetValueAsync` / `GetValue` methods accept an optional `SettingManagementContext` parameter. This lets you explicitly read a setting for a specific front-end app, tenant, or user — overriding the automatic context detection:
+All `GetValueAsync` / `GetValue` methods accept an optional `SettingManagementContext` parameter. This lets you explicitly read a setting for a specific front-end app, tenant, or user - overriding the automatic context detection:
 
 ```cs
 var context = new SettingManagementContext
@@ -479,4 +557,4 @@ var context = new SettingManagementContext
 var value = await _settings.DebitDay.GetValueAsync(context);
 ```
 
-You rarely need this — Shesha resolves the correct context automatically in most scenarios. It's mainly useful in background jobs or multi-tenant operations where the ambient context isn't available.
+You rarely need this - Shesha resolves the correct context automatically in most scenarios. It's mainly useful in background jobs or multi-tenant operations where the ambien

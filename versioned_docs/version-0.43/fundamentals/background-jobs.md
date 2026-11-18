@@ -57,7 +57,7 @@ public class Startup
 }
 ```
 
-The Shesha framework includes an authorization filter, `HangfireAuthorizationFilter`, which is imported from the `Shesha.Scheduler.Hangfire` namespace. This filter checks for the `Pages.Hangfire` permission on the roles assigned to the logged-in user. To grant access to the dashboard, assign the `Hangfire Dashboard` permission from the admin portal.
+The Shesha framework includes an authorization filter, `HangfireAuthorizationFilter`, which is imported from the `Shesha.Scheduler.Hangfire` namespace. This filter checks for the `Hangfire-Dashboard` permission (previously named `Pages.Hangfire`) on the roles assigned to the logged-in user. To grant access to the dashboard, assign the `Hangfire Dashboard` permission from the admin portal.
 
 To do this:
 
