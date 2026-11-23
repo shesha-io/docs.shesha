@@ -61,7 +61,8 @@ The notification type properties are:
 | CanOptOut | Whether users can opt out of receiving this notification. |
 | IsTimeSensitive | If `true`, sends immediately (synchronously) instead of queuing. |
 | AllowAttachments | Whether attachments can be included. |
-| OverrideChannels | Force specific channels, bypassing the default channel selection logic. |
+| DefaultPriority | `Low`, `Medium`, or `High`. Decides which default channels are used when nothing else applies. If it is empty, `Medium` is used. |
+| OverrideChannels | Channels this type must always use instead of the priority defaults. See [Override channels](#override-channels). |
 | Category | Optional grouping label for analysis. |
 
 The template properties are:
@@ -92,10 +93,30 @@ When a notification is sent, the framework decides which channel or channels to 
 
 1. **Explicit channel.** If a channel is passed directly in the `SendNotificationAsync` call, only that channel is used.
 2. **User preferences.** If the recipient has set a `UserNotificationPreference` for this notification type, that channel is used.
-3. **Override channels.** If the notification type has `OverrideChannels` configured, those are used.
+3. **Override channels.** If the notification type has `OverrideChannels` configured, only those channels are used, and the priority defaults are skipped. See [Override channels](#override-channels).
    ![Override Channels](images/notification-images/OverrideChannels.png)
-4. **System defaults.** Falls back to the default channels configured per priority level (High, Medium, or Low) in the notification settings.
+4. **System defaults.** Otherwise, the default channels for the type's `DefaultPriority` (High, Medium, or Low) are taken from the notification settings. If the type has no `DefaultPriority`, `Medium` is used.
    ![Notification Settings](images/notification-images/NotificationSettings.png)
+
+#### Override channels
+
+Use override channels when a notification must always go a specific way, whatever its priority. For example, a one-time PIN (OTP) should always go by SMS.
+
+To set them, open the notification type in the admin UI and pick one or more channels in the **Override Channels** field. It is a multi-select list of the configured notification channels. The choices are saved on the type as a list of channel identifiers (module and name):
+
+```json
+[
+  { "module": "Shesha", "name": "Email" },
+  { "module": "Shesha", "name": "Sms" }
+]
+```
+
+Keep these rules in mind:
+
+- Each item must match an existing channel's **name and module**. For example, the built-in SMS channel is named `Sms` in the `Shesha` module.
+- Only the **Live** version of a channel is used.
+- A recipient's own preference (step 2) still wins over the override channels.
+- Override channels replace the priority defaults completely. If **none** of them can be found, the notification is **not sent**, and there is no error and no fallback to the priority defaults.
 
 ___
 
@@ -129,7 +150,6 @@ Task SendNotificationAsync<TData>(
     Person? sender,                     // Sender (nullable)
     Person receiver,                    // Recipient
     TData data,                         // Template data (extends NotificationData)
-    RefListNotificationPriority priority,
     List<NotificationAttachmentDto>? attachments = null,
     string? cc = null,                  // CC addresses (semicolon-delimited)
     GenericEntityReference? triggeringEntity = null,
@@ -137,6 +157,10 @@ Task SendNotificationAsync<TData>(
     string? category = null
 ) where TData : NotificationData;
 ```
+
+:::note No priority parameter
+`SendNotificationAsync` has no priority parameter. The priority comes from the notification type's `DefaultPriority`, or `Medium` if it is not set.
+:::
 
 The second is participant-based and is for advanced scenarios. When you need to send to a raw address (such as an email or phone number not linked to a `Person` entity), use `IMessageSender` and `IMessageReceiver` participants.
 
@@ -146,7 +170,6 @@ Task SendNotificationAsync<TData>(
     IMessageSender? sender,
     IMessageReceiver receiver,
     TData data,
-    RefListNotificationPriority priority,
     List<NotificationAttachmentDto>? attachments = null,
     string? cc = null,
     GenericEntityReference? triggeringEntity = null,
@@ -164,7 +187,7 @@ There are two message participant types:
 
 ```csharp
 var receiver = new RawAddressMessageParticipant("user@example.com");
-await _notificationSender.SendNotificationAsync(type, null, receiver, data, priority);
+await _notificationSender.SendNotificationAsync(type, null, receiver, data);
 ```
 
 ---
@@ -295,7 +318,6 @@ The implementation:
 using Abp.Dependency;
 using Abp.Domain.Repositories;
 using Shesha.Domain;
-using Shesha.Domain.Enums;
 using Shesha.Notifications;
 
 namespace MyProject.Notifications
@@ -339,8 +361,7 @@ namespace MyProject.Notifications
                 notificationType,
                 sender: null,
                 receiver: order.Customer,
-                data: data,
-                priority: RefListNotificationPriority.Medium);
+                data: data);
         }
     }
 }
@@ -381,7 +402,7 @@ To notify several people, loop through the recipients:
 foreach (var person in recipients)
 {
     await _notificationSender.SendNotificationAsync(
-        notificationType, sender: null, receiver: person, data, priority);
+        notificationType, sender: null, receiver: person, data);
 }
 ```
 
@@ -394,7 +415,6 @@ var emailChannel = await _channelRepo.FirstOrDefaultAsync(x => x.Name == "Email"
 
 await _notificationSender.SendNotificationAsync(
     notificationType, sender: null, receiver: person, data,
-    RefListNotificationPriority.Medium,
     channel: emailChannel);
 ```
 
@@ -414,11 +434,11 @@ var attachments = new List<NotificationAttachmentDto>
 
 await _notificationSender.SendNotificationAsync(
     notificationType, sender: null, receiver: person, data,
-    RefListNotificationPriority.Medium, attachments: attachments);
+    attachments: attachments);
 ```
 
 :::note
-Attachments are only sent if the notification type has `AllowAttachments` set to `true` and the channel supports attachments (`SupportsAttachment = true`).
+Attachments are only sent if the notification type has `AllowAttachments` set to `true` and the channel supports attachments (`SupportsAttachment = true`). If either is `false`, the attachments are dropped **without an error**, and the message is sent without them.
 :::
 
 ### Linking a triggering entity
@@ -428,7 +448,6 @@ Use `GenericEntityReference` to link the notification to the entity that trigger
 ```csharp
 await _notificationSender.SendNotificationAsync(
     notificationType, sender: null, receiver: person, data,
-    RefListNotificationPriority.Medium,
     triggeringEntity: new GenericEntityReference(order));
 ```
 
@@ -449,6 +468,21 @@ Failed notifications are retried automatically up to three times, with delays of
 - `RetryCount` - the number of attempts made.
 - `Status` - `Preparing`, `Sent`, `WaitToRetry`, or `Failed`.
 - `ErrorMessage` - details of the last failure.
+
+---
+
+## Troubleshooting
+
+Shesha records every send, so start with the `Notification` and `NotificationMessage` records:
+
+| What you see | Likely cause | What to check |
+|---|---|---|
+| Nothing is recorded for one recipient | The recipient opted out | `CanOptOut` on the notification type, and the recipient's notification preferences. |
+| A `Notification` record, but no `NotificationMessage` | No channel was selected | That the override channels match real channels (name and module), or that the notification settings have a channel for the type's `DefaultPriority`. |
+| Error: "There is no ... template found for the ... channel" | The type has no template in that channel's format | Add a template whose `MessageFormat` matches the channel's `SupportedFormat`. |
+| A `NotificationMessage` with status `Failed` or `WaitToRetry` | The channel could not deliver | The message's `ErrorMessage`, and the channel's own settings (SMTP or SMS gateway). |
+| Status `Sent`, but the email is not in the inbox | Emails are redirected | Email settings → `RedirectAllMessagesTo`, which sends every email to one test address. |
+| The email arrives without its attachment | The attachment was dropped | `AllowAttachments` on the type and `SupportsAttachment` on the channel. |
 
 ---
 
